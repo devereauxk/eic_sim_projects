@@ -4,7 +4,7 @@ void access_tree(){
   erhic::EventPythia *event(NULL); //Note that I use Pointer
   //Particle Class
   erhic::ParticleMC *particle(NULL); //Also use Pointer
-  //Load ROOT File
+  //Load ROOT File for pythia
   TFile *f = new TFile("../pythia/outfiles/ep_10_100_norad.root");
   //Get EICTree Tree
   TTree *tree = (TTree*)f->Get("EICTree");
