@@ -1,5 +1,6 @@
 void plot_histogram(const char* inFile, const char* outDir)
 {
+  // run with root -l 'plot_histogram("histogram_dir/access_tree_output.root", "histogram_dir/")'
   // p_T distribution
 
   TFile* fin = new TFile(inFile,"read");

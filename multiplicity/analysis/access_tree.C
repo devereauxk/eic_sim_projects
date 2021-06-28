@@ -1,6 +1,7 @@
 R__LOAD_LIBRARY(libeicsmear);
 void access_tree(const char* inFile, const char* outDir)
 {
+  // run with root -l 'access_tree("sim_dir/sim_output.root", "histogram_dir/output.root")'
   // arg: inFile: directory + filename of .root file outputed from sim
   //arg: outDir: directory to output output.root file containing histogram data
 
@@ -67,15 +68,6 @@ void access_tree(const char* inFile, const char* outDir)
         nProtons++;
       }
 
-      if(Status[j]==1){
-      	printf("For Event %d, particle %d Eta = %.3f!\n",i,j,Eta[j]);
-      	printf("For Event %d, particle %d Px = %.3f GeV/c!\n",i,j,Px[j]);
-      	printf("For Event %d, particle %d Status = %d!\n",i,j,Status[j]);
-      	printf("For Event %d, particle %d Id = %d!\n",i,j,id[j]);
-        h2d_pt_vs_eta->Fill(particle->GetPt(),particle->GetEta());
-        h1d_part_pt->Fill(particle->GetPt());
-      }
-
       h1d_kaon->Fill(nChargedKaons);
       h1d_pion->Fill(nChargedPions);
       h1d_proton->Fill(nProtons);
@@ -84,7 +76,7 @@ void access_tree(const char* inFile, const char* outDir)
 
   cout<<"-------------------------------"<<endl;
   cout<<"Write output to root file"<<endl;
-  TFile* fout = new TFile(outDir+"output.root","recreate");
+  TFile* fout = new TFile(outFile,"recreate");
   h1d_kaon->Write();
   h1d_pion->Write();
   h1d_proton->Write();
