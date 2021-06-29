@@ -3,6 +3,8 @@ void plot_histogram(const char* inFile, const char* outDir)
   // run with root -l 'plot_histogram("histogram_dir/access_tree_output.root", "histogram_dir/")'
   // p_T distribution
 
+  std::string outDir = std:string(outDir);
+
   TFile* fin = new TFile(inFile,"read");
   cout<<"Print input file content"<<endl;
   fin->ls();
@@ -27,7 +29,7 @@ void plot_histogram(const char* inFile, const char* outDir)
 
   h1d_kaon->Draw("hsame");
 
-  c1->SaveAs(outDir+"charged_kaon_mul.pdf");
+  c1->SaveAs(outDir.append("charged_kaon_mul.pdf"));
 
   // charged pion multiplicity
 
@@ -44,7 +46,7 @@ void plot_histogram(const char* inFile, const char* outDir)
 
   h1d_pion->Draw("hsame");
 
-  c2->SaveAs(outDir+"charged_pion_mul.pdf");
+  c2->SaveAs(outDir.append("charged_pion_mul.pdf"));
 
   // charged kaon multiplicity
 
@@ -61,7 +63,7 @@ void plot_histogram(const char* inFile, const char* outDir)
 
   h1d_proton->Draw("hsame");
 
-  c3->SaveAs(outDir+"proton_mul.pdf");
+  c3->SaveAs(outDir.append("proton_mul.pdf"));
 
 
 }

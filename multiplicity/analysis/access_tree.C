@@ -1,9 +1,8 @@
 R__LOAD_LIBRARY(libeicsmear);
-void access_tree(const char* inFile, const char* outDir)
+void access_tree(const char* inFile, const char* outFile)
 {
   // run with root -l 'access_tree("sim_dir/sim_output.root", "histogram_dir/output.root")'
   // arg: inFile: directory + filename of .root file outputed from sim
-  //arg: outDir: directory to output output.root file containing histogram data
 
   //Event Class
   erhic::EventPythia *event(NULL); //Note that I use Pointer
