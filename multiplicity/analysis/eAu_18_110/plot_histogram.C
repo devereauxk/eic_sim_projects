@@ -28,7 +28,7 @@ void plot_histogram(const char* inFile)
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_kaon_total->GetXaxis()->SetTitle("K^{\pm} multiplicity");
+  h1d_kaon_total->GetXaxis()->SetTitle("K^{+/-} multiplicity");
   h1d_kaon_total->GetYaxis()->SetTitle("events");
   h1d_kaon_total->GetXaxis()->SetTitleOffset(1.3);
   h1d_kaon_total->GetYaxis()->SetTitleOffset(1.5);
