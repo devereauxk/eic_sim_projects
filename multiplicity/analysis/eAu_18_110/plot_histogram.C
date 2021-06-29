@@ -24,7 +24,7 @@ void plot_histogram(const char* inFile)
 
   // charged kaon multiplicity
 
-  TCanvas c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  TCanvas * c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
