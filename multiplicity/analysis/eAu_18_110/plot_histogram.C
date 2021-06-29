@@ -24,7 +24,7 @@ void plot_histogram(const char* inFile)
 
   // charged kaon multiplicity
 
-  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  TCanvas c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
@@ -35,7 +35,7 @@ void plot_histogram(const char* inFile)
   h1d_kaon_total->Draw("hsame");
   c1->SaveAs("total_kaon_mul.pdf");
 
-  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
@@ -46,7 +46,7 @@ void plot_histogram(const char* inFile)
   h1d_kaon_pos->Draw("hsame");
   c1->SaveAs("pos_kaon_mul.pdf");
 
-  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
@@ -69,7 +69,7 @@ void plot_histogram(const char* inFile)
 
   // charged pion multiplicity
 
-  TCanvas* c2 = new TCanvas("c1","c1",800,800); // create new canvas
+  TCanvas* c2 = new TCanvas("c2","c2",800,800); // create new canvas
   c2->Range(0,0,1,1);
   c2->SetLeftMargin(0.15);
   c2->SetBottomMargin(0.1);
@@ -83,7 +83,7 @@ void plot_histogram(const char* inFile)
 
   // proton multiplicity
 
-  TCanvas* c3 = new TCanvas("c1","c1",800,800); // create new canvas
+  TCanvas* c3 = new TCanvas("c3","c3",800,800); // create new canvas
   c3->Range(0,0,1,1);
   c3->SetLeftMargin(0.15);
   c3->SetBottomMargin(0.1);
