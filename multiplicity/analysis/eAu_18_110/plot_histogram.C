@@ -1,39 +1,3 @@
-void plot_h1d(TH1D * h1d, const char * x, const char * y, const char * filename)
-{
-  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
-  c1->Range(0,0,1,1);
-  c1->SetLeftMargin(0.15);
-  c1->SetBottomMargin(0.1);
-  //c1->SetLogy(); // set y axis to log scale
-
-  h1d->GetXaxis()->SetTitle(x);
-  h1d->GetYaxis()->SetTitle(y);
-  h1d->GetXaxis()->SetTitleOffset(1.3);
-  h1d->GetYaxis()->SetTitleOffset(1.5);
-
-  h1d->Draw("hsame");
-
-  c1->SaveAs(filename);
-}
-
-void plot_h2d(TH1D * h2d, const char * x, const char * y, const char * filename)
-{
-  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
-  c1->Range(0,0,1,1);
-  c1->SetLeftMargin(0.15);
-  c1->SetBottomMargin(0.1);
-  //c1->SetLogy(); // set y axis to log scale
-
-  h2d->GetXaxis()->SetTitle(x);
-  h2d->GetYaxis()->SetTitle(y);
-  h2d->GetXaxis()->SetTitleOffset(1.3);
-  h2d->GetYaxis()->SetTitleOffset(1.5);
-
-  h2d->Draw("colz");
-
-  c1->SaveAs(filename);
-}
-
 void plot_histogram(const char* inFile)
 {
   // run with root -l 'plot_histogram("histogram_dir/access_tree_output.root", "histogram_dir/")'
@@ -46,29 +10,67 @@ void plot_histogram(const char* inFile)
   TH2D* h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
   TH1D* h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
   TH1D* h1d_kaon_neg = (TH1D*) h2d_kaon->ProjectionY("h1d_kaon_neg");
-  TH1D* h1d_kaon_total = h1d_kaon_pos + h1d_kaon_neg;
+  TH1D* h1d_kaon_total = new TH1D("h1d_kaon_total", "charged kaon multiplicity", h1d_kaon_pos->GetXaxis()->GetXmin(), h1d_kaon_pos->GetXaxis()->GetXmax())
+  h1d_kaon_total->Add(h1d_kaon_pos, h1d_kaon_neg);
+
   TH2D* h2d_pion = (TH2D*)fin->Get("h2d_pion");
   TH1D* h1d_pion_pos = (TH1D*) h2d_pion->ProjectionX("h1d_pion_pos");
   TH1D* h1d_pion_neg = (TH1D*) h2d_pion->ProjectionY("h1d_pion_neg");
-  TH1D* h1d_pion_total = h1d_pion_pos + h1d_pion_neg;
+  TH1D* h1d_pion_total = new TH1D("h1d_pion_total", "charged pion multiplicity", h1d_pion_pos->GetXaxis()->GetXmin(), h1d_pion_pos->GetXaxis()->GetXmax())
+  h1d_pion_total->Add(h1d_pion_pos, h1d_pion_neg);
+
   TH1D* h1d_proton = (TH1D*)fin->Get("h1d_proton");
 
 
   // charged kaon multiplicity
 
-  plot_h2d(h2d_kaon, "positive kaon multiplicity (counts)", "negative kaon multiplicity (counts)", "kaon_mul_2d.pdf");
-  plot_h1d(h1d_kaon_total, "charged kaon multiplicity (counts)", "events", "kaon_mul_2d.pdf");
+  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_kaon_total->GetXaxis()->SetTitle("charged kaon multiplicity");
+  h1d_kaon_total->GetYaxis()->SetTitle("events");
+  h1d_kaon_total->GetXaxis()->SetTitleOffset(1.3);
+  h1d_kaon_total->GetYaxis()->SetTitleOffset(1.5);
+  h1d_kaon_total->Draw("hsame");
+  c1->SaveAs("total_kaon_mul.pdf");
+
+  THStack *hs = new THStack("hs", "");
+  hs->Add(h1d_kaon_pos);
+  hs->Add(h1d_kaon_neg);
+  TCanvas *cs = new TCanvas("cs", "cs", 700, 2100);
+  cs->Divide(2);
+  cs->cd(1); h2d_kaon->Draw("colz");
+  cs->cd(2); hs->Draw("nostackb");
+  cs->SaveAs("comp_kaon_mul.pdf");
 
 
   // charged pion multiplicity
 
-  plot_h2d(h2d_pion, "positive pion multiplicity (counts)", "negative pion multiplicity (counts)", "pion_mul_2d.pdf");
-  plot_h1d(h1d_pion_total, "charged pion multiplicity (counts)", "events", "pion_mul_2d.pdf");
+  TCanvas* c2 = new TCanvas("c1","c1",800,800); // create new canvas
+  c2->Range(0,0,1,1);
+  c2->SetLeftMargin(0.15);
+  c2->SetBottomMargin(0.1);
+  h1d_kaon_total->GetXaxis()->SetTitle("charged pion multiplicity");
+  h1d_kaon_total->GetYaxis()->SetTitle("events");
+  h1d_kaon_total->GetXaxis()->SetTitleOffset(1.3);
+  h1d_kaon_total->GetYaxis()->SetTitleOffset(1.5);
+  h1d_kaon_total->Draw("hsame");
+  c2->SaveAs("total_pion_mul.pdf");
 
 
   // proton multiplicity
 
-  plot_h1d(h1d_proton, "proton multiplicity (counts)", "events", "proton_mul.pdf");
+  TCanvas* c3 = new TCanvas("c1","c1",800,800); // create new canvas
+  c3->Range(0,0,1,1);
+  c3->SetLeftMargin(0.15);
+  c3->SetBottomMargin(0.1);
+  h1d_proton->GetXaxis()->SetTitle("proton multiplicity");
+  h1d_proton->GetYaxis()->SetTitle("events");
+  h1d_proton->GetXaxis()->SetTitleOffset(1.3);
+  h1d_proton->GetYaxis()->SetTitleOffset(1.5);
+  h1d_proton->Draw("hsame");
+  c3->SaveAs("proton_mul.pdf");
 
 
 }
