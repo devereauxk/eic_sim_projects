@@ -25,7 +25,7 @@ void access_tree(const char* inFile, const char* outFile)
   TH2D* h2d_kaon = new TH2D("h2d_kaon","charged kaon multiplicity",100,0,12,0,12);
   h2d_kaon->Sumw2(); // to handle error propagation correctly later
 
-  TH2D* h2d_pion = new T21D("h2d_pion","charged pion multiplicity",100,0,10000,0,10000);
+  TH2D* h2d_pion = new TH2D("h2d_pion","charged pion multiplicity",100,0,10000,0,10000);
   h2d_pion->Sumw2(); // to handle error propagation correctly later
 
   TH1D* h1d_proton = new TH1D("h1d_proton","proton multiplicity",100,0,200);
