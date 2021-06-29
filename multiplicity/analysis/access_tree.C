@@ -65,11 +65,12 @@ void access_tree(const char* inFile, const char* outFile)
       } else if (id == 2212) { // if proton
         nProtons++;
       }
-
-      h1d_kaon->Fill(nChargedKaons);
-      h1d_pion->Fill(nChargedPions);
-      h1d_proton->Fill(nProtons);
     }
+
+    h1d_kaon->Fill(nChargedKaons);
+    h1d_pion->Fill(nChargedPions);
+    h1d_proton->Fill(nProtons);
+    
   }
 
   cout<<"-------------------------------"<<endl;
