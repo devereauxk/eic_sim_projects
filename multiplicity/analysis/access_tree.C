@@ -40,7 +40,7 @@ void access_tree(const char* inFile, const char* outFile)
   Int_t nProtons;
 
   //Loop Over Events
-  for(Int_t i = 0; i < 10; i++) {
+  for(Int_t i = 0; i < nEntries; i++) {
 
     nChargedKaons = 0;
     nChargedKaons = 0;
@@ -50,7 +50,6 @@ void access_tree(const char* inFile, const char* outFile)
 
     //Get Total Number of Particles
     nParticles = event->GetNTracks();
-    printf("For Event %d, we have %d particles!\n",i,nParticles);
 
     //Loop Over Each Particle
     for(Int_t j = 0; j < nParticles; j++) {

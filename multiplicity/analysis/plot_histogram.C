@@ -1,9 +1,9 @@
-void plot_histogram(const char* inFile, const char* outDir)
+void plot_histogram(const char* inFile, const char* outDirChar)
 {
   // run with root -l 'plot_histogram("histogram_dir/access_tree_output.root", "histogram_dir/")'
   // p_T distribution
 
-  std::string outDir = std:string(outDir);
+  std::string outDir = std:string(outDirChar);
 
   TFile* fin = new TFile(inFile,"read");
   cout<<"Print input file content"<<endl;
