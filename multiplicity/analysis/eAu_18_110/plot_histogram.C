@@ -28,12 +28,34 @@ void plot_histogram(const char* inFile)
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_kaon_total->GetXaxis()->SetTitle("charged kaon multiplicity");
+  h1d_kaon_total->GetXaxis()->SetTitle("K^{\pm} multiplicity");
   h1d_kaon_total->GetYaxis()->SetTitle("events");
   h1d_kaon_total->GetXaxis()->SetTitleOffset(1.3);
   h1d_kaon_total->GetYaxis()->SetTitleOffset(1.5);
   h1d_kaon_total->Draw("hsame");
   c1->SaveAs("total_kaon_mul.pdf");
+
+  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_kaon_pos->GetXaxis()->SetTitle("K^{+} multiplicity");
+  h1d_kaon_pos->GetYaxis()->SetTitle("events");
+  h1d_kaon_pos->GetXaxis()->SetTitleOffset(1.3);
+  h1d_kaon_pos->GetYaxis()->SetTitleOffset(1.5);
+  h1d_kaon_pos->Draw("hsame");
+  c1->SaveAs("pos_kaon_mul.pdf");
+
+  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_kaon_neg->GetXaxis()->SetTitle("K^{-} multiplicity");
+  h1d_kaon_neg->GetYaxis()->SetTitle("events");
+  h1d_kaon_neg->GetXaxis()->SetTitleOffset(1.3);
+  h1d_kaon_neg->GetYaxis()->SetTitleOffset(1.5);
+  h1d_kaon_neg->Draw("hsame");
+  c1->SaveAs("neg_kaon_mul.pdf");
 
   THStack *hs = new THStack("hs", "");
   hs->Add(h1d_kaon_pos);
