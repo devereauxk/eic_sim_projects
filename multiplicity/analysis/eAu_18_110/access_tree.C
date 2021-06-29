@@ -67,7 +67,7 @@ void access_tree(const char* inFile, const char* outFile)
           nPosKaons++;
           break;
         case -321:
-          nNegKaons++:
+          nNegKaons++;
           break;
         case 211:
           nPosPions++;
