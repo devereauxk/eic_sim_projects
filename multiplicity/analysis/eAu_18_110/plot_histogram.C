@@ -27,10 +27,7 @@ void plot_histogram(const char* inFile)
 
   h1d_kaon->Draw("hsame");
 
-  char * path1 = new char[100];
-  std::strcpy(path1, outDir);
-  std::strcat(path1, "charged_kaon_mul.pdf");
-  c1->SaveAs(path1);
+  c1->SaveAs("charged_kaon_mul.pdf");
 
   // charged pion multiplicity
 
@@ -47,10 +44,7 @@ void plot_histogram(const char* inFile)
 
   h1d_pion->Draw("hsame");
 
-  char * path2 = new char[100];
-  std::strcpy(path2, outDir);
-  std::strcat(path2, "charged_pion_mul.pdf");
-  c2->SaveAs(path2);
+  c2->SaveAs("charged_pion_mul.pdf");
 
   // charged kaon multiplicity
 
@@ -67,10 +61,7 @@ void plot_histogram(const char* inFile)
 
   h1d_proton->Draw("hsame");
 
-  char * path3 = new char[100];
-  std::strcpy(path3, outDir);
-  std::strcat(path3, "proton_mul.pdf");
-  c3->SaveAs(path3);
+  c3->SaveAs("proton_mul.pdf");
 
 
 }
