@@ -57,16 +57,6 @@ void plot_histogram(const char* inFile)
   h1d_kaon_neg->Draw("hsame");
   c1->SaveAs("neg_kaon_mul.pdf");
 
-  THStack *hs = new THStack("hs", "");
-  hs->Add(h1d_kaon_pos);
-  hs->Add(h1d_kaon_neg);
-  TCanvas *cs = new TCanvas("cs", "cs", 1400, 700);
-  cs->Divide(2);
-  cs->cd(1); h2d_kaon->Draw("colz");
-  cs->cd(2); hs->Draw("nostackb");
-  cs->SaveAs("comp_kaon_mul.pdf");
-
-
   // charged pion multiplicity
 
   TCanvas* c2 = new TCanvas("c2","c2",800,800); // create new canvas
@@ -96,3 +86,13 @@ void plot_histogram(const char* inFile)
 
 
 }
+/*
+THStack *hs = new THStack("hs", "");
+hs->Add(h1d_kaon_pos);
+hs->Add(h1d_kaon_neg);
+TCanvas *cs = new TCanvas("cs", "cs", 1400, 700);
+cs->Divide(2);
+cs->cd(1); h2d_kaon->Draw("colz");
+cs->cd(2); hs->Draw("nostackb");
+cs->SaveAs("comp_kaon_mul.pdf");
+*/
