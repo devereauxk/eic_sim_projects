@@ -23,13 +23,13 @@ void access_tree(const char* inFile, const char* outDir)
   //Access event Branch
   tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
-  TH1D* h1d_kaon = new TH1D("h1d_kaon","charged kaon multiplicity",100,0,20,0,100);
+  TH1D* h1d_kaon = new TH1D("h1d_kaon","charged kaon multiplicity",100,0,20);
   h1d_kaon->Sumw2(); // to handle error propagation correctly later
 
-  TH1D* h1d_pion = new TH1D("h1d_pion","charged pion multiplicity",100,0,20,0,100);
+  TH1D* h1d_pion = new TH1D("h1d_pion","charged pion multiplicity",100,0,20);
   h1d_pion->Sumw2(); // to handle error propagation correctly later
 
-  TH1D* h1d_proton = new TH1D("h1d_proton","proton multiplicity",100,0,20,0,100);
+  TH1D* h1d_proton = new TH1D("h1d_proton","proton multiplicity",100,0,20);
   h1d_proton->Sumw2(); // to handle error propagation correctly later
 
   //Define Some Variables
