@@ -25,7 +25,7 @@ void access_tree(const char* inFile, const char* outFile)
   TH1D* h1d_kaon = new TH1D("h1d_kaon","charged kaon multiplicity",100,0,12);
   h1d_kaon->Sumw2(); // to handle error propagation correctly later
 
-  TH1D* h1d_pion = new TH1D("h1d_pion","charged pion multiplicity",100,0,200);
+  TH1D* h1d_pion = new TH1D("h1d_pion","charged pion multiplicity",100,0,2000);
   h1d_pion->Sumw2(); // to handle error propagation correctly later
 
   TH1D* h1d_proton = new TH1D("h1d_proton","proton multiplicity",100,0,14);
@@ -38,6 +38,7 @@ void access_tree(const char* inFile, const char* outFile)
   Int_t nChargedKaons;
   Int_t nChargedPions;
   Int_t nProtons;
+  Int_t temp = 0;
 
   //Loop Over Events
   for(Int_t i = 0; i < nEntries; i++) {
@@ -71,7 +72,11 @@ void access_tree(const char* inFile, const char* outFile)
     h1d_pion->Fill(nChargedPions);
     h1d_proton->Fill(nProtons);
 
+    temp += nChargedPions;
+
   }
+
+  cout<<"pion avg: "<<temp<<endl;
 
   cout<<"-------------------------------"<<endl;
   cout<<"Write output to root file"<<endl;
