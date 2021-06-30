@@ -1,3 +1,14 @@
+void insert_text(TH1D * h1d)
+{
+  TLatex* tl = new TLatex();
+  tl->SetTextAlign(11);
+  tl->SetTextSize(0.035);
+  tl->SetTextColor(kBlack);
+  tl->DrawLatexNDC(0.2,0.85,"e+Au @ 18GeV, 110GeV");
+  tl->SetTextColor(kBlue);
+  tl->DrawLatexNDC(0.2,0.80,Form("Total counts on plot is %.3e",h1d->GetEntries()));
+}
+
 void plot_histogram(const char* inFile)
 {
   // run with root -l 'plot_histogram("histogram_dir/access_tree_output.root", "histogram_dir/")'
@@ -121,16 +132,7 @@ void plot_histogram(const char* inFile)
 
 }
 
-void insert_text(TH1D * h1d)
-{
-  TLatex* tl = new TLatex();
-  tl->SetTextAlign(11);
-  tl->SetTextSize(0.035);
-  tl->SetTextColor(kBlack);
-  tl->DrawLatexNDC(0.2,0.85,"e+Au @ 18GeV, 110GeV");
-  tl->SetTextColor(kBlue);
-  tl->DrawLatexNDC(0.2,0.80,Form("Total counts on plot is %.3e",h1d->GetEntries()));
-}
+
 /*
 THStack *hs = new THStack("hs", "");
 hs->Add(h1d_kaon_pos);
