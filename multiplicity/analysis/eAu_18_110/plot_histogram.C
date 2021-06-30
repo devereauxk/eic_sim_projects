@@ -16,7 +16,7 @@ void plot_histogram(const char* inFile)
   TH2D* h2d_pion = (TH2D*)fin->Get("h2d_pion");
   TH1D* h1d_pion_pos = (TH1D*) h2d_pion->ProjectionX("h1d_pion_pos");
   TH1D* h1d_pion_neg = (TH1D*) h2d_pion->ProjectionY("h1d_pion_neg");
-  TH1D* h1d_pion_total = new TH1D("h1d_pion_total", "charged pion multiplicity", 10000, -0.5, 9999.5);
+  TH1D* h1d_pion_total = new TH1D("h1d_pion_total", "charged pion multiplicity", 12, -0.5, 11.5);
   h1d_pion_total->Add(h1d_pion_pos, h1d_pion_neg);
 
   TH1D* h1d_proton = (TH1D*)fin->Get("h1d_proton");
@@ -63,7 +63,7 @@ void plot_histogram(const char* inFile)
   c2->Range(0,0,1,1);
   c2->SetLeftMargin(0.15);
   c2->SetBottomMargin(0.1);
-  h1d_pion_total->GetXaxis()->SetTitle("#pi ^ {#pm} multiplicity");
+  h1d_pion_total->GetXaxis()->SetTitle("#pi^{#pm} multiplicity");
   h1d_pion_total->GetYaxis()->SetTitle("events");
   h1d_pion_total->GetXaxis()->SetTitleOffset(1.3);
   h1d_pion_total->GetYaxis()->SetTitleOffset(1.5);
@@ -74,7 +74,7 @@ void plot_histogram(const char* inFile)
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_pion_pos->GetXaxis()->SetTitle("#pi ^{+} multiplicity");
+  h1d_pion_pos->GetXaxis()->SetTitle("#pi^{+} multiplicity");
   h1d_pion_pos->GetYaxis()->SetTitle("events");
   h1d_pion_pos->GetXaxis()->SetTitleOffset(1.3);
   h1d_pion_pos->GetYaxis()->SetTitleOffset(1.5);
@@ -85,7 +85,7 @@ void plot_histogram(const char* inFile)
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_pion_neg->GetXaxis()->SetTitle("#pi ^{-} multiplicity");
+  h1d_pion_neg->GetXaxis()->SetTitle("#pi^{-} multiplicity");
   h1d_pion_neg->GetYaxis()->SetTitle("events");
   h1d_pion_neg->GetXaxis()->SetTitleOffset(1.3);
   h1d_pion_neg->GetYaxis()->SetTitleOffset(1.5);
@@ -99,7 +99,7 @@ void plot_histogram(const char* inFile)
   c3->Range(0,0,1,1);
   c3->SetLeftMargin(0.15);
   c3->SetBottomMargin(0.1);
-  h1d_proton->GetXaxis()->SetTitle("proton multiplicity");
+  h1d_proton->GetXaxis()->SetTitle("p multiplicity");
   h1d_proton->GetYaxis()->SetTitle("events");
   h1d_proton->GetXaxis()->SetTitleOffset(1.3);
   h1d_proton->GetYaxis()->SetTitleOffset(1.5);
