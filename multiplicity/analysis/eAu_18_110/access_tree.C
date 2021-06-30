@@ -25,10 +25,16 @@ void access_tree(const char* inFile, const char* outFile)
   TH2D* h2d_kaon = new TH2D("h2d_kaon","charged kaon multiplicity",12,-0.5,11.5,12,-0.5,11.5);
   h2d_kaon->Sumw2(); // to handle error propagation correctly later
 
-  TH2D* h2d_pion = new TH2D("h2d_pion","charged pion multiplicity",12,-0.5,11.5,12,-0.5,11.5);
+  TH2D* h2d_pion = new TH2D("h2d_pion","charged pion multiplicity",18,-0.5,17.5,18,-0.5,17.5);
   h2d_pion->Sumw2(); // to handle error propagation correctly later
 
-  TH1D* h1d_proton = new TH1D("h1d_proton","proton multiplicity",200,-0.5,199.5);
+  TH1D* h1d_kaon = new TH1D("h1d_kaon_total", "charged kaon multiplicity", 12, -0.5, 11.5);
+  h2d_pion->Sumw2();
+
+  TH1D* h1d_pion = new TH1D("h1d_pion_total", "charged pion multiplicity", 18, -0.5, 17.5);
+  h2d_pion->Sumw2();
+
+  TH1D* h1d_proton = new TH1D("h1d_proton","proton multiplicity",60,55.5,119.5);
   h1d_proton->Sumw2(); // to handle error propagation correctly later
 
   //Define Some Variables
@@ -84,7 +90,9 @@ void access_tree(const char* inFile, const char* outFile)
     }
 
     h2d_kaon->Fill(nPosKaons, nNegKaons);
+    h1d_kaon->Fill(nPosKaons+nNegKaons);
     h2d_pion->Fill(nPosPions, nNegPions);
+    h1d_pions->Fill(nPosPions+nNegPions);
     h1d_proton->Fill(nProtons);
 
   }
@@ -93,7 +101,9 @@ void access_tree(const char* inFile, const char* outFile)
   cout<<"Write output to root file"<<endl;
   TFile* fout = new TFile(outFile,"recreate");
   h2d_kaon->Write();
+  h1d_kaon->Write();
   h2d_pion->Write();
+  h1d_pion->Write();
   h1d_proton->Write();
   fout->Write();
   fout->Close();

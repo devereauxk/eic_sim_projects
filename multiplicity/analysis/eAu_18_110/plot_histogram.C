@@ -10,14 +10,12 @@ void plot_histogram(const char* inFile)
   TH2D* h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
   TH1D* h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
   TH1D* h1d_kaon_neg = (TH1D*) h2d_kaon->ProjectionY("h1d_kaon_neg");
-  TH1D* h1d_kaon_total = new TH1D("h1d_kaon_total", "charged kaon multiplicity", 12, -0.5, 11.5);
-  h1d_kaon_total->Add(h1d_kaon_pos, h1d_kaon_neg);
+  TH1D* h1d_kaon_total = (TH1D*)fin->Get("h1d_kaon");
 
   TH2D* h2d_pion = (TH2D*)fin->Get("h2d_pion");
   TH1D* h1d_pion_pos = (TH1D*) h2d_pion->ProjectionX("h1d_pion_pos");
   TH1D* h1d_pion_neg = (TH1D*) h2d_pion->ProjectionY("h1d_pion_neg");
-  TH1D* h1d_pion_total = new TH1D("h1d_pion_total", "charged pion multiplicity", 12, -0.5, 11.5);
-  h1d_pion_total->Add(h1d_pion_pos, h1d_pion_neg);
+  TH1D* h1d_pion_total = (TH1D*)fin->Get("h1d_pion");
 
   TH1D* h1d_proton = (TH1D*)fin->Get("h1d_proton");
 
