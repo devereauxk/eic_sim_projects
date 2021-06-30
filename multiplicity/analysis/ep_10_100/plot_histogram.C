@@ -7,27 +7,53 @@ void plot_histogram(const char* inFile)
   cout<<"Print input file content"<<endl;
   fin->ls();
 
-  TH1D* h1d_kaon = (TH1D*)fin->Get("h1d_kaon");
-  TH1D* h1d_pion = (TH1D*)fin->Get("h1d_pion");
+  TH2D* h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
+  TH1D* h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
+  TH1D* h1d_kaon_neg = (TH1D*) h2d_kaon->ProjectionY("h1d_kaon_neg");
+  TH1D* h1d_kaon_total = (TH1D*)fin->Get("h1d_kaon_total");
+
+  TH2D* h2d_pion = (TH2D*)fin->Get("h2d_pion");
+  TH1D* h1d_pion_pos = (TH1D*) h2d_pion->ProjectionX("h1d_pion_pos");
+  TH1D* h1d_pion_neg = (TH1D*) h2d_pion->ProjectionY("h1d_pion_neg");
+  TH1D* h1d_pion_total = (TH1D*)fin->Get("h1d_pion_total");
+
   TH1D* h1d_proton = (TH1D*)fin->Get("h1d_proton");
 
 
   // charged kaon multiplicity
 
-  TCanvas* c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  TCanvas * c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  //c1->SetLogy(); // set y axis to log scale
+  h1d_kaon_total->GetXaxis()->SetTitle("K^{#pm} multiplicity");
+  h1d_kaon_total->GetYaxis()->SetTitle("events");
+  h1d_kaon_total->GetXaxis()->SetTitleOffset(1.3);
+  h1d_kaon_total->GetYaxis()->SetTitleOffset(1.5);
+  h1d_kaon_total->Draw("hsame");
+  c1->SaveAs("total_kaon_mul.pdf");
 
-  h1d_kaon->GetXaxis()->SetTitle("charge kaon multiplicity (counts)");
-  h1d_kaon->GetYaxis()->SetTitle("events");
-  h1d_kaon->GetXaxis()->SetTitleOffset(1.3);
-  h1d_kaon->GetYaxis()->SetTitleOffset(1.5);
+  c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_kaon_pos->GetXaxis()->SetTitle("K^{+} multiplicity");
+  h1d_kaon_pos->GetYaxis()->SetTitle("events");
+  h1d_kaon_pos->GetXaxis()->SetTitleOffset(1.3);
+  h1d_kaon_pos->GetYaxis()->SetTitleOffset(1.5);
+  h1d_kaon_pos->Draw("hsame");
+  c1->SaveAs("pos_kaon_mul.pdf");
 
-  h1d_kaon->Draw("hsame");
-
-  c1->SaveAs("charged_kaon_mul.pdf");
+  c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_kaon_neg->GetXaxis()->SetTitle("K^{-} multiplicity");
+  h1d_kaon_neg->GetYaxis()->SetTitle("events");
+  h1d_kaon_neg->GetXaxis()->SetTitleOffset(1.3);
+  h1d_kaon_neg->GetYaxis()->SetTitleOffset(1.5);
+  h1d_kaon_neg->Draw("hsame");
+  c1->SaveAs("neg_kaon_mul.pdf");
 
   // charged pion multiplicity
 
@@ -35,33 +61,58 @@ void plot_histogram(const char* inFile)
   c2->Range(0,0,1,1);
   c2->SetLeftMargin(0.15);
   c2->SetBottomMargin(0.1);
-  //c2->SetLogy(); // set y axis to log scale
+  h1d_pion_total->GetXaxis()->SetTitle("#pi^{#pm} multiplicity");
+  h1d_pion_total->GetYaxis()->SetTitle("events");
+  h1d_pion_total->GetXaxis()->SetTitleOffset(1.3);
+  h1d_pion_total->GetYaxis()->SetTitleOffset(1.5);
+  h1d_pion_total->Draw("hsame");
+  c2->SaveAs("total_pion_mul.pdf");
 
-  h1d_pion->GetXaxis()->SetTitle("charge pion multiplicity (counts)");
-  h1d_pion->GetYaxis()->SetTitle("events");
-  h1d_pion->GetXaxis()->SetTitleOffset(1.3);
-  h1d_pion->GetYaxis()->SetTitleOffset(1.5);
+  c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_pion_pos->GetXaxis()->SetTitle("#pi^{+} multiplicity");
+  h1d_pion_pos->GetYaxis()->SetTitle("events");
+  h1d_pion_pos->GetXaxis()->SetTitleOffset(1.3);
+  h1d_pion_pos->GetYaxis()->SetTitleOffset(1.5);
+  h1d_pion_pos->Draw("hsame");
+  c1->SaveAs("pos_pion_mul.pdf");
 
-  h1d_pion->Draw("hsame");
+  c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_pion_neg->GetXaxis()->SetTitle("#pi^{-} multiplicity");
+  h1d_pion_neg->GetYaxis()->SetTitle("events");
+  h1d_pion_neg->GetXaxis()->SetTitleOffset(1.3);
+  h1d_pion_neg->GetYaxis()->SetTitleOffset(1.5);
+  h1d_pion_neg->Draw("hsame");
+  c1->SaveAs("neg_pion_mul.pdf");
 
-  c2->SaveAs("charged_pion_mul.pdf");
 
-  // charged kaon multiplicity
+  // proton multiplicity
 
   TCanvas* c3 = new TCanvas("c3","c3",800,800); // create new canvas
   c3->Range(0,0,1,1);
   c3->SetLeftMargin(0.15);
   c3->SetBottomMargin(0.1);
-  //c3->SetLogy(); // set y axis to log scale
-
-  h1d_proton->GetXaxis()->SetTitle("proton multiplicity (counts)");
+  h1d_proton->GetXaxis()->SetTitle("p multiplicity");
   h1d_proton->GetYaxis()->SetTitle("events");
   h1d_proton->GetXaxis()->SetTitleOffset(1.3);
   h1d_proton->GetYaxis()->SetTitleOffset(1.5);
-
   h1d_proton->Draw("hsame");
-
   c3->SaveAs("proton_mul.pdf");
 
 
 }
+/*
+THStack *hs = new THStack("hs", "");
+hs->Add(h1d_kaon_pos);
+hs->Add(h1d_kaon_neg);
+TCanvas *cs = new TCanvas("cs", "cs", 1400, 700);
+cs->Divide(2);
+cs->cd(1); h2d_kaon->Draw("colz");
+cs->cd(2); hs->Draw("nostackb");
+cs->SaveAs("comp_kaon_mul.pdf");
+*/
