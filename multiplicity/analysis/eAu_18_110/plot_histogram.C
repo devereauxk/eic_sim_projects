@@ -26,68 +26,80 @@ void plot_histogram(const char* inFile)
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_kaon_total->GetXaxis()->SetTitle("K^{#pm} multiplicity");
-  h1d_kaon_total->GetYaxis()->SetTitle("events");
+  h1d_kaon_total->GetXaxis()->SetTitle("K^{#pm} multiplicity [counts]");
+  h1d_kaon_total->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_kaon_total->Scale(1 / h1d_kaon_total->GetEntries());
   h1d_kaon_total->GetXaxis()->SetTitleOffset(1.3);
   h1d_kaon_total->GetYaxis()->SetTitleOffset(1.5);
   h1d_kaon_total->Draw("hsame");
+  insert_text(h1d_kaon_total);
   c1->SaveAs("total_kaon_mul.pdf");
 
   c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_kaon_pos->GetXaxis()->SetTitle("K^{+} multiplicity");
-  h1d_kaon_pos->GetYaxis()->SetTitle("events");
+  h1d_kaon_pos->GetXaxis()->SetTitle("K^{+} multiplicity [counts]");
+  h1d_kaon_pos->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_kaon_pos->Scale(1 / h1d_kaon_pos->GetEntries());
   h1d_kaon_pos->GetXaxis()->SetTitleOffset(1.3);
   h1d_kaon_pos->GetYaxis()->SetTitleOffset(1.5);
   h1d_kaon_pos->Draw("hsame");
+  insert_text(h1d_kaon_pos);
   c1->SaveAs("pos_kaon_mul.pdf");
 
   c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_kaon_neg->GetXaxis()->SetTitle("K^{-} multiplicity");
-  h1d_kaon_neg->GetYaxis()->SetTitle("events");
+  h1d_kaon_neg->GetXaxis()->SetTitle("K^{-} multiplicity [counts]");
+  h1d_kaon_neg->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_kaon_neg->Scale(1 / h1d_kaon_neg->GetEntries());
   h1d_kaon_neg->GetXaxis()->SetTitleOffset(1.3);
   h1d_kaon_neg->GetYaxis()->SetTitleOffset(1.5);
   h1d_kaon_neg->Draw("hsame");
+  insert_text(h1d_kaon_neg);
   c1->SaveAs("neg_kaon_mul.pdf");
 
-  // charged pion multiplicity
+  // charged pion multiplicity [counts]
 
   TCanvas* c2 = new TCanvas("c2","c2",800,800); // create new canvas
   c2->Range(0,0,1,1);
   c2->SetLeftMargin(0.15);
   c2->SetBottomMargin(0.1);
-  h1d_pion_total->GetXaxis()->SetTitle("#pi^{#pm} multiplicity");
-  h1d_pion_total->GetYaxis()->SetTitle("events");
+  h1d_pion_total->GetXaxis()->SetTitle("#pi^{#pm} multiplicity [counts]");
+  h1d_pion_total->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_pion_total->Scale(1 / h1d_pion_total->GetEntries());
   h1d_pion_total->GetXaxis()->SetTitleOffset(1.3);
   h1d_pion_total->GetYaxis()->SetTitleOffset(1.5);
   h1d_pion_total->Draw("hsame");
+  insert_text(h1d_pion_total);
   c2->SaveAs("total_pion_mul.pdf");
 
   c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_pion_pos->GetXaxis()->SetTitle("#pi^{+} multiplicity");
-  h1d_pion_pos->GetYaxis()->SetTitle("events");
+  h1d_pion_pos->GetXaxis()->SetTitle("#pi^{+} multiplicity [counts]");
+  h1d_pion_pos->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_pion_pos->Scale(1 / h1d_pion_pos->GetEntries());
   h1d_pion_pos->GetXaxis()->SetTitleOffset(1.3);
   h1d_pion_pos->GetYaxis()->SetTitleOffset(1.5);
   h1d_pion_pos->Draw("hsame");
+  insert_text(h1d_pion_pos);
   c1->SaveAs("pos_pion_mul.pdf");
 
   c1 = new TCanvas("c1","c1",800,800); // create new canvas
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_pion_neg->GetXaxis()->SetTitle("#pi^{-} multiplicity");
-  h1d_pion_neg->GetYaxis()->SetTitle("events");
+  h1d_pion_neg->GetXaxis()->SetTitle("#pi^{-} multiplicity [counts]");
+  h1d_pion_neg->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_pion_neg->Scale(1 / h1d_pion_neg->GetEntries());
   h1d_pion_neg->GetXaxis()->SetTitleOffset(1.3);
   h1d_pion_neg->GetYaxis()->SetTitleOffset(1.5);
   h1d_pion_neg->Draw("hsame");
+  insert_text(h1d_pion_neg);
   c1->SaveAs("neg_pion_mul.pdf");
 
 
@@ -97,14 +109,27 @@ void plot_histogram(const char* inFile)
   c3->Range(0,0,1,1);
   c3->SetLeftMargin(0.15);
   c3->SetBottomMargin(0.1);
-  h1d_proton->GetXaxis()->SetTitle("p multiplicity");
-  h1d_proton->GetYaxis()->SetTitle("events");
+  h1d_proton->GetXaxis()->SetTitle("p multiplicity [counts]");
+  h1d_proton->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_proton->Scale(1 / h1d_proton->GetEntries());
   h1d_proton->GetXaxis()->SetTitleOffset(1.3);
   h1d_proton->GetYaxis()->SetTitleOffset(1.5);
   h1d_proton->Draw("hsame");
+  insert_text(h1d_proton);
   c3->SaveAs("proton_mul.pdf");
 
 
+}
+
+void insert_text(TH1D * h1d)
+{
+  TLatex* tl = new TLatex();
+  tl->SetTextAlign(11);
+  tl->SetTextSize(0.035);
+  tl->SetTextColor(kBlack);
+  tl->DrawLatexNDC(0.2,0.85,"e+Au @ 10GeV, 100GeV");
+  tl->SetTextColor(kBlue);
+  tl->DrawLatexNDC(0.2,0.80,Form("Total counts on plot is %.3e",h1d->GetEntries()));
 }
 /*
 THStack *hs = new THStack("hs", "");
