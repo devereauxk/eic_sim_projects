@@ -127,7 +127,7 @@ void insert_text(TH1D * h1d)
   tl->SetTextAlign(11);
   tl->SetTextSize(0.035);
   tl->SetTextColor(kBlack);
-  tl->DrawLatexNDC(0.2,0.85,"e+Au @ 18GeV, 110GeV");
+  tl->DrawLatexNDC(0.2,0.85,"e+Au @ 18GeV, 110git GeV");
   tl->SetTextColor(kBlue);
   tl->DrawLatexNDC(0.2,0.80,Form("Total counts on plot is %.3e",h1d->GetEntries()));
 }
