@@ -92,7 +92,7 @@ void access_tree(const char* inFile, const char* outFile)
     h2d_kaon->Fill(nPosKaons, nNegKaons);
     h1d_kaon->Fill(nPosKaons+nNegKaons);
     h2d_pion->Fill(nPosPions, nNegPions);
-    h1d_pions->Fill(nPosPions+nNegPions);
+    h1d_pion->Fill(nPosPions+nNegPions);
     h1d_proton->Fill(nProtons);
 
   }
