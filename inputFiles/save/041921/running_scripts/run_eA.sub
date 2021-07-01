@@ -1,0 +1,9 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_eA.sh
+GetEnv         = True
+Input	       = /dev/null
+Output         = jobout/eA.out
+Error          = jobout/eA.err
+Log            = jobout/eA.log
+Queue

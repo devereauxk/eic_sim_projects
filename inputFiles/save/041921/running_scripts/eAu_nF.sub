@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_eAu_nF.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eAujob_nF.out.$(Process)
+Error          = jobout/eAujob_nF.err.$(Process)
+Log            = jobout/eAujob_nF.log.$(Process)
+Queue 10
