@@ -123,7 +123,7 @@ void plot_histogram(const char* inFile)
   c3->Range(0,0,1,1);
   c3->SetLeftMargin(0.15);
   c3->SetBottomMargin(0.1);
-  h1d_proton->GetXaxis()->SetTitle("p+#overline{p} multiplicity [counts]");
+  h1d_proton->GetXaxis()->SetTitle("proton+antiproton multiplicity [counts]");
   h1d_proton->GetYaxis()->SetTitle("fraction of events [%]");
   h1d_proton->Scale(1 / h1d_proton->GetEntries());
   h1d_proton->GetXaxis()->SetTitleOffset(1.3);
@@ -136,7 +136,7 @@ void plot_histogram(const char* inFile)
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_proton->GetXaxis()->SetTitle("p [counts]");
+  h1d_proton->GetXaxis()->SetTitle("proton multiplicity [counts]");
   h1d_proton->GetYaxis()->SetTitle("fraction of events [%]");
   h1d_proton->Scale(1 / h1d_proton->GetEntries());
   h1d_proton->GetXaxis()->SetTitleOffset(1.3);
@@ -149,7 +149,7 @@ void plot_histogram(const char* inFile)
   c1->Range(0,0,1,1);
   c1->SetLeftMargin(0.15);
   c1->SetBottomMargin(0.1);
-  h1d_anti_proton->GetXaxis()->SetTitle("#overline{p} [counts]");
+  h1d_anti_proton->GetXaxis()->SetTitle("antiproton multiplicity [counts]");
   h1d_anti_proton->GetYaxis()->SetTitle("fraction of events [%]");
   h1d_anti_proton->Scale(1 / h1d_anti_proton->GetEntries());
   h1d_anti_proton->GetXaxis()->SetTitleOffset(1.3);
