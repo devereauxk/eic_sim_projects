@@ -37,7 +37,7 @@ void access_tree(const char* inFile, const char* outFile)
   TH1D* h1d_pion = new TH1D("h1d_pion_total", "charged pion multiplicity", 40, -0.5, 39.5);
   h2d_pion->Sumw2();
 
-  TH1D* h1d_proton = new TH1D("h1d_proton_total","proton/antiproton multiplicity",60,55.5,119.5);
+  TH1D* h1d_proton = new TH1D("h1d_proton_total","proton/antiproton multiplicity",15,-0.5,14.5);
   h1d_proton->Sumw2(); // to handle error propagation correctly later
 
   //Define Some Variables
