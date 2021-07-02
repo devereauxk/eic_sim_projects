@@ -28,13 +28,16 @@ void access_tree(const char* inFile, const char* outFile)
   TH2D* h2d_pion = new TH2D("h2d_pion","charged pion multiplicity",25,-0.5,24.5,25,-0.5,24.5);
   h2d_pion->Sumw2(); // to handle error propagation correctly later
 
+  TH2D* h2d_proton = new TH2D("h2d_proton","proton/antiproton multiplicity",60, 55.5, 119.5, 10, -0.5, 9.5);
+  h2d_proton->Sumw2(); // to handle error propagation correctly later
+
   TH1D* h1d_kaon = new TH1D("h1d_kaon_total", "charged kaon multiplicity", 12, -0.5, 11.5);
   h2d_pion->Sumw2();
 
   TH1D* h1d_pion = new TH1D("h1d_pion_total", "charged pion multiplicity", 40, -0.5, 39.5);
   h2d_pion->Sumw2();
 
-  TH1D* h1d_proton = new TH1D("h1d_proton","proton multiplicity",60,55.5,119.5);
+  TH1D* h1d_proton = new TH1D("h1d_proton_total","proton/antiproton multiplicity",60,55.5,119.5);
   h1d_proton->Sumw2(); // to handle error propagation correctly later
 
   //Define Some Variables
@@ -46,6 +49,7 @@ void access_tree(const char* inFile, const char* outFile)
   Int_t nPosPions;
   Int_t nNegPions;
   Int_t nProtons;
+  Int_t nAntiProtons;
 
   //Loop Over Events
   for(Int_t i = 0; i < nEntries; i++) {
@@ -55,6 +59,7 @@ void access_tree(const char* inFile, const char* outFile)
     nPosPions = 0;
     nNegPions = 0;
     nProtons = 0;
+    nAntiProtons = 0;
 
     tree->GetEntry(i);
 
@@ -68,23 +73,28 @@ void access_tree(const char* inFile, const char* outFile)
       status = (Int_t) particle->GetStatus(); //Can also do particle->KS
       id = (Int_t) particle->Id();
 
-      switch(id) {
-        case 321:
-          nPosKaons++;
-          break;
-        case -321:
-          nNegKaons++;
-          break;
-        case 211:
-          nPosPions++;
-          break;
-        case -211:
-          nNegPions++;
-          break;
-        case 2212:
-          nProtons++;
-          break;
-        default: break;
+      if (status == 1) {
+        switch(id) {
+          case 321:
+            nPosKaons++;
+            break;
+          case -321:
+            nNegKaons++;
+            break;
+          case 211:
+            nPosPions++;
+            break;
+          case -211:
+            nNegPions++;
+            break;
+          case 2212:
+            nProtons++;
+            break;
+          case -2212:
+            nAntiProtons++;
+            break;
+          default: break;
+        }
       }
 
     }
@@ -93,7 +103,8 @@ void access_tree(const char* inFile, const char* outFile)
     h1d_kaon->Fill(nPosKaons+nNegKaons);
     h2d_pion->Fill(nPosPions, nNegPions);
     h1d_pion->Fill(nPosPions+nNegPions);
-    h1d_proton->Fill(nProtons);
+    h2d_proton->Fill(nProtons, nAntiProtons);
+    h1d_proton->Fill(nProtons+nAntiProtons);
 
   }
 
@@ -104,6 +115,7 @@ void access_tree(const char* inFile, const char* outFile)
   h1d_kaon->Write();
   h2d_pion->Write();
   h1d_pion->Write();
+  h2d_proton->Write();
   h1d_proton->Write();
   fout->Write();
   fout->Close();
