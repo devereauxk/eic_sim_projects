@@ -123,12 +123,12 @@ void plot_histogram(const char* inFile)
   c3->Range(0,0,1,1);
   c3->SetLeftMargin(0.15);
   c3->SetBottomMargin(0.1);
-  h1d_proton->GetXaxis()->SetTitle("proton+antiproton multiplicity [counts]");
-  h1d_proton->GetYaxis()->SetTitle("fraction of events [%]");
-  h1d_proton->Scale(1 / h1d_proton->GetEntries());
-  h1d_proton->GetXaxis()->SetTitleOffset(1.3);
-  h1d_proton->GetYaxis()->SetTitleOffset(1.5);
-  h1d_proton->Draw("hsame");
+  h1d_proton_total->GetXaxis()->SetTitle("proton+antiproton multiplicity [counts]");
+  h1d_proton_total->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_proton_total->Scale(1 / h1d_proton_total->GetEntries());
+  h1d_proton_total->GetXaxis()->SetTitleOffset(1.3);
+  h1d_proton_total->GetYaxis()->SetTitleOffset(1.5);
+  h1d_proton_total->Draw("hsame");
   insert_text(h1d_proton_total);
   c3->SaveAs("total_proton_mul.pdf");
 
