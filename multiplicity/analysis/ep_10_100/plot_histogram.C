@@ -28,7 +28,10 @@ void plot_histogram(const char* inFile)
   TH1D* h1d_pion_neg = (TH1D*) h2d_pion->ProjectionY("h1d_pion_neg");
   TH1D* h1d_pion_total = (TH1D*)fin->Get("h1d_pion_total");
 
-  TH1D* h1d_proton = (TH1D*)fin->Get("h1d_proton");
+  TH2D* h2d_proton = (TH2D*)fin->Get("h2d_proton");
+  TH1D* h1d_proton = (TH1D*) h2d_proton->ProjectionX("h1d_proton");
+  TH1D* h1d_anti_proton = (TH1D*) h2d_proton->ProjectionY("h1d_anti_proton");
+  TH1D* h1d_proton_total = (TH1D*)fin->Get("h1d_proton_total");
 
 
   // charged kaon multiplicity
@@ -120,14 +123,40 @@ void plot_histogram(const char* inFile)
   c3->Range(0,0,1,1);
   c3->SetLeftMargin(0.15);
   c3->SetBottomMargin(0.1);
-  h1d_proton->GetXaxis()->SetTitle("p multiplicity [counts]");
+  h1d_proton->GetXaxis()->SetTitle("p+#overline{p} multiplicity [counts]");
+  h1d_proton->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_proton->Scale(1 / h1d_proton->GetEntries());
+  h1d_proton->GetXaxis()->SetTitleOffset(1.3);
+  h1d_proton->GetYaxis()->SetTitleOffset(1.5);
+  h1d_proton->Draw("hsame");
+  insert_text(h1d_proton_total);
+  c3->SaveAs("total_proton_mul.pdf");
+
+  c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_proton->GetXaxis()->SetTitle("p [counts]");
   h1d_proton->GetYaxis()->SetTitle("fraction of events [%]");
   h1d_proton->Scale(1 / h1d_proton->GetEntries());
   h1d_proton->GetXaxis()->SetTitleOffset(1.3);
   h1d_proton->GetYaxis()->SetTitleOffset(1.5);
   h1d_proton->Draw("hsame");
   insert_text(h1d_proton);
-  c3->SaveAs("proton_mul.pdf");
+  c1->SaveAs("proton_mul.pdf");
+
+  c1 = new TCanvas("c1","c1",800,800); // create new canvas
+  c1->Range(0,0,1,1);
+  c1->SetLeftMargin(0.15);
+  c1->SetBottomMargin(0.1);
+  h1d_anti_proton->GetXaxis()->SetTitle("#overline{p} [counts]");
+  h1d_anti_proton->GetYaxis()->SetTitle("fraction of events [%]");
+  h1d_anti_proton->Scale(1 / h1d_anti_proton->GetEntries());
+  h1d_anti_proton->GetXaxis()->SetTitleOffset(1.3);
+  h1d_anti_proton->GetYaxis()->SetTitleOffset(1.5);
+  h1d_anti_proton->Draw("hsame");
+  insert_text(h1d_anti_proton);
+  c1->SaveAs("anti_proton_mul.pdf");
 
 
 }
