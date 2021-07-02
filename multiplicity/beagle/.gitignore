@@ -1,3 +1,4 @@
 fort*
 *.txt
-*.log
+outForPythiaMode/*.txt
+logs/
