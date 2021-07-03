@@ -6,13 +6,11 @@ echo "..."
 echo ""
 
 
-$BEAGLESYS/BeAGLE < input/eAu.inp > logs/eAu.log
+$BEAGLESYS/BeAGLE < input/eD.inp > logs/eD.log
 
 echo "Making Output ROOT File..."
-root -l -b -q 'make_tree.C("eAu.txt")'
+root -l -b -q 'make_tree.C("eD.txt")'
 echo "-----------------------------------"
 
 
 echo "Done!!!"
-
-
