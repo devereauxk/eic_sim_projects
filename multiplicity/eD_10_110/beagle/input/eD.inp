@@ -23,18 +23,18 @@ OUTPUT           92
 * ---------------------
 *	     momentum of beam1||momentum of beam2
 *...+....1....+....2....+....3....+....4....+....5....+....6....+....7...
-MOMENTUM         10.0         110.0
-*	decay of pi0  2/0  decay/not decayed
+MOMENTUM         5.0         41.0
+*	decay of pi0  2/0  decay/not decayed   
 PARDECAY           2
 *	treatment of diffractive events
 *DIFFRACT         -3         0         0         0
 * lepton tagger to sample events with certain kinematics cuts
-*			    yMin      yMax    Q2Min    Q2Max   theta_Min theta_Max
+*			    yMin      yMax    Q2Min    Q2Max   theta_Min theta_Max 
 L-TAG           1e-9      1.00      0.5    20000.0       0.0      6.29
 *VDM-PAR2           1        1         0
 * model selection
 USERSET         11         9.0
-MODEL                                                                 PYTHIA
+MODEL                                                                 PYTHIA  
 * if PYTHIA model specify pythia input cards
 PY-INPUT                                                              S1ALL003
 * PHOJET-specific input
@@ -57,6 +57,6 @@ HISTOGRAM      101.0     102.0
 * Start of event generation
 * -------------------------
 *		number of events
-START          1E3         0.0
+START          1E5         0.0
 STOP
 *...+....1....+....2....+....3....+....4....+....5....+....6....+....7...
