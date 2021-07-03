@@ -1,4 +1,4 @@
-'outForPythiaMode/eAu.txt' ! output file name
+'eD.txt' ! output file name
 1e-06, 1.00       ! xmin and xmax
 F2PY,1998         ! F2-Model, R-Parametrisation
 0                 ! switch for rad corrections; 0:no, 1:yes, 2:gen.lookup table 
@@ -8,16 +8,16 @@ F2PY,1998         ! F2-Model, R-Parametrisation
 101		  ! USED LO - nuclear pdf parameter2: correction order x*100+y x= 1:LO, 2:NLO y:error set
 1		    ! switch for quenching 1:on, 0:off
 0.0		    ! QHAT value
-FSEED 1234567                    !- only use fixed seed for debugging
+! FSEED 1234567 ! only use fixed seed for debugging
 ! PMAS(4,1)=1.27    ! charm mass
 MSEL=2
 mstp(14)=30
 MSTP(15)=0
 MSTP(16)=1
-MSTP(17)=4 ! MSTP 17=6 is the R-rho measured as by hermes, =4 Default
+MSTP(17)=6 ! MSTP 17=6 is the R-rho measured as by hermes, =4 Default
 MSTP(18)=3
 MSTP(19)=1 ! Hermes MSTP-19=1 different Q2 suppression, default = 4
-MSTP(20)=0 ! Hermes MSTP(20)=0 , default MSTP(20)=3
+MSTP(20)=4 ! Hermes MSTP(20)=4 , default MSTP(20)=3
 MSTP(32)=8
 MSTP(38)=4 ! # of massless quarks in box graphs (D=5)
 MSTP(51)=10042   ! if pdflib is linked than non pythia-pdfs are available,                         10042=CTEQ6L1 - good for EPS09LO 
@@ -33,23 +33,23 @@ MSTP(60)=7
 MSTP(61)=2
 MSTP(71)=1
 MSTP(81)=0   ! Multiple interactions off
-MSTP(82)=0   ! Irrelevant if MSTP(81)=0?
+MSTP(82)=1   ! Needed for resolved processes
 MSTP(91)=1
 MSTP(92)=3      ! hermes MSTP(92)=4
 MSTP(93)=1
 MSTP(94)=2      ! D=3 modified to 2 based on Mark tune
-MSTP(101)=3
+MSTP(101)=1
 MSTP(102)=1
 MSTP(111)=1
 MSTP(121)=0
 ! ----------- Now all the PARPs -----------
 PARP(2)=2     ! lower cut for accepted c.m.s energy
 PARP(13)=1
-PARP(18)=0.40 ! hermes PARP(18)=0.17
+PARP(18)=0.17 ! hermes PARP(18)=0.17
 PARP(81)=1.9
 PARP(89)=1800
 PARP(90)=0.16
-PARP(91)=0.32 ! rms kt D=2.0, Hermes=0.4, tuned by Mark 0.32
+PARP(91)=0.40 ! rms kt D=2.0, Hermes=0.4
 PARP(93)=5.
 PARP(97)=6.0  ! D=1.0, tuned by Mark 6.0
 PARP(99)=0.40 ! D=1.0, Hermes=0.4 kt inside of photon 
@@ -70,12 +70,13 @@ PARJ(1)=0.100
 PARJ(2)=0.300
 PARJ(11)=0.5
 PARJ(12)=0.6
-PARJ(21)= 0.32 ! fragpt width D=0.36, Hermes=0.40, Mark=0.32
+PARJ(21)= 0.40 ! fragpt width D=0.36, Hermes=0.40
 PARJ(32)=1.0
 PARJ(33)= 0.80
 PARJ(41)= 0.30
 PARJ(42)= 0.58
 PARJ(45)= 0.5
+PARJ(170)= 0.32
 !----------------------------------------------------------------------
 MSTJ(1)=1   !0 no fragmentation,1 lund string model
 MSTJ(12)=1  ! D=2 popcorn, Hermes uses 1 (diquark, no popcorn)
