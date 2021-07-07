@@ -27,10 +27,15 @@ export LD_LIBRARY_PATH="${LHAPDF5}:$LD_LIBRARY_PATH"
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
 
 #Soft links to necessary files
-ln -s /eic/data/baraks/BeAGLE/inputFiles/eAu.inp
-ln -s /eic/data/baraks/BeAGLE/inputFiles/S3ALL003
-ln -s /eic/data/baraks/BeAGLE/nuclear.bin
-ln -s /eic/data/baraks/BeAGLE/make_tree.C
+#ln -s /eic/data/baraks/BeAGLE/inputFiles/eAu.inp
+#ln -s /eic/data/baraks/BeAGLE/inputFiles/S3ALL003
+#ln -s /eic/data/baraks/BeAGLE/nuclear.bin
+#ln -s /eic/data/baraks/BeAGLE/make_tree.C
+ln -s /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/inputFiles/eAu.inp
+ln -s /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/inputFiles/S3ALL003
+ln -s /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/nuclear.bin
+ln -s /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/make_tree.C
+
 
 #Run simulation
 echo "start running in directory $PWD"
@@ -48,7 +53,10 @@ echo ""
 
 #Move output files and cleanup
 echo "Cleaning Up..."
-mv -v eA.txt /eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_${INPUT}.txt
-mv -v eA.root /eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_${INPUT}.root
-mv -v eAu.log /eic/data/baraks/BeAGLE/logs/5_41/eAu/eAu_${INPUT}.log
+#mv -v eA.txt /eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_${INPUT}.txt
+#mv -v eA.root /eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_${INPUT}.root
+#mv -v eAu.log /eic/data/baraks/BeAGLE/logs/5_41/eAu/eAu_${INPUT}.log
+mv -v eA.txt /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_${INPUT}.txt
+mv -v eA.root /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_${INPUT}.root
+mv -v eA.log /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/logs/eAu_${INPUT}.log
 echo "DONE!!!"
