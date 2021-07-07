@@ -1,2 +1,0 @@
-Warning in Kinematics, bounded(): x (or y) = 1.00603 is outside [0,1]
-To disable this warning, set erhic::DisKinematics::BoundaryWarning=false;
