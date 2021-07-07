@@ -1,0 +1,44 @@
+-----------------------------------
+Running BeAGLE Simulation for eU Collider!!!
+-----------------------------------
+Performing Job 56
+...
+
+The Random SEED is 46217
+
+Running BeAGLE...
+Completed Simulation!!!
+
+Making Output ROOT File...
+
+Processing make_tree.C("eU_56.txt")...
+
+Processing outForPythiaMode/eU_56.txt
+Processing event 10000
+Processing event 20000
+Processing event 30000
+Processing event 40000
+Processing event 50000
+Processing event 60000
+Processing event 70000
+Processing event 80000
+Processing event 90000
+Processing event 100000
+
+Processed outForPythiaMode/eU_56.txt
+TFile**		outForPythiaMode/rootfiles/eU_56.root	
+ TFile*		outForPythiaMode/rootfiles/eU_56.root	
+  OBJ: TTree	EICTree	my EIC tree : 0 at: 0x4020360
+  KEY: TProcessID	ProcessID0;1	869b2f3c-20bf-11eb-ac2b-529ec782beef
+  KEY: TTree	EICTree;1	my EIC tree
+Began on Sat Nov  7 01:08:28 2020
+Ended on Sat Nov  7 01:27:21 2020
+Processed 100000 events containing 30579493 particles in 1132.48 seconds (0.0113248 sec/event)
+Done!!!
+
+Cleaning up...
+removed ‘./outForPythiaMode/eU_56.txt’
+removed ‘InpU_56’
+removed ‘inputFiles/eU_56.inp’
+Done!!!
+

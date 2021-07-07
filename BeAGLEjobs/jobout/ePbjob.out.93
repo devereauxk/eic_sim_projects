@@ -1,0 +1,44 @@
+-----------------------------------
+Running BeAGLE Simulation for ePb Collider!!!
+-----------------------------------
+Performing Job 93
+...
+
+The Random SEED is 54724
+
+Running BeAGLE...
+Completed Simulation!!!
+
+Making Output ROOT File...
+
+Processing make_tree.C("ePb_93.txt")...
+
+Processing outForPythiaMode/ePb_93.txt
+Processing event 10000
+Processing event 20000
+Processing event 30000
+Processing event 40000
+Processing event 50000
+Processing event 60000
+Processing event 70000
+Processing event 80000
+Processing event 90000
+Processing event 100000
+
+Processed outForPythiaMode/ePb_93.txt
+TFile**		outForPythiaMode/rootfiles/ePb_93.root	
+ TFile*		outForPythiaMode/rootfiles/ePb_93.root	
+  OBJ: TTree	EICTree	my EIC tree : 0 at: 0x4b3f790
+  KEY: TProcessID	ProcessID0;1	d56db480-2246-11eb-b31c-879dc782beef
+  KEY: TTree	EICTree;1	my EIC tree
+Began on Sun Nov  8 23:48:49 2020
+Ended on Mon Nov  9 00:02:38 2020
+Processed 100000 events containing 26973339 particles in 829.417 seconds (0.00829417 sec/event)
+Done!!!
+
+Cleaning up...
+removed ‘./outForPythiaMode/ePb_93.txt’
+removed ‘InpPb_93’
+removed ‘inputFiles/ePb_93.inp’
+Done!!!
+

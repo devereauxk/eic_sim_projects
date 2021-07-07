@@ -1,0 +1,40 @@
+0
+start running in directory /home/condor/local/sdcc/execute/dir_127743/0000
+Running Job Number 0
+Completed Simulation!!!
+
+Making Output ROOT File...
+
+Processing make_tree.C("eAu.txt")...
+
+Processing ./eAu.txt
+Processing event 10000
+Processing event 20000
+Processing event 30000
+Processing event 40000
+Processing event 50000
+Processing event 60000
+Processing event 70000
+Processing event 80000
+Processing event 90000
+Processing event 100000
+
+Processed ./eAu.txt
+TFile**		./eAu.root	
+ TFile*		./eAu.root	
+  OBJ: TTree	EICTree	my EIC tree : 0 at: 0x60d5720
+  KEY: TProcessID	ProcessID0;1	df36f56a-dabc-11eb-8b54-849dc782beef
+  KEY: TTree	EICTree;1	my EIC tree
+Began on Thu Jul  1 18:37:11 2021
+Ended on Thu Jul  1 18:44:51 2021
+Processed 100000 events containing 25074329 particles in 460.106 seconds (0.00460106 sec/event)
+Done!!!
+
+Cleaning Up...
+‘eAu.txt’ -> ‘/eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_0.txt’
+removed ‘eAu.txt’
+‘eAu.root’ -> ‘/eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_0.root’
+removed ‘eAu.root’
+‘eAu.log’ -> ‘/eic/data/baraks/BeAGLE/logs/5_41/eAu/eAu_0.log’
+removed ‘eAu.log’
+DONE!!!
