@@ -7,7 +7,7 @@ echo ""
 
 
 echo "Making Output ROOT File with histogram data for eAu_18_110 events..."
-root -l -b -q 'access_tree.C("./outForPythiaMode/eAu.root", "output.root")'
+root -l -b -q 'access_tree.C("./outForPythiaMode/merged.root", "output.root")'
 echo "-----------------------------------"
 echo ""
 
