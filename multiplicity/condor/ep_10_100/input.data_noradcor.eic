@@ -1,12 +1,12 @@
-'outfiles/ep_10_100_norad.out' ! output file name
+'ep_10_100_norad.out' ! output file name
 11                ! lepton beam type
 100.,10.          ! proton and electron beam energy
-1000,10           ! Number of events 
+1000,10           ! Number of events
 1e-09,1.00        ! xmin and xmax
-1e-11,1.00        ! ymin and ymax 
-10,100            ! Q2min and Q2max 
+1e-11,1.00        ! ymin and ymax
+10,20000            ! Q2min and Q2max
 F2PY,1998         ! F2-Model, R-Parametrisation
-0                 ! switch for rad corrections; 0:no, 1:yes, 2:gen.lookup table 
+0                 ! switch for rad corrections; 0:no, 1:yes, 2:gen.lookup table
 1                 ! Pythia-Model = 0 standard GVMD generation in Pythia-x and Q2; = 1 GVMD model with generation in y and Q2 as for radgen
 1,1               ! A-Tar and Z-Tar
 1,1               ! nuclear pdf parameter1: nucleon mass number A, charge number Z
@@ -22,7 +22,7 @@ MSTP(19)=1 ! Hermes MSTP-19=1 different Q2 suppression, default = 4
 MSTP(20)=0 ! Hermes MSTP(20)=0 , default MSTP(20)=3
 MSTP(32)=8
 MSTP(38)=4
-MSTP(51)=10050 ! if pdflib is linked than non pythia-pdfs are available,                         like MSTP(51)=4046 
+MSTP(51)=10050 ! if pdflib is linked than non pythia-pdfs are available,                         like MSTP(51)=4046
 !MSTP(51)=10150
 MSTP(52)=2   ! ---> pdflib used MSTP   52=2
 MSTP(53)=3
@@ -64,7 +64,7 @@ PARP(163)=18.8
 PARP(164)=11.5
 PARP(165)=0.47679
 PARP(166)=0.67597 ! PARP165/166 are linked to MSTP17 as R_rho of HERMES is used
-! PARP(166)=0.5    
+! PARP(166)=0.5
 ! ----------- Now come all the switches for Jetset -----------
 PARJ(1)=0.100
 PARJ(2)=0.300
@@ -123,6 +123,6 @@ CKIN(40)=-1.
 CKIN(65)=1.e-09        ! Min for Q^2
 CKIN(66)=-1.       ! Max for Q^2
 CKIN(67)=0.
-CKIN(68)=-1. 
+CKIN(68)=-1.
 CKIN(77)=2.0
 CKIN(78)=-1.

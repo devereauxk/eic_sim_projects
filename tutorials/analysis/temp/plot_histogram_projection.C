@@ -1,6 +1,7 @@
 const int etabin = 3;
 const double eta_lo[etabin] = {-4,-1,1};
 const double eta_hi[etabin] = {-1,1,4};
+const int eta_color[etabin] = {kRed, kBlue, kGreen+1};
 TH1D* h1d_part_pt = NULL;
 TH2D* h2d_pt_vs_eta = NULL;
 TH1D* h1d_pt_in_eta[etabin] = {0};
@@ -59,4 +60,40 @@ void plot_histogram_projection(const char* inFile = "output.root")
     tl->DrawLatexNDC(0.2,0.80,Form("Total counts on plot is %.3e",h1d_pt_in_eta[ieta]->Integral()));
     c2->SaveAs( Form("part_pt_in_eta_%d.pdf",ieta) );
   }
+  // plot different eta bin slices on the same canvas
+  TCanvas* c3 = new TCanvas("c3","c3",800,800); // create new canvas
+  c3->Range(0,0,1,1);
+  c3->SetLeftMargin(0.15);
+  c3->SetBottomMargin(0.1);
+  c3->SetLogy(); // set y axis to log scale
+  TLegend* leg = new TLegend(0.60,0.70,0.80,0.80);
+  leg->SetBorderSize(0);
+  leg->SetTextSize(0.035);
+  leg->SetFillStyle(0);
+  leg->SetMargin(0.3);
+  float plot_xrange_lo = 0, plot_xrange_hi = 5;
+  float plot_yrange_lo = 1E0, plot_yrange_hi = 1.5*h1d_pt_in_eta[2]->GetMaximum(); // when using log axis, cannot use 0 as start as plot range
+  // use the empty 2D histogram htemp as a frame
+  TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+  htemp.SetStats(0); // not showing the box on the top right corner
+  htemp.Draw();
+  htemp.GetXaxis()->SetTitle("p_{T} [GeV/c]");
+  htemp.GetYaxis()->SetTitle("Counts");
+  htemp.GetXaxis()->SetTitleOffset(1.3);
+  htemp.GetYaxis()->SetTitleOffset(1.5);
+  for (int ieta = 0; ieta < etabin; ++ieta)
+  {
+    h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
+    h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
+    h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
+    h1d_pt_in_eta[ieta]->Draw("hsame");
+    leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
+  }
+  leg->Draw("same");
+  TLatex* tl = new TLatex();
+  tl->SetTextAlign(11);
+  tl->SetTextSize(0.035);
+  tl->SetTextColor(kBlack);
+  tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
+  c3->SaveAs( Form("part_pt_in_eta_all.pdf") );
 }
