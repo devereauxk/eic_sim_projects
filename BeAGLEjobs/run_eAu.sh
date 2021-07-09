@@ -47,7 +47,7 @@ echo "Completed Simulation!!!"
 echo ""
 
 echo "Making Output ROOT File..."
-root -l -b -q "make_tree.C(\"eA.txt\")"
+root -l -b -q "make_tree.C(\"eAu.txt\")"
 echo "Done!!!"
 echo ""
 
@@ -56,7 +56,7 @@ echo "Cleaning Up..."
 #mv -v eA.txt /eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_${INPUT}.txt
 #mv -v eA.root /eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_${INPUT}.root
 #mv -v eAu.log /eic/data/baraks/BeAGLE/logs/5_41/eAu/eAu_${INPUT}.log
-mv -v eA.txt /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_${INPUT}.txt
-mv -v eA.root /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_${INPUT}.root
-mv -v eA.log /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/logs/eAu_${INPUT}.log
+mv -v eAu.txt /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_${INPUT}.txt
+mv -v eAu.root /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_${INPUT}.root
+mv -v eAu.log /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/logs/eAu_${INPUT}.log
 echo "DONE!!!"
