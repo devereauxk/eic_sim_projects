@@ -106,6 +106,13 @@ void plot_histogram_projection(const char* inFile = "output.root")
     c_all->cd(ieta+1); h1d_pt_in_eta[ieta]->Draw("hsame");
   }
   c_all->cd(4); htemp.Draw();
+  for (int ieta = 0; ieta < etabin; ++ieta)
+  {
+    h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
+    h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
+    h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
+    h1d_pt_in_eta[ieta]->Draw("hsame");
+  }
   c_all->SaveAs(Form("all_the_plots_on_one_pdf.pdf"));
 
 
