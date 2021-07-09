@@ -96,4 +96,17 @@ void plot_histogram_projection(const char* inFile = "output.root")
   tl->SetTextColor(kBlack);
   tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
   c3->SaveAs( Form("part_pt_in_eta_all.pdf") );
+
+  // all in one pdf
+  TCanvas c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
+  c_all->Divide(2, 2);
+  for (int ieta = 0; ieta < 3; ++ieta)
+  {
+    c_all->cd(ieta+1); h1d_pt_in_eta[ieta]->Draw("hsame");
+  }
+  c3->DrawClone();
+  c_all->Draw();
+  c_all->SaveAs(Form("all_the_plots_on_one_pdf.pdf"));
+
+
 }
