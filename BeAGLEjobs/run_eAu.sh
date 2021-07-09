@@ -45,6 +45,9 @@ $BEAGLESYS/BeAGLE < eAu.inp > eAu.log
 echo "Completed Simulation!!!"
 
 echo ""
+echo "items in dir:"
+ls
+echo ""
 
 echo "Making Output ROOT File..."
 root -l -b -q "make_tree.C(\"eAu.txt\")"
