@@ -1,0 +1,76 @@
+When running PYTHIA model, the event structure goes as follows:
+
+
+The output file text format has the following structure:
+
+1st line: "PYTHIA EVENT FILE"
+2nd line: "============================================"
+3rd line: Information on event wise variables stored in the file 
+
+I: 	0 (line index)
+ievent: 	eventnumber running from 1 to XXX
+genevent: 	trials to generate this event
+subprocess: 	pythia subprocess (MSTI(1)), for details see table above
+nucleon: 	hadron beam type (MSTI(12))
+targetparton: 	parton hit in the target (MSTI(16))
+xtargparton: 	x of target parton (PARI(34))
+beamparton: 	in case of resolved photon processes and soft VMD the virtual photon has a hadronic structure. This gives the info which parton interacted with the target parton (MSTI(15))
+xbeamparton: 	x of beam parton (PARI(33))
+thetabeamparton: 	theta of beam parton (PARI(53))
+truey, trueQ2, truex, trueW2, trueNu: 	are the kinematic variables of the event.
+	If radiative corrections are turned on they are different from what is calculated from the scattered lepton.
+	If radiative corrections are turned off they are the same as what is calculated from the scattered lepton
+	(In the current version radiative corrections are not implemented yet, so they should be the same from the scatterd lepton)
+leptonphi:	phi of the lepton (VINT(313))
+s_hat: 	shat of the process (PARI(14))
+t_hat: 	Mandelstam t (PARI(15))
+u_hat: 	Mandelstm u (PARI(16))
+pt2_hat: 	pthat^2 of the hard scattering (PARI(18))
+Q2_hat: 	Q2hat of the hard scattering (PARI(22)),
+F2, F1, R, sigma_rad, SigRadCor: 	information used and needed in the radiative correction code
+EBrems: 	energy of the radiative photon in the nuclear rest frame
+photonflux: 	flux factor from PYTHIA (VINT(319))
+b,Phib:		impact parameter of photon in TRF wrt nuclear center: 
+                radial (in fm), azimuthal, z along gamma*, e' in x-z plane
+Thickness:	nuclear thickness function T(b) in nucleons/fm2
+ThickScl:	Scaled Nuclear thickness T(b)/rho_0 in units of fm
+Ncollt:		Number of collisions between gamma* and nucleons in A
+Ncolli:		Number of inelastic collisions between gamma* and nucleons in A
+d1st:		density-weighted distance from first collision to edge of nucl.
+davg:		Average density-weighted distance from all inelastic 
+		collisions to edge of the nucleus
+pxf,pyf,pzf:	Fermi-momentum of struck nucleon (or sum Fermi momentum for 
+		all inelastic nucleon participants for Ncolli>1)
+User1,2,3:	User variables to prevent/delay future format changes.
+nrTracks: 	number of tracks in this event, including event history 
+
+4th line: "============================================"
+5th line: Information on track wise variables stored in the file 
+
+I: 	line index, runs from 1 to nrTracks
+ISTHKK(I): 	status code KS (1: stable particles others: event history)
+IDTHKK(I): 	particle KF code (211: pion, 2112:n, ....)
+JMOHKK(2,I): 	line number of second mother particle
+JMOHKK(1,I): 	line number of first mother particle
+JDAHKK(1,I): 	normally the line number of the first daughter.
+JDAHKK(2,I): 	normally the line number of the last daughter.
+PHKK(1,I): 	px of particle
+PHKK(2,I): 	py of particle
+PHKK(3,I): 	pz of particle
+PHKK(4,I): 	Energy of particle
+PHKK(5,I): 	mass of particle
+VHKK(1,I): 	x vertex information
+VHKK(2,I): 	y vertex information
+VHKK(3,I): 	z vertex information
+IDRES(I):	For a nucleus (IDHKK(I)=80000), this is A, else 0
+IDXRES(I):	For a nucleus (IDHKK(I)=80000), this is Z, else 0
+NOBAM(I):	Flag describing particle origin (0=INC & e'), 2=hard collision,
+                3=evaporation/breakup products,4=final remnant nucleus
+6th line: "============================================"
+7th line: event information for first event
+8th line: "============================================"
+9th to X-1 line: trackwise info of 1st event
+Xth line "=============== Event finished ===============" 
+
+the information from line 7 to X repeats for each event.
+

@@ -1,0 +1,31 @@
+47
+start running in directory /home/condor/local/sdcc/execute/dir_12290/0047
+Running Job Number 47
+Completed Simulation!!!
+
+Making Output ROOT File...
+
+Processing make_tree.C("eAu.txt")...
+
+Processing ./eAu.txt
+Processing event 10000
+
+Processed ./eAu.txt
+TFile**		./eAu.root	
+ TFile*		./eAu.root	
+  OBJ: TTree	EICTree	my EIC tree : 0 at: 0x5ec9690
+  KEY: TProcessID	ProcessID0;1	b134e374-e076-11eb-82eb-eb9ec782beef
+  KEY: TTree	EICTree;1	my EIC tree
+Began on Fri Jul  9 01:30:02 2021
+Ended on Fri Jul  9 01:31:01 2021
+Processed 10000 events containing 2625275 particles in 59.603 seconds (0.0059603 sec/event)
+Done!!!
+
+Cleaning Up...
+‘eAu.txt’ -> ‘/eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_47.txt’
+removed ‘eAu.txt’
+‘eAu.root’ -> ‘/eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_47.root’
+removed ‘eAu.root’
+‘eAu.log’ -> ‘/eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/logs/eAu_47.log’
+removed ‘eAu.log’
+DONE!!!

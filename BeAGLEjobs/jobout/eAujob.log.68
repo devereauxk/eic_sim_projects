@@ -1,0 +1,49 @@
+000 (94421.068.000) 07/09 01:09:47 Job submitted from host: <130.199.48.114:9618?addrs=130.199.48.114-9618&noUDP&sock=2572_1ae2_3>
+...
+009 (94421.068.000) 07/09 01:09:57 Job was aborted by the user.
+	via condor_rm (by user kdevereaux)
+...
+000 (94422.068.000) 07/09 01:10:55 Job submitted from host: <130.199.48.114:9618?addrs=130.199.48.114-9618&noUDP&sock=2572_1ae2_3>
+...
+001 (94422.068.000) 07/09 01:11:49 Job executing on host: <130.199.152.199:9618?addrs=130.199.152.199-9618&noUDP&sock=11264_0367_3>
+...
+006 (94422.068.000) 07/09 01:11:58 Image size of job updated: 47672
+	45  -  MemoryUsage of job (MB)
+	45992  -  ResidentSetSize of job (KB)
+...
+006 (94422.068.000) 07/09 01:16:59 Image size of job updated: 89324
+	84  -  MemoryUsage of job (MB)
+	85572  -  ResidentSetSize of job (KB)
+...
+006 (94422.068.000) 07/09 01:22:00 Image size of job updated: 89332
+	84  -  MemoryUsage of job (MB)
+	85572  -  ResidentSetSize of job (KB)
+...
+006 (94422.068.000) 07/09 01:27:00 Image size of job updated: 89344
+	84  -  MemoryUsage of job (MB)
+	85580  -  ResidentSetSize of job (KB)
+...
+006 (94422.068.000) 07/09 01:32:01 Image size of job updated: 89348
+	84  -  MemoryUsage of job (MB)
+	85584  -  ResidentSetSize of job (KB)
+...
+006 (94422.068.000) 07/09 01:37:02 Image size of job updated: 245476
+	141  -  MemoryUsage of job (MB)
+	143728  -  ResidentSetSize of job (KB)
+...
+005 (94422.068.000) 07/09 01:38:15 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:26:09, Sys 0 00:00:03  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:26:09, Sys 0 00:00:03  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :     3           3   1901697 
+	   Memory (MB)          :   141        1500      1536 
+	   Xferslots            :                           0 
+...
