@@ -105,7 +105,7 @@ void plot_histogram_projection(const char* inFile = "output.root")
     h1d_pt_in_eta[ieta]->SetLineColor(kBlack);
     c_all->cd(ieta+1); h1d_pt_in_eta[ieta]->Draw("hsame");
   }
-  c_all->cd(4); c3->Draw("hsame");
+  c_all->cd(4); htemp.Draw();
   c_all->SaveAs(Form("all_the_plots_on_one_pdf.pdf"));
 
 
