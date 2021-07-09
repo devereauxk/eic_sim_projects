@@ -98,7 +98,7 @@ void plot_histogram_projection(const char* inFile = "output.root")
   c3->SaveAs( Form("part_pt_in_eta_all.pdf") );
 
   // all in one pdf
-  TCanvas c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
+  TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
   c_all->Divide(2, 2);
   for (int ieta = 0; ieta < 3; ++ieta)
   {
