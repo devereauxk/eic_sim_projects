@@ -102,10 +102,10 @@ void plot_histogram_projection(const char* inFile = "output.root")
   c_all->Divide(2, 2);
   for (int ieta = 0; ieta < 3; ++ieta)
   {
+    h1d_pt_in_eta[ieta]->SetLineColor(kBlack);
     c_all->cd(ieta+1); h1d_pt_in_eta[ieta]->Draw("hsame");
   }
-  c3->DrawClone();
-  c_all->Draw();
+  c_all->cd(4); c3->DrawClone();
   c_all->SaveAs(Form("all_the_plots_on_one_pdf.pdf"));
 
 
