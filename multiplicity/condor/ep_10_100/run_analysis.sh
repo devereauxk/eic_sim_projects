@@ -6,12 +6,12 @@ echo "..."
 echo ""
 
 
-echo "Making Output ROOT File with histogram data for ep_10_100 events..."
+echo "Making Output ROOT File with histogram data for events..."
 root -l -b -q 'access_tree.C("./outfiles/merged.root", "output.root")'
 echo "-----------------------------------"
 echo ""
 
-echo "Printing histograms for ep_10_100 events..."
+echo "Printing histograms for events..."
 root -l -b -q 'plot_histogram.C("output.root")'
 echo "-----------------------------------"
 echo ""
