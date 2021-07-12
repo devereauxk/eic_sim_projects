@@ -44,26 +44,43 @@ void plot_histogram_test(const char* inFile)
   h1d_proton_total->Scale(1 / h1d_proton_total->GetEntries());
   h1d_proton_total->GetXaxis()->SetTitleOffset(1.3);
   h1d_proton_total->GetYaxis()->SetTitleOffset(1.5);
+  h1d_proton_total->SetStats(0);
   h1d_proton_total->Draw("hsame");
-  insert_text(h1d_proton_total);
+
+  TLatex* tl = new TLatex();
+  tl->SetTextAlign(11);
+  tl->SetTextSize(0.035);
+  tl->SetTextColor(kBlack);
+  tl->DrawLatexNDC(0.2,0.85,"e + Au @ 18 + 110 GeV");
+  tl->DrawLatexNDC(0.2,1.2,Form("$.0f events", h1d_proton_total->GetEntries()));
+  tl->DrawLatexNDC(0.2,1.4,Form("avg: ", h1d_proton_total->GetAverage());
 
   c_all->cd(4);
-  TH2F htemp("htemp","",12,-0.5,11.5,10,0,1.5*fmaxf(h1d_proton->GetMaximum(), h1d_anti_proton->GetMaximum()));
+  TH2F htemp("htemp","",12,-0.5,11.5,10,0,1.2*fmaxf(h1d_proton->GetMaximum(), h1d_anti_proton->GetMaximum()));
   htemp.SetStats(0);
   htemp.Draw();
-  htemp.GetXaxis()->SetTitle("M [counts]");
+  htemp.GetXaxis()->SetTitle("multiplicity [counts]");
   htemp.GetYaxis()->SetTitle("fraction of events [%]");
-  htemp.Scale(1 / h1d_proton_total->GetEntries());
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
 
+  TLegend* leg = new TLegend(0.60,0.70,0.80,0.80);
+  leg->SetBorderSize(0);
+  leg->SetTextSize(0.035);
+  leg->SetFillStyle(0);
+  leg->SetMargin(0.3);
+
   h1d_proton->SetLineColor(kRed);
   h1d_proton->SetStats(0);
+  h1d_proton->Scale(1 / h1d_proton->GetEntries());
   h1d_proton->Draw("hsame");
+  leg->AddEntry(h1d_proton,"proton","l");
 
   h1d_anti_proton->SetLineColor(kBlue);
   h1d_anti_proton->SetStats(0);
+  h1d_anti_proton->Scale(1 / h1d_anti_proton->GetEntries());
   h1d_anti_proton->Draw("hsame");
+  leg->AddEntry(h1d_proton,"antiproton","l");
 
   c_all->SaveAs("temp.pdf");
 
