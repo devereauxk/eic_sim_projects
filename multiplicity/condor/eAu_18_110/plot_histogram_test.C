@@ -51,12 +51,12 @@ void plot_histogram_test(const char* inFile)
   tl->SetTextAlign(11);
   tl->SetTextSize(0.035);
   tl->SetTextColor(kBlack);
-  tl->DrawLatexNDC(0.2,0.85,"e + Au @ 18 + 110 GeV");
-  tl->DrawLatexNDC(0.2,1.2,Form("%.0f events", h1d_proton_total->GetEntries()));
-  tl->DrawLatexNDC(0.2,1.4,Form("avg: %1.4f", h1d_proton_total->GetMean()));
+  tl->DrawLatexNDC(0.4,0.85,"e + Au @ 18 + 110 GeV");
+  tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_proton_total->GetEntries()));
+  tl->DrawLatexNDC(0.4,0.65,Form("avg: %1.4f", h1d_proton_total->GetMean()));
 
   c_all->cd(4);
-  TH2F htemp("htemp","",12,-0.5,11.5,10,0,1.2*fmaxf(h1d_proton->GetMaximum(), h1d_anti_proton->GetMaximum()));
+  TH2F htemp("htemp","",12,-0.5,11.5,10,0,1.2*fmaxf(h1d_proton->GetMaximum() / h1d_proton->GetEntries(), h1d_anti_proton->GetMaximum() / h1d_anti_proton->GetEntries()));
   htemp.SetStats(0);
   htemp.Draw();
   htemp.GetXaxis()->SetTitle("multiplicity [counts]");
@@ -82,6 +82,7 @@ void plot_histogram_test(const char* inFile)
   h1d_anti_proton->Draw("hsame");
   leg->AddEntry(h1d_proton,"antiproton","l");
 
+  leg->Draw("same");
   c_all->SaveAs("temp.pdf");
 
 
