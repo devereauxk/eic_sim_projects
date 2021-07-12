@@ -53,7 +53,7 @@ void plot_histogram_test(const char* inFile)
   tl->SetTextColor(kBlack);
   tl->DrawLatexNDC(0.2,0.85,"e + Au @ 18 + 110 GeV");
   tl->DrawLatexNDC(0.2,1.2,Form("$.0f events", h1d_proton_total->GetEntries()));
-  tl->DrawLatexNDC(0.2,1.4,Form("avg: ", h1d_proton_total->GetAverage());
+  tl->DrawLatexNDC(0.2,1.4,Form("avg: ", h1d_proton_total->GetMean());
 
   c_all->cd(4);
   TH2F htemp("htemp","",12,-0.5,11.5,10,0,1.2*fmaxf(h1d_proton->GetMaximum(), h1d_anti_proton->GetMaximum()));
