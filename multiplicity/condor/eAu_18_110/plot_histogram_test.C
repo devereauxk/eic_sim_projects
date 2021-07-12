@@ -48,18 +48,21 @@ void plot_histogram_test(const char* inFile)
   insert_text(h1d_proton_total);
 
   c_all->cd(4);
-  TH2F htemp("htemp","",12,-0.5,11.5,10,0,1.5*h1d_proton->GetMaximum());
+  TH2F htemp("htemp","",12,-0.5,11.5,10,0,1.5*fmaxf(h1d_proton->GetMaximum(), h1d_anti_proton->GetMaximum()));
+  htemp.SetStats(0);
   htemp.Draw();
   htemp.GetXaxis()->SetTitle("M [counts]");
   htemp.GetYaxis()->SetTitle("fraction of events [%]");
-  htemp.Scale(1 / h1d_proton->GetEntries());
+  htemp.Scale(1 / h1d_proton_total->GetEntries());
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
 
   h1d_proton->SetLineColor(kRed);
+  h1d_proton->SetStats(0);
   h1d_proton->Draw("hsame");
 
   h1d_anti_proton->SetLineColor(kBlue);
+  h1d_anti_proton->SetStats(0);
   h1d_anti_proton->Draw("hsame");
 
   c_all->SaveAs("temp.pdf");
