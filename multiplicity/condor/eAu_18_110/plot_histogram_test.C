@@ -51,9 +51,9 @@ void plot_histogram_test(const char* inFile)
   tl->SetTextAlign(11);
   tl->SetTextSize(0.045);
   tl->SetTextColor(kBlack);
-  tl->DrawLatexNDC(0.4,0.85,"e + Au @ 18 + 110 GeV");
-  tl->DrawLatexNDC(0.4,0.80,Form("%.0f events", h1d_proton_total->GetEntries()));
-  tl->DrawLatexNDC(0.4,0.75,Form("avg: %1.4f", h1d_proton_total->GetMean()));
+  tl->DrawLatexNDC(0.4,0.80,"e + Au @ 18 + 110 GeV");
+  tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_proton_total->GetEntries()));
+  tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_proton_total->GetMean()));
 
   c_all->cd(4);
   TH2F htemp("htemp","",12,-0.5,11.5,10,0,1.2*fmaxf(h1d_proton->GetMaximum() / h1d_proton->GetEntries(), h1d_anti_proton->GetMaximum() / h1d_anti_proton->GetEntries()));
@@ -64,7 +64,7 @@ void plot_histogram_test(const char* inFile)
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
 
-  TLegend* leg = new TLegend(0.50,0.70,0.80,0.80);
+  TLegend* leg = new TLegend(0.35,0.70,0.80,0.80);
   leg->SetBorderSize(0);
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
@@ -73,8 +73,8 @@ void plot_histogram_test(const char* inFile)
   tl->SetTextAlign(11);
   tl->SetTextSize(0.045);
   tl->SetTextColor(kBlack);
-  tl->DrawLatexNDC(0.5,0.65,Form("proton avg: %1.4f", h1d_proton->GetMean()));
-  tl->DrawLatexNDC(0.5,0.60,Form("antiproton avg: %1.4f", h1d_anti_proton->GetMean()));
+  tl->DrawLatexNDC(0.35,0.60,Form("proton avg: %1.4f", h1d_proton->GetMean()));
+  tl->DrawLatexNDC(0.35,0.55,Form("antiproton avg: %1.4f", h1d_anti_proton->GetMean()));
 
   h1d_proton->SetLineColor(kRed);
   h1d_proton->SetStats(0);
