@@ -1,4 +1,4 @@
-void plot_histogram_test(const char* inFile)
+void plot_histogram(const char* inFile)
 {
   // run with root -l 'plot_histogram("histogram_dir/access_tree_output.root", "histogram_dir/")'
   // p_T distribution
