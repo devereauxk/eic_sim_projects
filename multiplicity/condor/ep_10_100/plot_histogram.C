@@ -39,7 +39,7 @@ void plot_histogram_test(const char* inFile)
   tl->SetTextAlign(11);
   tl->SetTextSize(0.045);
   tl->SetTextColor(kBlack);
-  tl->DrawLatexNDC(0.4,0.80,"e + Au @ 18 + 110 GeV");
+  tl->DrawLatexNDC(0.4,0.80,"e + p @ 10 + 100 GeV");
   tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_proton_total->GetEntries()));
   tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_proton_total->GetMean()));
 
@@ -92,7 +92,7 @@ void plot_histogram_test(const char* inFile)
   tl->SetTextAlign(11);
   tl->SetTextSize(0.045);
   tl->SetTextColor(kBlack);
-  tl->DrawLatexNDC(0.4,0.80,"e + Au @ 18 + 110 GeV");
+  tl->DrawLatexNDC(0.4,0.80,"e + p @ 10 + 100 GeV");
   tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_kaon_total->GetEntries()));
   tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_kaon_total->GetMean()));
 
@@ -148,7 +148,7 @@ void plot_histogram_test(const char* inFile)
   tl->SetTextAlign(11);
   tl->SetTextSize(0.045);
   tl->SetTextColor(kBlack);
-  tl->DrawLatexNDC(0.4,0.80,"e + Au @ 18 + 110 GeV");
+  tl->DrawLatexNDC(0.4,0.80,"e + p @ 10 + 100 GeV");
   tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_pion_total->GetEntries()));
   tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_pion_total->GetMean()));
 
@@ -189,7 +189,7 @@ void plot_histogram_test(const char* inFile)
 
 
   // save plot ------------------------------------------------------------------------
-  c_all->SaveAs("temp.pdf");
+  c_all->SaveAs("multiplicities.pdf");
 
 
 }
