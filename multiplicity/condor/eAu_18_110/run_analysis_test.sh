@@ -12,7 +12,7 @@ echo "-----------------------------------"
 echo ""
 
 echo "Printing histograms for eAu_18_110 events..."
-root -l -b -q 'plot_histogram.C("output.root")'
+root -l -b -q 'plot_histogram_test.C("output.root")'
 echo "-----------------------------------"
 echo ""
 
