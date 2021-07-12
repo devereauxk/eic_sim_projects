@@ -97,13 +97,13 @@ void plot_histogram_test(const char* inFile)
   tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_kaon_total->GetMean()));
 
   c_all->cd(5);
-  htemp("htemp","",12,-0.5,11.5,10,0,1.2*fmaxf(h1d_kaon_pos->GetMaximum() / h1d_kaon_pos->GetEntries(), h1d_kaon_neg->GetMaximum() / h1d_kaon_neg->GetEntries()));
-  htemp.SetStats(0);
-  htemp.Draw();
-  htemp.GetXaxis()->SetTitle("multiplicity [counts]");
-  htemp.GetYaxis()->SetTitle("fraction of events [%]");
-  htemp.GetXaxis()->SetTitleOffset(1.3);
-  htemp.GetYaxis()->SetTitleOffset(1.5);
+  TH2F htemp5("htemp5","",12,-0.5,11.5,10,0,1.2*fmaxf(h1d_kaon_pos->GetMaximum() / h1d_kaon_pos->GetEntries(), h1d_kaon_neg->GetMaximum() / h1d_kaon_neg->GetEntries()));
+  htemp5.SetStats(0);
+  htemp5.Draw();
+  htemp5.GetXaxis()->SetTitle("multiplicity [counts]");
+  htemp5.GetYaxis()->SetTitle("fraction of events [%]");
+  htemp5.GetXaxis()->SetTitleOffset(1.3);
+  htemp5.GetYaxis()->SetTitleOffset(1.5);
 
   leg = new TLegend(0.35,0.70,0.80,0.80);
   leg->SetBorderSize(0);
@@ -153,13 +153,13 @@ void plot_histogram_test(const char* inFile)
   tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_pion_total->GetMean()));
 
   c_all->cd(6);
-  htemp("htemp","", 40, -0.5, 39.5,10,0,1.2*fmaxf(h1d_pion_pos->GetMaximum() / h1d_pion_pos->GetEntries(), h1d_pion_neg->GetMaximum() / h1d_pion_neg->GetEntries()));
-  htemp.SetStats(0);
-  htemp.Draw();
-  htemp.GetXaxis()->SetTitle("multiplicity [counts]");
-  htemp.GetYaxis()->SetTitle("fraction of events [%]");
-  htemp.GetXaxis()->SetTitleOffset(1.3);
-  htemp.GetYaxis()->SetTitleOffset(1.5);
+  TH2F htemp6("htemp6","", 40, -0.5, 39.5,10,0,1.2*fmaxf(h1d_pion_pos->GetMaximum() / h1d_pion_pos->GetEntries(), h1d_pion_neg->GetMaximum() / h1d_pion_neg->GetEntries()));
+  htemp6.SetStats(0);
+  htemp6.Draw();
+  htemp6.GetXaxis()->SetTitle("multiplicity [counts]");
+  htemp6.GetYaxis()->SetTitle("fraction of events [%]");
+  htemp6.GetXaxis()->SetTitleOffset(1.3);
+  htemp6.GetYaxis()->SetTitleOffset(1.5);
 
   leg = new TLegend(0.35,0.70,0.80,0.80);
   leg->SetBorderSize(0);
