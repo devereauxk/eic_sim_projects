@@ -48,7 +48,7 @@ echo ""
 
 #Move output files and cleanup
 echo "Cleaning Up..."
-mv -v eC.txt /eic/u/kdevereaux/work/multiplicity/condor/eCa_18_110/outForPythiaMode/eCa_${INPUT}.txt
-mv -v eC.root /eic/u/kdevereaux/work/multiplicity/condor/eCa_18_110/outForPythiaMode/eCa_${INPUT}.root
-mv -v eC.log /eic/u/kdevereaux/work/multiplicity/condor/eCa_18_110/logs/eCa_${INPUT}.log
+mv -v eCa.txt /eic/u/kdevereaux/work/multiplicity/condor/eCa_18_110/outForPythiaMode/eCa_${INPUT}.txt
+mv -v eCa.root /eic/u/kdevereaux/work/multiplicity/condor/eCa_18_110/outForPythiaMode/eCa_${INPUT}.root
+mv -v eCa.log /eic/u/kdevereaux/work/multiplicity/condor/eCa_18_110/logs/eCa_${INPUT}.log
 echo "DONE!!!"
