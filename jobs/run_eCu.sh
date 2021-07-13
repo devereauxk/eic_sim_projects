@@ -27,7 +27,7 @@ export LD_LIBRARY_PATH="${LHAPDF5}:$LD_LIBRARY_PATH"
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
 
 #Soft links to necessary files
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/inputFiles/eC.inp
+ln -s /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/inputFiles/eCu.inp
 ln -s /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/inputFiles/S3ALL003
 ln -s /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/nuclear.bin
 ln -s /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/make_tree.C
@@ -48,7 +48,7 @@ echo ""
 
 #Move output files and cleanup
 echo "Cleaning Up..."
-mv -v eC.txt /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/outForPythiaMode/eC_${INPUT}.txt
-mv -v eC.root /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/outForPythiaMode/eC_${INPUT}.root
-mv -v eC.log /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/logs/eC_${INPUT}.log
+mv -v eC.txt /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/outForPythiaMode/eCu_${INPUT}.txt
+mv -v eC.root /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/outForPythiaMode/eCu_${INPUT}.root
+mv -v eC.log /eic/u/kdevereaux/work/multiplicity/condor/eCu_18_110/logs/eCu_${INPUT}.log
 echo "DONE!!!"
