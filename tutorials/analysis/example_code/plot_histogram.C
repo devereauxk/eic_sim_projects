@@ -5,6 +5,7 @@ const int eta_color[etabin] = {kRed, kBlue, kGreen+1};
 TH1D* h1d_part_pt = NULL;
 TH2D* h2d_pt_vs_eta = NULL;
 TH1D* h1d_pt_in_eta[etabin] = {0};
+TGraphErrors* g_pt_vs_eta = NULL;
 void slice_2D_hist()
 {
   for (int ieta = 0; ieta < etabin; ++ieta)
@@ -19,7 +20,7 @@ void slice_2D_hist()
   // set back to original range
   h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-4,4);
 }
-void plot_histogram_projection(const char* inFile = "output.root")
+void plot_histogram(const char* inFile = "output.root")
 {
   TFile* fin = new TFile(inFile,"read");
   cout<<"Print input file content"<<endl;
@@ -115,5 +116,42 @@ void plot_histogram_projection(const char* inFile = "output.root")
   }
   c_all->SaveAs(Form("all_the_plots_on_one_pdf.pdf"));
 
-
+  // plot average pt as function of eta using TGraph
+  double temp_pt[etabin] = {0}, temp_pt_err[etabin] = {0};
+  double temp_eta[etabin] = {0}, temp_eta_err[etabin] = {0};
+  for (int ieta = 0; ieta < etabin; ++ieta)
+  {
+    temp_pt[ieta] = h1d_pt_in_eta[ieta]->GetMean();
+    temp_eta[ieta] = 0.5*(eta_lo[ieta]+eta_hi[ieta]);
+  }
+  g_pt_vs_eta = new TGraphErrors(etabin,temp_eta,temp_pt,temp_eta_err,temp_pt_err);
+  g_pt_vs_eta->SetMarkerColor(kRed);
+  g_pt_vs_eta->SetMarkerStyle(20);
+  g_pt_vs_eta->SetMarkerSize(1);
+  TCanvas* c4 = new TCanvas("c4","c4",800,800); // create new canvas
+  c4->Range(0,0,1,1);
+  c4->SetLeftMargin(0.15);
+  c4->SetBottomMargin(0.1);
+  TLegend* leg = new TLegend(0.60,0.70,0.80,0.80);
+  leg->SetBorderSize(0);
+  leg->SetTextSize(0.035);
+  leg->SetFillStyle(0);
+  leg->SetMargin(0.3);
+  float plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
+  float plot_yrange_lo = 0, plot_yrange_hi = 4;
+  // use the empty 2D histogram htemp as a frame
+  TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+  htemp.SetStats(0); // not showing the box on the top right corner
+  htemp.Draw();
+  htemp.GetYaxis()->SetTitle("<p_{T}> [GeV/c]");
+  htemp.GetXaxis()->SetTitle("#eta");
+  htemp.GetXaxis()->SetTitleOffset(1.3);
+  htemp.GetYaxis()->SetTitleOffset(1.5);
+  g_pt_vs_eta->Draw("psame");
+  TLatex* tl = new TLatex();
+  tl->SetTextAlign(11);
+  tl->SetTextSize(0.035);
+  tl->SetTextColor(kBlack);
+  tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
+  c4->SaveAs( Form("graph_part_pt_vs_eta.pdf") );
 }
