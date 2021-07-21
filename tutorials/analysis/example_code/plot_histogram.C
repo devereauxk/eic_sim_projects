@@ -132,13 +132,13 @@ void plot_histogram(const char* inFile = "output.root")
   c4->Range(0,0,1,1);
   c4->SetLeftMargin(0.15);
   c4->SetBottomMargin(0.1);
-  TLegend* leg = new TLegend(0.60,0.70,0.80,0.80);
+  leg = new TLegend(0.60,0.70,0.80,0.80);
   leg->SetBorderSize(0);
   leg->SetTextSize(0.035);
   leg->SetFillStyle(0);
   leg->SetMargin(0.3);
-  float plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
-  float plot_yrange_lo = 0, plot_yrange_hi = 4;
+  plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
+  plot_yrange_lo = 0, plot_yrange_hi = 4;
   // use the empty 2D histogram htemp as a frame
   TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
   htemp.SetStats(0); // not showing the box on the top right corner
@@ -148,7 +148,7 @@ void plot_histogram(const char* inFile = "output.root")
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
   g_pt_vs_eta->Draw("psame");
-  TLatex* tl = new TLatex();
+  tl = new TLatex();
   tl->SetTextAlign(11);
   tl->SetTextSize(0.035);
   tl->SetTextColor(kBlack);
