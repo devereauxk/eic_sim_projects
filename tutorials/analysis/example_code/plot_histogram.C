@@ -140,13 +140,13 @@ void plot_histogram(const char* inFile = "output.root")
   plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
   plot_yrange_lo = 0, plot_yrange_hi = 4;
   // use the empty 2D histogram htemp as a frame
-  TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-  htemp.SetStats(0); // not showing the box on the top right corner
-  htemp.Draw();
-  htemp.GetYaxis()->SetTitle("<p_{T}> [GeV/c]");
-  htemp.GetXaxis()->SetTitle("#eta");
-  htemp.GetXaxis()->SetTitleOffset(1.3);
-  htemp.GetYaxis()->SetTitleOffset(1.5);
+  TH2F htemp1("htemp1","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+  htemp1.SetStats(0); // not showing the box on the top right corner
+  htemp1.Draw();
+  htemp1.GetYaxis()->SetTitle("<p_{T}> [GeV/c]");
+  htemp1.GetXaxis()->SetTitle("#eta");
+  htemp1.GetXaxis()->SetTitleOffset(1.3);
+  htemp1.GetYaxis()->SetTitleOffset(1.5);
   g_pt_vs_eta->Draw("psame");
   tl = new TLatex();
   tl->SetTextAlign(11);
