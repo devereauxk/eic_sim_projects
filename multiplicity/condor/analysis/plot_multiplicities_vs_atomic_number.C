@@ -34,7 +34,7 @@ void print_arr(double * arr)
 void GetY(TGraph * graph)
 {
   double * ans[graph->GetN()];
-  for (int i = 0; i < graph->GetN()) {
+  for (int i = 0; i < graph->GetN(); i++) {
     ans[i] = graph->GetPointY(i);
   }
   return ans;
@@ -121,6 +121,8 @@ void plot_multiplicities_vs_atomic_number()
   TCanvas* c_main;
   TGraphErrors * pos_graph;
   TGraphErrors * neg_graph;
+  double * pos_arr;
+  double * neg_arr;
   TLegend* leg;
   TLatex* t1;
   float plot_xrange_lo = 0, plot_xrange_hi = 10;
