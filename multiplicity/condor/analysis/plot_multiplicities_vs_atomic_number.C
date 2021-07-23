@@ -149,9 +149,8 @@ void plot_multiplicities_vs_atomic_number()
 
     plot_xrange_lo = 0;
     plot_xrange_hi = 220;
-    plot_yrange_lo = min(pos_graph->GetMinimum(), neg_graph->GetMinimum()) * 0.92;
-    plot_yrange_hi = max(pos_graph->GetMaximum(), neg_graph->GetMaximum()) * 1.08;
-    cout << pos_graph->GetMinimum() << neg_graph->GetMinimum() << pos_graph->GetMaximum() << neg_graph->GetMaximum() << endl;
+    plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
+    plot_yrange_hi = man(TMath::ManElement(pos_graph->GetN(),pos_graph->GetY()), TMath::ManElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.SetStats(0);
