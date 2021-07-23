@@ -3,7 +3,7 @@ void plot_multiplicities_vs_atomic_number()
 
   const int num_species = 8;
   std::string dirs[num_species] = {"ep_10_100", "eD_18_110", "eHe4_18_110", "eC_18_110", "eCa_18_110", "eCu_18_110", "eAu_18_110"};
-  const float atomic_weight[num_species] = {1, 2, 4, 12, 36, 40, 63, 197};
+  double atomic_weight[num_species] = {1, 2, 4, 12, 36, 40, 63, 197};
 
   double kaon_pos_mean[num_species] = {0}, kaon_pos_mean_err[num_species] = {0};
   double kaon_neg_mean[num_species] = {0}, kaon_neg_mean_err[num_species] = {0};
