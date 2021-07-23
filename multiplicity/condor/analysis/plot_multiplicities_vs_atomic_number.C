@@ -127,8 +127,9 @@ void plot_multiplicities_vs_atomic_number()
 
     plot_xrange_lo = 0;
     plot_xrange_hi = 220;
-    plot_yrange_lo = min(min_arr(pos_graph->GetY()), min_arr(neg_graph->GetY()));
-    plot_yrange_hi = max(max_arr(pos_graph->GetY()), max_arr(neg_graph->GetY()));
+    //plot_yrange_lo = min(min_arr(pos_graph->GetY()), min_arr(neg_graph->GetY()));
+    plot_yrange_lo = 0;
+    plot_yrange_hi = max(max_arr(pos_graph->GetY()), max_arr(neg_graph->GetY())) * 1.2;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.SetStats(0);
