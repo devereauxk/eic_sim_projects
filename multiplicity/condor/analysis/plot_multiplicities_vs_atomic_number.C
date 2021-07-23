@@ -147,15 +147,11 @@ void plot_multiplicities_vs_atomic_number()
     //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
     //plot_yrange_lo = 0, plot_yrange_hi = 4;
 
-    pos_arr = (double*) GetY(pos_graph);
-    neg_arr = (double*) GetY(neg_graph);
-    print_arr(pos_arr);
-    print_arr(neg_arr);
-
     plot_xrange_lo = 0;
     plot_xrange_hi = 220;
-    plot_yrange_lo = min(min_arr(pos_arr), min_arr(neg_arr)) * 0.92;
-    plot_yrange_hi = max(min_arr(pos_arr), max_arr(neg_arr)) * 1.08;
+    plot_yrange_lo = min(pos_graph->GetMinimum(), neg_graph->GetMinimum()) * 0.92;
+    plot_yrange_hi = max(pos_graph->GetMaximum(), neg_graph->GetMaximum()) * 1.08;
+    cout << pos_graph->GetMinimum() << neg_graph->GetMinimum() << pos_graph->GetMaximum() << neg_graph->GetMaximum() << endl;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.SetStats(0);
