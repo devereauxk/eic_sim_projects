@@ -26,7 +26,7 @@ void plot_multiplicities_vs_atomic_number()
   TH2D * h2d_kaon, h2d_pion, h2d_proton;
   TH1D * h1d_kaon_pos, h1d_kaon_neg, h1d_pion_pos, h1d_pion_neg, h1d_proton_pos, h1d_proton_neg;
   for (int i = 0; i < num_species; i++) {
-    cout<<"processing " + dirs[i] + " ..."<endl;
+    cout<<"processing " + dirs[i] + " ..."<<endl;
 
     dir_str = "../" + dirs[i] + "/outForPythiaMode/merged.root", "read";
     strcpy(dir_char, dir_str.c_str());
