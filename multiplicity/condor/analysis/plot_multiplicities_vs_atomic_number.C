@@ -24,9 +24,9 @@ void print_arr(double * arr)
 {
   int length = sizeof(arr) / sizeof(double);
   for (int i = 0; i < length; i++) {
-    cout<<arr[i];
+    cout << arr[i] << " ";
   }
-  cout<<"\n";
+  cout << "\n";
 }
 
 void plot_multiplicities_vs_atomic_number()
