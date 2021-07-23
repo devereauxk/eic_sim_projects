@@ -124,10 +124,10 @@ void plot_multiplicities_vs_atomic_number()
     leg->AddEntry(neg_graph, "negative particle", "l");
 
     t1 = new TLatex();
-    tl->SetTextAlign(11);
-    tl->SetTextSize(0.035);
-    tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
+    t1->SetTextAlign(11);
+    t1->SetTextSize(0.035);
+    t1->SetTextColor(kBlack);
+    t1->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
     c_main->SaveAs( Form("multiplicity_vs_atomic_mass_%d.pdf", i) );
 
   }
