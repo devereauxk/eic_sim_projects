@@ -23,6 +23,9 @@ double max_arr(double * arr)
 void print_arr(double * arr)
 {
   int length = sizeof(arr) / sizeof(double);
+  cout << length << endl;
+  cout << sizeof(arr) << endl;
+  cout << sizeof(double) << endl;
   for (int i = 0; i < length; i++) {
     cout << arr[i] << " ";
   }
