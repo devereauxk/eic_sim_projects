@@ -1,9 +1,9 @@
-def plot_multiplicities_vs_atomic_number()
+void plot_multiplicities_vs_atomic_number()
 {
 
   const int num_species = 8;
   string dirs[num_species] = {"ep_10_100", "eD_18_110", "eHe4_18_110", "eC_18_110", "eCa_18_110", "eCu_18_110", "eAu_18_110"};
-  const float atomic_weight = {1, 2, 4, 12, 36, 40, 63, 197};
+  const float atomic_weight[num_species] = {1, 2, 4, 12, 36, 40, 63, 197};
 
   double kaon_pos_mean[num_species] = {0}, kaon_pos_mean_err[num_species] = {0};
   double kaon_neg_mean[num_species] = {0}, kaon_neg_mean_err[num_species] = {0};
@@ -22,7 +22,7 @@ def plot_multiplicities_vs_atomic_number()
 
   TFile * fin = NULL;
   TH2D * h2d_kaon, h2d_pion, h2d_proton;
-  TH1D * h1d_kaon_pos, h1d_kaon_neg, h1d_kaon_pos, h1d_kaon_neg, h1d_kaon_pos, h1d_kaon_neg;
+  TH1D * h1d_kaon_pos, h1d_kaon_neg, h1d_pion_pos, h1d_pion_neg, h1d_proton_pos, h1d_proton_neg;
   for (int i = 0; i < num_species; i++) {
     cout<<"processing " + dirs[i] + " ..."<<endl;
 
