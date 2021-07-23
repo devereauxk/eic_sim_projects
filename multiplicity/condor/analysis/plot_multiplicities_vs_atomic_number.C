@@ -20,9 +20,9 @@ void plot_multiplicities_vs_atomic_number()
   double proton_pos_rms[num_species] = {0}, proton_pos_rms_err[num_species] = {0};
   double proton_neg_rms[num_species] = {0}, proton_neg_rms_err[num_species] = {0};
 
-  std::string dir_str = "";
-  char dir_char = NULL;
-  TFile * fin = NULL;
+  std::string dir_str;
+  char dir_char;
+  TFile * fin;
   TH2D * h2d_kaon, *h2d_pion, *h2d_proton;
   TH1D * h1d_kaon_pos, *h1d_kaon_neg, *h1d_pion_pos, *h1d_pion_neg, *h1d_proton_pos, *h1d_proton_neg;
   for (int i = 0; i < num_species; i++) {
@@ -79,11 +79,11 @@ void plot_multiplicities_vs_atomic_number()
 
   TGraphErrors* graph_arr[12] = {kaon_pos_mean_vs_an, kaon_neg_mean_vs_an, kaon_pos_rms_vs_an, kaon_neg_rms_vs_an, pion_pos_mean_vs_an, pion_neg_mean_vs_an, pion_pos_rms_vs_an, pion_neg_rms_vs_an, proton_pos_mean_vs_an, proton_neg_mean_vs_an, proton_pos_rms_vs_an, proton_neg_rms_vs_an};
 
-  TCanvas* c_main = NULL;
-  TGraphErrors * pos_graph = NULL;
-  TGraphErrors * neg_graph = NULL;
-  TLegend* leg = NULL;
-  TLatex* t1 = NULL;
+  TCanvas* c_main;
+  TGraphErrors * pos_graph;
+  TGraphErrors * neg_graph;
+  TLegend* leg;
+  TLatex* t1;
   float plot_xrange_lo = 0, plot_xrange_hi = 10;
   float plot_yrange_lo = 0, plot_yrange_hi = 10;
   for (int i = 0; i < 12; i += 2) {
