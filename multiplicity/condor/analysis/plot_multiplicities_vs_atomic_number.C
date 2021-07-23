@@ -84,7 +84,7 @@ void plot_multiplicities_vs_atomic_number()
   TLatex t1 = NULL;
   float plot_xrange_lo = 0, plot_xrange_hi = 10;
   float plot_yrange_lo = 0, plot_yrange_hi = 10;
-  for (int i = 0, i < 12; i += 2) {
+  for (int i = 0; i < 12; i += 2) {
     pos_graph = graph_arr[i];
     pos_graph->SetMarkerColor(kRed);
     pos_graph->SetMarkerStyle(20);
