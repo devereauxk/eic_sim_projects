@@ -20,6 +20,14 @@ double max_arr(double * arr)
   }
   return ans;
 }
+void print_arr(double * arr)
+{
+  int length = sizeof(arr) / sizeof(double);
+  for (int i = 0; i < length; i++) {
+    cout<<arr[i];
+  }
+  cout<<"\n";
+}
 
 void plot_multiplicities_vs_atomic_number()
 {
@@ -125,6 +133,9 @@ void plot_multiplicities_vs_atomic_number()
     //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
     //plot_yrange_lo = 0, plot_yrange_hi = 4;
 
+    print_arr(pos_graph->GetY());
+    print_arr(neg_graph->GetY());
+
     plot_xrange_lo = 0;
     plot_xrange_hi = 220;
     plot_yrange_lo = min(min_arr(pos_graph->GetY()), min_arr(neg_graph->GetY())) * 0.92;
@@ -149,11 +160,13 @@ void plot_multiplicities_vs_atomic_number()
     leg->AddEntry(pos_graph, "positive particle", "l");
     leg->AddEntry(neg_graph, "negative particle", "l");
 
+    /*
     t1 = new TLatex();
     t1->SetTextAlign(11);
     t1->SetTextSize(0.035);
     t1->SetTextColor(kBlack);
     t1->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
+    */
     c_main->SaveAs( Form("multiplicity_vs_atomic_mass_%d.pdf", i/2) );
 
   }
