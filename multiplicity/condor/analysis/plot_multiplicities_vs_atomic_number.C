@@ -29,6 +29,7 @@ void plot_multiplicities_vs_atomic_number()
 
     dir_char = dirs[i].c_str();
     fin = new TFile(dir_char);
+    fin->ls();
 
     h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
     h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
