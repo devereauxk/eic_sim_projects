@@ -20,13 +20,17 @@ void plot_multiplicities_vs_atomic_number()
   double proton_pos_rms[num_species] = {0}, proton_pos_rms_err[num_species] = {0};
   double proton_neg_rms[num_species] = {0}, proton_neg_rms_err[num_species] = {0};
 
+  std::string dir_str = NULL;
+  char * dir_char = NULL;
   TFile * fin = NULL;
   TH2D * h2d_kaon, h2d_pion, h2d_proton;
   TH1D * h1d_kaon_pos, h1d_kaon_neg, h1d_pion_pos, h1d_pion_neg, h1d_proton_pos, h1d_proton_neg;
   for (int i = 0; i < num_species; i++) {
-    cout<<"processing " + dirs[i] + " ..."<<endl;
+    cout<<"processing " + dirs[i] + " ..."<endl;
 
-    fin = new TFile("../" + dirs[i] + "/outForPythiaMode/merged.root", "read");
+    dir_str = "../" + dirs[i] + "/outForPythiaMode/merged.root", "read";
+    strcpy(dir_char, dir_str.c_str());
+    fin = new TFile(dir_char);
 
     h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
     h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
