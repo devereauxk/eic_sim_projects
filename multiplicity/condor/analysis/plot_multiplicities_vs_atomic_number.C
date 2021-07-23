@@ -28,8 +28,7 @@ void plot_multiplicities_vs_atomic_number()
     cout<<"processing " + dirs[i] + " ..."<<endl;
 
     dir_char = dirs[i].c_str();
-    fin = new TFile(dir_char);
-    fin->ls();
+    fin = new TFile(dir_char, "read");
 
     h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
     h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
