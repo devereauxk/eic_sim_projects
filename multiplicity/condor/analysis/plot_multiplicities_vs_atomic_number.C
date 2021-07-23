@@ -31,6 +31,14 @@ void print_arr(double * arr)
   }
   cout << "\n";
 }
+void GetY(TGraph * graph)
+{
+  double * ans[graph->GetN()];
+  for (int i = 0; i < graph->GetN()) {
+    ans[i] = graph->GetPointY(i);
+  }
+  return ans;
+}
 
 void plot_multiplicities_vs_atomic_number()
 {
@@ -136,13 +144,15 @@ void plot_multiplicities_vs_atomic_number()
     //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
     //plot_yrange_lo = 0, plot_yrange_hi = 4;
 
-    print_arr((double *) pos_graph->GetY());
-    print_arr((double *) neg_graph->GetY());
+    pos_arr = GetY(pos_graph);
+    neg_arr = GetY(neg_graph);
+    print_arr(pos_arr);
+    print_arr(neg_arr);
 
     plot_xrange_lo = 0;
     plot_xrange_hi = 220;
-    plot_yrange_lo = min(min_arr(pos_graph->GetY()), min_arr(neg_graph->GetY())) * 0.92;
-    plot_yrange_hi = max(max_arr(pos_graph->GetY()), max_arr(neg_graph->GetY())) * 1.08;
+    plot_yrange_lo = min(min_arr(pos_arr), min_arr(neg_arr)) * 0.92;
+    plot_yrange_hi = max(min_arr(pos_arr), max_arr(neg_arr)) * 1.08;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.SetStats(0);
