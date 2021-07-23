@@ -31,13 +31,13 @@ void print_arr(double * arr)
   }
   cout << "\n";
 }
-void GetY(TGraph * graph)
+double GetY(TGraph * graph)
 {
-  double * ans[graph->GetN()];
+  double ans[graph->GetN()];
   for (int i = 0; i < graph->GetN(); i++) {
     ans[i] = graph->GetPointY(i);
   }
-  return ans;
+  return &ans;
 }
 
 void plot_multiplicities_vs_atomic_number()
@@ -146,8 +146,8 @@ void plot_multiplicities_vs_atomic_number()
     //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
     //plot_yrange_lo = 0, plot_yrange_hi = 4;
 
-    pos_arr = GetY(pos_graph);
-    neg_arr = GetY(neg_graph);
+    pos_arr = (double*) GetY(pos_graph);
+    neg_arr = (double*) GetY(neg_graph);
     print_arr(pos_arr);
     print_arr(neg_arr);
 
