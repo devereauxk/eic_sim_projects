@@ -1,3 +1,26 @@
+double min_arr(double * arr)
+{
+  double ans = arr[0];
+  int length = sizeof(arr) / sizeof(double);
+  for (int i = 0; i < length; i++) {
+    if (arr[i] < ans) {
+      ans = arr[i];
+    }
+  }
+  return ans;
+}
+double max_arr(double * arr)
+{
+  double ans = arr[0];
+  int length = sizeof(arr) / sizeof(double);
+  for (int i = 0; i < length; i++) {
+    if (arr[i] > ans) {
+      ans = arr[i];
+    }
+  }
+  return ans;
+}
+
 void plot_multiplicities_vs_atomic_number()
 {
 
@@ -102,6 +125,11 @@ void plot_multiplicities_vs_atomic_number()
     //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
     //plot_yrange_lo = 0, plot_yrange_hi = 4;
 
+    plot_xrange_lo = 0;
+    plot_xrange_hi = 220;
+    plot_yrange_lo = min(pos_graph->GetMinimum(), neg_graph->GetMinimum());
+    plot_yrange_hi = max(pos_graph->GetMaximum(), neg_graph->GetMaximum());
+
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.SetStats(0);
     htemp.Draw();
@@ -126,7 +154,7 @@ void plot_multiplicities_vs_atomic_number()
     t1->SetTextSize(0.035);
     t1->SetTextColor(kBlack);
     t1->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
-    c_main->SaveAs( Form("multiplicity_vs_atomic_mass_%d.pdf", i) );
+    c_main->SaveAs( Form("multiplicity_vs_atomic_mass_%d.pdf", i/2) );
 
   }
 
