@@ -80,8 +80,8 @@ void plot_multiplicities_vs_atomic_number()
 
   TCanvas* c_main = NULL;
   TGraphErrors * temp_graph = NULL;
-  TLegend leg = NULL;
-  TLatex t1 = NULL;
+  TLegend* leg = NULL;
+  TLatex* t1 = NULL;
   float plot_xrange_lo = 0, plot_xrange_hi = 10;
   float plot_yrange_lo = 0, plot_yrange_hi = 10;
   for (int i = 0; i < 12; i += 2) {
