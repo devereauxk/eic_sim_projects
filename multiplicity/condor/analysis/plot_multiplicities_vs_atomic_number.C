@@ -121,14 +121,14 @@ void plot_multiplicities_vs_atomic_number()
     c_main->Range(0,0,1,1);
     c_main->SetLeftMargin(0.15);
     c_main->SetBottomMargin(0.1);
+    c_main->SetLogx();
 
     //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
     //plot_yrange_lo = 0, plot_yrange_hi = 4;
 
     plot_xrange_lo = 0;
     plot_xrange_hi = 220;
-    //plot_yrange_lo = min(min_arr(pos_graph->GetY()), min_arr(neg_graph->GetY()));
-    plot_yrange_lo = 0;
+    plot_yrange_lo = min(min_arr(pos_graph->GetY()), min_arr(neg_graph->GetY())) * 0.8;
     plot_yrange_hi = max(max_arr(pos_graph->GetY()), max_arr(neg_graph->GetY())) * 1.2;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
