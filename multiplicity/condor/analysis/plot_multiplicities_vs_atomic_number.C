@@ -76,10 +76,11 @@ void plot_multiplicities_vs_atomic_number()
   TGraphErrors* proton_pos_rms_vs_an = new TGraphErrors(num_species, atomic_weight, proton_pos_rms, NULL, proton_pos_rms_err);
   TGraphErrors* proton_neg_rms_vs_an = new TGraphErrors(num_species, atomic_weight, proton_neg_rms, NULL, proton_neg_rms_err);
 
-  TGraphErrors* graph_arr[12] = {kaon_pos_mean_vs_an, kaon_neg_mean_vs_an, kaon_pos_rms_vs_an, kaon_neg_rms_vs_an, pion_pos_mean_vs_an, pion_neg_mean_vs_an, pion_pos_rms_vs_an, pion_neg_rms_vs_an, proton_pos_mean_vs_an, proton_neg_mean_vs_an, proton_pos_rms_vs_an, proton_neg_rms_vs_an};
+  TGraphErrors graph_arr[12] = {kaon_pos_mean_vs_an, kaon_neg_mean_vs_an, kaon_pos_rms_vs_an, kaon_neg_rms_vs_an, pion_pos_mean_vs_an, pion_neg_mean_vs_an, pion_pos_rms_vs_an, pion_neg_rms_vs_an, proton_pos_mean_vs_an, proton_neg_mean_vs_an, proton_pos_rms_vs_an, proton_neg_rms_vs_an};
 
   TCanvas* c_main = NULL;
-  TGraphErrors * temp_graph = NULL;
+  TGraphErrors * pos_graph = NULL;
+  TGraphErrors * neg_graph = NULL;
   TLegend* leg = NULL;
   TLatex* t1 = NULL;
   float plot_xrange_lo = 0, plot_xrange_hi = 10;
