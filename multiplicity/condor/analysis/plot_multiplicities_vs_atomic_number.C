@@ -2,7 +2,7 @@ void plot_multiplicities_vs_atomic_number()
 {
 
   const int num_species = 8;
-  std::string dirs[num_species] = {"../ep_10_100/outfiles/merged.root", "../eD_18_110/outForPythiaMode/merged.root", "../eHe4_18_110/outForPythiaMode/merged.root", "../eC_18_110/outForPythiaMode/merged.root", "../eCa_18_110/outForPythiaMode/merged.root", "../eCu_18_110/outForPythiaMode/merged.root", "../eAu_18_110/outForPythiaMode/merged.root"};
+  std::string dirs[num_species] = {"../ep_10_100/output.root", "../eD_18_110/output.root", "../eHe4_18_110/output.root", "../eC_18_110/output.root", "../eCa_18_110/output.root", "../eCu_18_110/output.root", "../eAu_18_110/output.root"};
   double atomic_weight[num_species] = {1, 2, 4, 12, 36, 40, 63, 197};
 
   double kaon_pos_mean[num_species] = {0}, kaon_pos_mean_err[num_species] = {0};
