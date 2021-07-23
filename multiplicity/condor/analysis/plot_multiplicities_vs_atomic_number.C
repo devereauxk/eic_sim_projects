@@ -33,7 +33,7 @@ void print_arr(double * arr)
 }
 double* GetY(TGraph * graph)
 {
-  double ans[graph->GetN()];
+  double * ans = new double[graph->GetN()];
   cout << graph->GetN() << " n " << endl;
   for (int i = 0; i < graph->GetN(); i++) {
     ans[i] = graph->GetPointY(i);
