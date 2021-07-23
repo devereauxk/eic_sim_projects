@@ -1,4 +1,4 @@
-def plot_multiplicities_vs_atomic_number(const char * inFile)
+def plot_multiplicities_vs_atomic_number()
 {
 
   const int num_species = 8;
