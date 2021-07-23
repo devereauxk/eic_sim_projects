@@ -31,13 +31,13 @@ void print_arr(double * arr)
   }
   cout << "\n";
 }
-double GetY(TGraph * graph)
+double* GetY(TGraph * graph)
 {
   double ans[graph->GetN()];
   for (int i = 0; i < graph->GetN(); i++) {
     ans[i] = graph->GetPointY(i);
   }
-  return &ans;
+  return ans;
 }
 
 void plot_multiplicities_vs_atomic_number()
