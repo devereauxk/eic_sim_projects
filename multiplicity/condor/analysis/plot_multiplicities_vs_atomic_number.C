@@ -23,8 +23,8 @@ void plot_multiplicities_vs_atomic_number()
   std::string dir_str = NULL;
   char * dir_char = NULL;
   TFile * fin = NULL;
-  TH2D * h2d_kaon, h2d_pion, h2d_proton;
-  TH1D * h1d_kaon_pos, h1d_kaon_neg, h1d_pion_pos, h1d_pion_neg, h1d_proton_pos, h1d_proton_neg;
+  TH2D * h2d_kaon, *h2d_pion, *h2d_proton;
+  TH1D * h1d_kaon_pos, *h1d_kaon_neg, *h1d_pion_pos, *h1d_pion_neg, *h1d_proton_pos, *h1d_proton_neg;
   for (int i = 0; i < num_species; i++) {
     cout<<"processing " + dirs[i] + " ..."<<endl;
 
