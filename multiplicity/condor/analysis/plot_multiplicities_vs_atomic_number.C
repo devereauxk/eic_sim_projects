@@ -2,7 +2,7 @@ void plot_multiplicities_vs_atomic_number()
 {
 
   const int num_species = 8;
-  std::string dirs[num_species] = {"ep_10_100", "eD_18_110", "eHe4_18_110", "eC_18_110", "eCa_18_110", "eCu_18_110", "eAu_18_110"};
+  std::string dirs[num_species] = {"../ep_10_100/outfiles/merged.root", "../eD_18_110/outForPythiaMode/merged.root", "../eHe4_18_110/outForPythiaMode/merged.root", "../eC_18_110/outForPythiaMode/merged.root", "../eCa_18_110/outForPythiaMode/merged.root", "../eCu_18_110/outForPythiaMode/merged.root", "../eAu_18_110/outForPythiaMode/merged.root"};
   double atomic_weight[num_species] = {1, 2, 4, 12, 36, 40, 63, 197};
 
   double kaon_pos_mean[num_species] = {0}, kaon_pos_mean_err[num_species] = {0};
@@ -20,7 +20,6 @@ void plot_multiplicities_vs_atomic_number()
   double proton_pos_rms[num_species] = {0}, proton_pos_rms_err[num_species] = {0};
   double proton_neg_rms[num_species] = {0}, proton_neg_rms_err[num_species] = {0};
 
-  std::string dir_str;
   const char * dir_char;
   TFile * fin;
   TH2D * h2d_kaon, *h2d_pion, *h2d_proton;
@@ -28,8 +27,7 @@ void plot_multiplicities_vs_atomic_number()
   for (int i = 0; i < num_species; i++) {
     cout<<"processing " + dirs[i] + " ..."<<endl;
 
-    dir_str = "../" + dirs[i] + "/outForPythiaMode/merged.root", "read";
-    dir_char = dir_str.c_str();
+    dir_char = dirs[i].c_str();
     fin = new TFile(dir_char);
 
     h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
