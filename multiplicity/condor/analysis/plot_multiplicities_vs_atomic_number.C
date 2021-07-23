@@ -20,7 +20,7 @@ void plot_multiplicities_vs_atomic_number()
   double proton_pos_rms[num_species] = {0}, proton_pos_rms_err[num_species] = {0};
   double proton_neg_rms[num_species] = {0}, proton_neg_rms_err[num_species] = {0};
 
-  std::string dir_str = NULL;
+  std::string dir_str = "";
   char * dir_char = NULL;
   TFile * fin = NULL;
   TH2D * h2d_kaon, *h2d_pion, *h2d_proton;
