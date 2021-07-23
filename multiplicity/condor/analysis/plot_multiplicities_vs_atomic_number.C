@@ -121,7 +121,6 @@ void plot_multiplicities_vs_atomic_number()
     c_main->Range(0,0,1,1);
     c_main->SetLeftMargin(0.15);
     c_main->SetBottomMargin(0.1);
-    c_main->SetLogx();
 
     //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
     //plot_yrange_lo = 0, plot_yrange_hi = 4;
