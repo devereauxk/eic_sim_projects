@@ -136,8 +136,8 @@ void plot_multiplicities_vs_atomic_number()
     //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
     //plot_yrange_lo = 0, plot_yrange_hi = 4;
 
-    print_arr(pos_graph->GetY());
-    print_arr(neg_graph->GetY());
+    print_arr((double *) pos_graph->GetY());
+    print_arr((double *) neg_graph->GetY());
 
     plot_xrange_lo = 0;
     plot_xrange_hi = 220;
