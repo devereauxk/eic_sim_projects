@@ -112,20 +112,18 @@ void plot_multiplicities_vs_atomic_number()
   plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
 
   TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-  htemp.SetTitle("Kaon multiplicity");
+  htemp.SetTitle("Kaon multiplicity; mass number of A; average particle multiplicity [counts]");
   htemp.SetStats(0);
   htemp.Draw();
-  htemp.GetXaxis()->SetTitle("mass number of A");
-  htemp.GetYaxis()->SetTitle("average particle multiplicity [counts]");
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
 
   pos_graph->Draw("alp");
   neg_graph->Draw("alp");
 
-  leg = new TLegend(0.60, 0.70, 0.80, 0.80);
+  leg = new TLegend(0.65, 0.60, 0.80, 0.80);
   leg->SetBorderSize(0);
-  leg->SetTextSize(0.035);
+  leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->SetMargin(0.3);
   leg->AddEntry(pos_graph, "K^+", "l");
@@ -134,11 +132,11 @@ void plot_multiplicities_vs_atomic_number()
 
   t1 = new TLatex();
   t1->SetTextAlign(11);
-  t1->SetTextSize(0.045);
+  t1->SetTextSize(0.035);
   t1->SetTextColor(kBlack);
-  t1->DrawLatexNDC(0.4,0.85,"e + p @ 10 + 100 GeV");
-  t1->DrawLatexNDC(0.4,0.80,"e + A @ 18 + 110 Gev");
-  t1->DrawLatexNDC(0.4,0.75,"collisions per species: ~1E6");
+  t1->DrawLatexNDC(0.5,0.85,"e + p @ 10 + 100 GeV");
+  t1->DrawLatexNDC(0.5,0.82,"e + A @ 18 + 110 Gev");
+  t1->DrawLatexNDC(0.5,0.79,"collisions per species: ~1E6");
 
   c_main->cd(2);
   pos_graph = graph_arr[2];
