@@ -85,7 +85,7 @@ void plot_multiplicities_vs_atomic_number()
   float plot_yrange_lo = 0, plot_yrange_hi = 10;
 
   // kaon --------------------------------------------------------------------------------------------------
-  c_main = new TCanvas("c_main", "c_main", 1200, 2400);
+  c_main = new TCanvas("c_main", "c_main", 1200, 1800);
   c_main->Range(0,0,1,1);
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
@@ -112,7 +112,7 @@ void plot_multiplicities_vs_atomic_number()
   plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
   cout << plot_xrange_lo << plot_xrange_hi << plot_yrange_lo << plot_yrange_hi << endl;
 
-  TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+  TH2F htemp("htemp","Kaon multiplicity",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
   htemp.SetStats(0);
   htemp.Draw();
   htemp.GetXaxis()->SetTitle("mass number of A");
