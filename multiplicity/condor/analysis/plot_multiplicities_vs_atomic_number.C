@@ -112,6 +112,7 @@ void plot_multiplicities_vs_atomic_number()
   plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
 
   TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+  htemp.SetTitle("Kaon multiplicity")
   htemp.SetStats(0);
   htemp.Draw();
   htemp.GetXaxis()->SetTitle("mass number of A");
@@ -129,6 +130,7 @@ void plot_multiplicities_vs_atomic_number()
   leg->SetMargin(0.3);
   leg->AddEntry(pos_graph, "K^+", "l");
   leg->AddEntry(neg_graph, "K^-", "l");
+  leg->Draw();
 
   t1 = new TLatex();
   t1->SetTextAlign(11);
