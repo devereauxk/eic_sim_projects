@@ -85,7 +85,7 @@ void plot_multiplicities_vs_atomic_number()
   float plot_yrange_lo = 0, plot_yrange_hi = 10;
 
   // kaon --------------------------------------------------------------------------------------------------
-  c_main = new TCanvas("c_main", "c_main", 800, 800);
+  c_main = new TCanvas("c_main", "c_main", 1200, 1800);
   c_main->Range(0,0,1,1);
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
@@ -96,11 +96,15 @@ void plot_multiplicities_vs_atomic_number()
   pos_graph->SetMarkerColor(kRed);
   pos_graph->SetMarkerStyle(20);
   pos_graph->SetMarkerSize(1);
+  pos_graph->SetLineColor(kRed);
+  pos_graph->SetLineWidth(2);
 
   neg_graph = graph_arr[1];
   neg_graph->SetMarkerColor(kBlue);
   neg_graph->SetMarkerStyle(20);
   neg_graph->SetMarkerSize(1);
+  neg_graph->SetLineColor(kBlue);
+  neg_graph->SetLineWidth(2);
 
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
@@ -115,8 +119,8 @@ void plot_multiplicities_vs_atomic_number()
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
 
-  pos_graph->Draw("psame");
-  neg_graph->Draw("psame");
+  pos_graph->Draw("acp");
+  neg_graph->Draw("acp");
 
   leg = new TLegend(0.60, 0.70, 0.80, 0.80);
   leg->SetBorderSize(0);
@@ -132,6 +136,7 @@ void plot_multiplicities_vs_atomic_number()
   t1->SetTextColor(kBlack);
   t1->DrawLatexNDC(0.4,0.85,"e + p @ 10 + 100 GeV");
   t1->DrawLatexNDC(0.4,0.80,"e + A @ 18 + 110 Gev");
+  t1->DrawLatexNDC(0.4,0.80,"collisions per species: ~1E6");
 
   c_main->cd(2);
   pos_graph = graph_arr[2];
