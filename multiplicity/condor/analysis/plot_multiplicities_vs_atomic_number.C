@@ -143,9 +143,8 @@ void plot_multiplicities_vs_atomic_number()
 
   c_main->cd(2);
   mg = new TMultiGraph();
-  mg->SetTitle("Kaon multiplicity");
   mg->GetXaxis()->SetTitle("mass number of A");
-  mg->GetYaxis()->SetTitle("average particle multiplicity [counts]");
+  mg->GetYaxis()->SetTitle("particle multiplicity rms [counts]");
   mg->GetXaxis()->SetTitleOffset(1.3);
   mg->GetYaxis()->SetTitleOffset(1.5);
 
