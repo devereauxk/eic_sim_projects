@@ -174,4 +174,187 @@ void plot_multiplicities_vs_atomic_number()
 
   c_main->SaveAs( Form("kaon_vs_atomic_number.pdf") );
 
+
+
+  // pion --------------------------------------------------------------------------------------------------
+  c_main = new TCanvas("c_main", "c_main", 1200, 1800);
+  c_main->Range(0,0,1,1);
+  c_main->SetLeftMargin(0.15);
+  c_main->SetBottomMargin(0.1);
+  c_main->Divide(1,2);
+
+  c_main->cd(1);
+  mg = new TMultiGraph();
+  mg->SetTitle("Pion multiplicity");
+  mg->GetXaxis()->SetTitle("mass number of A");
+  mg->GetYaxis()->SetTitle("average particle multiplicity [counts]");
+  mg->GetXaxis()->SetTitleOffset(1.3);
+  mg->GetYaxis()->SetTitleOffset(1.5);
+
+  pos_graph = graph_arr[4];
+  pos_graph->SetMarkerColor(kRed);
+  //pos_graph->SetMarkerStyle(20);
+  //pos_graph->SetMarkerSize(1);
+  pos_graph->SetLineColor(kRed);
+  //pos_graph->SetLineWidth(2);
+  mg->Add(pos_graph);
+
+  neg_graph = graph_arr[5];
+  neg_graph->SetMarkerColor(kBlue);
+  //neg_graph->SetMarkerStyle(20);
+  //neg_graph->SetMarkerSize(1);
+  neg_graph->SetLineColor(kBlue);
+  //neg_graph->SetLineWidth(2);
+  mg->Add(neg_graph);
+
+  mg->Draw("ALP");
+  plot_xrange_lo = 0;
+  plot_xrange_hi = 220;
+  plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
+  plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
+  mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
+  mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
+
+  leg = new TLegend(0.3, 0.75, 0.50, 0.85);
+  leg->SetBorderSize(0);
+  leg->SetTextSize(0.040);
+  leg->SetFillStyle(0);
+  leg->SetMargin(0.3);
+  leg->AddEntry(pos_graph, "#pi^{+}", "l");
+  leg->AddEntry(neg_graph, "#pi^{-}", "l");
+  leg->Draw();
+
+  t1 = new TLatex();
+  t1->SetTextAlign(11);
+  t1->SetTextSize(0.040);
+  t1->SetTextColor(kBlack);
+  t1->DrawLatexNDC(0.5,0.85,"e + p @ 10 + 100 GeV");
+  t1->DrawLatexNDC(0.5,0.80,"e + A @ 18 + 110 Gev");
+  t1->DrawLatexNDC(0.5,0.75,"collisions per species: ~1E6");
+
+  c_main->cd(2);
+  mg = new TMultiGraph();
+  mg->GetXaxis()->SetTitle("mass number of A");
+  mg->GetYaxis()->SetTitle("particle multiplicity rms [counts]");
+  mg->GetXaxis()->SetTitleOffset(1.3);
+  mg->GetYaxis()->SetTitleOffset(1.5);
+
+  pos_graph = graph_arr[6];
+  pos_graph->SetMarkerColor(kRed);
+  //pos_graph->SetMarkerStyle(20);
+  //pos_graph->SetMarkerSize(1);
+  pos_graph->SetLineColor(kRed);
+  //pos_graph->SetLineWidth(2);
+  mg->Add(pos_graph);
+
+  neg_graph = graph_arr[7];
+  neg_graph->SetMarkerColor(kBlue);
+  //neg_graph->SetMarkerStyle(20);
+  //neg_graph->SetMarkerSize(1);
+  neg_graph->SetLineColor(kBlue);
+  //neg_graph->SetLineWidth(2);
+  mg->Add(neg_graph);
+
+  mg->Draw("ALP");
+  plot_xrange_lo = 0;
+  plot_xrange_hi = 220;
+  plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
+  plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
+  mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
+  mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
+
+  c_main->SaveAs( Form("pion_vs_atomic_number.pdf") );
+
+
+
+  // pion --------------------------------------------------------------------------------------------------
+  c_main = new TCanvas("c_main", "c_main", 1200, 1800);
+  c_main->Range(0,0,1,1);
+  c_main->SetLeftMargin(0.15);
+  c_main->SetBottomMargin(0.1);
+  c_main->Divide(1,2);
+
+  c_main->cd(1);
+  mg = new TMultiGraph();
+  mg->SetTitle("Proton multiplicity");
+  mg->GetXaxis()->SetTitle("mass number of A");
+  mg->GetYaxis()->SetTitle("average particle multiplicity [counts]");
+  mg->GetXaxis()->SetTitleOffset(1.3);
+  mg->GetYaxis()->SetTitleOffset(1.5);
+
+  pos_graph = graph_arr[8];
+  pos_graph->SetMarkerColor(kRed);
+  //pos_graph->SetMarkerStyle(20);
+  //pos_graph->SetMarkerSize(1);
+  pos_graph->SetLineColor(kRed);
+  //pos_graph->SetLineWidth(2);
+  mg->Add(pos_graph);
+
+  neg_graph = graph_arr[9];
+  neg_graph->SetMarkerColor(kBlue);
+  //neg_graph->SetMarkerStyle(20);
+  //neg_graph->SetMarkerSize(1);
+  neg_graph->SetLineColor(kBlue);
+  //neg_graph->SetLineWidth(2);
+  mg->Add(neg_graph);
+
+  mg->Draw("ALP");
+  plot_xrange_lo = 0;
+  plot_xrange_hi = 220;
+  plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
+  plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
+  mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
+  mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
+
+  leg = new TLegend(0.3, 0.75, 0.50, 0.85);
+  leg->SetBorderSize(0);
+  leg->SetTextSize(0.040);
+  leg->SetFillStyle(0);
+  leg->SetMargin(0.3);
+  leg->AddEntry(pos_graph, "proton", "l");
+  leg->AddEntry(neg_graph, "antiproton", "l");
+  leg->Draw();
+
+  t1 = new TLatex();
+  t1->SetTextAlign(11);
+  t1->SetTextSize(0.040);
+  t1->SetTextColor(kBlack);
+  t1->DrawLatexNDC(0.5,0.85,"e + p @ 10 + 100 GeV");
+  t1->DrawLatexNDC(0.5,0.80,"e + A @ 18 + 110 Gev");
+  t1->DrawLatexNDC(0.5,0.75,"collisions per species: ~1E6");
+
+  c_main->cd(2);
+  mg = new TMultiGraph();
+  mg->GetXaxis()->SetTitle("mass number of A");
+  mg->GetYaxis()->SetTitle("particle multiplicity rms [counts]");
+  mg->GetXaxis()->SetTitleOffset(1.3);
+  mg->GetYaxis()->SetTitleOffset(1.5);
+
+  pos_graph = graph_arr[10];
+  pos_graph->SetMarkerColor(kRed);
+  //pos_graph->SetMarkerStyle(20);
+  //pos_graph->SetMarkerSize(1);
+  pos_graph->SetLineColor(kRed);
+  //pos_graph->SetLineWidth(2);
+  mg->Add(pos_graph);
+
+  neg_graph = graph_arr[11];
+  neg_graph->SetMarkerColor(kBlue);
+  //neg_graph->SetMarkerStyle(20);
+  //neg_graph->SetMarkerSize(1);
+  neg_graph->SetLineColor(kBlue);
+  //neg_graph->SetLineWidth(2);
+  mg->Add(neg_graph);
+
+  mg->Draw("ALP");
+  plot_xrange_lo = 0;
+  plot_xrange_hi = 220;
+  plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
+  plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
+  mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
+  mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
+
+  c_main->SaveAs( Form("proton_vs_atomic_number.pdf") );
+
+
 }
