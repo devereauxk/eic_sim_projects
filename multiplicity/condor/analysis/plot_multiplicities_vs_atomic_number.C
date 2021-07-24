@@ -122,7 +122,7 @@ void plot_multiplicities_vs_atomic_number()
   pos_graph->Draw("alp");
   neg_graph->Draw("alp");
 
-  leg = new TLegend(0.60, 0.70, 0.80, 0.80);
+  leg = new TLegend(0.25, 0.75, 0.50, 0.90);
   leg->SetBorderSize(0);
   leg->SetTextSize(0.040);
   leg->SetFillStyle(0);
@@ -154,6 +154,8 @@ void plot_multiplicities_vs_atomic_number()
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
   plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
+  cout << plot_xrange_lo << plot_xrange_hi << plot_yrange_lo << plot_yrange_hi << endl;
+
 
   TH2F htemp2("htemp2","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
   htemp2.SetStats(0);
