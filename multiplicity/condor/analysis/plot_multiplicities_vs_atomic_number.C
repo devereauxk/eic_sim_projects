@@ -306,7 +306,7 @@ void plot_multiplicities_vs_atomic_number()
   mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
   mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-  leg = new TLegend(0.3, 0.60, 0.50, 0.80);
+  leg = new TLegend(0.60, 0.30, 0.80, 0.40);
   leg->SetBorderSize(0);
   leg->SetTextSize(0.040);
   leg->SetFillStyle(0);
