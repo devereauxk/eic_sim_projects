@@ -149,13 +149,13 @@ void plot_multiplicities_vs_atomic_number()
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
   plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
 
-  TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-  htemp.SetStats(0);
-  htemp.Draw();
-  htemp.GetXaxis()->SetTitle("mass number of A");
-  htemp.GetYaxis()->SetTitle("particle multiplicity rms [counts]");
-  htemp.GetXaxis()->SetTitleOffset(1.3);
-  htemp.GetYaxis()->SetTitleOffset(1.5);
+  TH2F htemp2("htemp2","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+  htemp2.SetStats(0);
+  htemp2.Draw();
+  htemp2.GetXaxis()->SetTitle("mass number of A");
+  htemp2.GetYaxis()->SetTitle("particle multiplicity rms [counts]");
+  htemp2.GetXaxis()->SetTitleOffset(1.3);
+  htemp2.GetYaxis()->SetTitleOffset(1.5);
 
   pos_graph->Draw("psame");
   neg_graph->Draw("psame");
