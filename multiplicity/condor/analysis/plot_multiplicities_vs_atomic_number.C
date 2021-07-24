@@ -102,18 +102,18 @@ void plot_multiplicities_vs_atomic_number()
 
   pos_graph = graph_arr[0];
   pos_graph->SetMarkerColor(kRed);
-  pos_graph->SetMarkerStyle(20);
-  pos_graph->SetMarkerSize(1);
+  //pos_graph->SetMarkerStyle(20);
+  //pos_graph->SetMarkerSize(1);
   pos_graph->SetLineColor(kRed);
-  pos_graph->SetLineWidth(2);
+  //pos_graph->SetLineWidth(2);
   mg->Add(pos_graph);
 
   neg_graph = graph_arr[1];
   neg_graph->SetMarkerColor(kBlue);
-  neg_graph->SetMarkerStyle(20);
-  neg_graph->SetMarkerSize(1);
+  //neg_graph->SetMarkerStyle(20);
+  //neg_graph->SetMarkerSize(1);
   neg_graph->SetLineColor(kBlue);
-  neg_graph->SetLineWidth(2);
+  //neg_graph->SetLineWidth(2);
   mg->Add(neg_graph);
 
   mg->Draw("ALP");
