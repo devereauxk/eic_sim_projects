@@ -142,31 +142,36 @@ void plot_multiplicities_vs_atomic_number()
   t1->DrawLatexNDC(0.5,0.75,"collisions per species: ~1E6");
 
   c_main->cd(2);
+  mg = new TMultiGraph();
+  mg->SetTitle("Kaon multiplicity");
+  mg->GetXaxis()->SetTitle("mass number of A");
+  mg->GetYaxis()->SetTitle("average particle multiplicity [counts]");
+  mg->GetXaxis()->SetTitleOffset(1.3);
+  mg->GetYaxis()->SetTitleOffset(1.5);
+
   pos_graph = graph_arr[2];
   pos_graph->SetMarkerColor(kRed);
-  pos_graph->SetMarkerStyle(20);
-  pos_graph->SetMarkerSize(1);
+  //pos_graph->SetMarkerStyle(20);
+  //pos_graph->SetMarkerSize(1);
+  pos_graph->SetLineColor(kRed);
+  //pos_graph->SetLineWidth(2);
+  mg->Add(pos_graph);
 
   neg_graph = graph_arr[3];
   neg_graph->SetMarkerColor(kBlue);
-  neg_graph->SetMarkerStyle(20);
-  neg_graph->SetMarkerSize(1);
+  //neg_graph->SetMarkerStyle(20);
+  //neg_graph->SetMarkerSize(1);
+  neg_graph->SetLineColor(kBlue);
+  //neg_graph->SetLineWidth(2);
+  mg->Add(neg_graph);
 
+  mg->Draw("ALP");
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
   plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
-
-  TH2F htemp2("htemp2","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-  htemp2.SetStats(0);
-  htemp2.Draw();
-  htemp2.GetXaxis()->SetTitle("mass number of A");
-  htemp2.GetYaxis()->SetTitle("particle multiplicity rms [counts]");
-  htemp2.GetXaxis()->SetTitleOffset(1.3);
-  htemp2.GetYaxis()->SetTitleOffset(1.5);
-
-  pos_graph->Draw("psame");
-  neg_graph->Draw("psame");
+  mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
+  mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
   c_main->SaveAs( Form("kaon_vs_atomic_number.pdf") );
 
