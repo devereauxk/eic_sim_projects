@@ -85,7 +85,7 @@ void plot_multiplicities_vs_atomic_number()
   float plot_yrange_lo = 0, plot_yrange_hi = 10;
 
   // kaon --------------------------------------------------------------------------------------------------
-  c_main = new TCanvas("c_main", "c_main", 1200, 1800);
+  c_main = new TCanvas("c_main", "c_main", 1200, 2400);
   c_main->Range(0,0,1,1);
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
