@@ -83,6 +83,7 @@ void plot_multiplicities_vs_atomic_number()
   TLatex* t1;
   float plot_xrange_lo = 0, plot_xrange_hi = 10;
   float plot_yrange_lo = 0, plot_yrange_hi = 10;
+  TMultiGraph * mg;
 
   // kaon --------------------------------------------------------------------------------------------------
   c_main = new TCanvas("c_main", "c_main", 1200, 1800);
@@ -92,33 +93,37 @@ void plot_multiplicities_vs_atomic_number()
   c_main->Divide(1,2);
 
   c_main->cd(1);
+  mg = new TMultiGraph();
+  mg->SetStats(0);
+  mg->SetTitle("Kaon multiplicity");
+  mg->GetXaxis()->SetTitle("mass number of A");
+  mg->GetYaxis()->SetTitle("average particle multiplicity [counts]");
+  mg->GetXaxis()->SetTitleOffset(1.3);
+  mg->GetYaxis()->SetTitleOffset(1.5);
+  
   pos_graph = graph_arr[0];
-  neg_graph = graph_arr[1];
-  plot_xrange_lo = 0;
-  plot_xrange_hi = 220;
-  plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
-  plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
-  TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-  htemp.SetStats(0);
-  htemp.Draw();
-  htemp.GetXaxis()->SetTitle("mass number of A");
-  htemp.GetYaxis()->SetTitle("average particle multiplicity [counts]");
-  htemp.GetXaxis()->SetTitleOffset(1.3);
-  htemp.GetYaxis()->SetTitleOffset(1.5);
-
   pos_graph->SetMarkerColor(kRed);
   pos_graph->SetMarkerStyle(20);
   pos_graph->SetMarkerSize(1);
   pos_graph->SetLineColor(kRed);
   pos_graph->SetLineWidth(2);
-  pos_graph->Draw("psame");
+  mg->Add(pos_graph);
 
+  neg_graph = graph_arr[1];
   neg_graph->SetMarkerColor(kBlue);
   neg_graph->SetMarkerStyle(20);
   neg_graph->SetMarkerSize(1);
   neg_graph->SetLineColor(kBlue);
   neg_graph->SetLineWidth(2);
-  neg_graph->Draw("psame");
+  mg->Add(neg_graph);
+
+  mg->Draw("ALP");
+  plot_xrange_lo = 0;
+  plot_xrange_hi = 220;
+  plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
+  plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
+  mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
+  mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
   leg = new TLegend(0.3, 0.75, 0.50, 0.85);
   leg->SetBorderSize(0);
