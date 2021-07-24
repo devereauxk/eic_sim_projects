@@ -120,8 +120,8 @@ void plot_multiplicities_vs_atomic_number()
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
 
-  pos_graph->Draw("alp");
-  neg_graph->Draw("alp");
+  pos_graph->Draw("ap");
+  neg_graph->Draw("ap");
 
   leg = new TLegend(0.3, 0.75, 0.50, 0.85);
   leg->SetBorderSize(0);
@@ -164,8 +164,8 @@ void plot_multiplicities_vs_atomic_number()
   htemp2.GetXaxis()->SetTitleOffset(1.3);
   htemp2.GetYaxis()->SetTitleOffset(1.5);
 
-  pos_graph->Draw("alp");
-  neg_graph->Draw("alp");
+  pos_graph->Draw("ap");
+  neg_graph->Draw("ap");
 
   c_main->SaveAs( Form("kaon_vs_atomic_number.pdf") );
 
