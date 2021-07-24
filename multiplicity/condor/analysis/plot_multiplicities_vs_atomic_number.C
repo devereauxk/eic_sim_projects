@@ -119,8 +119,8 @@ void plot_multiplicities_vs_atomic_number()
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
 
-  pos_graph->Draw("acp");
-  neg_graph->Draw("acp");
+  pos_graph->Draw("alp");
+  neg_graph->Draw("alp");
 
   leg = new TLegend(0.60, 0.70, 0.80, 0.80);
   leg->SetBorderSize(0);
@@ -136,7 +136,7 @@ void plot_multiplicities_vs_atomic_number()
   t1->SetTextColor(kBlack);
   t1->DrawLatexNDC(0.4,0.85,"e + p @ 10 + 100 GeV");
   t1->DrawLatexNDC(0.4,0.80,"e + A @ 18 + 110 Gev");
-  t1->DrawLatexNDC(0.4,0.80,"collisions per species: ~1E6");
+  t1->DrawLatexNDC(0.4,0.75,"collisions per species: ~1E6");
 
   c_main->cd(2);
   pos_graph = graph_arr[2];
