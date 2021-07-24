@@ -92,6 +92,8 @@ void plot_multiplicities_vs_atomic_number()
   c_main->Divide(1,2);
 
   c_main->cd(1);
+  pos_graph = graph_arr[0];
+  neg_graph = graph_arr[1];
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
@@ -104,7 +106,6 @@ void plot_multiplicities_vs_atomic_number()
   htemp.GetXaxis()->SetTitleOffset(1.3);
   htemp.GetYaxis()->SetTitleOffset(1.5);
 
-  pos_graph = graph_arr[0];
   pos_graph->SetMarkerColor(kRed);
   pos_graph->SetMarkerStyle(20);
   pos_graph->SetMarkerSize(1);
@@ -112,7 +113,6 @@ void plot_multiplicities_vs_atomic_number()
   pos_graph->SetLineWidth(2);
   pos_graph->Draw("psame");
 
-  neg_graph = graph_arr[1];
   neg_graph->SetMarkerColor(kBlue);
   neg_graph->SetMarkerStyle(20);
   neg_graph->SetMarkerSize(1);
