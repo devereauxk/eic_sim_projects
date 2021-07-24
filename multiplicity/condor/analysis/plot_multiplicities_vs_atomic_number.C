@@ -1,46 +1,3 @@
-double min_arr(double * arr)
-{
-  double ans = arr[0];
-  int length = sizeof(arr) / sizeof(double);
-  for (int i = 0; i < length; i++) {
-    if (arr[i] < ans) {
-      ans = arr[i];
-    }
-  }
-  return ans;
-}
-double max_arr(double * arr)
-{
-  double ans = arr[0];
-  int length = sizeof(arr) / sizeof(double);
-  for (int i = 0; i < length; i++) {
-    if (arr[i] > ans) {
-      ans = arr[i];
-    }
-  }
-  return ans;
-}
-void print_arr(double * arr)
-{
-  int length = sizeof(arr) / sizeof(double);
-  cout << length << endl;
-  cout << sizeof(arr) << endl;
-  cout << sizeof(double) << endl;
-  for (int i = 0; i < length; i++) {
-    cout << arr[i] << " ";
-  }
-  cout << "\n";
-}
-double* GetY(TGraph * graph)
-{
-  double * ans = new double[graph->GetN()];
-  cout << graph->GetN() << " n " << endl;
-  for (int i = 0; i < graph->GetN(); i++) {
-    ans[i] = graph->GetPointY(i);
-  }
-  return ans;
-}
-
 void plot_multiplicities_vs_atomic_number()
 {
 
@@ -122,64 +79,87 @@ void plot_multiplicities_vs_atomic_number()
   TCanvas* c_main;
   TGraphErrors * pos_graph;
   TGraphErrors * neg_graph;
-  double * pos_arr;
-  double * neg_arr;
   TLegend* leg;
   TLatex* t1;
   float plot_xrange_lo = 0, plot_xrange_hi = 10;
   float plot_yrange_lo = 0, plot_yrange_hi = 10;
-  for (int i = 0; i < 12; i += 2) {
-    pos_graph = graph_arr[i];
-    pos_graph->SetMarkerColor(kRed);
-    pos_graph->SetMarkerStyle(20);
-    pos_graph->SetMarkerSize(1);
 
-    neg_graph = graph_arr[i+1];
-    neg_graph->SetMarkerColor(kBlue);
-    neg_graph->SetMarkerStyle(20);
-    neg_graph->SetMarkerSize(1);
+  // kaon --------------------------------------------------------------------------------------------------
+  c_main = new TCanvas("c_main", "c_main", 800, 800);
+  c_main->Range(0,0,1,1);
+  c_main->SetLeftMargin(0.15);
+  c_main->SetBottomMargin(0.1);
+  c_main->Divide(1,2);
 
-    c_main = new TCanvas("c_main", "c_main", 800, 800);
-    c_main->Range(0,0,1,1);
-    c_main->SetLeftMargin(0.15);
-    c_main->SetBottomMargin(0.1);
+  c_main->cd(1);
+  pos_graph = graph_arr[0];
+  pos_graph->SetMarkerColor(kRed);
+  pos_graph->SetMarkerStyle(20);
+  pos_graph->SetMarkerSize(1);
 
-    //plot_xrange_lo = eta_lo[0]-0.5, plot_xrange_hi = eta_hi[etabin-1]+0.5;
-    //plot_yrange_lo = 0, plot_yrange_hi = 4;
+  neg_graph = graph_arr[1];
+  neg_graph->SetMarkerColor(kBlue);
+  neg_graph->SetMarkerStyle(20);
+  neg_graph->SetMarkerSize(1);
 
-    plot_xrange_lo = 0;
-    plot_xrange_hi = 220;
-    plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
-    plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
+  plot_xrange_lo = 0;
+  plot_xrange_hi = 220;
+  plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
+  plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
 
-    TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-    htemp.SetStats(0);
-    htemp.Draw();
-    htemp.GetXaxis()->SetTitle("mass number");
-    htemp.GetYaxis()->SetTitle("average particle multiplicity [counts]");
-    htemp.GetXaxis()->SetTitleOffset(1.3);
-    htemp.GetYaxis()->SetTitleOffset(1.5);
+  TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+  htemp.SetStats(0);
+  htemp.Draw();
+  htemp.GetXaxis()->SetTitle("mass number of A");
+  htemp.GetYaxis()->SetTitle("average particle multiplicity [counts]");
+  htemp.GetXaxis()->SetTitleOffset(1.3);
+  htemp.GetYaxis()->SetTitleOffset(1.5);
 
-    pos_graph->Draw("psame");
-    neg_graph->Draw("psame");
+  pos_graph->Draw("psame");
+  neg_graph->Draw("psame");
 
-    leg = new TLegend(0.60, 0.70, 0.80, 0.80);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.035);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.3);
-    leg->AddEntry(pos_graph, "positive particle", "l");
-    leg->AddEntry(neg_graph, "negative particle", "l");
+  leg = new TLegend(0.60, 0.70, 0.80, 0.80);
+  leg->SetBorderSize(0);
+  leg->SetTextSize(0.035);
+  leg->SetFillStyle(0);
+  leg->SetMargin(0.3);
+  leg->AddEntry(pos_graph, "K^+", "l");
+  leg->AddEntry(neg_graph, "K^-", "l");
 
-    /*
-    t1 = new TLatex();
-    t1->SetTextAlign(11);
-    t1->SetTextSize(0.035);
-    t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
-    */
-    c_main->SaveAs( Form("multiplicity_vs_atomic_mass_%d.pdf", i/2) );
+  t1 = new TLatex();
+  t1->SetTextAlign(11);
+  t1->SetTextSize(0.045);
+  t1->SetTextColor(kBlack);
+  t1->DrawLatexNDC(0.4,0.85,"e + p @ 10 + 100 GeV");
+  t1->DrawLatexNDC(0.4,0.80,"e + A @ 18 + 110 Gev");
 
-  }
+  c_main->cd(2);
+  pos_graph = graph_arr[2];
+  pos_graph->SetMarkerColor(kRed);
+  pos_graph->SetMarkerStyle(20);
+  pos_graph->SetMarkerSize(1);
+
+  neg_graph = graph_arr[3];
+  neg_graph->SetMarkerColor(kBlue);
+  neg_graph->SetMarkerStyle(20);
+  neg_graph->SetMarkerSize(1);
+
+  plot_xrange_lo = 0;
+  plot_xrange_hi = 220;
+  plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
+  plot_yrange_hi = max(TMath::MaxElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MaxElement(neg_graph->GetN(),neg_graph->GetY())) * 1.08;
+
+  TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+  htemp.SetStats(0);
+  htemp.Draw();
+  htemp.GetXaxis()->SetTitle("mass number of A");
+  htemp.GetYaxis()->SetTitle("particle multiplicity rms [counts]");
+  htemp.GetXaxis()->SetTitleOffset(1.3);
+  htemp.GetYaxis()->SetTitleOffset(1.5);
+
+  pos_graph->Draw("psame");
+  neg_graph->Draw("psame");
+
+  c_main->SaveAs( Form("kaon_vs_atomic_number.pdf") );
 
 }
