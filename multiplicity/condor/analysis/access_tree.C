@@ -46,7 +46,7 @@ void access_tree(const char* outFile)
     //loop over events
     for (int j = 0; j < nEntries; j++) {
 
-      tree->GetEntry(i);
+      tree->GetEntry(j);
 
       //Get Total Number of Particles
       nParticles = event->GetNTracks();
@@ -54,7 +54,7 @@ void access_tree(const char* outFile)
       //Loop Over Each Particle
       for(int k = 0; k < nParticles; k++) {
 
-        particle = event->GetTrack(j);
+        particle = event->GetTrack(k);
         status = (Int_t) particle->GetStatus(); //Can also do particle->KS
         id = (Int_t) particle->Id();
         pT = (Double_t) particle->GetPt();
