@@ -5,10 +5,15 @@ echo "Running analysis!!!"
 echo "..."
 echo ""
 
-echo "Running plot_multiplicities_vs_atomic_number ... "
-root -l -b -q 'plot_multiplicities_vs_atomic_number.C()'
+
+echo "Making Output ROOT File with histogram data for events..."
+root -l -b -q 'access_tree.C("output.root")'
 echo "-----------------------------------"
 echo ""
 
+#echo "Printing histograms for events..."
+#root -l -b -q 'plot_histogram.C("output.root")'
+#echo "-----------------------------------"
+#echo ""
 
 echo "Done!!!"
