@@ -12,7 +12,7 @@ void access_tree_pt_eta_TH2Ds()
   //Particle Class
   erhic::ParticleMC *particle(NULL); //Also use Pointer
 
-  int num_species = 7;
+  const int num_species = 7;
   std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
 
   TH2D * pt_vs_eta_kaon;
