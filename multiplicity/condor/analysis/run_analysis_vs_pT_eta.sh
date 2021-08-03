@@ -7,7 +7,7 @@ echo ""
 
 
 echo "Making Output ROOT File with histogram data for events..."
-root -l -b -q 'access_tree.C("output.root")'
+root -l -b -q 'access_tree_pt_eta_TH2Ds.C()'
 echo "-----------------------------------"
 echo ""
 

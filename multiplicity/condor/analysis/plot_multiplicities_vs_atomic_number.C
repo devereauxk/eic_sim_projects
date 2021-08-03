@@ -91,6 +91,7 @@ void plot_multiplicities_vs_atomic_number()
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
   c_main->Divide(1,2);
+  c_main->SetLogx();
 
   c_main->cd(1);
   mg = new TMultiGraph();
@@ -102,7 +103,7 @@ void plot_multiplicities_vs_atomic_number()
 
   pos_graph = graph_arr[0];
   pos_graph->SetMarkerColor(kRed);
-  //pos_graph->SetMarkerStyle(20);
+  pos_graph->SetMarkerStyle(20);
   //pos_graph->SetMarkerSize(1);
   pos_graph->SetLineColor(kRed);
   //pos_graph->SetLineWidth(2);
@@ -110,7 +111,7 @@ void plot_multiplicities_vs_atomic_number()
 
   neg_graph = graph_arr[1];
   neg_graph->SetMarkerColor(kBlue);
-  //neg_graph->SetMarkerStyle(20);
+  neg_graph->SetMarkerStyle(20);
   //neg_graph->SetMarkerSize(1);
   neg_graph->SetLineColor(kBlue);
   //neg_graph->SetLineWidth(2);
@@ -150,7 +151,7 @@ void plot_multiplicities_vs_atomic_number()
 
   pos_graph = graph_arr[2];
   pos_graph->SetMarkerColor(kRed);
-  //pos_graph->SetMarkerStyle(20);
+  pos_graph->SetMarkerStyle(20);
   //pos_graph->SetMarkerSize(1);
   pos_graph->SetLineColor(kRed);
   //pos_graph->SetLineWidth(2);
@@ -158,7 +159,7 @@ void plot_multiplicities_vs_atomic_number()
 
   neg_graph = graph_arr[3];
   neg_graph->SetMarkerColor(kBlue);
-  //neg_graph->SetMarkerStyle(20);
+  neg_graph->SetMarkerStyle(20);
   //neg_graph->SetMarkerSize(1);
   neg_graph->SetLineColor(kBlue);
   //neg_graph->SetLineWidth(2);
@@ -182,6 +183,7 @@ void plot_multiplicities_vs_atomic_number()
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
   c_main->Divide(1,2);
+  c_main->SetLogx();
 
   c_main->cd(1);
   mg = new TMultiGraph();
@@ -193,7 +195,7 @@ void plot_multiplicities_vs_atomic_number()
 
   pos_graph = graph_arr[4];
   pos_graph->SetMarkerColor(kRed);
-  //pos_graph->SetMarkerStyle(20);
+  pos_graph->SetMarkerStyle(20);
   //pos_graph->SetMarkerSize(1);
   pos_graph->SetLineColor(kRed);
   //pos_graph->SetLineWidth(2);
@@ -201,7 +203,7 @@ void plot_multiplicities_vs_atomic_number()
 
   neg_graph = graph_arr[5];
   neg_graph->SetMarkerColor(kBlue);
-  //neg_graph->SetMarkerStyle(20);
+  neg_graph->SetMarkerStyle(20);
   //neg_graph->SetMarkerSize(1);
   neg_graph->SetLineColor(kBlue);
   //neg_graph->SetLineWidth(2);
@@ -241,7 +243,7 @@ void plot_multiplicities_vs_atomic_number()
 
   pos_graph = graph_arr[6];
   pos_graph->SetMarkerColor(kRed);
-  //pos_graph->SetMarkerStyle(20);
+  pos_graph->SetMarkerStyle(20);
   //pos_graph->SetMarkerSize(1);
   pos_graph->SetLineColor(kRed);
   //pos_graph->SetLineWidth(2);
@@ -249,7 +251,7 @@ void plot_multiplicities_vs_atomic_number()
 
   neg_graph = graph_arr[7];
   neg_graph->SetMarkerColor(kBlue);
-  //neg_graph->SetMarkerStyle(20);
+  neg_graph->SetMarkerStyle(20);
   //neg_graph->SetMarkerSize(1);
   neg_graph->SetLineColor(kBlue);
   //neg_graph->SetLineWidth(2);
@@ -273,6 +275,7 @@ void plot_multiplicities_vs_atomic_number()
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
   c_main->Divide(1,2);
+  c_main->SetLogx();
 
   c_main->cd(1);
   mg = new TMultiGraph();
@@ -284,7 +287,7 @@ void plot_multiplicities_vs_atomic_number()
 
   pos_graph = graph_arr[8];
   pos_graph->SetMarkerColor(kRed);
-  //pos_graph->SetMarkerStyle(20);
+  pos_graph->SetMarkerStyle(20);
   //pos_graph->SetMarkerSize(1);
   pos_graph->SetLineColor(kRed);
   //pos_graph->SetLineWidth(2);
@@ -292,7 +295,7 @@ void plot_multiplicities_vs_atomic_number()
 
   neg_graph = graph_arr[9];
   neg_graph->SetMarkerColor(kBlue);
-  //neg_graph->SetMarkerStyle(20);
+  neg_graph->SetMarkerStyle(20);
   //neg_graph->SetMarkerSize(1);
   neg_graph->SetLineColor(kBlue);
   //neg_graph->SetLineWidth(2);
@@ -332,7 +335,7 @@ void plot_multiplicities_vs_atomic_number()
 
   pos_graph = graph_arr[10];
   pos_graph->SetMarkerColor(kRed);
-  //pos_graph->SetMarkerStyle(20);
+  pos_graph->SetMarkerStyle(20);
   //pos_graph->SetMarkerSize(1);
   pos_graph->SetLineColor(kRed);
   //pos_graph->SetLineWidth(2);
@@ -340,7 +343,7 @@ void plot_multiplicities_vs_atomic_number()
 
   neg_graph = graph_arr[11];
   neg_graph->SetMarkerColor(kBlue);
-  //neg_graph->SetMarkerStyle(20);
+  neg_graph->SetMarkerStyle(20);
   //neg_graph->SetMarkerSize(1);
   neg_graph->SetLineColor(kBlue);
   //neg_graph->SetLineWidth(2);
