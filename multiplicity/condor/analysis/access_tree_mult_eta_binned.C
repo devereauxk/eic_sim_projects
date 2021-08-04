@@ -1,4 +1,10 @@
 R__LOAD_LIBRARY(libeicsmear);
+void zero_array(Int_t arr)
+{
+  for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
+    arr[i] = 0;
+  }
+}
 void access_tree_mult_eta_binned()
 {
   // run with root -l 'access_tree("sim_dir/sim_output.root", "histogram_dir/output.root")'
@@ -70,12 +76,12 @@ void access_tree_mult_eta_binned()
     //loop over events
     for (int j = 0; j < nEntries; j++) {
 
-      std::fill(std::begin(nPosKaons), std::end(nPosKaons), 0);
-      std::fill(std::begin(nNegKaons), std::end(nNegKaons), 0);
-      std::fill(std::begin(nPosPions), std::end(nPosPions), 0);
-      std::fill(std::begin(nNegPions), std::end(nNegPions), 0);
-      std::fill(std::begin(nProtons), std::end(nProtons), 0);
-      std::fill(std::begin(nAntiProtons), std::end(nAntiProtons), 0);
+      Int_t nPosKaons[etabin] = {0};
+      Int_t nNegKaons[etabin] = {0};
+      Int_t nPosPions[etabin] = {0};
+      Int_t nNegPions[etabin] = {0};
+      Int_t nProtons[etabin] = {0};
+      Int_t nAntiProtons[etabin] = {0};
 
       tree->GetEntry(j);
 
