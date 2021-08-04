@@ -33,12 +33,12 @@ void access_tree_mult_eta_binned()
   Int_t id;
   Int_t status;
   Double_t eta;
-  Int_t nPosKaons;
-  Int_t nNegKaons;
-  Int_t nPosPions;
-  Int_t nNegPions;
-  Int_t nProtons;
-  Int_t nAntiProtons;
+  Int_t nPosKaons[etabin] = {0};
+  Int_t nNegKaons[etabin] = {0};
+  Int_t nPosPions[etabin] = {0};
+  Int_t nNegPions[etabin] = {0};
+  Int_t nProtons[etabin] = {0};
+  Int_t nAntiProtons[etabin] = {0};
 
   //loop over each merged.root file
   for (int i = 0; i < num_species; i++) {
@@ -70,12 +70,12 @@ void access_tree_mult_eta_binned()
     //loop over events
     for (int j = 0; j < nEntries; j++) {
 
-      nPosKaons = {0};
-      nNegKaons = {0};
-      nPosPions = {0};
-      nNegPions = {0};
-      nProtons = {0};
-      nAntiProtons = {0};
+      std::fill(std::begin(nPosKaons), std::end(nPosKaons), 0);
+      std::fill(std::begin(nNegKaons), std::end(nNegKaons), 0);
+      std::fill(std::begin(nPosPions), std::end(nPosPions), 0);
+      std::fill(std::begin(nNegPions), std::end(nNegPions), 0);
+      std::fill(std::begin(nProtons), std::end(nProtons), 0);
+      std::fill(std::begin(nAntiProtons), std::end(nAntiProtons), 0);
 
       tree->GetEntry(j);
 
