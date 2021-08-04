@@ -1,5 +1,5 @@
 R__LOAD_LIBRARY(libeicsmear);
-void access_tree_pt_eta_TH2Ds()
+void access_tree_mult_eta_binned()
 {
   // run with root -l 'access_tree("sim_dir/sim_output.root", "histogram_dir/output.root")'
   // arg: inFile: directory + filename of .root file outputed from sim
@@ -15,9 +15,12 @@ void access_tree_pt_eta_TH2Ds()
   const int num_species = 7;
   std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
 
-  TH2D * pt_vs_eta_kaon;
-  TH2D * pt_vs_eta_pion;
-  TH2D * pt_vs_eta_proton;
+  const int etabin = 3;
+  const double eta_lo[etabin] = {-3, -1, 1};
+  const double eta_hi[etabin] = {-1, 1, 3};
+  TH1D * kaon[etabin];
+  TH1D * pion[etabin];
+  TH1D * proton[etabin];
 
   //loop over files
   TFile *f;
@@ -29,8 +32,13 @@ void access_tree_pt_eta_TH2Ds()
   Int_t nParticles(0);
   Int_t id;
   Int_t status;
-  Double_t pT;
   Double_t eta;
+  Int_t nPosKaons[etabin];
+  Int_t nNegKaons[etabin];
+  Int_t nPosPions[etabin];
+  Int_t nNegPions[etabin];
+  Int_t nProtons[etabin];
+  Int_t nAntiProtons[etabin];
 
   //loop over each merged.root file
   for (int i = 0; i < num_species; i++) {
@@ -46,19 +54,28 @@ void access_tree_pt_eta_TH2Ds()
     tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
     //load new out file
-    outFile = dirs[i] + "pt_eta_TH2Ds.root";
+    outFile = dirs[i] + "mult_eta_binned.root";
     fout = new TFile(outFile.c_str(), "recreate");
 
-    //Initialize new histogram
-    pt_vs_eta_kaon = new TH2D("pt_vs_eta_kaon", "particle multiplicity, pt vs eta, kaon", 100, 0, 20, 3, -3, 3);
-    pt_vs_eta_kaon->Sumw2();
-    pt_vs_eta_pion = new TH2D("pt_vs_eta_pion", "particle multiplicity, pt vs eta, pion", 100, 0, 20, 3, -3, 3);
-    pt_vs_eta_pion->Sumw2();
-    pt_vs_eta_proton = new TH2D("pt_vs_eta_proton", "particle multiplicity, pt vs eta, proton", 100, 0, 20, 3, -3, 3);
-    pt_vs_eta_proton->Sumw2();
+    //Initialize new histograms
+    for (int ieta = 0; ieta < etabin, ieta++) {
+      kaon[ieta] = new TH2D("h2d_kaon","charged kaon multiplicity",12,-0.5,11.5,12,-0.5,11.5);
+      kaon[ieta]->Sumw2();
+      pion[ieta] = new TH2D("h2d_pion","charged pion multiplicity",25,-0.5,24.5,25,-0.5,24.5);
+      pion[ieta]->Sumw2();
+      proton[ieta] = new TH2D("h2d_proton","proton/antiproton multiplicity",15, -0.5, 14.5, 15, -0.5, 14.5);
+      proton[ieta]->Sumw2();
+    }
 
     //loop over events
     for (int j = 0; j < nEntries; j++) {
+
+      nPosKaons = {0, 0, 0};
+      nNegKaons = {0, 0, 0};
+      nPosPions = {0, 0, 0};
+      nNegPions = {0, 0, 0};
+      nProtons = {0, 0, 0};
+      nAntiProtons = {0, 0, 0};
 
       tree->GetEntry(j);
 
@@ -71,25 +88,45 @@ void access_tree_pt_eta_TH2Ds()
         particle = event->GetTrack(k);
         status = (Int_t) particle->GetStatus(); //Can also do particle->KS
         id = (Int_t) particle->Id();
-        pT = (Double_t) particle->GetPt();
         eta = (Double_t) particle->GetEta();
 
         if (status == 1) {
-          if (id == 321 || id == -321) {
-            pt_vs_eta_kaon->Fill(pT, eta);
-          } else if (id == 211 || id == -211) {
-            pt_vs_eta_pion->Fill(pT, eta);
-          } else if (id == 2212 || id == -2212) {
-            pt_vs_eta_proton->Fill(pT, eta);
+          for (int ieta = 0; ieta < etabin; ieta++) {
+            if (eta_lo[ieta] <= eta && eta <= eta_hi[ieta]) {
+              switch(id) {
+                case 321:
+                  nPosKaons[ieta]++;
+                  break;
+                case -321:
+                  nNegKaons[ieta]++;
+                  break;
+                case 211:
+                  nPosPions[ieta]++;
+                  break;
+                case -211:
+                  nNegPions[ieta]++;
+                  break;
+                case 2212:
+                  nProtons[ieta]++;
+                  break;
+                case -2212:
+                  nAntiProtons[ieta]++;
+                  break;
+                default: break;
+              }
+            }
           }
         }
 
       }
     }
 
-    pt_vs_eta_kaon->Write();
-    pt_vs_eta_pion->Write();
-    pt_vs_eta_proton->Write();
+    for (int ieta = 0; ieta < etabin; ieta++) {
+      kaon[ieta]->Write();
+      pion[ieta]->Write();
+      proton[ieta]->Write();
+    }
+
     fout->Write();
     fout->Close();
 
