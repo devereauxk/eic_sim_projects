@@ -34,11 +34,11 @@ void access_tree_mult_eta_binned()
   Int_t status;
   Double_t eta;
   Int_t nPosKaons;
-  Int_t nNegKaons[etabin] = {0};
-  Int_t nPosPions[etabin] = {0};
-  Int_t nNegPions[etabin] = {0};
-  Int_t nProtons[etabin] = {0};
-  Int_t nAntiProtons[etabin] = {0};
+  Int_t nNegKaons[etabin];
+  Int_t nPosPions[etabin];
+  Int_t nNegPions[etabin];
+  Int_t nProtons[etabin];
+  Int_t nAntiProtons[etabin];
 
   //loop over each merged.root file
   for (int i = 0; i < num_species; i++) {
