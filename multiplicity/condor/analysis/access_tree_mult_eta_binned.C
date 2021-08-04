@@ -1,10 +1,4 @@
 R__LOAD_LIBRARY(libeicsmear);
-void zero_array(Int_t arr)
-{
-  for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
-    arr[i] = 0;
-  }
-}
 void access_tree_mult_eta_binned()
 {
   // run with root -l 'access_tree("sim_dir/sim_output.root", "histogram_dir/output.root")'
