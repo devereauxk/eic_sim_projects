@@ -4,6 +4,7 @@ const double eta_hi[etabin] = {-1,1,3};
 const int eta_color[etabin] = {kRed, kBlue, kGreen+1};
 TH2D* h2d_pt_vs_eta = NULL;
 TH1D* h1d_pt_in_eta[etabin] = {0};
+TGraphErrors* g_pt_vs_eta = NULL;
 
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
@@ -82,7 +83,7 @@ void plot_histograms_pt_eta_totals()
     tl->SetTextSize(0.035);
     tl->SetTextColor(kBlack);
     tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
-    c3->SaveAs( Form("%spart_pt_in_eta_all.pdf", ourdirs[ieta].c_str()) );
+    c3->SaveAs( Form("%spart_pt_in_eta_all.pdf", outdirs[ieta].c_str()) );
 
     // all in one pdf
     TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
