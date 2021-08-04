@@ -32,6 +32,7 @@ void plot_histograms_pt_eta_totals()
   for (int ieta = 0; ieta < etabin; ieta++) {
     inFile = dirs[ieta] + "pt_eta_total_TH2D.root";
     fin = new TFile(inFile.c_str(), "read");
+    fin->ls();
     h2d_pt_vs_eta = (TH2D*)fin->Get("h2d_pt_vs_eta");
     slice_2D_hist();
 
