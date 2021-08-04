@@ -18,9 +18,9 @@ void access_tree_mult_eta_binned()
   const int etabin = 3;
   const double eta_lo[etabin] = {-3, -1, 1};
   const double eta_hi[etabin] = {-1, 1, 3};
-  TH1D * kaon[etabin];
-  TH1D * pion[etabin];
-  TH1D * proton[etabin];
+  TH2D * kaon[etabin];
+  TH2D * pion[etabin];
+  TH2D * proton[etabin];
 
   //loop over files
   TFile *f;
@@ -33,12 +33,12 @@ void access_tree_mult_eta_binned()
   Int_t id;
   Int_t status;
   Double_t eta;
-  Int_t nPosKaons[etabin];
-  Int_t nNegKaons[etabin];
-  Int_t nPosPions[etabin];
-  Int_t nNegPions[etabin];
-  Int_t nProtons[etabin];
-  Int_t nAntiProtons[etabin];
+  Int_t nPosKaons;
+  Int_t nNegKaons[etabin] = {0};
+  Int_t nPosPions[etabin] = {0};
+  Int_t nNegPions[etabin] = {0};
+  Int_t nProtons[etabin] = {0};
+  Int_t nAntiProtons[etabin] = {0};
 
   //loop over each merged.root file
   for (int i = 0; i < num_species; i++) {
@@ -58,7 +58,7 @@ void access_tree_mult_eta_binned()
     fout = new TFile(outFile.c_str(), "recreate");
 
     //Initialize new histograms
-    for (int ieta = 0; ieta < etabin, ieta++) {
+    for (int ieta = 0; ieta < etabin; ieta++) {
       kaon[ieta] = new TH2D("h2d_kaon","charged kaon multiplicity",12,-0.5,11.5,12,-0.5,11.5);
       kaon[ieta]->Sumw2();
       pion[ieta] = new TH2D("h2d_pion","charged pion multiplicity",25,-0.5,24.5,25,-0.5,24.5);
@@ -70,12 +70,12 @@ void access_tree_mult_eta_binned()
     //loop over events
     for (int j = 0; j < nEntries; j++) {
 
-      nPosKaons = {0, 0, 0};
-      nNegKaons = {0, 0, 0};
-      nPosPions = {0, 0, 0};
-      nNegPions = {0, 0, 0};
-      nProtons = {0, 0, 0};
-      nAntiProtons = {0, 0, 0};
+      nPosKaons = {0};
+      nNegKaons = {0};
+      nPosPions = {0};
+      nNegPions = {0};
+      nProtons = {0};
+      nAntiProtons = {0};
 
       tree->GetEntry(j);
 
