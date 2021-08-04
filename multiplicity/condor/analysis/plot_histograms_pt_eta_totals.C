@@ -7,6 +7,7 @@ TH1D* h1d_pt_in_eta[etabin] = {0};
 
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
 
 void slice_2D_hist()
 {
@@ -25,7 +26,7 @@ void slice_2D_hist()
 
 void plot_histograms_pt_eta_totals()
 {
-  TFile * f;
+  TFile * fin;
   std::string inFile;
   for (int ieta = 0; ieta < etabin; ieta++) {
     inFile = dirs[ieta] + "pt_eta_total_TH2D.root";
@@ -44,7 +45,7 @@ void plot_histograms_pt_eta_totals()
     h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
     h2d_pt_vs_eta->GetYaxis()->SetTitleOffset(1.5);
     h2d_pt_vs_eta->Draw("hsame");
-    c3->SaveAs(Form("%spt_vs_eta_2D_histogram.pdf", dirs[ieta]));
+    c3->SaveAs(Form("%spt_vs_eta_2D_histogram.pdf", outdirs[ieta].c_str()));
 
     // plot different eta bin slices on the same canvas
     c3 = new TCanvas("c3","c3",800,800); // create new canvas
@@ -81,7 +82,7 @@ void plot_histograms_pt_eta_totals()
     tl->SetTextSize(0.035);
     tl->SetTextColor(kBlack);
     tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
-    c3->SaveAs( Form("part_pt_in_eta_all.pdf") );
+    c3->SaveAs( Form("%spart_pt_in_eta_all.pdf", ourdirs[ieta].c_str()) );
 
     // all in one pdf
     TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
@@ -99,7 +100,7 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
       h1d_pt_in_eta[ieta]->Draw("hsame");
     }
-    c_all->SaveAs(Form("%spt_eta_binned.pdf", dirs[ieta]));
+    c_all->SaveAs(Form("%spt_eta_binned.pdf", outdirs[ieta].c_str()));
 
     // plot average pt as function of eta using TGraph
     double temp_pt[etabin] = {0}, temp_pt_err[etabin] = {0};
@@ -138,7 +139,7 @@ void plot_histograms_pt_eta_totals()
     tl->SetTextSize(0.035);
     tl->SetTextColor(kBlack);
     tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
-    c4->SaveAs( Form("%savg_pt_vs_eta.pdf") );
+    c4->SaveAs( Form("%savg_pt_vs_eta.pdf", outdirs[ieta].c_str()) );
   }
 
 }

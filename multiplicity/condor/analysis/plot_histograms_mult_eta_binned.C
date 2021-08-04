@@ -9,6 +9,7 @@ TH1D * proton[etabin];
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
 srd::string names[num_species] = {"e + p @ 10 + 110 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
+std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
 
 void plot_histograms_mult_eta_binned()
 {
@@ -203,7 +204,7 @@ void plot_histograms_mult_eta_binned()
 
 
     // save plot ------------------------------------------------------------------------
-    c_all->SaveAs(Form("%smultiplicities_eta_binned_%d.pdf", dirs[ieta], ieta));
+    c_all->SaveAs(Form("%smultiplicities_eta_binned_%d.pdf", outdirs[ieta].c_str(), ieta));
   }
 
 
