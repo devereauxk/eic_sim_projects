@@ -15,7 +15,7 @@ void plot_histograms_mult_eta_binned()
   TFile * fin;
   std::string inFile;
   for (int ieta = 0; ieta < etabin; ieta++) {
-    inFile = dirs[ieta] + "";
+    inFile = dirs[ieta] + "mult_eta_binned.root";
     fin = new TFile(inFile.c_str(),"read");
 
     TH2D* h2d_kaon = (TH2D*)fin->Get("h2d_kaon");

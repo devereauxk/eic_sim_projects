@@ -1,5 +1,5 @@
 R__LOAD_LIBRARY(libeicsmear);
-void access_tree_pt_eta_total_TH2D()
+void access_tree_pt_eta_totals()
 {
   // run with root -l 'access_tree("sim_dir/sim_output.root", "histogram_dir/output.root")'
   // arg: inFile: directory + filename of .root file outputed from sim

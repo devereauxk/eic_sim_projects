@@ -7,12 +7,12 @@ echo ""
 
 
 echo "Making Output ROOT File with histogram data for events..."
-root -l -b -q 'access_tree_pt_eta_total_TH2D.C()'
+root -l -b -q 'access_tree_pt_eta_totals.C()'
 echo "-----------------------------------"
 echo ""
 
 echo "Printing histograms for events..."
-root -l -b -q 'plot_histograms_pt_eta_total_TH2D.C()'
+root -l -b -q 'plot_histograms_pt_eta_totals.C()'
 echo "-----------------------------------"
 echo ""
 

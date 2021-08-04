@@ -23,7 +23,7 @@ void slice_2D_hist()
   h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-3,3);
 }
 
-void plot_histograms_pt_eta_total_TH2D()
+void plot_histograms_pt_eta_totals()
 {
   TFile * f;
   std::string inFile;
