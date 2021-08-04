@@ -91,7 +91,6 @@ void plot_multiplicities_vs_atomic_number()
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
   c_main->Divide(1,2);
-  c_main->SetLogx();
 
   c_main->cd(1);
   mg = new TMultiGraph();
@@ -118,6 +117,7 @@ void plot_multiplicities_vs_atomic_number()
   mg->Add(neg_graph);
 
   mg->Draw("ALP");
+  gPad->SetLogx();
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
@@ -166,6 +166,7 @@ void plot_multiplicities_vs_atomic_number()
   mg->Add(neg_graph);
 
   mg->Draw("ALP");
+  gPad->SetLogx();
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
@@ -183,7 +184,6 @@ void plot_multiplicities_vs_atomic_number()
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
   c_main->Divide(1,2);
-  c_main->SetLogx();
 
   c_main->cd(1);
   mg = new TMultiGraph();
@@ -210,6 +210,7 @@ void plot_multiplicities_vs_atomic_number()
   mg->Add(neg_graph);
 
   mg->Draw("ALP");
+  gPad->SetLogx();
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
@@ -258,6 +259,7 @@ void plot_multiplicities_vs_atomic_number()
   mg->Add(neg_graph);
 
   mg->Draw("ALP");
+  gPad->SetLogx();
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
@@ -275,7 +277,6 @@ void plot_multiplicities_vs_atomic_number()
   c_main->SetLeftMargin(0.15);
   c_main->SetBottomMargin(0.1);
   c_main->Divide(1,2);
-  c_main->SetLogx();
 
   c_main->cd(1);
   mg = new TMultiGraph();
@@ -302,6 +303,7 @@ void plot_multiplicities_vs_atomic_number()
   mg->Add(neg_graph);
 
   mg->Draw("ALP");
+  gPad->SetLogx();
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;
@@ -350,6 +352,7 @@ void plot_multiplicities_vs_atomic_number()
   mg->Add(neg_graph);
 
   mg->Draw("ALP");
+  gPad->SetLogx();
   plot_xrange_lo = 0;
   plot_xrange_hi = 220;
   plot_yrange_lo = min(TMath::MinElement(pos_graph->GetN(),pos_graph->GetY()), TMath::MinElement(neg_graph->GetN(),neg_graph->GetY())) * 0.92;

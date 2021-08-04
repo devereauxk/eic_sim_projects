@@ -117,8 +117,14 @@ void access_tree_mult_eta_binned()
             }
           }
         }
-
       }
+
+      for (int ieta = 0; ieta < etabin; ieta++) {
+        kaon[ieta]->Fill(nPosKaons[ieta], nNegKaons[ieta]);
+        pion[ieta]->Fill(nPosPions[ieta], nNegKaons[ieta]);
+        proton[ieta]->Fill(nProtons[ieta], nAntiProtons[ieta]);
+      }
+
     }
 
     for (int ieta = 0; ieta < etabin; ieta++) {
