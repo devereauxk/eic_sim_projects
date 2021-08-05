@@ -44,7 +44,7 @@ void plot_histograms_pt_eta_totals()
     c3->SetRightMargin(0.15);
     c3->SetBottomMargin(0.1);
     h2d_pt_vs_eta = (TH2D*) h2d_pt_vs_eta->Rebin2D(2, 2);
-    h2d_pt_vs_eta->SetTitle("");
+    h2d_pt_vs_eta->SetTitle(names[i].c_str());
     h2d_pt_vs_eta->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
     h2d_pt_vs_eta->GetYaxis()->SetTitle("#eta");
     h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
@@ -96,15 +96,17 @@ void plot_histograms_pt_eta_totals()
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
       c_all->cd(ieta+1); h1d_pt_in_eta[ieta]->Draw("hsame");
-      /*TLatex* tl = new TLatex();
+    }
+    c_all->cd(4); htemp.Draw();
+    for (int ieta = 0; ieta < etabin; ++ieta)
+    {
+      c_all->cd(ieta+1);
+      TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
       tl->SetTextSize(0.035);
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
       tl->DrawLatexNDC(0.2,0.80,Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-    */}
-    for (int ieta = 0; ieta < etabin; ++ieta)
-    {
       h1d_pt_in_eta[ieta]->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
       h1d_pt_in_eta[ieta]->GetYaxis()->SetTitle("counts");
       h1d_pt_in_eta[ieta]->GetXaxis()->SetTitleOffset(1.3);
@@ -115,7 +117,7 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
     }
-    c_all->cd(4); htemp.Draw();
+
     c_all->SaveAs(Form("%spt_eta_binned_decomp.pdf", outdirs[i].c_str()));
 
     // plot average pt as function of eta using TGraph
