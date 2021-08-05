@@ -8,6 +8,7 @@ TGraphErrors* g_pt_vs_eta = NULL;
 
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+srd::string names[num_species] = {"e + p @ 10 + 110 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
 std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
 
 void slice_2D_hist()
@@ -29,8 +30,8 @@ void plot_histograms_pt_eta_totals()
 {
   TFile * fin;
   std::string inFile;
-  for (int ieta = 0; ieta < etabin; ieta++) {
-    inFile = dirs[ieta] + "pt_eta_total_TH2D.root";
+  for (int i = 0; i < num_species; i++) {
+    inFile = dirs[i] + "pt_eta_total_TH2D.root";
     fin = new TFile(inFile.c_str(), "read");
     fin->ls();
     h2d_pt_vs_eta = (TH2D*)fin->Get("h2d_pt_vs_eta");
@@ -41,13 +42,13 @@ void plot_histograms_pt_eta_totals()
     c3->Range(0,0,1,1);
     c3->SetLeftMargin(0.15);
     c3->SetBottomMargin(0.1);
-    c3->SetLogy();
-    h2d_pt_vs_eta->GetXaxis()->SetTitle("p_{T} [GeV/c]");
+    h2d_pt_vs_eta->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
     h2d_pt_vs_eta->GetYaxis()->SetTitle("#eta");
     h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
     h2d_pt_vs_eta->GetYaxis()->SetTitleOffset(1.5);
-    h2d_pt_vs_eta->Draw("hsame");
-    c3->SaveAs(Form("%spt_vs_eta_2D_histogram.pdf", outdirs[ieta].c_str()));
+    h2d_pt_vs_eta->Draw("colz");
+    c3->SetStats(0);
+    c3->SaveAs(Form("%spt_vs_eta_2D_histogram.pdf", outdirs[i].c_str()));
 
     // plot different eta bin slices on the same canvas
     c3 = new TCanvas("c3","c3",800,800); // create new canvas
@@ -66,10 +67,11 @@ void plot_histograms_pt_eta_totals()
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.SetStats(0); // not showing the box on the top right corner
     htemp.Draw();
-    htemp.GetXaxis()->SetTitle("p_{T} [GeV/c]");
+    htemp.GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
     htemp.GetYaxis()->SetTitle("Counts");
     htemp.GetXaxis()->SetTitleOffset(1.3);
     htemp.GetYaxis()->SetTitleOffset(1.5);
+    htemp.GetYAxis()->SetRangeUser(100,10000000);
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
@@ -83,8 +85,8 @@ void plot_histograms_pt_eta_totals()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.035);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
-    c3->SaveAs( Form("%spart_pt_in_eta_all.pdf", outdirs[ieta].c_str()) );
+    tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
+    c3->SaveAs( Form("%spart_pt_in_eta_all.pdf", outdirs[i].c_str()) );
 
     // all in one pdf
     TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
@@ -97,12 +99,23 @@ void plot_histograms_pt_eta_totals()
     c_all->cd(4); htemp.Draw();
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.035);
+      tl->SetTextColor(kBlack);
+      tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
+      tl->DrawLatexNDC(0.2,0.80,Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+      h1d_pt_in_eta[ieta]->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
+      h1d_pt_in_eta[ieta]->GetYaxis()->SetTitle("counts");
+      h1d_pt_in_eta[ieta]->GetXaxis()->SetTitleOffset(1.3);
+      h1d_pt_in_eta[ieta]->GetYaxis()->SetTitleOffset(1.5);
+      h1d_pt_in_eta[ieta]->SetTitle("");
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
       h1d_pt_in_eta[ieta]->Draw("hsame");
     }
-    c_all->SaveAs(Form("%spt_eta_binned.pdf", outdirs[ieta].c_str()));
+    c_all->SaveAs(Form("%spt_eta_binned.pdf", outdirs[i].c_str()));
 
     // plot average pt as function of eta using TGraph
     double temp_pt[etabin] = {0}, temp_pt_err[etabin] = {0};
@@ -140,8 +153,8 @@ void plot_histograms_pt_eta_totals()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.035);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 110 GeV");
-    c4->SaveAs( Form("%savg_pt_vs_eta.pdf", outdirs[ieta].c_str()) );
+    tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
+    c4->SaveAs( Form("%savg_pt_vs_eta.pdf", outdirs[i].c_str()) );
   }
 
 }
