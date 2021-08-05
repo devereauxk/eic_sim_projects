@@ -81,6 +81,7 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
       h1d_pt_in_eta[ieta]->Draw("hsame");
+      h1d_pt_in_eta[ieta]->GetXaxis()->SetRangeUser(0,10);
       leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
     }
     leg->Draw("same");
@@ -100,7 +101,7 @@ void plot_histograms_pt_eta_totals()
     }
     c_all->cd(4); htemp.Draw();
     for (int ieta = 0; ieta < etabin; ++ieta)
-    {
+    {/*
       c_all->cd(ieta+1);
       TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
@@ -108,7 +109,7 @@ void plot_histograms_pt_eta_totals()
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
       tl->DrawLatexNDC(0.2,0.80,Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-      h1d_pt_in_eta[ieta]->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
+      */h1d_pt_in_eta[ieta]->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
       h1d_pt_in_eta[ieta]->GetYaxis()->SetTitle("counts");
       h1d_pt_in_eta[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_pt_in_eta[ieta]->GetYaxis()->SetTitleOffset(1.5);
@@ -118,7 +119,6 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
     }
-    c_all->cd(4); htemp.Draw();
     c_all->SaveAs(Form("%spt_eta_binned_decomp.pdf", outdirs[i].c_str()));
 
     // plot average pt as function of eta using TGraph
