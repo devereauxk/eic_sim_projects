@@ -8,7 +8,7 @@ TGraphErrors* g_pt_vs_eta = NULL;
 
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
-srd::string names[num_species] = {"e + p @ 10 + 110 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
+std::string names[num_species] = {"e + p @ 10 + 110 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
 std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
 
 void slice_2D_hist()
@@ -47,7 +47,7 @@ void plot_histograms_pt_eta_totals()
     h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
     h2d_pt_vs_eta->GetYaxis()->SetTitleOffset(1.5);
     h2d_pt_vs_eta->Draw("colz");
-    c3->SetStats(0);
+    h2d_pt_vs_eta->SetStats(0);
     c3->SaveAs(Form("%spt_vs_eta_2D_histogram.pdf", outdirs[i].c_str()));
 
     // plot different eta bin slices on the same canvas
@@ -71,12 +71,12 @@ void plot_histograms_pt_eta_totals()
     htemp.GetYaxis()->SetTitle("Counts");
     htemp.GetXaxis()->SetTitleOffset(1.3);
     htemp.GetYaxis()->SetTitleOffset(1.5);
-    htemp.GetYAxis()->SetRangeUser(100,10000000);
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
+      h1d_pt_in_eta[ieta]->GetYAxis()->SetRangeUser(100,10000000);
       h1d_pt_in_eta[ieta]->Draw("hsame");
       leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
     }
