@@ -48,7 +48,7 @@ void plot_histograms_pt_eta_totals()
     h2d_pt_vs_eta->GetYaxis()->SetTitleOffset(1.5);
     h2d_pt_vs_eta->Draw("colz");
     h2d_pt_vs_eta->SetStats(0);
-    c3->SaveAs(Form("%spt_vs_eta_2D_histogram.pdf", outdirs[i].c_str()));
+    c3->SaveAs(Form("%spt_vs_eta_2D_histo.pdf", outdirs[i].c_str()));
 
     // plot different eta bin slices on the same canvas
     c3 = new TCanvas("c3","c3",800,800); // create new canvas
@@ -76,7 +76,7 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
-      h1d_pt_in_eta[ieta]->GetYAxis()->SetRangeUser(100,10000000);
+      h1d_pt_in_eta[ieta]->SetMinimum(100);
       h1d_pt_in_eta[ieta]->Draw("hsame");
       leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
     }
@@ -86,7 +86,7 @@ void plot_histograms_pt_eta_totals()
     tl->SetTextSize(0.035);
     tl->SetTextColor(kBlack);
     tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
-    c3->SaveAs( Form("%spart_pt_in_eta_all.pdf", outdirs[i].c_str()) );
+    c3->SaveAs( Form("%spt_eta_binned_single.pdf", outdirs[i].c_str()) );
 
     // all in one pdf
     TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
@@ -109,13 +109,14 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->GetYaxis()->SetTitle("counts");
       h1d_pt_in_eta[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_pt_in_eta[ieta]->GetYaxis()->SetTitleOffset(1.5);
+      h1d_pt_in_eta[ieta]->GetXaxis()->SetRangeUser(0,10);
       h1d_pt_in_eta[ieta]->SetTitle("");
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
       h1d_pt_in_eta[ieta]->Draw("hsame");
     }
-    c_all->SaveAs(Form("%spt_eta_binned.pdf", outdirs[i].c_str()));
+    c_all->SaveAs(Form("%spt_eta_binned_decomp.pdf", outdirs[i].c_str()));
 
     // plot average pt as function of eta using TGraph
     double temp_pt[etabin] = {0}, temp_pt_err[etabin] = {0};
