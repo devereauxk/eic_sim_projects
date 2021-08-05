@@ -40,9 +40,10 @@ void plot_histograms_pt_eta_totals()
     // plots pt and eta 2d histogram
     TCanvas* c3 = new TCanvas("c3","c3",800,800); // create new canvas
     c3->Range(0,0,1,1);
-    c3->SetLeftMargin(0.05);
+    c3->SetLeftMargin(0.15);
+    c3->SetRightMargin(0.15);
     c3->SetBottomMargin(0.1);
-    c3->SetLogx();
+    h2d_pt_vs_eta = h2d_pt_vs_eta->Rebin2D(5, 5);
     h2d_pt_vs_eta->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
     h2d_pt_vs_eta->GetYaxis()->SetTitle("#eta");
     h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
@@ -109,7 +110,7 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
-      h1d_pt_in_eta[ieta]->Draw("hsame");
+      c_all->cd(ieta+1); h1d_pt_in_eta[ieta]->Draw("hsame");
     }
     c_all->cd(4); htemp.Draw();
     c_all->SaveAs(Form("%spt_eta_binned_decomp.pdf", outdirs[i].c_str()));
