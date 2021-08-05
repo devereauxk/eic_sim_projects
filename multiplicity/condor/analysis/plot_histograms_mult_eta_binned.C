@@ -24,17 +24,20 @@ void plot_histograms_mult_eta_binned()
       TH2D* h2d_kaon = (TH2D*)fin->Get(Form("h2d_kaon_%d", ieta));
       TH1D* h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
       TH1D* h1d_kaon_neg = (TH1D*) h2d_kaon->ProjectionY("h1d_kaon_neg");
-      TH1D* h1d_kaon_total = h1d_kaon_pos->TH1D::Add(h1d_kaon_neg);
+      TH1D* h1d_kaon_total = (TH1D*) h1d_kaon_pos->Clone();
+      h1d_kaon_total->Add(h1d_kaon_neg);
 
       TH2D* h2d_pion = (TH2D*)fin->Get(Form("h2d_pion_%d", ieta));
       TH1D* h1d_pion_pos = (TH1D*) h2d_pion->ProjectionX("h1d_pion_pos");
       TH1D* h1d_pion_neg = (TH1D*) h2d_pion->ProjectionY("h1d_pion_neg");
-      TH1D* h1d_pion_total = h1d_pion_pos->TH1D::Add(h1d_pion_neg);
+      TH1D* h1d_pion_total = (TH1D*) h1d_pion_pos->Clone();
+      h1d_pion_total->Add(h1d_pion_neg);
 
-      TH2D* h2d_proton = (TH2D*)fin->Get(Form("h2d_proton", ieta));
+      TH2D* h2d_proton = (TH2D*)fin->Get(Form("h2d_proton_%d", ieta));
       TH1D* h1d_proton = (TH1D*) h2d_proton->ProjectionX("h1d_proton");
       TH1D* h1d_anti_proton = (TH1D*) h2d_proton->ProjectionY("h1d_anti_proton");
-      TH1D* h1d_proton_total = h1d_proton->TH1D::Add(h1d_anti_proton);
+      TH1D* h1d_proton_total = (TH1D*) h1d_proton->Clone();
+      h1d_proton_total->Add(h1d_anti_proton);
 
       TCanvas * c_all = new TCanvas("c_all", "c_all", 2400, 1600);
       c_all->Divide(3, 2);
@@ -54,7 +57,7 @@ void plot_histograms_mult_eta_binned()
       tl->SetTextSize(0.045);
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.4,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-      tl->DrawLatexNDC(0.4,0.80, names[i]);
+      tl->DrawLatexNDC(0.4,0.80, names[i].c_str());
       tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_proton_total->GetEntries()));
       tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_proton_total->GetMean()));
 
@@ -108,7 +111,7 @@ void plot_histograms_mult_eta_binned()
       tl->SetTextSize(0.045);
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.4,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-      tl->DrawLatexNDC(0.4,0.80, names[ieta]);
+      tl->DrawLatexNDC(0.4,0.80, names[i].c_str());
       tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_kaon_total->GetEntries()));
       tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_kaon_total->GetMean()));
 
@@ -165,7 +168,7 @@ void plot_histograms_mult_eta_binned()
       tl->SetTextSize(0.045);
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.4,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-      tl->DrawLatexNDC(0.4,0.80, names[ieta]);
+      tl->DrawLatexNDC(0.4,0.80, names[i].c_str());
       tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_pion_total->GetEntries()));
       tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_pion_total->GetMean()));
 
