@@ -64,8 +64,8 @@ void plot_histograms_pt_eta_totals()
     leg->SetTextSize(0.035);
     leg->SetFillStyle(0);
     leg->SetMargin(0.3);
-    float plot_xrange_lo = 0, plot_xrange_hi = 5;
-    float plot_yrange_lo = 1E0, plot_yrange_hi = 1.5*h1d_pt_in_eta[2]->GetMaximum(); // when using log axis, cannot use 0 as start as plot range
+    float plot_xrange_lo = 0, plot_xrange_hi = 10;
+    float plot_yrange_lo = 1E0, plot_yrange_hi = 10*h1d_pt_in_eta[2]->GetMaximum(); // when using log axis, cannot use 0 as start as plot range
     // use the empty 2D histogram htemp as a frame
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.SetStats(0); // not showing the box on the top right corner
@@ -74,14 +74,12 @@ void plot_histograms_pt_eta_totals()
     htemp.GetYaxis()->SetTitle("counts");
     htemp.GetXaxis()->SetTitleOffset(1.3);
     htemp.GetYaxis()->SetTitleOffset(1.5);
-    htemp.GetXaxis()->SetRangeUser(0,10);
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
       h1d_pt_in_eta[ieta]->Draw("hsame");
-      h1d_pt_in_eta[ieta]->GetXaxis()->SetRangeUser(0,10);
       leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
     }
     leg->Draw("same");
