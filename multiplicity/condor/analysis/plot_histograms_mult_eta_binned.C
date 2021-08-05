@@ -15,8 +15,8 @@ void plot_histograms_mult_eta_binned()
 {
   TFile * fin;
   std::string inFile;
-  for (int ieta = 0; ieta < etabin; ieta++) {
-    inFile = dirs[ieta] + "mult_eta_binned.root";
+  for (int i = 0; i < num_species; i++) {
+    inFile = dirs[i] + "mult_eta_binned.root";
     fin = new TFile(inFile.c_str(),"read");
 
     TH2D* h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
@@ -52,7 +52,7 @@ void plot_histograms_mult_eta_binned()
     tl->SetTextSize(0.045);
     tl->SetTextColor(kBlack);
     tl->DrawLatexNDC(0.4,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-    tl->DrawLatexNDC(0.4,0.80, names[ieta]);
+    tl->DrawLatexNDC(0.4,0.80, names[i]);
     tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_proton_total->GetEntries()));
     tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_proton_total->GetMean()));
 

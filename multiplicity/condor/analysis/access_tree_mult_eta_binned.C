@@ -59,11 +59,11 @@ void access_tree_mult_eta_binned()
 
     //Initialize new histograms
     for (int ieta = 0; ieta < etabin; ieta++) {
-      kaon[ieta] = new TH2D("h2d_kaon","charged kaon multiplicity",12,-0.5,11.5,12,-0.5,11.5);
+      kaon[ieta] = new TH2D(Form("h2d_kaon_%d", ieta),"charged kaon multiplicity",12,-0.5,11.5,12,-0.5,11.5);
       kaon[ieta]->Sumw2();
-      pion[ieta] = new TH2D("h2d_pion","charged pion multiplicity",25,-0.5,24.5,25,-0.5,24.5);
+      pion[ieta] = new TH2D(Form("h2d_pion_%d", ieta),"charged pion multiplicity",25,-0.5,24.5,25,-0.5,24.5);
       pion[ieta]->Sumw2();
-      proton[ieta] = new TH2D("h2d_proton","proton/antiproton multiplicity",15, -0.5, 14.5, 15, -0.5, 14.5);
+      proton[ieta] = new TH2D(Form("h2d_proton_%d", ieta),"proton/antiproton multiplicity",15, -0.5, 14.5, 15, -0.5, 14.5);
       proton[ieta]->Sumw2();
     }
 
