@@ -58,7 +58,7 @@ void plot_histograms_mult_eta_binned()
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.4,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
       tl->DrawLatexNDC(0.4,0.80, names[i].c_str());
-      tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_proton_total->GetEntries()));
+      tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_proton_total->GetEntries() / 2));
       tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_proton_total->GetMean()));
 
       c_all->cd(4);
@@ -112,7 +112,7 @@ void plot_histograms_mult_eta_binned()
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.4,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
       tl->DrawLatexNDC(0.4,0.80, names[i].c_str());
-      tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_kaon_total->GetEntries()));
+      tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_kaon_total->GetEntries() / 2));
       tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_kaon_total->GetMean()));
 
       c_all->cd(5);
@@ -169,7 +169,7 @@ void plot_histograms_mult_eta_binned()
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.4,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
       tl->DrawLatexNDC(0.4,0.80, names[i].c_str());
-      tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_pion_total->GetEntries()));
+      tl->DrawLatexNDC(0.4,0.75,Form("%.0f events", h1d_pion_total->GetEntries() / 2));
       tl->DrawLatexNDC(0.4,0.70,Form("avg: %1.4f", h1d_pion_total->GetMean()));
 
       c_all->cd(6);
