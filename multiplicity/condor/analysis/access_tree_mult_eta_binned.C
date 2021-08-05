@@ -118,10 +118,11 @@ void access_tree_mult_eta_binned()
           }
         }
       }
+      cout<<nPosKaons<<" "<<nNegKaons<<" "<<nPosPions<<" "<<nNegKaons<<" "<<nProtons<<" "<<nAntiProtons<<endl;
 
       for (int ieta = 0; ieta < etabin; ieta++) {
         kaon[ieta]->Fill(nPosKaons[ieta], nNegKaons[ieta]);
-        pion[ieta]->Fill(nPosPions[ieta], nNegKaons[ieta]);
+        pion[ieta]->Fill(nPosPions[ieta], nNegPions[ieta]);
         proton[ieta]->Fill(nProtons[ieta], nAntiProtons[ieta]);
       }
 
