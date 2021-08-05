@@ -59,12 +59,12 @@ void plot_histograms_pt_eta_totals()
     c3->SetLeftMargin(0.15);
     c3->SetBottomMargin(0.1);
     c3->SetLogy(); // set y axis to log scale
-    TLegend* leg = new TLegend(0.25,0.35,0.45,0.45);
+    TLegend* leg = new TLegend(0.65,0.60,0.75,0.80);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.035);
     leg->SetFillStyle(0);
     leg->SetMargin(0.3);
-    float plot_xrange_lo = 0, plot_xrange_hi = 10;
+    float plot_xrange_lo = 0, plot_xrange_hi = 15;
     float plot_yrange_lo = 1E0, plot_yrange_hi = 10*h1d_pt_in_eta[2]->GetMaximum(); // when using log axis, cannot use 0 as start as plot range
     // use the empty 2D histogram htemp as a frame
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
@@ -91,23 +91,18 @@ void plot_histograms_pt_eta_totals()
     c3->SaveAs( Form("%spt_eta_binned_single.pdf", outdirs[i].c_str()) );
 
     // all in one pdf
-    TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
-    c_all->Divide(2, 2);
+    TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 2400, 800);
+    c_all->Divide(3);
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
       c_all->cd(ieta+1); h1d_pt_in_eta[ieta]->Draw("hsame");
-    }
-    c_all->cd(4); htemp.Draw();
-    for (int ieta = 0; ieta < etabin; ++ieta)
-    {/*
-      c_all->cd(ieta+1);
       TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
       tl->SetTextSize(0.035);
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
       tl->DrawLatexNDC(0.2,0.80,Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-      */h1d_pt_in_eta[ieta]->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
+      h1d_pt_in_eta[ieta]->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
       h1d_pt_in_eta[ieta]->GetYaxis()->SetTitle("counts");
       h1d_pt_in_eta[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_pt_in_eta[ieta]->GetYaxis()->SetTitleOffset(1.5);
