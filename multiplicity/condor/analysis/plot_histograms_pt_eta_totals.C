@@ -40,8 +40,9 @@ void plot_histograms_pt_eta_totals()
     // plots pt and eta 2d histogram
     TCanvas* c3 = new TCanvas("c3","c3",800,800); // create new canvas
     c3->Range(0,0,1,1);
-    c3->SetLeftMargin(0.15);
+    c3->SetLeftMargin(0.05);
     c3->SetBottomMargin(0.1);
+    c3->SetLogx();
     h2d_pt_vs_eta->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
     h2d_pt_vs_eta->GetYaxis()->SetTitle("#eta");
     h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
@@ -56,7 +57,7 @@ void plot_histograms_pt_eta_totals()
     c3->SetLeftMargin(0.15);
     c3->SetBottomMargin(0.1);
     c3->SetLogy(); // set y axis to log scale
-    TLegend* leg = new TLegend(0.60,0.70,0.80,0.80);
+    TLegend* leg = new TLegend(0.25,0.35,0.45,0.45);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.035);
     leg->SetFillStyle(0);
@@ -68,7 +69,7 @@ void plot_histograms_pt_eta_totals()
     htemp.SetStats(0); // not showing the box on the top right corner
     htemp.Draw();
     htemp.GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
-    htemp.GetYaxis()->SetTitle("Counts");
+    htemp.GetYaxis()->SetTitle("counts");
     htemp.GetXaxis()->SetTitleOffset(1.3);
     htemp.GetYaxis()->SetTitleOffset(1.5);
     for (int ieta = 0; ieta < etabin; ++ieta)
@@ -76,7 +77,6 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
-      h1d_pt_in_eta[ieta]->SetMinimum(100);
       h1d_pt_in_eta[ieta]->Draw("hsame");
       leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
     }
@@ -85,20 +85,15 @@ void plot_histograms_pt_eta_totals()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.035);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
+    tl->DrawLatexNDC(0.5,0.85,names[i].c_str());
     c3->SaveAs( Form("%spt_eta_binned_single.pdf", outdirs[i].c_str()) );
 
     // all in one pdf
     TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 1600, 1600);
     c_all->Divide(2, 2);
-    for (int ieta = 0; ieta < 3; ++ieta)
-    {
-      h1d_pt_in_eta[ieta]->SetLineColor(kBlack);
-      c_all->cd(ieta+1); h1d_pt_in_eta[ieta]->Draw("hsame");
-    }
-    c_all->cd(4); htemp.Draw();
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
+      c_all->cd(ieta+1);
       TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
       tl->SetTextSize(0.035);
@@ -116,6 +111,7 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
       h1d_pt_in_eta[ieta]->Draw("hsame");
     }
+    c_all->cd(4); htemp.Draw();
     c_all->SaveAs(Form("%spt_eta_binned_decomp.pdf", outdirs[i].c_str()));
 
     // plot average pt as function of eta using TGraph
