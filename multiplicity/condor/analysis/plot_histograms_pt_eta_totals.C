@@ -74,6 +74,7 @@ void plot_histograms_pt_eta_totals()
     htemp.GetYaxis()->SetTitle("counts");
     htemp.GetXaxis()->SetTitleOffset(1.3);
     htemp.GetYaxis()->SetTitleOffset(1.5);
+    htemp.GetXaxis()->SetRangeUser(0,10);
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
       h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
@@ -117,7 +118,7 @@ void plot_histograms_pt_eta_totals()
       h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
       h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
     }
-
+    c_all->cd(4); htemp.Draw();
     c_all->SaveAs(Form("%spt_eta_binned_decomp.pdf", outdirs[i].c_str()));
 
     // plot average pt as function of eta using TGraph
