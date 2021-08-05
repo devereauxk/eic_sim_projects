@@ -43,7 +43,7 @@ void plot_histograms_pt_eta_totals()
     c3->SetLeftMargin(0.15);
     c3->SetRightMargin(0.15);
     c3->SetBottomMargin(0.1);
-    h2d_pt_vs_eta = h2d_pt_vs_eta->Rebin2D(5, 5);
+    h2d_pt_vs_eta = (TH2D*) h2d_pt_vs_eta->Rebin2D(5, 5);
     h2d_pt_vs_eta->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
     h2d_pt_vs_eta->GetYaxis()->SetTitle("#eta");
     h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
