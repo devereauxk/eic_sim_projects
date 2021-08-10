@@ -8,8 +8,6 @@ TH1D * proton[etabin];
 
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
-std::string names[num_species] = {"e + p @ 10 + 100 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
-std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
 
 void plot_multiplicities_vs_atomic_number_eta_binned()
 {
@@ -37,18 +35,18 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     for (int i = 0; i < num_species; i++) {
       cout<<"processing " + dirs[i] + " ..."<<endl;
 
-      inFile = dirs[i] +  "mult_eta_binned.root";
+      inFile = dirs[i] + "mult_eta_binned.root";
       fin = new TFile(inFile, "read");
 
-      h2d_kaon = (TH2D*)fin->Get("h2d_kaon");
+      h2d_kaon = (TH2D*)fin->Get(Form("h2d_kaon_%d", ieta));
       h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
       h1d_kaon_neg = (TH1D*) h2d_kaon->ProjectionY("h1d_kaon_neg");
 
-      h2d_pion = (TH2D*)fin->Get("h2d_pion");
+      h2d_pion = (TH2D*)fin->Get(Form("h2d_pion_%d", ieta));
       h1d_pion_pos = (TH1D*) h2d_pion->ProjectionX("h1d_pion_pos");
       h1d_pion_neg = (TH1D*) h2d_pion->ProjectionY("h1d_pion_neg");
 
-      h2d_proton = (TH2D*)fin->Get("h2d_proton");
+      h2d_proton = (TH2D*)fin->Get(Form("h2d_proton_%d", ieta));
       h1d_proton_pos = (TH1D*) h2d_proton->ProjectionX("h1d_proton");
       h1d_proton_neg = (TH1D*) h2d_proton->ProjectionY("h1d_anti_proton");
 
@@ -148,9 +146,10 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,0.85,"e + p @ 10 + 100 GeV");
-    t1->DrawLatexNDC(0.5,0.80,"e + A @ 18 + 110 Gev");
-    t1->DrawLatexNDC(0.5,0.75,"collisions per species: ~1E6");
+    tl->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,0.80,"e + p @ 10 + 100 GeV");
+    t1->DrawLatexNDC(0.5,0.75,"e + A @ 18 + 110 Gev");
+    t1->DrawLatexNDC(0.5,0.70,"collisions per species: ~1E6");
 
     c_main->cd(2);
     mg = new TMultiGraph();
@@ -184,7 +183,7 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-    c_main->SaveAs( Form("kaon_vs_atomic_number.pdf") );
+    c_main->SaveAs( Form("kaon_vs_atomic_number_%d.pdf", ieta) );
 
 
 
@@ -241,9 +240,10 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,0.30,"e + p @ 10 + 100 GeV");
-    t1->DrawLatexNDC(0.5,0.25,"e + A @ 18 + 110 Gev");
-    t1->DrawLatexNDC(0.5,0.20,"collisions per species: ~1E6");
+    tl->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,0.80,"e + p @ 10 + 100 GeV");
+    t1->DrawLatexNDC(0.5,0.75,"e + A @ 18 + 110 Gev");
+    t1->DrawLatexNDC(0.5,0.70,"collisions per species: ~1E6");
 
     c_main->cd(2);
     mg = new TMultiGraph();
@@ -277,7 +277,7 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-    c_main->SaveAs( Form("pion_vs_atomic_number.pdf") );
+    c_main->SaveAs( Form("pion_vs_atomic_number_%d.pdf", ieta) );
 
 
 
@@ -334,9 +334,10 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,0.85,"e + p @ 10 + 100 GeV");
-    t1->DrawLatexNDC(0.5,0.80,"e + A @ 18 + 110 Gev");
-    t1->DrawLatexNDC(0.5,0.75,"collisions per species: ~1E6");
+    tl->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,0.80,"e + p @ 10 + 100 GeV");
+    t1->DrawLatexNDC(0.5,0.75,"e + A @ 18 + 110 Gev");
+    t1->DrawLatexNDC(0.5,0.70,"collisions per species: ~1E6");
 
     c_main->cd(2);
     mg = new TMultiGraph();
@@ -370,7 +371,7 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-    c_main->SaveAs( Form("proton_vs_atomic_number.pdf") );
+    c_main->SaveAs( Form("proton_vs_atomic_number_%d.pdf", ieta) );
 
 
   }
