@@ -231,9 +231,9 @@ void plot_multiplicities_vs_atomic_number()
   t1->SetTextAlign(11);
   t1->SetTextSize(0.040);
   t1->SetTextColor(kBlack);
-  t1->DrawLatexNDC(0.1,0.85,"e + p @ 10 + 100 GeV");
-  t1->DrawLatexNDC(0.1,0.80,"e + A @ 18 + 110 Gev");
-  t1->DrawLatexNDC(0.1,0.75,"collisions per species: ~1E6");
+  t1->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 100 GeV");
+  t1->DrawLatexNDC(0.2,0.80,"e + A @ 18 + 110 Gev");
+  t1->DrawLatexNDC(0.2,0.75,"collisions per species: ~1E6");
 
   c_main->cd(2);
   mg = new TMultiGraph();
@@ -324,9 +324,9 @@ void plot_multiplicities_vs_atomic_number()
   t1->SetTextAlign(11);
   t1->SetTextSize(0.040);
   t1->SetTextColor(kBlack);
-  t1->DrawLatexNDC(0.1,0.85,"e + p @ 10 + 100 GeV");
-  t1->DrawLatexNDC(0.1,0.80,"e + A @ 18 + 110 Gev");
-  t1->DrawLatexNDC(0.1,0.75,"collisions per species: ~1E6");
+  t1->DrawLatexNDC(0.2,0.85,"e + p @ 10 + 100 GeV");
+  t1->DrawLatexNDC(0.2,0.80,"e + A @ 18 + 110 Gev");
+  t1->DrawLatexNDC(0.2,0.75,"collisions per species: ~1E6");
 
   c_main->cd(2);
   mg = new TMultiGraph();
