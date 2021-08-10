@@ -41,7 +41,7 @@ void access_tree_mult_eta_binned()
   Int_t nAntiProtons[etabin] = {0};
 
   //loop over each merged.root file
-  for (int i = 0; i < num_species; i++) {
+  for (Int_t i = 0; i < num_species; i++) {
     //Load ROOT File for pythia
     inFile = dirs[i] + "merged.root";
     f = new TFile(inFile.c_str(), "read");
@@ -58,7 +58,7 @@ void access_tree_mult_eta_binned()
     fout = new TFile(outFile.c_str(), "recreate");
 
     //Initialize new histograms
-    for (int ieta = 0; ieta < etabin; ieta++) {
+    for (Int_t ieta = 0; ieta < etabin; ieta++) {
       kaon[ieta] = new TH2D(Form("h2d_kaon_%d", ieta),"charged kaon multiplicity",12,-0.5,11.5,12,-0.5,11.5);
       kaon[ieta]->Sumw2();
       pion[ieta] = new TH2D(Form("h2d_pion_%d", ieta),"charged pion multiplicity",25,-0.5,24.5,25,-0.5,24.5);
@@ -71,8 +71,10 @@ void access_tree_mult_eta_binned()
     Int_t d_avg_pion_1 = 0;
     Int_t d_avg_pion_2 = 0;
 
+    cout<<"entries: "<<nEntries<<endl;
+
     //loop over events
-    for (int j = 0; j < nEntries; j++) {
+    for (Int_t j = 0; j < nEntries; j++) {
 
       Int_t nPosKaons[etabin] = {0};
       Int_t nNegKaons[etabin] = {0};
@@ -86,8 +88,10 @@ void access_tree_mult_eta_binned()
       //Get Total Number of Particles
       nParticles = event->GetNTracks();
 
+      cout<<"nparticles: "<<nParticles<<endl;
+
       //Loop Over Each Particle
-      for(int k = 0; k < nParticles; k++) {
+      for(Int_t k = 0; k < nParticles; k++) {
 
         particle = event->GetTrack(k);
         status = (Int_t) particle->GetStatus(); //Can also do particle->KS
@@ -95,7 +99,7 @@ void access_tree_mult_eta_binned()
         eta = (Double_t) particle->GetEta();
 
         if (status == 1) {
-          for (int ieta = 0; ieta < etabin; ieta++) {
+          for (Int_t ieta = 0; ieta < etabin; ieta++) {
             if (eta_lo[ieta] <= eta && eta <= eta_hi[ieta]) {
               switch(id) {
                 case 321:
@@ -129,7 +133,7 @@ void access_tree_mult_eta_binned()
       //d_avg_pion_1 += nNegPions[1];
       //d_avg_pion_2 += nPosPions[2];
 
-      for (int ieta = 0; ieta < etabin; ieta++) {
+      for (Int_t ieta = 0; ieta < etabin; ieta++) {
         kaon[ieta]->Fill(nPosKaons[ieta], nNegKaons[ieta]);
         pion[ieta]->Fill(nPosPions[ieta], nNegPions[ieta]);
         proton[ieta]->Fill(nProtons[ieta], nAntiProtons[ieta]);
@@ -138,7 +142,7 @@ void access_tree_mult_eta_binned()
     }
     //cout<<((Float_t) d_avg_pion_0) / nEntries<<" "<<((Float_t) d_avg_pion_1) / nEntries<<" "<<((Float_t) d_avg_pion_2) / nEntries<<endl;
 
-    for (int ieta = 0; ieta < etabin; ieta++) {
+    for (Int_t ieta = 0; ieta < etabin; ieta++) {
       kaon[ieta]->Write();
       pion[ieta]->Write();
       proton[ieta]->Write();
