@@ -48,7 +48,7 @@ void access_tree_p_eta_totals()
     fout = new TFile(outFile.c_str(), "recreate");
 
     //Initialize new histogram
-    h2d_p_vs_eta = new TH2D("h2d_p_vs_eta","particle p vs pseudo-rapidity",100,0,80,80,-4,4);
+    h2d_p_vs_eta = new TH2D("h2d_p_vs_eta","particle p vs pseudo-rapidity",400,0,80,80,-4,4);
     h2d_p_vs_eta->Sumw2();
 
     //loop over events
