@@ -65,7 +65,7 @@ void plot_histograms_p_eta_totals()
     leg->SetTextSize(0.035);
     leg->SetFillStyle(0);
     leg->SetMargin(0.3);
-    float plot_xrange_lo = 0, plot_xrange_hi = 25;
+    float plot_xrange_lo = 0, plot_xrange_hi = 30;
     float plot_yrange_lo = 1E0, plot_yrange_hi = 10*h1d_p_in_eta[2]->GetMaximum(); // when using log axis, cannot use 0 as start as plot range
     // use the empty 2D histogram htemp as a frame
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
