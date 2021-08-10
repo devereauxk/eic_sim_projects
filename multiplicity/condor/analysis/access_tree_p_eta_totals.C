@@ -15,7 +15,7 @@ void access_tree_p_eta_totals()
   const int num_species = 7;
   std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
 
-  TH2D * h2d_pt_vs_eta;
+  TH2D * h2d_p_vs_eta;
 
   //loop over files
   TFile *f;
@@ -27,7 +27,7 @@ void access_tree_p_eta_totals()
   Int_t nParticles(0);
   Int_t id;
   Int_t status;
-  Double_t pT;
+  Double_t p;
   Double_t eta;
 
   //loop over each merged.root file
