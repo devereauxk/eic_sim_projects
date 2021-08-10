@@ -49,6 +49,7 @@ void plot_histograms_pt_eta_totals()
     h2d_pt_vs_eta->GetYaxis()->SetTitle("#eta");
     h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
     h2d_pt_vs_eta->GetYaxis()->SetTitleOffset(1.5);
+    c3->SetLogz();
     h2d_pt_vs_eta->Draw("colz");
     h2d_pt_vs_eta->SetStats(0);
     c3->SaveAs(Form("%spt_vs_eta_2D_histo.pdf", outdirs[i].c_str()));
