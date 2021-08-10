@@ -9,7 +9,7 @@ TH1D * proton[etabin];
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
 double atomic_weight[num_species] = {1, 2, 4, 12, 40, 63, 197};
-  
+
 void plot_multiplicities_vs_atomic_number_eta_binned()
 {
   for (int ieta = 0; ieta < etabin; ieta++) {
@@ -37,7 +37,7 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
       cout<<"processing " + dirs[i] + " ..."<<endl;
 
       inFile = dirs[i] + "mult_eta_binned.root";
-      fin = new TFile(inFile, "read");
+      fin = new TFile(inFile.c_str(), "read");
 
       h2d_kaon = (TH2D*)fin->Get(Form("h2d_kaon_%d", ieta));
       h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
@@ -147,7 +147,7 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
     t1->DrawLatexNDC(0.5,0.80,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,0.75,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,0.70,"collisions per species: ~1E6");
@@ -241,7 +241,7 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
     t1->DrawLatexNDC(0.5,0.80,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,0.75,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,0.70,"collisions per species: ~1E6");
@@ -335,7 +335,7 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,0.85, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
     t1->DrawLatexNDC(0.5,0.80,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,0.75,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,0.70,"collisions per species: ~1E6");
