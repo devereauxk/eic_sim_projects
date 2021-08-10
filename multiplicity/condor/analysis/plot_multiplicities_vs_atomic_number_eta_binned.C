@@ -8,7 +8,8 @@ TH1D * proton[etabin];
 
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
-
+double atomic_weight[num_species] = {1, 2, 4, 12, 40, 63, 197};
+  
 void plot_multiplicities_vs_atomic_number_eta_binned()
 {
   for (int ieta = 0; ieta < etabin; ieta++) {
