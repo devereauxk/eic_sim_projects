@@ -20,7 +20,7 @@ void slice_2D_hist()
     // project to X axis and set name of the new 1D histograms (Form() function return a string), Make sure all the projected hisotgrams get a different name.
     h1d_p_in_eta[ieta] = (TH1D*)h2d_p_vs_eta->ProjectionX( Form("h1d_p_in_eta_%d",ieta) );
     h1d_p_in_eta[ieta]->SetName( Form("h1d_p_in_eta_%d",ieta) );
-    h1d_p_in_eta[ieta]->SetTitle( "particle p_{T} ditributiton" );
+    h1d_p_in_eta[ieta]->SetTitle( "particle p ditributiton" );
   }
   // set back to original range
   h2d_p_vs_eta->GetYaxis()->SetRangeUser(-3,3);
@@ -45,7 +45,7 @@ void plot_histograms_p_eta_totals()
     c3->SetBottomMargin(0.1);
     h2d_p_vs_eta = (TH2D*) h2d_p_vs_eta->Rebin2D(2, 2);
     h2d_p_vs_eta->SetTitle(names[i].c_str());
-    h2d_p_vs_eta->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
+    h2d_p_vs_eta->GetXaxis()->SetTitle("<p> [GeV/c]");
     h2d_p_vs_eta->GetYaxis()->SetTitle("#eta");
     h2d_p_vs_eta->GetXaxis()->SetTitleOffset(1.3);
     h2d_p_vs_eta->GetYaxis()->SetTitleOffset(1.5);
@@ -71,7 +71,7 @@ void plot_histograms_p_eta_totals()
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.SetStats(0); // not showing the box on the top right corner
     htemp.Draw();
-    htemp.GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
+    htemp.GetXaxis()->SetTitle("<p> [GeV/c]");
     htemp.GetYaxis()->SetTitle("counts");
     htemp.GetXaxis()->SetTitleOffset(1.3);
     htemp.GetYaxis()->SetTitleOffset(1.5);
@@ -103,7 +103,7 @@ void plot_histograms_p_eta_totals()
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
       tl->DrawLatexNDC(0.2,0.80,Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-      h1d_p_in_eta[ieta]->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
+      h1d_p_in_eta[ieta]->GetXaxis()->SetTitle("<p> [GeV/c]");
       h1d_p_in_eta[ieta]->GetYaxis()->SetTitle("counts");
       h1d_p_in_eta[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_p_in_eta[ieta]->GetYaxis()->SetTitleOffset(1.5);
@@ -142,7 +142,7 @@ void plot_histograms_p_eta_totals()
     TH2F htemp1("htemp1","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp1.SetStats(0); // not showing the box on the top right corner
     htemp1.Draw();
-    htemp1.GetYaxis()->SetTitle("average <p_{T}> [GeV/c]");
+    htemp1.GetYaxis()->SetTitle("average <p> [GeV/c]");
     htemp1.GetXaxis()->SetTitle("#eta");
     htemp1.GetXaxis()->SetTitleOffset(1.3);
     htemp1.GetYaxis()->SetTitleOffset(1.5);
