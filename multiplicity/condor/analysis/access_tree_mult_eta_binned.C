@@ -88,8 +88,6 @@ void access_tree_mult_eta_binned()
       //Get Total Number of Particles
       nParticles = event->GetNTracks();
 
-      cout<<"nparticles: "<<nParticles<<endl;
-
       //Loop Over Each Particle
       for(Int_t k = 0; k < nParticles; k++) {
 
