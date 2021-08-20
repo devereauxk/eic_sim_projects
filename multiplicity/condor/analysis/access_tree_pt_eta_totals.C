@@ -18,7 +18,7 @@ void access_tree_pt_eta_totals()
 
   const int num_species = 1;
   std::string dirs[num_species] = {"../../debug/"};
-  std::inFileName = "ep_minbias_highQ2_91.root";
+  std::string inFileName = "ep_minbias_highQ2_91.root";
 
   TH2D * h2d_pt_vs_eta;
 
@@ -38,7 +38,7 @@ void access_tree_pt_eta_totals()
   //loop over each merged.root file
   for (int i = 0; i < num_species; i++) {
     //Load ROOT File for pythia
-    inFile = dirs[i] + "merged.root";
+    inFile = dirs[i] + inFileName;
     f = new TFile(inFile.c_str(), "read");
 
     //Get EICTree Tree
