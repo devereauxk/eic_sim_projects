@@ -39,7 +39,7 @@ void slice_2D_hist()
 
 void plot_histograms_pt_eta_decomp()
 {
-  for(int i_titles; i < num_histograms; i++) {
+  for(int i_titles; i_titles < num_histograms; i_titles++) {
 
     TFile * fin;
     std::string inFile;
