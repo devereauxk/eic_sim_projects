@@ -54,7 +54,7 @@ void access_tree_pt_eta_decomp()
     tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
     //load new out file
-    outFile = dirs[i] + "pt_eta_total_TH2D.root";
+    outFile = dirs[i] + "pt_eta_decomp.root";
     fout = new TFile(outFile.c_str(), "recreate");
 
     //Initialize new histogram

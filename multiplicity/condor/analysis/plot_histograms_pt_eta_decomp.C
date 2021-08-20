@@ -16,7 +16,7 @@ const int num_species = 2;
 std::string dirs[num_species] = {"../../../debug/", "../ep_10_100/outfiles/"};
 std::string names[num_species] = {"e + p @ 10 + 100 GeV, Wenqing data", "e + p @ 10 + 100 GeV"};
 std::string outdirs[num_species] = {"../../../debug/pdfs/", "../ep_10_100/"};
-std::string inFileName = "pt_eta_total_TH2D.root";
+std::string inFileName = "pt_eta_decomp.root";
 
 const int num_histograms = 6;
 std::string histogram_titles[num_histograms] = {"kaon_pos", "kaon_neg", "pion_pos", "pion_neg", "proton_pos", "proton_neg"};
