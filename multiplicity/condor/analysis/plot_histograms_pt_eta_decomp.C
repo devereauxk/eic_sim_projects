@@ -20,7 +20,7 @@ std::string inFileName = "pt_eta_decomp.root";
 
 const int num_histograms = 6;
 std::string histogram_titles[num_histograms] = {"kaon_pos", "kaon_neg", "pion_pos", "pion_neg", "proton_pos", "proton_neg"};
-std::string histogram_symbols[num_histograms] = {"K^{+}", "K^{-}", "#pi^{+}", "#pi^{-}", "proton", "antiproton"}
+std::string histogram_symbols[num_histograms] = {"K^{+}", "K^{-}", "#pi^{+}", "#pi^{-}", "proton", "antiproton"};
 
 
 void slice_2D_hist()
@@ -57,7 +57,7 @@ void plot_histograms_pt_eta_decomp()
       c3->SetRightMargin(0.15);
       c3->SetBottomMargin(0.1);
       h2d_pt_vs_eta = (TH2D*) h2d_pt_vs_eta->Rebin2D(2, 2);
-      h2d_pt_vs_eta->SetTitle(Form("%s multiplicity, %s", names[i].c_str(), histogram_symbols[i_titles].c_str());
+      h2d_pt_vs_eta->SetTitle(Form("%s multiplicity, %s", names[i].c_str(), histogram_symbols[i_titles].c_str()));
       h2d_pt_vs_eta->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
       h2d_pt_vs_eta->GetYaxis()->SetTitle("#eta");
       h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
