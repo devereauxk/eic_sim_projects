@@ -58,17 +58,17 @@ void access_tree_pt_eta_decomp()
     fout = new TFile(outFile.c_str(), "recreate");
 
     //Initialize new histogram
-    kaon_pos = new TH2D("kaon_pos","particle pt vs pseudo-rapidity, kaon pos",100,0,20,80,-4,4);
+    kaon_pos = new TH2D("kaon_pos","particle pt vs pseudo-rapidity, kaon pos",100,0,20,80,-10,10);
     kaon_pos->Sumw2();
-    kaon_neg = new TH2D("kaon_neg","particle pt vs pseudo-rapidity, kaon neg",100,0,20,80,-4,4);
+    kaon_neg = new TH2D("kaon_neg","particle pt vs pseudo-rapidity, kaon neg",100,0,20,80,-10,10);
     kaon_neg->Sumw2();
-    pion_pos = new TH2D("pion_pos","particle pt vs pseudo-rapidity, pion pos",100,0,20,80,-4,4);
+    pion_pos = new TH2D("pion_pos","particle pt vs pseudo-rapidity, pion pos",100,0,20,80,-10,10);
     pion_pos->Sumw2();
-    pion_neg = new TH2D("pion_neg","particle pt vs pseudo-rapidity, pion neg",100,0,20,80,-4,4);
+    pion_neg = new TH2D("pion_neg","particle pt vs pseudo-rapidity, pion neg",100,0,20,80,-10,10);
     pion_neg->Sumw2();
-    proton_pos = new TH2D("proton_pos","particle pt vs pseudo-rapidity, proton pos",100,0,20,80,-4,4);
+    proton_pos = new TH2D("proton_pos","particle pt vs pseudo-rapidity, proton pos",100,0,20,80,-10,10);
     proton_pos->Sumw2();
-    proton_neg = new TH2D("proton_neg","particle pt vs pseudo-rapidity, proton neg",100,0,20,80,-4,4);
+    proton_neg = new TH2D("proton_neg","particle pt vs pseudo-rapidity, proton neg",100,0,20,80,-10,10);
     proton_neg->Sumw2();
 
     //loop over events

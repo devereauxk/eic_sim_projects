@@ -35,7 +35,7 @@ void slice_2D_hist()
     h1d_pt_in_eta[ieta]->SetTitle( "particle p_{T} ditributiton" );
   }
   // set back to original range
-  h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-4,4);
+  h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-7,7);   // whats this line for ????
 }
 
 void plot_histograms_pt_eta_decomp()
@@ -48,6 +48,7 @@ void plot_histograms_pt_eta_decomp()
       inFile = dirs[i] + inFileName;
       fin = new TFile(inFile.c_str(), "read");
       h2d_pt_vs_eta = (TH2D*)fin->Get(histogram_titles[i_titles].c_str());
+      Double_t nEntries = h2d_pt_vs_eta->GetEntries();    // make sure the eta range on the h2d_pt_vs_eta is large enough so that all particles are included
       slice_2D_hist();
 
       // plots pt and eta 2d histogram
@@ -79,7 +80,7 @@ void plot_histograms_pt_eta_decomp()
       leg->SetFillStyle(0);
       leg->SetMargin(0.3);
       float plot_xrange_lo = 0, plot_xrange_hi = 15;
-      float plot_yrange_lo = 1E0, plot_yrange_hi = 10*h1d_pt_in_eta[2]->GetMaximum(); // when using log axis, cannot use 0 as start as plot range
+      float plot_yrange_lo = 1E0, plot_yrange_hi = (10 / nEntries)*h1d_pt_in_eta[2]->GetMaximum(); // when using log axis, cannot use 0 as start as plot range
       // use the empty 2D histogram htemp as a frame
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.SetStats(0); // not showing the box on the top right corner
@@ -94,6 +95,7 @@ void plot_histograms_pt_eta_decomp()
         h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
         h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
         h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
+        h1d_pt_in_eta[ieta]->Scale(1 / nEntries);
         h1d_pt_in_eta[ieta]->Draw("hsame");
         leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
       }
