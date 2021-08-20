@@ -20,6 +20,7 @@ std::string inFileName = "pt_eta_decomp.root";
 
 const int num_histograms = 6;
 std::string histogram_titles[num_histograms] = {"kaon_pos", "kaon_neg", "pion_pos", "pion_neg", "proton_pos", "proton_neg"};
+std::string histogram_symbols[num_histograms] = {"K^{+}", "K^{-}", "#pi^{+}", "#pi^{-}", "proton", "antiproton"}
 
 
 void slice_2D_hist()
@@ -56,7 +57,7 @@ void plot_histograms_pt_eta_decomp()
       c3->SetRightMargin(0.15);
       c3->SetBottomMargin(0.1);
       h2d_pt_vs_eta = (TH2D*) h2d_pt_vs_eta->Rebin2D(2, 2);
-      h2d_pt_vs_eta->SetTitle(names[i].c_str());
+      h2d_pt_vs_eta->SetTitle(Form("%s multiplicity, %s", names[i].c_str(), histogram_symbols[i_titles].c_str());
       h2d_pt_vs_eta->GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
       h2d_pt_vs_eta->GetYaxis()->SetTitle("#eta");
       h2d_pt_vs_eta->GetXaxis()->SetTitleOffset(1.3);
@@ -83,6 +84,7 @@ void plot_histograms_pt_eta_decomp()
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.SetStats(0); // not showing the box on the top right corner
       htemp.Draw();
+      htemp.SetTitle(Form("%s multiplicity", histogram_symbols[i_titles].c_str()));
       htemp.GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
       htemp.GetYaxis()->SetTitle("counts");
       htemp.GetXaxis()->SetTitleOffset(1.3);
@@ -103,6 +105,7 @@ void plot_histograms_pt_eta_decomp()
       tl->DrawLatexNDC(0.5,0.85,names[i].c_str());
       c3->SaveAs( Form("%spt_eta_binned_single_%s.pdf", outdirs[i].c_str(), histogram_titles[i_titles].c_str()) );
 
+      /*
       // all in one pdf
       TCanvas * c_all = new TCanvas("canvas_with_all_of_them", "canvas_with_all_of_them", 2400, 800);
       c_all->Divide(3);
@@ -165,6 +168,7 @@ void plot_histograms_pt_eta_decomp()
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
       c4->SaveAs( Form("%savg_pt_vs_eta_%s.pdf", outdirs[i].c_str(), histogram_titles[i_titles].c_str()) );
+      */
     }
 
   }
