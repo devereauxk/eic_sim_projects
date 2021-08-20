@@ -17,7 +17,7 @@ void access_tree_pt_eta_totals()
   //std::inFileName = "merged.root";
 
   const int num_species = 1;
-  std::string dirs[num_species] = {"../../debug/"};
+  std::string dirs[num_species] = {"../../../debug/"};
   std::string inFileName = "ep_minbias_highQ2_91.root";
 
   TH2D * h2d_pt_vs_eta;

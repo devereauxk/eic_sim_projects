@@ -13,9 +13,9 @@ TGraphErrors* g_pt_vs_eta = NULL;
 //std::string inFileName = "pt_eta_total_TH2D.root";
 
 const int num_species = 1;
-std::string dirs[num_species] = {"../../debug/"}
+std::string dirs[num_species] = {"../../../debug/"}
 std::string names[num_species] = {"e + p @ 10 + 100 GeV"};
-std::string outdirs[num_species] = {"../../debug/pdfs/"};
+std::string outdirs[num_species] = {"../../../debug/pdfs/"};
 std::string inFileName = "pt_eta_total_TH2D.root";
 
 
