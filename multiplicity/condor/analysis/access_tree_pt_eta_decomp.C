@@ -18,7 +18,7 @@ void access_tree_pt_eta_decomp()
 
   const int num_species = 2;
   std::string dirs[num_species] = {"../../../debug/", "../ep_10_100/outfiles/"};
-  std::string inFileNames[num_species] = {"ep_minbias_highQ2_38.root", "merged.root"};
+  std::string inFileNames[num_species] = {"ep_minbias_highQ2_91.root", "merged.root"};
 
   TH2D * kaon_pos;
   TH2D * kaon_neg;

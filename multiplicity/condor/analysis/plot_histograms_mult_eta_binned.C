@@ -1,15 +1,20 @@
-const int etabin = 3;
-const double eta_lo[etabin] = {-3,-1,1};
-const double eta_hi[etabin] = {-1,1,3};
-const int eta_color[etabin] = {kRed, kBlue, kGreen+1};
+const int etabin = 5;
+const double eta_lo[etabin] = {-3,-1,1,-3,-4};
+const double eta_hi[etabin] = {-1,1,3,3,4};
+const int eta_color[etabin] = {kRed, kBlue, kGreen+1, kBlack, kOrange};
 TH1D * kaon[etabin];
 TH1D * pion[etabin];
 TH1D * proton[etabin];
 
-const int num_species = 7;
-std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
-std::string names[num_species] = {"e + p @ 10 + 100 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
-std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
+//const int num_species = 7;
+//std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+//std::string names[num_species] = {"e + p @ 10 + 100 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
+//std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
+
+const int num_species = 2;
+std::string dirs[num_species] = {"../../../debug/", "../ep_10_100/outfiles/"};
+std::string names[num_species] = {"e + p @ 10 + 100 GeV, Wenqing data", "e + p @ 10 + 100 GeV"};
+std::string outdirs[num_species] = {"../../../debug/pdfs/", "../ep_10_100/"};
 
 void plot_histograms_mult_eta_binned()
 {
