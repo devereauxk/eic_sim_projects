@@ -35,7 +35,7 @@ void slice_2D_hist()
     h1d_pt_in_eta[ieta]->SetTitle( "particle p_{T} ditributiton" );
   }
   // set back to original range
-  h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-7,7);   // whats this line for ????
+  h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-7,7);
 }
 
 void plot_histograms_pt_eta_decomp()
@@ -90,12 +90,12 @@ void plot_histograms_pt_eta_decomp()
       htemp.GetYaxis()->SetTitle("counts");
       htemp.GetXaxis()->SetTitleOffset(1.3);
       htemp.GetYaxis()->SetTitleOffset(1.5);
+      htemp.Scale(1 / nEntries);
       for (int ieta = 0; ieta < etabin; ++ieta)
       {
         h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
         h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
         h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
-        h1d_pt_in_eta[ieta]->Scale(1 / nEntries);
         h1d_pt_in_eta[ieta]->Draw("hsame");
         leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
       }
