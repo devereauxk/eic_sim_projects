@@ -67,10 +67,6 @@ void access_tree_mult_eta_binned()
       proton[ieta]->Sumw2();
     }
 
-    Int_t d_avg_pion_0 = 0;
-    Int_t d_avg_pion_1 = 0;
-    Int_t d_avg_pion_2 = 0;
-
     cout<<"entries: "<<nEntries<<endl;
 
     //loop over events
@@ -124,12 +120,6 @@ void access_tree_mult_eta_binned()
           }
         }
       }
-      //cout<<nPosKaons[0]<<" "<<nNegKaons[0]<<" "<<nPosPions[0]<<" "<<nNegKaons[0]<<" "<<nProtons[0]<<" "<<nAntiProtons[0]<<endl;
-      //cout<<nPosKaons[1]<<" "<<nNegKaons[1]<<" "<<nPosPions[1]<<" "<<nNegKaons[1]<<" "<<nProtons[1]<<" "<<nAntiProtons[1]<<endl;
-      //cout<<nPosKaons[2]<<" "<<nNegKaons[2]<<" "<<nPosPions[2]<<" "<<nNegKaons[2]<<" "<<nProtons[2]<<" "<<nAntiProtons[2]<<endl<<endl;
-      //d_avg_pion_0 += nNegPions[0];
-      //d_avg_pion_1 += nNegPions[1];
-      //d_avg_pion_2 += nPosPions[2];
 
       for (Int_t ieta = 0; ieta < etabin; ieta++) {
         kaon[ieta]->Fill(nPosKaons[ieta], nNegKaons[ieta]);
@@ -138,7 +128,6 @@ void access_tree_mult_eta_binned()
       }
 
     }
-    //cout<<((Float_t) d_avg_pion_0) / nEntries<<" "<<((Float_t) d_avg_pion_1) / nEntries<<" "<<((Float_t) d_avg_pion_2) / nEntries<<endl;
 
     for (Int_t ieta = 0; ieta < etabin; ieta++) {
       kaon[ieta]->Write();
