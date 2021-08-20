@@ -6,10 +6,18 @@ TH2D* h2d_pt_vs_eta = NULL;
 TH1D* h1d_pt_in_eta[etabin] = {0};
 TGraphErrors* g_pt_vs_eta = NULL;
 
-const int num_species = 7;
-std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
-std::string names[num_species] = {"e + p @ 10 + 100 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
-std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
+//const int num_species = 7;
+//std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+//std::string names[num_species] = {"e + p @ 10 + 100 GeV", "e + D @ 18 + 110 GeV", "e + He4 @ 18 + 110 GeV", "e + C @ 18 + 110 GeV", "e + Ca @ 18 + 110 GeV", "e + Cu @ 18 + 110 GeV", "e + Au @ 18 + 110 GeV"};
+//std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
+//std::string inFileName = "pt_eta_total_TH2D.root";
+
+const int num_species = 1;
+std::string dirs[num_species] = {"../../debug/"}
+std::string names[num_species] = {"e + p @ 10 + 100 GeV"};
+std::string outdirs[num_species] = {"../../debug/pdfs/"};
+std::string inFileName = "pt_eta_total_TH2D.root";
+
 
 void slice_2D_hist()
 {
@@ -31,7 +39,7 @@ void plot_histograms_pt_eta_totals()
   TFile * fin;
   std::string inFile;
   for (int i = 0; i < num_species; i++) {
-    inFile = dirs[i] + "pt_eta_total_TH2D.root";
+    inFile = dirs[i] + inFileName;
     fin = new TFile(inFile.c_str(), "read");
     fin->ls();
     h2d_pt_vs_eta = (TH2D*)fin->Get("h2d_pt_vs_eta");
