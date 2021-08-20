@@ -103,10 +103,10 @@ void access_tree_pt_eta_totals()
               pion_neg->Fill(pT, eta);
               break;
             case 2212:
-              protons_pos->Fill(pT, eta);
+              proton_pos->Fill(pT, eta);
               break;
             case -2212:
-              protons_neg->Fill(pT, eta);
+              proton_neg->Fill(pT, eta);
               break;
             default: break;
           }
