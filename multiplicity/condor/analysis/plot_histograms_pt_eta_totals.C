@@ -1,7 +1,7 @@
-const int etabin = 3;
-const double eta_lo[etabin] = {-3,-1,1};
-const double eta_hi[etabin] = {-1,1,3};
-const int eta_color[etabin] = {kRed, kBlue, kGreen+1};
+const int etabin = 5;
+const double eta_lo[etabin] = {-3,-1,1,-3,-4};
+const double eta_hi[etabin] = {-1,1,3,3,4};
+const int eta_color[etabin] = {kRed, kBlue, kGreen+1, kBlack, kOrange};
 TH2D* h2d_pt_vs_eta = NULL;
 TH1D* h1d_pt_in_eta[etabin] = {0};
 TGraphErrors* g_pt_vs_eta = NULL;
@@ -12,10 +12,10 @@ TGraphErrors* g_pt_vs_eta = NULL;
 //std::string outdirs[num_species] = {"../ep_10_100/", "../eD_18_110/", "../eHe4_18_110/", "../eC_18_110/", "../eCa_18_110/", "../eCu_18_110/", "../eAu_18_110/"};
 //std::string inFileName = "pt_eta_total_TH2D.root";
 
-const int num_species = 1;
-std::string dirs[num_species] = {"../../../debug/"};
-std::string names[num_species] = {"e + p @ 10 + 100 GeV"};
-std::string outdirs[num_species] = {"../../../debug/pdfs/"};
+const int num_species = 2;
+std::string dirs[num_species] = {"../../../debug/", "../ep_10_100/outfiles/"};
+std::string names[num_species] = {"e + p @ 10 + 100 GeV, Wenqing data", "e + p @ 10 + 100 GeV"};
+std::string outdirs[num_species] = {"../../../debug/pdfs/", "../ep_10_100/"};
 std::string inFileName = "pt_eta_total_TH2D.root";
 
 
@@ -31,7 +31,7 @@ void slice_2D_hist()
     h1d_pt_in_eta[ieta]->SetTitle( "particle p_{T} ditributiton" );
   }
   // set back to original range
-  h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-3,3);
+  h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-4,4);
 }
 
 void plot_histograms_pt_eta_totals()
