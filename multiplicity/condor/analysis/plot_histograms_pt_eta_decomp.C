@@ -73,7 +73,7 @@ void plot_histograms_pt_eta_decomp()
       c3->Range(0,0,1,1);
       c3->SetLeftMargin(0.15);
       c3->SetBottomMargin(0.1);
-      c3->SetLogy(); // set y axis to log scale
+      //c3->SetLogy(); // set y axis to log scale
       TLegend* leg = new TLegend(0.65,0.60,0.75,0.80);
       leg->SetBorderSize(0);
       leg->SetTextSize(0.035);
