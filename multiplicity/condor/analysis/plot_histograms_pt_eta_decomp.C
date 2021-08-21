@@ -96,8 +96,10 @@ void plot_histograms_pt_eta_decomp()
         h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
         h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
         h1d_pt_in_eta[ieta]->Scale(1 / nEntries);
+        cout<<h1d_pt_in_eta[ieta]->Integral(0,10)<<endl;
         h1d_pt_in_eta[ieta]->Draw("hsame");
         leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
+        cout<<""<<endl;
       }
       leg->Draw("same");
       TLatex* tl = new TLatex();
