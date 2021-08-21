@@ -80,7 +80,7 @@ void plot_histograms_pt_eta_decomp()
       leg->SetFillStyle(0);
       leg->SetMargin(0.3);
       float plot_xrange_lo = 0, plot_xrange_hi = 15;
-      float plot_yrange_lo = 1E0, plot_yrange_hi = 10*h1d_pt_in_eta[2]->GetMaximum(); // when using log axis, cannot use 0 as start as plot range
+      float plot_yrange_lo = 1E0, plot_yrange_hi = 1; // when using log axis, cannot use 0 as start as plot range
       // use the empty 2D histogram htemp as a frame
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.SetStats(0); // not showing the box on the top right corner
@@ -90,7 +90,6 @@ void plot_histograms_pt_eta_decomp()
       htemp.GetYaxis()->SetTitle("counts");
       htemp.GetXaxis()->SetTitleOffset(1.3);
       htemp.GetYaxis()->SetTitleOffset(1.5);
-      htemp.Scale(1 / nEntries);
       for (int ieta = 0; ieta < etabin; ++ieta)
       {
         h1d_pt_in_eta[ieta]->SetStats(0); // not showing the box on the top right corner
