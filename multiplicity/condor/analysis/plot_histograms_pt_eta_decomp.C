@@ -1,6 +1,6 @@
 const int etabin = 5;
-const double eta_lo[etabin] = {-3,-1,1,-3,-4};
-const double eta_hi[etabin] = {-1,1,3,3,4};
+const double eta_lo[etabin] = {-3,-1,1,-3,-4,-7,-10};
+const double eta_hi[etabin] = {-1,1,3,3,4,7,10};
 const int eta_color[etabin] = {kRed, kBlue, kGreen+1, kBlack, kOrange};
 TH2D* h2d_pt_vs_eta = NULL;
 TH1D* h1d_pt_in_eta[etabin] = {0};
