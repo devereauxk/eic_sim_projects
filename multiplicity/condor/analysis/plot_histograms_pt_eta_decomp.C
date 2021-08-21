@@ -80,7 +80,7 @@ void plot_histograms_pt_eta_decomp()
       leg->SetFillStyle(0);
       leg->SetMargin(0.3);
       float plot_xrange_lo = 0, plot_xrange_hi = 15;
-      float plot_yrange_lo = 1E0, plot_yrange_hi = 1; // when using log axis, cannot use 0 as start as plot range
+      float plot_yrange_lo = 0, plot_yrange_hi = 1; // when using log axis, cannot use 0 as start as plot range
       // use the empty 2D histogram htemp as a frame
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.SetStats(0); // not showing the box on the top right corner
