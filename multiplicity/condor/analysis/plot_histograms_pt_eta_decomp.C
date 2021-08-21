@@ -79,8 +79,8 @@ void plot_histograms_pt_eta_decomp()
       leg->SetTextSize(0.035);
       leg->SetFillStyle(0);
       leg->SetMargin(0.3);
-      float plot_xrange_lo = 0, plot_xrange_hi = 15;
-      float plot_yrange_lo = 0, plot_yrange_hi = 1; // when using log axis, cannot use 0 as start as plot range
+      float plot_xrange_lo = 0, plot_xrange_hi = 7;
+      float plot_yrange_lo = 0, plot_yrange_hi = 0.7; // when using log axis, cannot use 0 as start as plot range
       // use the empty 2D histogram htemp as a frame
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.SetStats(0); // not showing the box on the top right corner
@@ -96,10 +96,10 @@ void plot_histograms_pt_eta_decomp()
         h1d_pt_in_eta[ieta]->SetLineColor(eta_color[ieta]); // eta_color array defined at the beginning
         h1d_pt_in_eta[ieta]->SetMarkerColor(eta_color[ieta]);
         h1d_pt_in_eta[ieta]->Scale(1 / nEntries);
-        cout<<h1d_pt_in_eta[ieta]->Integral(0,10)<<endl;
+        h1d_pt_in_eta[ieta]->Rebin(2);
+        //cout<<h1d_pt_in_eta[ieta]->Integral(0,10)<<endl; // integral should be 1 if all particles included in eta range!
         h1d_pt_in_eta[ieta]->Draw("hsame");
         leg->AddEntry(h1d_pt_in_eta[ieta],Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]),"l"); // "l" means line
-        cout<<""<<endl;
       }
       leg->Draw("same");
       TLatex* tl = new TLatex();
