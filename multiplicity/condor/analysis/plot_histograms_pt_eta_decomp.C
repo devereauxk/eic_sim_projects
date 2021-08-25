@@ -87,7 +87,7 @@ void plot_histograms_pt_eta_decomp()
       htemp.Draw();
       htemp.SetTitle(Form("%s multiplicity", histogram_symbols[i_titles].c_str()));
       htemp.GetXaxis()->SetTitle("<p_{T}> [GeV/c]");
-      htemp.GetYaxis()->SetTitle("counts");
+      htemp.GetYaxis()->SetTitle("fraction of counts [%]");
       htemp.GetXaxis()->SetTitleOffset(1.3);
       htemp.GetYaxis()->SetTitleOffset(1.5);
       for (int ieta = 0; ieta < etabin; ++ieta)
