@@ -12,16 +12,13 @@ void access_tree_mult_eta_binned()
   //Particle Class
   erhic::ParticleMC *particle(NULL); //Also use Pointer
 
-  //const int num_species = 7;
-  //std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+  const int num_species = 7;
+  std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/",  "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+  std::string inFileNames[num_species] = {"merged.root", "merged.root", "merged.root", "merged.root", "merged.root", "merged.root", "merged.root"};
 
-  const int num_species = 2;
-  std::string dirs[num_species] = {"../../../debug/", "../ep_10_100/outfiles/"};
-  std::string inFileNames[num_species] = {"ep_minbias_highQ2_91.root", "merged.root"};
-
-  const int etabin = 5;
-  const double eta_lo[etabin] = {-3, -1, 1, -3, -4};
-  const double eta_hi[etabin] = {-1, 1, 3, 3, 4};
+  const int etabin = 4;
+  const double eta_lo[etabin] = {-3, -1, 1, -3};
+  const double eta_hi[etabin] = {-1, 1, 3, 3};
   TH2D * kaon[etabin];
   TH2D * pion[etabin];
   TH2D * proton[etabin];
