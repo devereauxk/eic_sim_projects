@@ -34,7 +34,7 @@ void access_tree_pt_eta_totals()
   for (int i = 0; i < num_species; i++) {
     cout<<dirs[i]<<endl;
     //Load ROOT File for pythia
-    inFile = dirs[i] + "merged.root";
+    inFile = dirs[i] + inFileNames[i];
     f = new TFile(inFile.c_str(), "read");
 
     //Get EICTree Tree
@@ -80,7 +80,7 @@ void access_tree_pt_eta_totals()
     h2d_pt_vs_eta->Write();
     fout->Write();
     fout->Close();
-    
+
   }
 
 }
