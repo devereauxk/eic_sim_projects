@@ -13,7 +13,8 @@ void access_tree_p_eta_totals()
   erhic::ParticleMC *particle(NULL); //Also use Pointer
 
   const int num_species = 7;
-  std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+  std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/",  "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+  std::string inFileNames[num_species] = {"merged.root", "merged.root", "merged.root", "merged.root", "merged.root", "merged.root", "merged.root"};
 
   TH2D * h2d_p_vs_eta;
 
@@ -33,7 +34,7 @@ void access_tree_p_eta_totals()
   //loop over each merged.root file
   for (int i = 0; i < num_species; i++) {
     //Load ROOT File for pythia
-    inFile = dirs[i] + "merged.root";
+    inFile = dirs[i] + inFileNames[i];
     f = new TFile(inFile.c_str(), "read");
 
     //Get EICTree Tree
