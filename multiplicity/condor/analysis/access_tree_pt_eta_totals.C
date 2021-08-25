@@ -13,8 +13,8 @@ void access_tree_pt_eta_totals()
   erhic::ParticleMC *particle(NULL); //Also use Pointer
 
   const int num_species = 2;
-  std::string dirs[num_species] = {"../../../debug/", "../ep_10_100/outfiles/"};
-  std::string inFileNames[num_species] = {"ep_minbias_highQ2_91.root", "merged.root"};
+  std::string dirs[num_species] = {"../eD_18_110/outForPythiaMode/", "../ep_10_100/outfiles/"};
+  std::string inFileNames[num_species] = {"merged.root", "merged.root"};
 
   TH2D * h2d_pt_vs_eta;
 
