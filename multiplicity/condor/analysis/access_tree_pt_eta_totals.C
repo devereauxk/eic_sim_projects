@@ -76,11 +76,11 @@ void access_tree_pt_eta_totals()
       }
     }
 
+    f->Close();
     h2d_pt_vs_eta->Write();
     fout->Write();
     fout->Close();
-    f->Close();
-
+    
   }
 
 }
