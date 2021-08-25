@@ -12,9 +12,8 @@ void access_tree_pt_eta_totals()
   //Particle Class
   erhic::ParticleMC *particle(NULL); //Also use Pointer
 
-  const int num_species = 4;
-  std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
-  std::string inFileNames[num_species] = {"merged.root", "merged.root", "merged.root", "merged.root"};
+  const int num_species = 7;
+  std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/",  "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
 
   TH2D * h2d_pt_vs_eta;
 
@@ -33,8 +32,9 @@ void access_tree_pt_eta_totals()
 
   //loop over each merged.root file
   for (int i = 0; i < num_species; i++) {
+    cout<<dirs[i]<<endl;
     //Load ROOT File for pythia
-    inFile = dirs[i] + inFileNames[i];
+    inFile = dirs[i] + "merged.root";
     f = new TFile(inFile.c_str(), "read");
 
     //Get EICTree Tree
@@ -79,6 +79,7 @@ void access_tree_pt_eta_totals()
     h2d_pt_vs_eta->Write();
     fout->Write();
     fout->Close();
+    f->Close();
 
   }
 
