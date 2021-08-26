@@ -13,7 +13,7 @@ void access_tree_mult_eta_binned()
   erhic::ParticleMC *particle(NULL); //Also use Pointer
 
   const int num_species = 7;
-  std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/",  "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
+  std::string dirs[num_species] = {"../eD_18_110/outForPythiaMode/",  "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/", "../ep_10_100/outfiles/"};
   std::string inFileNames[num_species] = {"merged.root", "merged.root", "merged.root", "merged.root", "merged.root", "merged.root", "merged.root"};
 
   const int etabin = 4;
