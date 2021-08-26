@@ -69,8 +69,6 @@ void access_tree_mult_eta_binned()
       proton[ieta]->Sumw2();
     }
 
-    cout<<"entries: "<<nEntries<<endl;
-
     //loop over events
     for (Int_t j = 0; j < nEntries; j++) {
 
