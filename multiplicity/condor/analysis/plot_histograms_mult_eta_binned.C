@@ -1,7 +1,7 @@
-const int etabin = 5;
+const int etabin = 4;
 const double eta_lo[etabin] = {-3,-1,1,-3};
 const double eta_hi[etabin] = {-1,1,3,3};
-const int eta_color[etabin] = {kRed, kBlue, kGreen+1, kBlack, kOrange};
+const int eta_color[etabin] = {kRed, kBlue, kGreen+1, kBlack};
 TH1D * kaon[etabin];
 TH1D * pion[etabin];
 TH1D * proton[etabin];
