@@ -134,7 +134,11 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-    leg = new TLegend(0.3, 0.20, 0.50, 0.30);
+    double kaon_translate = 0.2;
+    if (eta_lo[ieta] == 1 && eta_hi[ieta] == 3) {
+      kaon_translate = 0.4;
+    }
+    leg = new TLegend(0.3, kaon_translate, 0.50, kaon_translate+0.1);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.040);
     leg->SetFillStyle(0);
@@ -143,10 +147,6 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     leg->AddEntry(neg_graph, "K^{-}", "l");
     leg->Draw();
 
-    double kaon_translate = 0.2;
-    if (eta_lo[ieta] == 1 && eta_hi[ieta] == 3) {
-      kaon_translate = 0.4;
-    }
     t1 = new TLatex();
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
@@ -232,7 +232,11 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-    leg = new TLegend(0.3, 0.20, 0.50, 0.30);
+    double pion_translate = 0.2;
+    if (eta_lo[ieta] == 1 && eta_hi[ieta] == 3) {
+      pion_translate = 0.7;
+    }
+    leg = new TLegend(0.3, pion_translate, 0.50, pion_translate+0.1);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.040);
     leg->SetFillStyle(0);
@@ -241,18 +245,14 @@ void plot_multiplicities_vs_atomic_number_eta_binned()
     leg->AddEntry(neg_graph, "#pi^{-}", "l");
     leg->Draw();
 
-    double pion_translate = 0.2;
-    if (eta_lo[ieta] == 1 && eta_hi[ieta] == 3) {
-      pion_translate = 0.7;
-    }
     t1 = new TLatex();
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,0.35, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
-    t1->DrawLatexNDC(0.5,0.3,"e + p @ 10 + 100 GeV");
-    t1->DrawLatexNDC(0.5,0.25,"e + A @ 18 + 110 Gev");
-    t1->DrawLatexNDC(0.5,0.2,"collisions per species: ~1E6");
+    t1->DrawLatexNDC(0.5,pion_translate+0.15, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,pion_translate+0.1,"e + p @ 10 + 100 GeV");
+    t1->DrawLatexNDC(0.5,pion_translate+0.05,"e + A @ 18 + 110 Gev");
+    t1->DrawLatexNDC(0.5,pion_translate,"collisions per species: ~1E6");
 
     c_main->cd(2);
     mg = new TMultiGraph();
