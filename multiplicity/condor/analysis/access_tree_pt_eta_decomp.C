@@ -38,6 +38,7 @@ void access_tree_pt_eta_decomp()
 
   //loop over each merged.root file
   for (int i = 0; i < num_species; i++) {
+    cout<<dirs[i]<<endl;
     //Load ROOT File for pythia
     inFile = dirs[i] + inFileNames[i];
     f = new TFile(inFile.c_str(), "read");
