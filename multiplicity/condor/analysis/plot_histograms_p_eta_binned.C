@@ -32,7 +32,7 @@ void slice_2D_hist()
   h2d_pt_vs_eta->GetYaxis()->SetRangeUser(-7,7);
 }
 
-void plot_histograms_pt_eta_decomp()
+void plot_histograms_p_eta_decomp()
 {
   for(int i_titles; i_titles < num_histograms; i_titles++) {
 
