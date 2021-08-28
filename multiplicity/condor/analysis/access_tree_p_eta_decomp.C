@@ -82,7 +82,7 @@ void access_tree_p_eta_decomp()
         particle = event->GetTrack(k);
         status = (Int_t) particle->GetStatus(); //Can also do particle->KS
         id = (Int_t) particle->Id();
-        p = (Double_t) particle->GetPt();
+        p = (Double_t) particle->GetP();
         eta = (Double_t) particle->GetEta();
 
         if (status == 1) {
