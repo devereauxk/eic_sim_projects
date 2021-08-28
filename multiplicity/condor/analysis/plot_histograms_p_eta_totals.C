@@ -55,6 +55,7 @@ void plot_histograms_p_eta_totals()
     h2d_p_vs_eta->SetStats(0);
     c3->SaveAs(Form("%sp_vs_eta_2D_histo.pdf", outdirs[i].c_str()));
 
+    /*
     // plot different eta bin slices on the same canvas
     c3 = new TCanvas("c3","c3",800,800); // create new canvas
     c3->Range(0,0,1,1);
@@ -154,6 +155,7 @@ void plot_histograms_p_eta_totals()
     tl->SetTextColor(kBlack);
     tl->DrawLatexNDC(0.2,0.85,names[i].c_str());
     c4->SaveAs( Form("%savg_p_vs_eta.pdf", outdirs[i].c_str()) );
+    */
   }
 
 }
