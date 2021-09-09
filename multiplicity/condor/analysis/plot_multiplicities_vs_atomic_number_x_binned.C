@@ -1,10 +1,10 @@
 const int xbin = 5;
 const double x_lo[xbin] = {1/100000, 1/10000, 1/1000, 1/100, 1/10};
 const double x_hi[xbin] = {1/10000, 1/1000, 1/100, 1/10, 1};
-const int eta_color[etabin] = {kRed, kBlue, kGreen+1, kBlack, kOrange};
-TH1D * kaon[etabin];
-TH1D * pion[etabin];
-TH1D * proton[etabin];
+const int x_color[xbin] = {kRed, kBlue, kGreen+1, kBlack, kOrange};
+TH1D * kaon[xbin];
+TH1D * pion[xbin];
+TH1D * proton[xbin];
 
 const int num_species = 7;
 std::string dirs[num_species] = {"../ep_10_100/outfiles/", "../eD_18_110/outForPythiaMode/", "../eHe4_18_110/outForPythiaMode/", "../eC_18_110/outForPythiaMode/", "../eCa_18_110/outForPythiaMode/", "../eCu_18_110/outForPythiaMode/", "../eAu_18_110/outForPythiaMode/"};
@@ -12,7 +12,7 @@ double atomic_weight[num_species] = {1, 2, 4, 12, 40, 63, 197};
 
 void plot_multiplicities_vs_atomic_number_x_binned()
 {
-  for (int ieta = 0; ieta < etabin; ieta++) {
+  for (int ix = 0; ix < xbin; ix++) {
 
     double kaon_pos_mean[num_species] = {0}, kaon_pos_mean_err[num_species] = {0};
     double kaon_neg_mean[num_species] = {0}, kaon_neg_mean_err[num_species] = {0};
@@ -39,15 +39,15 @@ void plot_multiplicities_vs_atomic_number_x_binned()
       inFile = dirs[i] + "mult_x_binned.root";
       fin = new TFile(inFile.c_str(), "read");
 
-      h2d_kaon = (TH2D*)fin->Get(Form("h2d_kaon_%d", ieta));
+      h2d_kaon = (TH2D*)fin->Get(Form("h2d_kaon_%d", ix));
       h1d_kaon_pos = (TH1D*) h2d_kaon->ProjectionX("h1d_kaon_pos");
       h1d_kaon_neg = (TH1D*) h2d_kaon->ProjectionY("h1d_kaon_neg");
 
-      h2d_pion = (TH2D*)fin->Get(Form("h2d_pion_%d", ieta));
+      h2d_pion = (TH2D*)fin->Get(Form("h2d_pion_%d", ix));
       h1d_pion_pos = (TH1D*) h2d_pion->ProjectionX("h1d_pion_pos");
       h1d_pion_neg = (TH1D*) h2d_pion->ProjectionY("h1d_pion_neg");
 
-      h2d_proton = (TH2D*)fin->Get(Form("h2d_proton_%d", ieta));
+      h2d_proton = (TH2D*)fin->Get(Form("h2d_proton_%d", ix));
       h1d_proton_pos = (TH1D*) h2d_proton->ProjectionX("h1d_proton");
       h1d_proton_neg = (TH1D*) h2d_proton->ProjectionY("h1d_anti_proton");
 
@@ -135,7 +135,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
     double kaon_translate = 0.2;
-    if (eta_lo[ieta] == 1 && eta_hi[ieta] == 3) {
+    if (x_lo[ix] == 1 && x_hi[ix] == 3) {
       kaon_translate = 0.4;
     }
     leg = new TLegend(0.3, kaon_translate, 0.50, kaon_translate+0.1);
@@ -151,7 +151,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,kaon_translate+0.15, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,kaon_translate+0.15, Form("%.0f < x < %.0f",x_lo[ix],x_hi[ix]));
     t1->DrawLatexNDC(0.5,kaon_translate+0.1,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,kaon_translate+0.05,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,kaon_translate,"collisions per species: ~1E6");
@@ -188,7 +188,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-    c_main->SaveAs( Form("kaon_vs_atomic_number_x_%d.pdf", ieta) );
+    c_main->SaveAs( Form("kaon_vs_atomic_number_x_%d.pdf", ix) );
 
 
 
@@ -233,7 +233,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
     double pion_translate = 0.2;
-    if (eta_lo[ieta] == 1 && eta_hi[ieta] == 3) {
+    if (x_lo[ix] == 1 && x_hi[ix] == 3) {
       pion_translate = 0.7;
     }
     leg = new TLegend(0.3, pion_translate, 0.50, pion_translate+0.1);
@@ -249,7 +249,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,pion_translate+0.15, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,pion_translate+0.15, Form("%.0f < x < %.0f",x_lo[ix],x_hi[ix]));
     t1->DrawLatexNDC(0.5,pion_translate+0.1,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,pion_translate+0.05,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,pion_translate,"collisions per species: ~1E6");
@@ -286,7 +286,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-    c_main->SaveAs( Form("pion_vs_atomic_number_x_%d.pdf", ieta) );
+    c_main->SaveAs( Form("pion_vs_atomic_number_x_%d.pdf", ix) );
 
 
 
@@ -343,7 +343,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,0.35, Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    t1->DrawLatexNDC(0.5,0.35, Form("%.0f < #x < %.0f",x_lo[ix],x_hi[ix]));
     t1->DrawLatexNDC(0.5,0.3,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,0.25,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,0.2,"collisions per species: ~1E6");
@@ -380,7 +380,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     mg->GetXaxis()->SetRange(plot_xrange_lo, plot_xrange_hi);
     mg->GetYaxis()->SetRange(plot_yrange_lo, plot_yrange_hi);
 
-    c_main->SaveAs( Form("proton_vs_atomic_number_x_%d.pdf", ieta) );
+    c_main->SaveAs( Form("proton_vs_atomic_number_x_%d.pdf", ix) );
 
 
   }
