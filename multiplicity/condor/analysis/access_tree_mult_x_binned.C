@@ -124,9 +124,9 @@ void access_tree_mult_x_binned()
                 }
               }
             }
-          }
-          break;
+            break;
 
+          }
         }
       }
 
