@@ -25,7 +25,7 @@ void plot_histograms_x_Q2_totals()
     c3->SetBottomMargin(0.1);
     h2d_x_vs_q2 = (TH2D*) h2d_x_vs_q2->Rebin2D(2, 2);
     h2d_x_vs_q2->SetTitle(names[i].c_str());
-    h2d_x_vs_q2->GetXaxis()->SetTitle("x");
+    h2d_x_vs_q2->GetXaxis()->SetTitle("log(x)");
     h2d_x_vs_q2->GetYaxis()->SetTitle("Q^{2}");
     h2d_x_vs_q2->GetXaxis()->SetTitleOffset(1.3);
     h2d_x_vs_q2->GetYaxis()->SetTitleOffset(1.5);
