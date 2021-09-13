@@ -98,6 +98,7 @@ void access_tree_mult_x_binned()
               id = (Int_t) particle->Id();
 
               if (status == 1) {
+                cout<<id<<endl;
                 switch(id) {
                   case 321:
                     nPosKaons[ix]++;
