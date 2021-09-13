@@ -89,7 +89,7 @@ void access_tree_mult_x_binned()
       if (event->GetProcess() == 99) {
         for (Int_t ix = 0; ix < xbin; ix++) {
           if (x_lo[ix] <= x && x <= x_hi[ix]) {
-
+            cout<<"runs"<<endl;
             //Loop Over Each Particle
             for(Int_t k = 0; k < nParticles; k++) {
 
