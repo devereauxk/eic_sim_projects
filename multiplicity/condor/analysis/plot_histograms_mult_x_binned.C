@@ -1,6 +1,6 @@
 const int xbin = 5;
-const double x_lo[xbin] = {1/100000, 1/10000, 1/1000, 1/100, 1/10};
-const double x_hi[xbin] = {1/10000, 1/1000, 1/100, 1/10, 1};
+const double x_lo[xbin] = {1e-5, 1e-4 1e-3, 1e-2, 1e-1};
+const double x_hi[xbin] = {1e-4, 1e-3, 1e-2, 1e-1, 1};
 const int x_color[xbin] = {kRed, kBlue, kGreen+1, kBlack, kOrange};
 TH1D * kaon[xbin];
 TH1D * pion[xbin];
