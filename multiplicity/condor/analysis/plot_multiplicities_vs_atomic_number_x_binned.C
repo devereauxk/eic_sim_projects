@@ -151,7 +151,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,kaon_translate+0.15, Form("%e < x < %e",x_lo[ix],x_hi[ix]));
+    t1->DrawLatexNDC(0.5,kaon_translate+0.15, Form("%0.1e < x < %0.1e",x_lo[ix],x_hi[ix]));
     t1->DrawLatexNDC(0.5,kaon_translate+0.1,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,kaon_translate+0.05,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,kaon_translate,"collisions per species: ~1E6");
@@ -249,7 +249,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,pion_translate+0.15, Form("%e < x < %e",x_lo[ix],x_hi[ix]));
+    t1->DrawLatexNDC(0.5,pion_translate+0.15, Form("%0.1e < x < %0.1e",x_lo[ix],x_hi[ix]));
     t1->DrawLatexNDC(0.5,pion_translate+0.1,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,pion_translate+0.05,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,pion_translate,"collisions per species: ~1E6");
@@ -343,7 +343,7 @@ void plot_multiplicities_vs_atomic_number_x_binned()
     t1->SetTextAlign(11);
     t1->SetTextSize(0.040);
     t1->SetTextColor(kBlack);
-    t1->DrawLatexNDC(0.5,0.35, Form("%e < #x < %e",x_lo[ix],x_hi[ix]));
+    t1->DrawLatexNDC(0.5,0.35, Form("%0.1e < #x < %0.1e",x_lo[ix],x_hi[ix]));
     t1->DrawLatexNDC(0.5,0.3,"e + p @ 10 + 100 GeV");
     t1->DrawLatexNDC(0.5,0.25,"e + A @ 18 + 110 Gev");
     t1->DrawLatexNDC(0.5,0.2,"collisions per species: ~1E6");

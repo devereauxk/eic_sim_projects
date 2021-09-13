@@ -86,6 +86,8 @@ void access_tree_mult_x_binned()
 
       x = event->GetX();
 
+      cout<<x<<endl;
+
       if (event->GetProcess() == 99) {
         for (Int_t ix = 0; ix < xbin; ix++) {
           if (x_lo[ix] <= x && x <= x_hi[ix]) {
