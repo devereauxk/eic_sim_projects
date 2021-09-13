@@ -50,7 +50,7 @@ void access_tree_x_Q2_totals()
     fout = new TFile(outFile.c_str(), "recreate");
 
     //Initialize new histogram
-    h2d_x_vs_q2 = new TH2D("h2d_x_vs_q2","event x vs Q^2",100,0,1,100,10,100);
+    h2d_x_vs_q2 = new TH2D("h2d_x_vs_q2","event x vs Q^2",100,1e-5,1,100,10,100);
     h2d_x_vs_q2->Sumw2();
 
     //loop over events
