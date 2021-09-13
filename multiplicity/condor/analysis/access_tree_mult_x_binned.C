@@ -17,7 +17,7 @@ void access_tree_mult_x_binned()
   std::string inFileNames[num_species] = {"merged.root", "merged.root", "merged.root", "merged.root", "merged.root", "merged.root", "merged.root"};
 
   const int xbin = 5;
-  const double x_lo[xbin] = {1e-5, 1e-4 1e-3, 1e-2, 1e-1};
+  const double x_lo[xbin] = {1e-5, 1e-4, 1e-3, 1e-2, 1e-1};
   const double x_hi[xbin] = {1e-4, 1e-3, 1e-2, 1e-1, 1};
   TH2D * kaon[xbin];
   TH2D * pion[xbin];
