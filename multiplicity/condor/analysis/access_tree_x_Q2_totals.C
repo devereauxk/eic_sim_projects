@@ -50,7 +50,7 @@ void access_tree_x_Q2_totals()
     fout = new TFile(outFile.c_str(), "recreate");
 
     //Initialize new histogram
-    h2d_x_vs_q2 = new TH2D("h2d_x_vs_q2","event x vs Q^2",1000000,1e-5,1,100,10,100);
+    h2d_x_vs_q2 = new TH2D("h2d_x_vs_q2","event x vs Q^2",100,-5,1,100,10,100);
     h2d_x_vs_q2->Sumw2();
 
     //loop over events
@@ -65,7 +65,7 @@ void access_tree_x_Q2_totals()
       q2 = event->GetQ2();
 
       if (event->GetProcess() == 99) {
-        h2d_x_vs_q2->Fill(x, q2);
+        h2d_x_vs_q2->Fill(log10(x), q2); // use actual log scalling
       }
 
     }
