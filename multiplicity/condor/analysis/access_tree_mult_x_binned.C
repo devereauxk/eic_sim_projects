@@ -87,16 +87,17 @@ void access_tree_mult_x_binned()
       x = event->GetX();
 
       if (event->GetProcess() == 99) {
-        //Loop Over Each Particle
-        for(Int_t k = 0; k < nParticles; k++) {
+        for (Int_t ix = 0; ix < xbin; ix++) {
+          if (x_lo[ix] <= x && x <= x_hi[ix]) {
 
-          particle = event->GetTrack(k);
-          status = (Int_t) particle->GetStatus(); //Can also do particle->KS
-          id = (Int_t) particle->Id();
+            //Loop Over Each Particle
+            for(Int_t k = 0; k < nParticles; k++) {
 
-          if (status == 1) {
-            for (Int_t ix = 0; ix < xbin; ix++) {
-              if (x_lo[ix] <= x && x <= x_hi[ix]) {
+              particle = event->GetTrack(k);
+              status = (Int_t) particle->GetStatus(); //Can also do particle->KS
+              id = (Int_t) particle->Id();
+
+              if (status == 1) {
                 switch(id) {
                   case 321:
                     nPosKaons[ix]++;
@@ -121,6 +122,8 @@ void access_tree_mult_x_binned()
               }
             }
           }
+          break;
+          
         }
       }
 
