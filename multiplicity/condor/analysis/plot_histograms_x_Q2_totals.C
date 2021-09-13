@@ -29,7 +29,6 @@ void plot_histograms_x_Q2_totals()
     h2d_x_vs_q2->GetYaxis()->SetTitle("Q^{2}");
     h2d_x_vs_q2->GetXaxis()->SetTitleOffset(1.3);
     h2d_x_vs_q2->GetYaxis()->SetTitleOffset(1.5);
-    c3->SetLogx();
     c3->SetLogy();
     c3->SetLogz();
     h2d_x_vs_q2->Draw("colz");
