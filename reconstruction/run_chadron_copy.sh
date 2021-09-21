@@ -21,10 +21,10 @@ SMEAR_OPT=$3 # 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smeari
 BFIELD=$4 # 0--Barbar, 1--Beast
 ID_OPT=$5 # 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
 
-mkdir /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
+mkdir /gpfs/mnt/gpfs02/eic/wfan/HF_vtx_study/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
 
-ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/fast_sim.h .
-ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/D0_tree.C .
+ln -s /gpfs/mnt/gpfs02/eic/wfan/HF_vtx_study/fast_sim.h .
+ln -s /gpfs/mnt/gpfs02/eic/wfan/HF_vtx_study/D0_tree.C .
 
 for file in $LIST
 do
@@ -51,3 +51,4 @@ do
 done
 
 popd
+
