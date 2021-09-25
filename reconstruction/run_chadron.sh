@@ -21,10 +21,10 @@ SMEAR_OPT=$3 # 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smeari
 BFIELD=$4 # 0--Barbar, 1--Beast
 ID_OPT=$5 # 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
 
-mkdir /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
+mkdir /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
 
-ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/fast_sim.h .
-ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/D0_tree.C .
+ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/fast_sim.h .
+ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/D0_tree.C .
 
 for file in $LIST
 do
@@ -38,13 +38,13 @@ do
     hname=`echo hists-$fno.root`
     echo histogram name is $hname
 
-    if [ -a /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}/$hname ]
+    if [ -a /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}/$hname ]
     then
       echo "File already exists"
     else
       root -b -q 'D0_tree.C("'$file'","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT')'
       echo "job done...move output file: ${hname}"
-      mv $hname /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
+      mv $hname /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
     fi
   fi
   NUM=$(( $NUM + 1 ))
