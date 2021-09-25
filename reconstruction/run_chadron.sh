@@ -38,13 +38,13 @@ do
     hname=`echo hists-$fno.root`
     echo histogram name is $hname
 
-    if [ -a /gpfs/mnt/gpfs02/eic/wfan/HF_vtx_study/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}/$hname ]
+    if [ -a /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}/$hname ]
     then
       echo "File already exists"
     else
       root -b -q 'D0_tree.C("'$file'","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT')'
       echo "job done...move output file: ${hname}"
-      mv $hname /gpfs/mnt/gpfs02/eic/wfan/HF_vtx_study/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
+      mv $hname /gpfs/mnt/gpfs02/eic/kdevereaux/work/reconstruction/hist_output/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
     fi
   fi
   NUM=$(( $NUM + 1 ))
