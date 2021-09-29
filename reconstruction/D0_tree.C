@@ -489,10 +489,10 @@ class D0_reco
       }
       // debugging eA no entry problem here
       cout<<"================================================================="<<endl;
-      cout<<"negl_p_true:"<<negl_p_true<<endl;
-      cout<<"posl_p_true:"<<posl_p_true<<endl;
-      cout<<"negl_p_reco:"<<negl_p_reco<<endl;
-      cout<<"posl_p_reco:"<<posl_p_reco<<endl;
+      cout<<"negl_p_true:"<<negl_p_true.size()<<endl;
+      cout<<"posl_p_true:"<<posl_p_true.size()<<endl;
+      cout<<"negl_p_reco:"<<negl_p_reco.size()<<endl;
+      cout<<"posl_p_reco:"<<posl_p_reco.size()<<endl;
       cout<<"================================================================="<<endl;
       // end debugging
     }
