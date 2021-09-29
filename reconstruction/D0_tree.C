@@ -1591,10 +1591,10 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
     ana_D0.FillSingleTracks(event);
     // debugging eA no entry problem here
     cout<<"================================================================="<endl;
-    cout<<"negl_p_true:"<<negl_p_true<<endl;
-    cout<<"posl_p_true:"<<posl_p_true<<endl;
-    cout<<"negl_p_reco:"<<negl_p_reco<<endl;
-    cout<<"posl_p_reco:"<<posl_p_reco<<endl;
+    cout<<"negl_p_true:"<<ana_D0.negl_p_true<<endl;
+    cout<<"posl_p_true:"<<ana_D0.posl_p_true<<endl;
+    cout<<"negl_p_reco:"<<ana_D0.negl_p_reco<<endl;
+    cout<<"posl_p_reco:"<<ana_D0.posl_p_reco<<endl;
     cout<<"================================================================="<endl;
     // end debugging
     ana_D0.FillD0Pairs();
