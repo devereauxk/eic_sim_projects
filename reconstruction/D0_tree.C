@@ -7,21 +7,21 @@ TDatabasePDG* pdg = NULL;
 const int chargebin = 3; // 0: -, 1: +, 2:+/-
 
 const int etabin = 3;
-static double eta_lo[etabin] = {-3,-1,1}; 
-static double eta_hi[etabin] = {-1,1,3}; 
+static double eta_lo[etabin] = {-3,-1,1};
+static double eta_hi[etabin] = {-1,1,3};
 
 // parent pt bin
 const int pptbin = 5;
-static double ppt_lo[pptbin] = {0.2, 0.5, 1, 2, 4}; 
-static double ppt_hi[pptbin] = {0.5, 1, 2, 4, 10}; 
+static double ppt_lo[pptbin] = {0.2, 0.5, 1, 2, 4};
+static double ppt_hi[pptbin] = {0.5, 1, 2, 4, 10};
 
 const int Q2bin = 5;
-static double Q2_lo[Q2bin] = {1E0, 5E0, 1E1, 5E1, 1E2}; 
-static double Q2_hi[Q2bin] = {5E0, 1E1, 5E1, 1E2, 5E2}; 
+static double Q2_lo[Q2bin] = {1E0, 5E0, 1E1, 5E1, 1E2};
+static double Q2_hi[Q2bin] = {5E0, 1E1, 5E1, 1E2, 5E2};
 
 const int xbin = 4;
-static double x_lo[xbin] = {1E-4, 1E-3, 1E-2, 1E-1}; 
-static double x_hi[xbin] = {1E-3, 1E-2, 1E-1, 1E0}; 
+static double x_lo[xbin] = {1E-4, 1E-3, 1E-2, 1E-1};
+static double x_hi[xbin] = {1E-3, 1E-2, 1E-1, 1E0};
 
 const double degree = 180./TMath::Pi();
 
@@ -56,7 +56,7 @@ int find_quark_origin(erhic::EventPythia* evt, erhic::ParticleMC* part)
     if (pdg->GetParticle(parent->Id())) cout<< "parent id is " << pdg->GetParticle(parent->Id())->GetName() << endl;
     else cout<< "parent id is " << parent->Id() << endl;
   }
-  
+
   return find_quark_origin(evt, parent);
 }
 
@@ -181,7 +181,7 @@ class D0_reco
           h2d_pi_D0_p_vs_eta[ieta][ipt]->Sumw2();
         }
       }
-      
+
 
       for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
       {
@@ -267,7 +267,7 @@ class D0_reco
         for (int ipt = 0; ipt < pptbin; ++ipt)
         {
           h2d_K_D0_p_vs_eta[ieta][ipt]->Reset("ICESM");
-          h2d_pi_D0_p_vs_eta[ieta][ipt]->Reset("ICESM"); 
+          h2d_pi_D0_p_vs_eta[ieta][ipt]->Reset("ICESM");
         }
       }
 
@@ -319,7 +319,7 @@ class D0_reco
       negl_parent_index_true.clear();
       negl_parent_id_true.clear();
       negl_quark_p.clear();
-      
+
       negl_p_reco.clear();
       negl_vtx_reco.clear();
       negl_prob_e.clear();
@@ -361,6 +361,8 @@ class D0_reco
       }
       else return; // if incoming proton not found, skip the whole event
 
+      cout<<"entries in event: "<<py_evt->GetNTracks()<<endl;
+
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
         erhic::ParticleMC* part = py_evt->GetTrack(ipart);
@@ -369,7 +371,7 @@ class D0_reco
 
         if (abs(part->Id())!=2212 && abs(part->Id())!=211 && abs(part->Id())!=321 && abs(part->Id())!=11 && abs(part->Id())!=13) continue; // proton, pion, kaon, electron, muon
 
-        if (TRK_P_LO>-99 && part->GetPt()<TRK_P_LO) continue; 
+        if (TRK_P_LO>-99 && part->GetPt()<TRK_P_LO) continue;
 
         TLorentzVector track_mom4_true = part->Get4Vector();
         TLorentzVector track_mom4_reco = track_mom4_true;
@@ -393,7 +395,7 @@ class D0_reco
           track_mom4_reco = smearMomHybrid(track_mom4_true, BFIELD_TYPE);
           track_vtx_reco = smearPosHybrid(track_mom4_true.Vect(), track_vtx_true);
         }
-        if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range 
+        if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
         // single track DCA cut
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
@@ -402,7 +404,7 @@ class D0_reco
         //==========================
         //      PID selection
         //==========================
-        bitset<4> track_binary_id;         
+        bitset<4> track_binary_id;
         if (ID_OPTION==-1);
         else if (ID_OPTION==0) passing_DM_PID(track_mom4_reco,track_binary_id);
         else if (ID_OPTION==1 || ID_OPTION==2)
@@ -559,7 +561,7 @@ class D0_reco
         //   // cout<<"D0 Pt = "<<pair.Pt()<<" struck quark Pt = "<<struck_quark.Pt()<<" frac = "<<
         //   cout<<"frac = "<<(pair.Vect()).Dot(struck_quark.Vect())/(struck_quark.Vect()).Dot(struck_quark.Vect())<<endl;
         //   cout<<"**********************"<<endl;
-        // } 
+        // }
 
         for (int ipt = 0; ipt < pptbin; ++ipt)
         {
@@ -585,7 +587,7 @@ class D0_reco
         {
           h2d_D0_pt_vs_eta[iQ2bin][ixbin]->Fill(pair.Pt(),pair.PseudoRapidity());
           h2d_D0_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,pair.PseudoRapidity());
-        } 
+        }
 
         h2d_ztheo_vs_zjet->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
       }
@@ -616,7 +618,7 @@ class D0_reco
           // D0 cos(theta) > cut value
           double D0_costheta = TMath::Cos(D0_vec.Angle(decay_l));
           if (D0_COSTHETA>-99 && D0_costheta<D0_costheta) continue;
-          
+
           if (ID_OPTION==-1)
           { // no hID (but with eID)
             if (fabs(negl_id_true[ineg])!=11 && fabs(posl_id_true[ipos])!=11)
@@ -624,7 +626,7 @@ class D0_reco
               fill_Kpi_mass(0,ineg,ipos);
               fill_Kpi_mass(1,ipos,ineg);
             }
-          } 
+          }
 
           if (ID_OPTION==0)
           { // PID with no low momentum cutoff
@@ -636,7 +638,7 @@ class D0_reco
             {
               fill_Kpi_mass(1,ipos,ineg);
             }
-          } 
+          }
 
           if (ID_OPTION==1)
           { // PID with low momentum cutoff & some mis-identified pi, K
@@ -648,7 +650,7 @@ class D0_reco
             {
               fill_Kpi_mass(1,ipos,ineg);
             }
-          }   
+          }
 
           if (ID_OPTION==2)
           { // PID with low momentum cutoff & all identified pi, K
@@ -672,7 +674,7 @@ class D0_reco
             {
               fill_Kpi_mass(1,ipos,ineg);
             }
-          }          
+          }
         }
       }
     }
@@ -965,7 +967,7 @@ class Lc_reco
       negl_parent_id_true.clear();
       negl_gparent_index_true.clear();
       negl_gparent_id_true.clear();
-      
+
       negl_p_reco.clear();
       negl_vtx_reco.clear();
       negl_prob_e.clear();
@@ -1009,7 +1011,7 @@ class Lc_reco
 
         if (abs(part->Id())!=2212 && abs(part->Id())!=211 && abs(part->Id())!=321 && abs(part->Id())!=11 && abs(part->Id())!=13) continue; // proton, pion, kaon, electron, muon
 
-        if (TRK_P_LO>-99 && part->GetPt()<TRK_P_LO) continue; 
+        if (TRK_P_LO>-99 && part->GetPt()<TRK_P_LO) continue;
 
         TLorentzVector track_mom4_true = part->Get4Vector();
         TLorentzVector track_mom4_reco = track_mom4_true;
@@ -1033,7 +1035,7 @@ class Lc_reco
           track_mom4_reco = smearMomHybrid(track_mom4_true, BFIELD_TYPE);
           track_vtx_reco = smearPosHybrid(track_mom4_true.Vect(), track_vtx_true);
         }
-        if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range 
+        if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
         // single track DCA cut
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
@@ -1042,7 +1044,7 @@ class Lc_reco
         //==========================
         //      PID selection
         //==========================
-        bitset<4> track_binary_id;         
+        bitset<4> track_binary_id;
         if (ID_OPTION==-1);
         else if (ID_OPTION==0) passing_DM_PID(track_mom4_reco,track_binary_id);
         else if (ID_OPTION==1 || ID_OPTION==2)
@@ -1095,13 +1097,13 @@ class Lc_reco
             erhic::ParticleMC* gparent = py_evt->GetTrack(parent->GetParentIndex()-1);
             if (gparent!=NULL) negl_gparent_id_true.push_back(gparent->Id());
             else negl_gparent_id_true.push_back(-9999);
-          } 
+          }
           else
           {
             negl_parent_id_true.push_back(-9999);
             negl_gparent_index_true.push_back(-9999);
             negl_gparent_id_true.push_back(-9999);
-          } 
+          }
 
           negl_p_reco.push_back(track_mom4_reco);
           negl_vtx_reco.push_back(track_vtx_reco);
@@ -1127,13 +1129,13 @@ class Lc_reco
             erhic::ParticleMC* gparent = py_evt->GetTrack(parent->GetParentIndex()-1);
             if (gparent!=NULL) posl_gparent_id_true.push_back(gparent->Id());
             else posl_gparent_id_true.push_back(-9999);
-          } 
+          }
           else
           {
             posl_parent_id_true.push_back(-9999);
             posl_gparent_index_true.push_back(-9999);
             posl_gparent_id_true.push_back(-9999);
-          } 
+          }
 
           posl_p_reco.push_back(track_mom4_reco);
           posl_vtx_reco.push_back(track_vtx_reco);
@@ -1172,7 +1174,7 @@ class Lc_reco
         kaon_p = negl_p_reco[ipart1];
         kaon_p.SetXYZM(kaon_p.X(),kaon_p.Y(),kaon_p.Z(),KMASS);
         if (fabs(negl_id_true[ipart1])!=321) is_SG = false;
-        
+
         if (mass_order==0)
         { // pi+p+
           pion_p = posl_p_reco[ipart2];
@@ -1214,7 +1216,7 @@ class Lc_reco
         kaon_p = posl_p_reco[ipart1];
         kaon_p.SetXYZM(kaon_p.X(),kaon_p.Y(),kaon_p.Z(),KMASS);
         if (fabs(posl_id_true[ipart1])!=321) is_SG = false;
-        
+
         if (mass_order==0)
         { // pi-p-
           pion_p = negl_p_reco[ipart2];
@@ -1247,7 +1249,7 @@ class Lc_reco
       if (ietabin<0) return;
 
       double frag_z = hadron_beam.Dot(trip)/(nu_true*hadron_beam.M());  // z= Pp/Pq where Pq=nuM
-        
+
       fg2d_Kpipmass_vs_p[charge_type][ietabin]->Fill(trip.M(),trip.Pt());
       fg2d_Kpipmass_vs_p[2][ietabin]->Fill(trip.M(),trip.Pt());
       fg2d_Kpipmass_vs_z[charge_type][ietabin]->Fill(trip.M(),frag_z);
@@ -1287,7 +1289,7 @@ class Lc_reco
         {
           h2d_Lc_pt_vs_eta[iQ2bin][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
           h2d_Lc_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,trip.PseudoRapidity());
-        } 
+        }
       }
     }
 
@@ -1332,7 +1334,7 @@ class Lc_reco
                 // K-p+pi+
                 fill_Kpip_mass(0,1,ineg,ipos1,ipos2);
               }
-            } 
+            }
 
             if (ID_OPTION==0)
             { // PID with no low momentum cutoff
@@ -1345,7 +1347,7 @@ class Lc_reco
               { // K-p+pi+
                 fill_Kpip_mass(0,1,ineg,ipos1,ipos2);
               }
-            } 
+            }
 
             if (ID_OPTION==1)
             { // PID with low momentum cutoff & some mis-identified K, p
@@ -1357,7 +1359,7 @@ class Lc_reco
               { // K-p+pi+
                 fill_Kpip_mass(0,1,ineg,ipos1,ipos2);
               }
-            }   
+            }
 
             if (ID_OPTION==2)
             { // PID with low momentum cutoff & all identified pi, K, p
@@ -1381,7 +1383,7 @@ class Lc_reco
               { // K-p+pi+
                 fill_Kpip_mass(0,1,ineg,ipos1,ipos2);
               }
-            }   
+            }
           }
         }
       }
@@ -1425,7 +1427,7 @@ class Lc_reco
                 // K+p-pi-
                 fill_Kpip_mass(1,1,ipos,ineg1,ineg2);
               }
-            } 
+            }
 
             if (ID_OPTION==0)
             { // PID with no low momentum cutoff
@@ -1437,7 +1439,7 @@ class Lc_reco
               { // K+p-pi-
                 fill_Kpip_mass(1,1,ipos,ineg1,ineg2);
               }
-            } 
+            }
 
             if (ID_OPTION==1)
             { // PID with low momentum cutoff & some mis-identified K, p
@@ -1449,7 +1451,7 @@ class Lc_reco
               { // K+p-pi-
                 fill_Kpip_mass(1,1,ipos,ineg1,ineg2);
               }
-            }   
+            }
 
             if (ID_OPTION==2)
             { // PID with low momentum cutoff & all identified pi, K, p
@@ -1473,7 +1475,7 @@ class Lc_reco
               { // K-p+pi+
                 fill_Kpip_mass(1,1,ipos,ineg1,ineg2);
               }
-            } 
+            }
           }
         }
       }
@@ -1529,7 +1531,7 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
   erhic::ParticleMC *particle(NULL); //Also use Pointer
 
   // erhic::ParticleMC *child(NULL);
-  
+
   //Load ROOT File
   //TFile *f = new TFile("../pythia/outfiles/ep_10_100_norad_def.root"); //Not created by eic or jlab version
   TFile *f = new TFile(inFile);
@@ -1560,11 +1562,11 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
   ana_Lc.SetIDCuts(PID_option);
   ana_Lc.SetSmearType(smear_option);
   ana_Lc.SetBFieldType(Bfield_type);
-  
+
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
   for(Int_t ievt = 0; ievt < nevt; ievt++)
-  {    
+  {
     if (ievt%10000==0) cout<<"Processing event = "<<ievt<<"/"<<nevt<<endl;
 
     tree->GetEntry(ievt);
@@ -1573,7 +1575,7 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
     Q2 = (Float_t) event->GetQ2(); //Can also do event->QSquared
     // printf("For Event %d, Q^2 = %.3f GeV^2!\n",ievt,Q2);
     // if (Q2>10) continue; // process low Q2
-    
+
     //Get Total Number of Particles
     nParticles = event->GetNTracks();
     // printf("For Event %d, we have %d particles!\n",ievt,nParticles);
@@ -1588,6 +1590,8 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
     ana_D0.SetNuTrue(event->GetNu());
 
     ana_D0.FillSingleTracks(event);
+    // debugging eA no entry problem here
+
     ana_D0.FillD0Pairs();
 
     ana_Lc.SetVectTrue(evt_vtx);
