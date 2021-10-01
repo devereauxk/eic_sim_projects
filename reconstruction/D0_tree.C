@@ -362,6 +362,7 @@ class D0_reco
       else return; // if incoming proton not found, skip the whole event
 
       int dca_cuts = 0;
+      int event_n = 0;
       // nonzero number of entries found
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
@@ -379,7 +380,8 @@ class D0_reco
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
 
-        cout<<"================================================================="<<endl;
+        event_n += 1;
+        cout<<"["<<event_n<<"]"<<"================================================================="<<endl;
         cout<<"negl_p_true:";
         track_mom4_true.Print();
         cout<<endl;
@@ -507,7 +509,7 @@ class D0_reco
           else posl_quark_p.push_back(TLorentzVector(0,0,0,0));
         }
       }
-      cout<<"dca cuts="<<dca_cuts<<endl;
+      cout<<"[dca cuts="<<dca_cuts<<"]"<<"===================================="<<endl;
       /*// issue here single tracks not being recorded
       // debugging eA no entry problem here
       cout<<"================================================================="<<endl;
