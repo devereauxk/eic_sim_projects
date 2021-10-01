@@ -509,7 +509,7 @@ class D0_reco
           else posl_quark_p.push_back(TLorentzVector(0,0,0,0));
         }
       }
-      cout<<"[dca cuts="<<dca_cuts<<"]"<<"===================================="<<endl;
+      cout<<"[particles making dca cuts="<<dca_cuts<<" for the above event]"<<"===================================="<<endl;
       /*// issue here single tracks not being recorded
       // debugging eA no entry problem here
       cout<<"================================================================="<<endl;
