@@ -382,16 +382,16 @@ class D0_reco
 
         event_n += 1;
         cout<<"["<<event_n<<"]"<<"================================================================="<<endl;
-        cout<<"negl_p_true:";
+        cout<<"track_mom4_true:";
         track_mom4_true.Print();
         cout<<endl;
-        cout<<"posl_p_true:";
+        cout<<"track_mom4_reco:";
         track_mom4_reco.Print();
         cout<<endl;
-        cout<<"negl_p_reco:";
+        cout<<"track_vtx_true:";
         track_vtx_true.Print();
         cout<<endl;
-        cout<<"posl_p_reco:";
+        cout<<"track_vtx_reco:";
         track_vtx_reco.Print();
         cout<<endl;
 
