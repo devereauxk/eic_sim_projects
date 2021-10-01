@@ -391,7 +391,7 @@ class D0_reco
         cout<<"posl_p_reco:";
         track_vtx_reco.Print();
         cout<<endl;
-        cout<<"================================================================="<<endl;
+
 
         if (SMEAR_OPTION==0);
         if (SMEAR_OPTION==1)
@@ -445,8 +445,16 @@ class D0_reco
         float prob_p = -999;
         identify_charged_hadrons(part->Id(), track_binary_id, prob_e, prob_pi, prob_K, prob_p);
 
+        cout<<"prob_pi="<<prob_pi<<endl;
+        cout<<"prob_K="<<prob_K<<endl;
+        cout<<"prob_e="<<prob_e<<endl;
+        cout<<"prob_p="<<prob_p<<endl;
+
         int quark_index = find_quark_origin(py_evt,part);
         erhic::ParticleMC* quark_orig = py_evt->GetTrack(quark_index-1);
+
+        cout<<"quark_index="<<quark_index<<endl;
+        cout<<"================================================================="<<endl;
 
         //============================
         //  opposite charge selection
