@@ -361,6 +361,7 @@ class D0_reco
       }
       else return; // if incoming proton not found, skip the whole event
 
+      int dca_cuts = 0;
       // nonzero number of entries found
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
@@ -378,6 +379,7 @@ class D0_reco
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
 
+        /*
         cout<<"================================================================="<<endl;
         cout<<"negl_p_true:";
         track_mom4_true.Print();
@@ -391,6 +393,7 @@ class D0_reco
         cout<<"posl_p_reco:";
         track_vtx_reco.Print();
         cout<<endl;
+        */
 
 
         if (SMEAR_OPTION==0);
@@ -413,9 +416,10 @@ class D0_reco
 
         // single track DCA cut
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
-        cout<<"RUNS"<<endl;
+        //cout<<"RUNS"<<endl;
         if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
-        cout<<"DOESNTRUN"<<endl;
+        //cout<<"DOESNTRUN"<<endl;
+        dca_cuts += 1;
 
         //==========================
         //      PID selection
@@ -448,16 +452,16 @@ class D0_reco
         float prob_p = -999;
         identify_charged_hadrons(part->Id(), track_binary_id, prob_e, prob_pi, prob_K, prob_p);
 
-        cout<<"prob_pi="<<prob_pi<<endl;
-        cout<<"prob_K="<<prob_K<<endl;
-        cout<<"prob_e="<<prob_e<<endl;
-        cout<<"prob_p="<<prob_p<<endl;
+        //cout<<"prob_pi="<<prob_pi<<endl;
+        //cout<<"prob_K="<<prob_K<<endl;
+        //cout<<"prob_e="<<prob_e<<endl;
+        //cout<<"prob_p="<<prob_p<<endl;
 
         int quark_index = find_quark_origin(py_evt,part);
         erhic::ParticleMC* quark_orig = py_evt->GetTrack(quark_index-1);
 
-        cout<<"quark_index="<<quark_index<<endl;
-        cout<<"================================================================="<<endl;
+        //cout<<"quark_index="<<quark_index<<endl;
+        //cout<<"================================================================="<<endl;
 
         //============================
         //  opposite charge selection
@@ -513,6 +517,7 @@ class D0_reco
           else posl_quark_p.push_back(TLorentzVector(0,0,0,0));
         }
       }
+      cout<<"dca cuts="<<dca_cuts<<endl;
       /*// issue here single tracks not being recorded
       // debugging eA no entry problem here
       cout<<"================================================================="<<endl;
