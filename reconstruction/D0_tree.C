@@ -379,7 +379,6 @@ class D0_reco
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
 
-        /*
         cout<<"================================================================="<<endl;
         cout<<"negl_p_true:";
         track_mom4_true.Print();
@@ -393,7 +392,6 @@ class D0_reco
         cout<<"posl_p_reco:";
         track_vtx_reco.Print();
         cout<<endl;
-        */
 
 
         if (SMEAR_OPTION==0);
@@ -417,7 +415,7 @@ class D0_reco
         // single track DCA cut
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
         //cout<<"RUNS"<<endl;
-        if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
+        if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue; // issue at this line, no eA particles are making DCA cut
         //cout<<"DOESNTRUN"<<endl;
         dca_cuts += 1;
 
@@ -452,16 +450,8 @@ class D0_reco
         float prob_p = -999;
         identify_charged_hadrons(part->Id(), track_binary_id, prob_e, prob_pi, prob_K, prob_p);
 
-        //cout<<"prob_pi="<<prob_pi<<endl;
-        //cout<<"prob_K="<<prob_K<<endl;
-        //cout<<"prob_e="<<prob_e<<endl;
-        //cout<<"prob_p="<<prob_p<<endl;
-
         int quark_index = find_quark_origin(py_evt,part);
         erhic::ParticleMC* quark_orig = py_evt->GetTrack(quark_index-1);
-
-        //cout<<"quark_index="<<quark_index<<endl;
-        //cout<<"================================================================="<<endl;
 
         //============================
         //  opposite charge selection
