@@ -381,7 +381,7 @@ class D0_reco
         TVector3 track_vtx_reco = track_vtx_true;
 
         event_n += 1;
-        cout<<"["<<event_n<<"]"<<"================================================================="<<endl;
+        cout<<"[particle #"<<event_n<<"]"<<"================================================================="<<endl;
         cout<<"track_mom4_true:";
         track_mom4_true.Print();
         cout<<endl;
@@ -419,6 +419,7 @@ class D0_reco
         //cout<<"RUNS"<<endl;
         if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue; // issue at this line, no eA particles are making DCA cut
         //cout<<"DOESNTRUN"<<endl;
+        cout<<"MAKES DCA CUT"
         dca_cuts += 1;
 
         //==========================
@@ -509,7 +510,7 @@ class D0_reco
           else posl_quark_p.push_back(TLorentzVector(0,0,0,0));
         }
       }
-      cout<<"[particles making dca cuts="<<dca_cuts<<" for the above event]"<<"===================================="<<endl;
+      cout<<"[START OF EVENT]"<<"======================================================"<<endl;
       /*// issue here single tracks not being recorded
       // debugging eA no entry problem here
       cout<<"================================================================="<<endl;
