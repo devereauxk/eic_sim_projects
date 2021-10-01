@@ -433,7 +433,10 @@ class D0_reco
           passing_hside_dRICH(track_mom4_reco,track_binary_id);
           passing_eside_dRICH(track_mom4_reco,track_binary_id);
         }
+        cout<<"RUNS"<<endl;
         if (verbosity>2) cout << "track_binary_id " <<track_binary_id.to_ulong() << endl;
+
+        cout<<"DOESNTRUN"<<endl;
 
         //==============================================================================
         //    Assumption: Cherekov detectors (mass ordering, no mu/pi separation)
