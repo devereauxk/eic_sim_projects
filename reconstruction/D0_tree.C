@@ -409,7 +409,9 @@ class D0_reco
           track_mom4_reco = smearMomHybrid(track_mom4_true, BFIELD_TYPE);
           track_vtx_reco = smearPosHybrid(track_mom4_true.Vect(), track_vtx_true);
         }
+        cout<<"RUNS"<<endl;
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
+        cout<<"DOESNTRUN"<<endl;
 
         // single track DCA cut
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
@@ -433,10 +435,8 @@ class D0_reco
           passing_hside_dRICH(track_mom4_reco,track_binary_id);
           passing_eside_dRICH(track_mom4_reco,track_binary_id);
         }
-        cout<<"RUNS"<<endl;
         if (verbosity>2) cout << "track_binary_id " <<track_binary_id.to_ulong() << endl;
 
-        cout<<"DOESNTRUN"<<endl;
 
         //==============================================================================
         //    Assumption: Cherekov detectors (mass ordering, no mu/pi separation)
