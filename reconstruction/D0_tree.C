@@ -379,10 +379,18 @@ class D0_reco
         TVector3 track_vtx_reco = track_vtx_true;
 
         cout<<"================================================================="<<endl;
-        cout<<"negl_p_true:"<<track_mom4_true.Print()<<endl;
-        cout<<"posl_p_true:"<<track_mom4_reco.Print()<<endl;
-        cout<<"negl_p_reco:"<<track_vtx_true.Print()<<endl;
-        cout<<"posl_p_reco:"<<track_vtx_reco.Print()<<endl;
+        cout<<"negl_p_true:";
+        track_mom4_true.Print();
+        cout<<endl;
+        cout<<"posl_p_true:";
+        track_mom4_reco.Print();
+        cout<<endl;
+        cout<<"negl_p_reco:";
+        track_vtx_true.Print();
+        cout<<endl;
+        cout<<"posl_p_reco:";
+        track_vtx_reco.Print();
+        cout<<endl;
         cout<<"================================================================="<<endl;
 
         if (SMEAR_OPTION==0);
