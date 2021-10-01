@@ -409,13 +409,13 @@ class D0_reco
           track_mom4_reco = smearMomHybrid(track_mom4_true, BFIELD_TYPE);
           track_vtx_reco = smearPosHybrid(track_mom4_true.Vect(), track_vtx_true);
         }
-        cout<<"RUNS"<<endl;
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
-        cout<<"DOESNTRUN"<<endl;
 
         // single track DCA cut
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
+        cout<<"RUNS"<<endl;
         if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
+        cout<<"DOESNTRUN"<<endl;
 
         //==========================
         //      PID selection
