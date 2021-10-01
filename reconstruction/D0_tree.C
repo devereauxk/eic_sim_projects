@@ -378,6 +378,13 @@ class D0_reco
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
 
+        cout<<"================================================================="<<endl;
+        cout<<"negl_p_true:"<<track_mom4_true.Print()<<endl;
+        cout<<"posl_p_true:"<<track_mom4_reco.Print()<<endl;
+        cout<<"negl_p_reco:"<<track_vtx_true.Print()<<endl;
+        cout<<"posl_p_reco:"<<track_vtx_reco.Print()<<endl;
+        cout<<"================================================================="<<endl;
+
         if (SMEAR_OPTION==0);
         if (SMEAR_OPTION==1)
         {
@@ -487,6 +494,7 @@ class D0_reco
           else posl_quark_p.push_back(TLorentzVector(0,0,0,0));
         }
       }
+      /*// issue here single tracks not being recorded
       // debugging eA no entry problem here
       cout<<"================================================================="<<endl;
       cout<<"negl_p_true:"<<negl_p_true.size()<<endl;
@@ -494,7 +502,7 @@ class D0_reco
       cout<<"negl_p_reco:"<<negl_p_reco.size()<<endl;
       cout<<"posl_p_reco:"<<posl_p_reco.size()<<endl;
       cout<<"================================================================="<<endl;
-      // end debugging
+      // end debugging*/
     }
 
     void fill_Kpi_mass(const int charge_type, const int ipart1, const int ipart2)
