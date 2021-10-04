@@ -1342,16 +1342,16 @@ class Lc_reco
 
             // Decay length > cut value
             TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos1]+posl_vtx_reco[ipos2])*(1./3)-evt_vtx_reco;
-            if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
+            //if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
 
             // Lc DCA > cut value
             TVector3 Lc_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos1].Vect()+posl_p_reco[ipos2].Vect();
             double Lc_dca = dcaSigned(Lc_vec, decay_l, evt_vtx_reco);
-            if (Lc_DCA>-99 && fabs(Lc_dca)>Lc_DCA) continue;
+            //if (Lc_DCA>-99 && fabs(Lc_dca)>Lc_DCA) continue;
 
             // Lc cos(theta) > cut value
             double Lc_costheta = TMath::Cos(Lc_vec.Angle(decay_l));
-            if (Lc_COSTHETA>-99 && Lc_costheta<Lc_costheta) continue;
+            //if (Lc_COSTHETA>-99 && Lc_costheta<Lc_costheta) continue;
 
             if (ID_OPTION==-1)
             { // no hID (but with eID)
