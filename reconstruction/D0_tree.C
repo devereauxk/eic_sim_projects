@@ -639,12 +639,12 @@ class D0_reco
 
           // Decay length > cut value
           TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos])*0.5-evt_vtx_reco;
-          //if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
+          if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
 
           // D0 DCA > cut value
           TVector3 D0_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos].Vect();
           double D0_dca = dcaSigned(D0_vec, decay_l, evt_vtx_reco);
-          if (D0_DCA>-99 && fabs(D0_dca)<D0_DCA) continue;
+          //if (D0_DCA>-99 && fabs(D0_dca)<D0_DCA) continue;
 
           // D0 cos(theta) > cut value
           double D0_costheta = TMath::Cos(D0_vec.Angle(decay_l));
