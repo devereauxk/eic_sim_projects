@@ -635,11 +635,11 @@ class D0_reco
           //==========================
           // pair DCA < cut value
           TVector3 dca_pair = negl_vtx_reco[ineg]-posl_vtx_reco[ipos];
-          //if (PAIR_DCA>-99 && dca_pair.Mag()>PAIR_DCA) continue;
+          if (PAIR_DCA>-99 && dca_pair.Mag()>PAIR_DCA) continue;
 
           // Decay length > cut value
           TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos])*0.5-evt_vtx_reco;
-          if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
+          //if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
 
           // D0 DCA > cut value
           TVector3 D0_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos].Vect();
