@@ -648,7 +648,7 @@ class D0_reco
 
           // D0 cos(theta) > cut value
           double D0_costheta = TMath::Cos(D0_vec.Angle(decay_l));
-          //if (D0_COSTHETA>-99 && D0_costheta<D0_costheta) continue;
+          if (D0_COSTHETA>-99 && D0_costheta<D0_costheta) continue;
 
           if (ID_OPTION==-1)
           { // no hID (but with eID)
