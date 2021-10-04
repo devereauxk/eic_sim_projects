@@ -380,6 +380,7 @@ class D0_reco
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
 
+        /*
         event_n += 1;
         cout<<"[particle #"<<event_n<<"]"<<"================================================================="<<endl;
         cout<<"track_mom4_reco:";
@@ -388,7 +389,7 @@ class D0_reco
         cout<<"track_vtx_reco:";
         track_vtx_reco.Print();
         cout<<endl;
-
+        */
 
         if (SMEAR_OPTION==0);
         if (SMEAR_OPTION==1)
@@ -410,11 +411,11 @@ class D0_reco
 
         // single track DCA cut
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
-        //cout<<"RUNS"<<endl;
         if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue; // issue at this line, no eA particles are making DCA cut
-        //cout<<"DOESNTRUN"<<endl;
+        /*
         cout<<"MAKES DCA CUT"<<endl<<endl;;
         dca_cuts += 1;
+        */
 
         //==========================
         //      PID selection
@@ -504,7 +505,7 @@ class D0_reco
           else posl_quark_p.push_back(TLorentzVector(0,0,0,0));
         }
       }
-      cout<<"[START OF EVENT]"<<"=================================================================================="<<endl;
+      //cout<<"[START OF EVENT]"<<"=================================================================================="<<endl;
       /*// issue here single tracks not being recorded
       // debugging eA no entry problem here
       cout<<"================================================================="<<endl;
