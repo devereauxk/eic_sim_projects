@@ -508,12 +508,14 @@ class D0_reco
       //cout<<"[START OF EVENT]"<<"=================================================================================="<<endl;
       // issue here single tracks not being recorded
       // debugging eA no entry problem here
+      /*
       cout<<"================================================================="<<endl;
       cout<<"negl_p_true:"<<negl_p_true.size()<<endl;
       cout<<"posl_p_true:"<<posl_p_true.size()<<endl;
       cout<<"negl_p_reco:"<<negl_p_reco.size()<<endl;
       cout<<"posl_p_reco:"<<posl_p_reco.size()<<endl;
       cout<<"================================================================="<<endl;
+      */
       // end debugging*/
     }
 
@@ -631,7 +633,7 @@ class D0_reco
           //==========================
           // pair DCA < cut value
           TVector3 dca_pair = negl_vtx_reco[ineg]-posl_vtx_reco[ipos];
-          if (PAIR_DCA>-99 && dca_pair.Mag()>PAIR_DCA) continue;
+          //if (PAIR_DCA>-99 && dca_pair.Mag()>PAIR_DCA) continue;
 
           // Decay length > cut value
           TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos])*0.5-evt_vtx_reco;
@@ -1065,8 +1067,8 @@ class Lc_reco
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
         // single track DCA cut
-        double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
-        if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
+        //double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
+        //if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
 
         //==========================
         //      PID selection
@@ -1336,7 +1338,7 @@ class Lc_reco
             TVector3 dca_pair2 = negl_vtx_reco[ineg]-posl_vtx_reco[ipos2];
             TVector3 dca_pair3 = posl_vtx_reco[ipos1]-posl_vtx_reco[ipos2];
             double dca_pair[3] = {dca_pair1.Mag(),dca_pair2.Mag(),dca_pair3.Mag()};
-            if (PAIR_DCA>-99 && TMath::MaxElement(3,dca_pair)>PAIR_DCA) continue;
+            //if (PAIR_DCA>-99 && TMath::MaxElement(3,dca_pair)>PAIR_DCA) continue;
 
             // Decay length > cut value
             TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos1]+posl_vtx_reco[ipos2])*(1./3)-evt_vtx_reco;
