@@ -410,8 +410,8 @@ class D0_reco
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
         // single track DCA cut
-        double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
-        if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue; // issue at this line, no eA particles are making DCA cut
+        //double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
+        //if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue; // issue at this line, no eA particles are making DCA cut
         /*
         cout<<"MAKES DCA CUT"<<endl<<endl;;
         dca_cuts += 1;
