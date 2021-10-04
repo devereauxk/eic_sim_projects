@@ -506,7 +506,7 @@ class D0_reco
         }
       }
       //cout<<"[START OF EVENT]"<<"=================================================================================="<<endl;
-      /*// issue here single tracks not being recorded
+      // issue here single tracks not being recorded
       // debugging eA no entry problem here
       cout<<"================================================================="<<endl;
       cout<<"negl_p_true:"<<negl_p_true.size()<<endl;
@@ -1065,8 +1065,8 @@ class Lc_reco
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
         // single track DCA cut
-        //double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
-        //if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
+        double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
+        if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
 
         //==========================
         //      PID selection
