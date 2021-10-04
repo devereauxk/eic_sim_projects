@@ -1338,11 +1338,11 @@ class Lc_reco
             TVector3 dca_pair2 = negl_vtx_reco[ineg]-posl_vtx_reco[ipos2];
             TVector3 dca_pair3 = posl_vtx_reco[ipos1]-posl_vtx_reco[ipos2];
             double dca_pair[3] = {dca_pair1.Mag(),dca_pair2.Mag(),dca_pair3.Mag()};
-            //if (PAIR_DCA>-99 && TMath::MaxElement(3,dca_pair)>PAIR_DCA) continue;
+            if (PAIR_DCA>-99 && TMath::MaxElement(3,dca_pair)>PAIR_DCA) continue;
 
             // Decay length > cut value
             TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos1]+posl_vtx_reco[ipos2])*(1./3)-evt_vtx_reco;
-            if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
+            //if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
 
             // Lc DCA > cut value
             TVector3 Lc_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos1].Vect()+posl_p_reco[ipos2].Vect();
