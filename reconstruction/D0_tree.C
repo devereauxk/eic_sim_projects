@@ -1342,7 +1342,7 @@ class Lc_reco
 
             // Decay length > cut value
             TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos1]+posl_vtx_reco[ipos2])*(1./3)-evt_vtx_reco;
-            //if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
+            if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
 
             // Lc DCA > cut value
             TVector3 Lc_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos1].Vect()+posl_p_reco[ipos2].Vect();
