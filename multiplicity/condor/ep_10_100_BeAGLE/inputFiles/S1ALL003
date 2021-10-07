@@ -1,7 +1,7 @@
-'eD.txt' ! output file name
+'ep.txt' ! output file name
 1e-06, 1.00       ! xmin and xmax
 F2PY,1998         ! F2-Model, R-Parametrisation
-0                 ! switch for rad corrections; 0:no, 1:yes, 2:gen.lookup table 
+0                 ! switch for rad corrections; 0:no, 1:yes, 2:gen.lookup table
 1                 ! Pythia-Model = 0 standard GVMD generation in Pythia-x and Q2; = 1 GVMD model with generation in y and Q2 as for radgen
 1,1               ! A-Tar and Z-Tar
 1                 ! switch for shadowing: genShd
@@ -20,7 +20,7 @@ MSTP(19)=1 ! Hermes MSTP-19=1 different Q2 suppression, default = 4
 MSTP(20)=4 ! Hermes MSTP(20)=4 , default MSTP(20)=3
 MSTP(32)=8
 MSTP(38)=4 ! # of massless quarks in box graphs (D=5)
-MSTP(51)=10042   ! if pdflib is linked than non pythia-pdfs are available,                         10042=CTEQ6L1 - good for EPS09LO 
+MSTP(51)=10042   ! if pdflib is linked than non pythia-pdfs are available,                         10042=CTEQ6L1 - good for EPS09LO
 MSTP(52)=2   ! ---> pdflib used MSTP   52=2
 MSTP(53)=3
 MSTP(54)=1
@@ -52,7 +52,7 @@ PARP(90)=0.16
 PARP(91)=0.40 ! rms kt D=2.0, Hermes=0.4
 PARP(93)=5.
 PARP(97)=6.0  ! D=1.0, tuned by Mark 6.0
-PARP(99)=0.40 ! D=1.0, Hermes=0.4 kt inside of photon 
+PARP(99)=0.40 ! D=1.0, Hermes=0.4 kt inside of photon
 PARP(100)=5
 PARP(102)=0.28
 PARP(103)=1.0
@@ -64,7 +64,7 @@ PARP(163)=18.8 ! Hermes tweak for photon-phi coupling D=18.4
 PARP(164)=11.5
 PARP(165)=0.47679
 PARP(166)=0.67597 ! PARP165/166 are linked to MSTP17 as R_rho of HERMES is used
-! PARP(166)=0.5    
+! PARP(166)=0.5
 ! ----------- Now come all the switches for Jetset -----------
 PARJ(1)=0.100
 PARJ(2)=0.300
@@ -124,6 +124,6 @@ CKIN(40)=-1.
 CKIN(65)=1.e-09        ! Min for Q^2
 CKIN(66)=-1.       ! Max for Q^2
 CKIN(67)=0.
-CKIN(68)=-1. 
+CKIN(68)=-1.
 CKIN(77)=2.0
 CKIN(78)=-1.
