@@ -9,7 +9,7 @@ void plot_histogram(const char* inFile, const char* outDir)
   c->SetRightMargin(0.15);
   c->SetBottomMargin(0.1);
 
-  TH1D* x = (TH1D*) ((TH2D*) f->Get("fg2d_Kpimass_vs_p_2_0"))->ProjectionX("x")
+  TH1D* x = (TH1D*) ((TH2D*) f->Get("fg2d_Kpimass_vs_p_2_0"))->ProjectionX("x");
   x->Draw("hsame");
   x->GetXaxis()->SetRangeUser(1.7,2);
   c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_0_proj.pdf", outDir));
