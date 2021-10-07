@@ -76,10 +76,12 @@ PARJ(33)= 0.80
 PARJ(41)= 0.30
 PARJ(42)= 0.58
 PARJ(45)= 0.5
+PARJ(71)=10 ! ADDED FOR DCA DEBUGGING
 PARJ(170)= 0.32
 !----------------------------------------------------------------------
 MSTJ(1)=1   !0 no fragmentation,1 lund string model
 MSTJ(12)=1  ! D=2 popcorn, Hermes uses 1 (diquark, no popcorn)
+MSTJ(22)=2 ! ADDED FOR DCA DEBUGGING
 MSTJ(45)=5
 MSTU(112)=5
 MSTU(113)=5
