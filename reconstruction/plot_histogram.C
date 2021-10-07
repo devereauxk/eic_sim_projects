@@ -11,6 +11,7 @@ void plot_histogram(const char* inFile, const char* outDir)
 
   for (int ieta = 0; ieta < 3; ieta++) {
 
+    c = new TCanvas("c3","c3",800,800);
     TH1D* x = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     x->Draw("hsame");
     x->GetXaxis()->SetRangeUser(1.7,2);
