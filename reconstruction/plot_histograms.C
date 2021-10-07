@@ -2,7 +2,6 @@ void plot_histograms(const char* inFile, const char* outDir)
 {
 
   TFile* f = new TFile(inFile,"read");
-  TTree* t = (TTree*) f->Get("EICTree");
 
   TCanvas* c = new TCanvas("c3","c3",800,800);
   c->Range(0,0,1,1);
