@@ -285,10 +285,10 @@ class D0_reco
 
     void SetLowP(const float mom_thr) { TRK_P_LO = mom_thr; }
 
-    void SetDCACuts()
+    void SetDCACuts(const double single_TRK_DCA = 0.03) //TODO
     {
       // single
-      TRK_DCA = 0.03;
+      TRK_DCA = single_TRK_DCA;
 
       // pair
       PAIR_DCA = 0.12; // 120um in unit of mm
@@ -633,6 +633,7 @@ class D0_reco
           //==========================
           //    decay topology cut
           //==========================
+          // if statements are opposite from comments.
           // pair DCA < cut value
           TVector3 dca_pair = negl_vtx_reco[ineg]-posl_vtx_reco[ipos];
           if (PAIR_DCA>-99 && dca_pair.Mag()>PAIR_DCA) continue;
@@ -648,7 +649,7 @@ class D0_reco
 
           // D0 cos(theta) > cut value
           double D0_costheta = TMath::Cos(D0_vec.Angle(decay_l));
-          if (D0_COSTHETA>-99 && D0_costheta<D0_costheta) continue;
+          if (D0_COSTHETA>-99 && D0_costheta<D0_COSTHETA) continue;
 
           if (ID_OPTION==-1)
           { // no hID (but with eID)
@@ -966,7 +967,7 @@ class Lc_reco
     void SetDCACuts()
     {
       // single
-      TRK_DCA = -9999;
+      TRK_DCA = -9999; // by default no cut
 
       // pair
       PAIR_DCA = 0.3; // 300um in unit of mm
@@ -1349,11 +1350,11 @@ class Lc_reco
             // Lc DCA > cut value
             TVector3 Lc_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos1].Vect()+posl_p_reco[ipos2].Vect();
             double Lc_dca = dcaSigned(Lc_vec, decay_l, evt_vtx_reco);
-            if (Lc_DCA>-99 && fabs(Lc_dca)>Lc_DCA) continue;
+            if (Lc_DCA>-99 && fabs(Lc_dca)<Lc_DCA) continue;
 
             // Lc cos(theta) > cut value
             double Lc_costheta = TMath::Cos(Lc_vec.Angle(decay_l));
-            if (Lc_COSTHETA>-99 && Lc_costheta<Lc_costheta) continue;
+            if (Lc_COSTHETA>-99 && Lc_costheta<Lc_COSTHETA) continue;
 
             if (ID_OPTION==-1)
             { // no hID (but with eID)
@@ -1547,10 +1548,12 @@ class Lc_reco
     }
 };
 
-void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0)
+void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0, const int DCA_cut = 1)
 { // smear_2nd_vtx & momentum: 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smearing
   // Bfield_type: 0--Barbar, 1--Beast
   // 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
+  //DCA_cut: 0--no cut, 1--cut on DCA
+  //TODO
 
   // PDG data table
   pdg = new TDatabasePDG();
