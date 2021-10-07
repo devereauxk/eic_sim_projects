@@ -285,16 +285,30 @@ class D0_reco
 
     void SetLowP(const float mom_thr) { TRK_P_LO = mom_thr; }
 
-    void SetDCACuts(const double single_TRK_DCA = 0.03) //TODO
+    void SetDCACuts(const int set_t_f = 1)
     {
+      //if set_t_f == 1, sets default DCA cuts
+      //if set_t_f == 0, all dca cuts passed
+
       // single
-      TRK_DCA = single_TRK_DCA;
+      TRK_DCA = -9999;
 
       // pair
-      PAIR_DCA = 0.12; // 120um in unit of mm
-      DECAY_L = 0.04;
-      D0_DCA = 0.01;
-      D0_COSTHETA = 0.98;
+      PAIR_DCA = -9999; // 120um in unit of mm
+      DECAY_L = -9999;
+      D0_DCA = -9999;
+      D0_COSTHETA = -9999;
+
+      if (set_t_f == 1){
+        // single
+        TRK_DCA = 0.03;
+
+        // pair
+        PAIR_DCA = 0.12; // 120um in unit of mm
+        DECAY_L = 0.04;
+        D0_DCA = 0.01;
+        D0_COSTHETA = 0.98;
+      }
     }
 
     void SetIDCuts(const int id_opt) { ID_OPTION = id_opt; }
@@ -361,9 +375,6 @@ class D0_reco
       }
       else return; // if incoming proton not found, skip the whole event
 
-      int dca_cuts = 0;
-      int event_n = 0;
-      // nonzero number of entries found
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
         erhic::ParticleMC* part = py_evt->GetTrack(ipart);
@@ -379,17 +390,6 @@ class D0_reco
 
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
-
-        /*
-        event_n += 1;
-        cout<<"[particle #"<<event_n<<"]"<<"================================================================="<<endl;
-        cout<<"track_mom4_reco:";
-        track_mom4_reco.Print();
-        cout<<endl;
-        cout<<"track_vtx_reco:";
-        track_vtx_reco.Print();
-        cout<<endl;
-        */
 
         if (SMEAR_OPTION==0);
         if (SMEAR_OPTION==1)
@@ -410,12 +410,8 @@ class D0_reco
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
         // single track DCA cut
-        //double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
-        //if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue; // issue at this line, no eA particles are making DCA cut
-        /*
-        cout<<"MAKES DCA CUT"<<endl<<endl;;
-        dca_cuts += 1;
-        */
+        double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
+        if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
 
         //==========================
         //      PID selection
@@ -640,12 +636,12 @@ class D0_reco
 
           // Decay length > cut value
           TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos])*0.5-evt_vtx_reco;
-          //if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
+          if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue; //eA commented out
 
           // D0 DCA > cut value
           TVector3 D0_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos].Vect();
           double D0_dca = dcaSigned(D0_vec, decay_l, evt_vtx_reco);
-          //if (D0_DCA>-99 && fabs(D0_dca)<D0_DCA) continue;
+          if (D0_DCA>-99 && fabs(D0_dca)<D0_DCA) continue; //eA commented out
 
           // D0 cos(theta) > cut value
           double D0_costheta = TMath::Cos(D0_vec.Angle(decay_l));
@@ -964,16 +960,30 @@ class Lc_reco
 
     void SetLowP(const float mom_thr) { TRK_P_LO = mom_thr; }
 
-    void SetDCACuts()
+    void SetDCACuts(const int set_t_f = 1)
     {
+      //if set_t_f == 1, sets default DCA cuts
+      //if set_t_f == 0, all dca cuts passed
+
       // single
       TRK_DCA = -9999; // by default no cut
 
       // pair
-      PAIR_DCA = 0.3; // 300um in unit of mm
-      DECAY_L = 0.01;
-      Lc_DCA = 0.15;
+      PAIR_DCA = -9999; // 300um in unit of mm
+      DECAY_L = -9999;
+      Lc_DCA = -9999;
       Lc_COSTHETA = -9999;
+
+      if (set_t_f == 1){
+        // single
+        TRK_DCA = -9999; // by default no cut
+
+        // pair
+        PAIR_DCA = 0.3; // 300um in unit of mm
+        DECAY_L = 0.01;
+        Lc_DCA = 0.15;
+        Lc_COSTHETA = -9999;
+      }
     }
 
     void SetIDCuts(const int id_opt) { ID_OPTION = id_opt; }
@@ -1070,8 +1080,8 @@ class Lc_reco
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
         // single track DCA cut
-        //double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
-        //if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
+        double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
+        if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
 
         //==========================
         //      PID selection
@@ -1345,7 +1355,7 @@ class Lc_reco
 
             // Decay length > cut value
             TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos1]+posl_vtx_reco[ipos2])*(1./3)-evt_vtx_reco;
-            //if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
+            if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue; //commented for eA
 
             // Lc DCA > cut value
             TVector3 Lc_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos1].Vect()+posl_p_reco[ipos2].Vect();
@@ -1553,7 +1563,6 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
   // Bfield_type: 0--Barbar, 1--Beast
   // 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
   //DCA_cut: 0--no cut, 1--cut on DCA
-  //TODO
 
   // PDG data table
   pdg = new TDatabasePDG();
@@ -1586,13 +1595,13 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
 
   D0_reco ana_D0;
   ana_D0.SetLowP(0.1);
-  ana_D0.SetDCACuts();
+  ana_D0.SetDCACuts(DCA_cut);
   ana_D0.SetIDCuts(PID_option);
   ana_D0.SetSmearType(smear_option);
   ana_D0.SetBFieldType(Bfield_type);
 
   Lc_reco ana_Lc;
-  ana_Lc.SetDCACuts();
+  ana_Lc.SetDCACuts(DCA_cut);
   ana_Lc.SetIDCuts(PID_option);
   ana_Lc.SetSmearType(smear_option);
   ana_Lc.SetBFieldType(Bfield_type);
