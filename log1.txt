@@ -1,0 +1,8 @@
+   ------------------------------------------------------------------
+  | Welcome to ROOT 6.20/02                        https://root.cern |
+  | (c) 1995-2020, The ROOT Team; conception: R. Brun, F. Rademakers |
+  | Built for linuxx8664gcc on Mar 15 2020, 15:25:34                 |
+  | From tags/v6-20-02@v6-20-02                                      |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q'       |
+   ------------------------------------------------------------------
+
