@@ -33,7 +33,7 @@ void plot_histogram(const char* inFile, const char* outDir)
     x->SetTitle("");
     x->GetXaxis()->SetTitle("M(K^{#pm}#pi^{-#pm}) [GeV/c^{2}]");
     x->GetYaxis()->SetTitle("<p_{T}>(K^{#pm}#pi^{-#pm}) [GeV/c]");
-    x->GetZaxis()->SetTitle("counts")
+    x->GetZaxis()->SetTitle("counts");
     x->GetXaxis()->SetTitleOffset(1.3);
     x->GetYaxis()->SetTitleOffset(1.5);
     c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
