@@ -17,6 +17,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
   for (int ieta = 0; ieta < 3; ieta++) {
 
+    // D0
     c = new TCanvas("c3","c3",800,800);
     TH1D* x = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     x->Draw("hsame");
@@ -38,14 +39,36 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
     TH2D* x2 = (TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta));
     x2->Draw("colz");
+    x->SetStats(0);
     c->SetLogz();
+    c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
+
+    //Lc
+    c = new TCanvas("c3","c3",800,800);
+    x = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpipmass_vs_p_2_%d", ieta)))->ProjectionX("x");
+    x->Draw("hsame");
+    x->GetXaxis()->SetRangeUser(1.7,2);
     x->SetTitle("");
-    x->GetXaxis()->SetTitle("M(K^{#pm}#pi^{#mp}) [GeV/c^{2}]");
-    x->GetYaxis()->SetTitle("<p_{T}>(K^{#pm}#pi^{#mp}) [GeV/c]");
+    x->GetXaxis()->SetTitle("M(K^{#pm}#pi^{#mp}p^{#mp}) [GeV/c^{2}]");
+    x->GetYaxis()->SetTitle("counts");
     x->GetXaxis()->SetTitleOffset(1.3);
     x->GetYaxis()->SetTitleOffset(1.5);
     x->SetStats(0);
-    c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
+    tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.035);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.15,0.85,title);
+    tl->DrawLatexNDC(0.15,0.80,Form("%.1e events",events));
+    tl->DrawLatexNDC(0.15,0.75,Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    c->SaveAs(Form("%sfg2d_Kpipmass_2_%d.pdf", outDir, ieta));
+
+    x2 = (TH2D*) f->Get(Form("fg2d_Kpipmass_vs_p_2_%d", ieta));
+    x2->Draw("colz");
+    x->SetStats(0);
+    c->SetLogz();
+    c->SaveAs(Form("%sfg2d_Kpipmass_vs_p_2_%d.pdf", outDir, ieta));
+
 
   }
 
