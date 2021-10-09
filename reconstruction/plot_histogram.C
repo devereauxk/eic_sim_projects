@@ -2,10 +2,12 @@ const int etabin = 3;
 static double eta_lo[etabin] = {-3,-1,1};
 static double eta_hi[etabin] = {-1,1,3};
 
-void plot_histogram(const char* inFile, const char* outDir)
+void plot_histogram(const char* inFile, const char* outDir, const char* title = "", const int events = 1000000)
 {
 
   TFile* f = new TFile(inFile,"read");
+
+  TTree* t = (TTree*) f->Get("EICTree");
 
   TCanvas* c = new TCanvas("c3","c3",800,800);
   c->Range(0,0,1,1);
@@ -29,7 +31,9 @@ void plot_histogram(const char* inFile, const char* outDir)
     tl->SetTextAlign(11);
     tl->SetTextSize(0.035);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.6,0.85,Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
+    tl->DrawLatexNDC(0.1,0.85,title);
+    tl->DrawLatexNDC(0.1,0.75,Form("%e events",events));
+    tl->DrawLatexNDC(0.1,0.65,Form("%.0f < #eta < %.0f",eta_lo[ieta],eta_hi[ieta]));
     c->SaveAs(Form("%sfg2d_Kpimass_2_%d.pdf", outDir, ieta));
 
     TH2D* x2 = (TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta));
