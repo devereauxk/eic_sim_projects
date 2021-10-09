@@ -47,7 +47,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     c = new TCanvas("c3","c3",800,800);
     x = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpipmass_vs_p_2_%d", ieta)))->ProjectionX("x");
     x->Draw("hsame");
-    x->GetXaxis()->SetRangeUser(1.7,2);
+    x->GetXaxis()->SetRangeUser(2.15,2.45);
     x->SetTitle("");
     x->GetXaxis()->SetTitle("M(K^{#pm}#pi^{#mp}p^{#mp}) [GeV/c^{2}]");
     x->GetYaxis()->SetTitle("counts");
