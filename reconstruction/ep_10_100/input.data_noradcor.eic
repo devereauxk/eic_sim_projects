@@ -1,7 +1,7 @@
 'ep_10_100_norad.out' ! output file name
 11                ! lepton beam type
 100.,10.          ! proton and electron beam energy
-100000,10           ! Number of events
+1000,10           ! Number of events
 1e-09,1.00        ! xmin and xmax
 1e-11,1.00        ! ymin and ymax
 10,20000            ! Q2min and Q2max
