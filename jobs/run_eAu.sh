@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
+WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/eAu_18_110
+
 if [ -z "$1" ]
 then
         echo "No job number set."
@@ -31,10 +33,10 @@ source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0
 #ln -s /eic/data/baraks/BeAGLE/inputFiles/S3ALL003
 #ln -s /eic/data/baraks/BeAGLE/nuclear.bin
 #ln -s /eic/data/baraks/BeAGLE/make_tree.C
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/inputFiles/eAu.inp
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/inputFiles/S3ALL003
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/nuclear.bin
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/make_tree.C
+ln -s ${WORKING_DIR}/inputFiles/eAu.inp
+ln -s ${WORKING_DIR}/inputFiles/S3ALL003
+ln -s ${WORKING_DIR}/nuclear.bin
+ln -s ${WORKING_DIR}/make_tree.C
 
 
 #Run simulation
@@ -56,7 +58,7 @@ echo "Cleaning Up..."
 #mv -v eA.txt /eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_${INPUT}.txt
 #mv -v eA.root /eic/data/baraks/BeAGLE/outForPythiaMode/5_41/eAu/eAu_${INPUT}.root
 #mv -v eAu.log /eic/data/baraks/BeAGLE/logs/5_41/eAu/eAu_${INPUT}.log
-mv -v eAu.txt /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_${INPUT}.txt
-mv -v eAu.root /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/outForPythiaMode/eAu_${INPUT}.root
-mv -v eAu.log /eic/u/kdevereaux/work/multiplicity/condor/eAu_18_110/logs/eAu_${INPUT}.log
+mv -v eAu.txt ${WORKING_DIR}/outForPythiaMode/eAu_${INPUT}.txt
+mv -v eAu.root ${WORKING_DIR}/outForPythiaMode/eAu_${INPUT}.root
+mv -v eAu.log ${WORKING_DIR}/logs/eAu_${INPUT}.log
 echo "DONE!!!"

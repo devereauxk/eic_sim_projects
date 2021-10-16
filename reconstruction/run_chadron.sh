@@ -2,7 +2,7 @@
 
 FOLDER=pythiaeRHIC_e10p100_MB
 
-LIST=`ls -lhtr /gpfs/mnt/gpfs02/eic/wfan/data/$FOLDER/*highQ2*.root | awk '{printf("%s\n",$9)}'`
+LIST=`ls -lhtr /gpfs/mnt/gpfs02/eic/wfan/data/$FOLDER/ep_minbias_highQ2*.root | awk '{printf("%s\n",$9)}'`
 NUM=0
 
 chmod g+rx ${_CONDOR_SCRATCH_DIR}
