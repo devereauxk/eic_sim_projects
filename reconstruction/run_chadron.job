@@ -11,5 +11,5 @@ Output         = /dev/null
 Error          = /dev/null
 Requirements   = (CPU_Speed >= 1)
 
-Arguments      = run_chadron_eAu.sh $(Process) 0 0 0 0 0
+Arguments      = run_chadron.sh $(Process) 0 0 0 0 0
 Queue 1
