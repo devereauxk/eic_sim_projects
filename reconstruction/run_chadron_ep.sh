@@ -2,7 +2,7 @@
 
 FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/ep_10_100
 
-LIST=`ls -lhtr $FOLDER/outfiles/*.root | awk '{printf("%s\n",$9)}'`
+LIST=`ls -lhtr $FOLDER/outfiles/*.root | awk '{printf("%s\n",$10)}'` # $10 since files are ten levels down from root directory
 NUM=0
 
 chmod g+rx ${_CONDOR_SCRATCH_DIR}
@@ -31,9 +31,9 @@ for file in $LIST
 do
   if (( $NUM == $1 ))
   then
-    fname=`echo $file | awk -F \/ '{printf("%s\n",$9)}'`
+    fname=`echo $file | awk -F \/ '{printf("%s\n",$10)}'` # $10 since files are ten levels down from root directory
     ln -s $FOLDER/outfiles/$fname .
-    fno=`echo $fname | awk -F \_ '{printf("%s\n",$2)}' | awk -F \. '{printf("%s\n",$1)}'`
+    fno=`echo $fname | awk -F \_ '{printf("%s\n",$2)}' | awk -F \. '{printf("%s\n",$1)}'`    # $2 since file of form ep_<some number>.root
     echo $file
     echo file name is $fname with file number $fno
     hname=`echo hists-$fno.root`
