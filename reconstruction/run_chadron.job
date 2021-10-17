@@ -4,12 +4,12 @@ GetEnv         = True
 Initialdir     = $ENV(PWD)
 Executable     = /bin/sh
 Priority       = +20
-#Log	         = /gpfs/mnt/gpfs02/eic/kdevereaux/jobs/jobout/log$(Process).log
-#Output        = /gpfs/mnt/gpfs02/eic/kdevereaux/jobs/jobout/out$(Process).out
-Log            = /dev/null
-Output         = /dev/null
+Log	         = /gpfs/mnt/gpfs02/eic/kdevereaux/jobs/jobout/log$(Process).log
+Output        = /gpfs/mnt/gpfs02/eic/kdevereaux/jobs/jobout/out$(Process).out
+#Log            = /dev/null
+#Output         = /dev/null
 Error          = /dev/null
 Requirements   = (CPU_Speed >= 1)
 
 Arguments      = run_chadron.sh $(Process) 0 0 0 0 0
-Queue 1
+Queue 10
