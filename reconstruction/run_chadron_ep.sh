@@ -33,7 +33,7 @@ do
   then
     fname=`echo $file | awk -F \/ '{printf("%s\n",$9)}'`
     ln -s $FOLDER/outfiles/$fname .
-    fno=`echo $fname | awk -F \_ '{printf("%s\n",$4)}' | awk -F \. '{printf("%s\n",$1)}'`
+    fno=`echo $fname | awk -F \_ '{printf("%s\n",$2)}' | awk -F \. '{printf("%s\n",$1)}'`
     echo $file
     echo file name is $fname with file number $fno
     hname=`echo hists-$fno.root`
