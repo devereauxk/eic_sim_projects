@@ -1,4 +1,5 @@
 #!/bin/sh
+echo "made it this far"
 
 FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/ep_10_100
 
@@ -10,6 +11,7 @@ cd ${_CONDOR_SCRATCH_DIR}
 
 INPUT=$(( 0 + $1 ))
 echo $INPUT
+echo "made it this far"
 
 DIR=`printf "%05d" $INPUT`
 mkdir -p $DIR
@@ -22,10 +24,14 @@ BFIELD=$4 # 0--Barbar, 1--Beast
 ID_OPT=$5 # 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
 DCA=$6 # DCA_cut: 0--no cut, 1--cut on DCA
 
+echo "made it this far"
+
 mkdir $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}
 
 ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/fast_sim.h .
 ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/D0_tree.C .
+
+echo "made it this far"
 
 for file in $LIST
 do
