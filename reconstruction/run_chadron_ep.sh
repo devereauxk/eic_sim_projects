@@ -27,8 +27,6 @@ mkdir $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}
 ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/fast_sim.h .
 ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/D0_tree.C .
 
-echo "made it this far"
-
 for file in $LIST
 do
   if (( $NUM == $1 ))
@@ -52,7 +50,5 @@ do
   fi
   NUM=$(( $NUM + 1 ))
 done
-
-echo "made it this far"
 
 popd
