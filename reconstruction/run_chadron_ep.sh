@@ -2,7 +2,7 @@
 
 FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/ep_10_100
 
-LIST=`ls -lhtr $FOLDER/outfiles/*.root` # $10 since files are ten levels down from root directory     # TRY RUNNING IT LIKE THIS?????????????????????????????
+LIST=`ls -lhtr $FOLDER/outfiles/*.root | awk '{printf("%s\n",$10)}'` # since file full dir given as 9th output paran for ls -lhtr
 NUM=0
 
 chmod g+rx ${_CONDOR_SCRATCH_DIR}
