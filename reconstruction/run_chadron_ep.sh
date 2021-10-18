@@ -2,7 +2,7 @@
 
 FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/ep_10_100
 
-LIST=`ls -lhtr $FOLDER/outfiles/*.root | awk '{printf("%s\n",$10)}'` # since file full dir given as 9th output paran for ls -lhtr
+LIST=`ls -lhtr $FOLDER/outfiles/*.root | awk '{printf("%s\n",$9)}'` # since file full dir given as 9th output paran for ls -lhtr
 NUM=0
 
 chmod g+rx ${_CONDOR_SCRATCH_DIR}
@@ -26,6 +26,8 @@ mkdir $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}
 
 ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/fast_sim.h .
 ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/D0_tree.C .
+
+echo "made it this far"
 
 for file in $LIST
 do
