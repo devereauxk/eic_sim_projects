@@ -153,10 +153,11 @@ class D0_reco
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
 
-      HALF_LIFE = 0;
+      MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} s
+      MASS = 1.86483; // \pm 0.00005 (GeV/c^2)
 
-      TF1* func_D0_decay_vertex = new TF1("func_D0_decay_vertex", "[0]+[1]*x+[2]*exp(x)", 0, 1000); // units of microns (um)
-      func_D0_decay_vertex->SetParameters(par0,par1);  //normalization, decay length
+      TF1* func_D0_decay_length = new TF1("func_D0_decay_length", "(1/([0]*[1]))*exp(-x/([0]*[1]))*[2]*1E6", 0, 1E-12); // output units of microns (um), x units of 10^{-15}
+      // [0] = gamma, [1] = MEAN_LIFE, [2] = velocity magnitude
 
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
@@ -390,26 +391,27 @@ class D0_reco
 
         if (TRK_P_LO>-99 && part->GetPt()<TRK_P_LO) continue;
 
+        TLorentzVector track_mom4_true = part->Get4Vector();
+        TLorentzVector track_mom4_reco = track_mom4_true;
+
         //patch for issue where D0 vtx is always at (0,0,0)
-        if (abs(part->GetParentIndex->Id()) == 421) // TODO
+        if (abs(part->GetParentId()) == 421) // TODO
         {
+          //calculate new vertex coords
+          double_t velocity_mag = sqrt(pow(track_mom4_true->Px(),2) + pow(track_mom4_true->Py(),2) + pow(track_mom4_true->Pz(),2)) / MASS;
+          func_D0_decay_vertex->SetParameters(part->Gamma(), MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
           decay_length = func_D0_decay_length->GetRandom();
-          decay_dir_phi = func_D0_decay_phi->GetRandom();
-          decay_dir_theta = func_D0_decay_theta->GetRandom();
+          decay_dir_phi = track_mom4_true->Phi();
+          decay_dir_theta = track_mom4_true->Theta();
 
-          //boost the vertex to the correct frame -> only affects decay length - wenqing will do
-          decay_length = modifiecd
-
-          //calculate new vertex
+          //make new vertex
           TVector3 new_vtx_true();
           new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
 
+          //set new vertex
           part->SetVertex(new_vtx_true);
-          cout<<"patched nonzero D0 vertex @ "<<part->GetVertex()<<endl; // for checking
+          cout<<"patched nonzero D0 vertex @ "<<part->GetVertex()<<" with decay length "<<decay_length<<endl; // for checking
         }
-
-        TLorentzVector track_mom4_true = part->Get4Vector();
-        TLorentzVector track_mom4_reco = track_mom4_true;
 
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
