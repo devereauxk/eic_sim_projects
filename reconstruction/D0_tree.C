@@ -153,6 +153,11 @@ class D0_reco
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
 
+      HALF_LIFE = 0;
+
+      TF1* func_D0_decay_vertex = new TF1("func_D0_decay_vertex", "[0]+[1]*x+[2]*exp(x)", 0, 1000); // units of microns (um)
+      func_D0_decay_vertex->SetParameters(par0,par1);  //normalization, decay length
+
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
         for (int ieta = 0; ieta < etabin; ++ieta)
@@ -384,6 +389,24 @@ class D0_reco
         if (abs(part->Id())!=2212 && abs(part->Id())!=211 && abs(part->Id())!=321 && abs(part->Id())!=11 && abs(part->Id())!=13) continue; // proton, pion, kaon, electron, muon
 
         if (TRK_P_LO>-99 && part->GetPt()<TRK_P_LO) continue;
+
+        //patch for issue where D0 vtx is always at (0,0,0)
+        if (abs(part->GetParentIndex->Id()) == 421) // TODO
+        {
+          decay_length = func_D0_decay_length->GetRandom();
+          decay_dir_phi = func_D0_decay_phi->GetRandom();
+          decay_dir_theta = func_D0_decay_theta->GetRandom();
+
+          //boost the vertex to the correct frame -> only affects decay length - wenqing will do
+          decay_length = modifiecd
+
+          //calculate new vertex
+          TVector3 new_vtx_true();
+          new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
+
+          part->SetVertex(new_vtx_true);
+          cout<<"patched nonzero D0 vertex @ "<<part->GetVertex()<<endl; // for checking
+        }
 
         TLorentzVector track_mom4_true = part->Get4Vector();
         TLorentzVector track_mom4_reco = track_mom4_true;
