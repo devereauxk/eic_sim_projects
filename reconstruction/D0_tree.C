@@ -413,8 +413,7 @@ class D0_reco
           cout<<"TRIED VERTEX LENGTH:";
           (part->GetVertex()).Print();
           cout<<endl;
-          (part->GetVertex()).Mag();
-          cout<<endl;
+          cout<<(part->GetVertex()).Mag()<<endl;
           //calculate new vertex coords
           double_t velocity_mag = sqrt(pow(track_mom4_true.Px(),2) + pow(track_mom4_true.Py(),2) + pow(track_mom4_true.Pz(),2)) / MASS;
           func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
