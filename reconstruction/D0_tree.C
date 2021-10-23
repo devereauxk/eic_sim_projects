@@ -396,6 +396,8 @@ class D0_reco
           cout<<"This is a D0 ================================================================"<<endl;
           (part->GetVertex()).Print();
           cout<<endl;
+          cout<<(part->GetVertex()).Mag()<<endl;
+          cout<<endl;
         }
 
         if (part->GetStatus()!=1) continue; // only loop through final stable particles
