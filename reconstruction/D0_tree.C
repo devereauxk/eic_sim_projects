@@ -119,6 +119,10 @@ class D0_reco
     float D0_DCA;
     float D0_COSTHETA;
 
+    //metric for vertex patch
+    float MEAN_LIFE;
+    float MASS;
+
     // mass pair vs pt
     TH2D* fg2d_Kpimass_vs_p[chargebin][etabin]; // 0: K-pi+
     TH2D* bg2d_Kpimass_vs_p[chargebin][etabin]; // 0: K-pi+
@@ -398,14 +402,14 @@ class D0_reco
         if (abs(part->GetParentId()) == 421) // TODO
         {
           //calculate new vertex coords
-          double_t velocity_mag = sqrt(pow(track_mom4_true->Px(),2) + pow(track_mom4_true->Py(),2) + pow(track_mom4_true->Pz(),2)) / MASS;
+          double_t velocity_mag = sqrt(pow(track_mom4_true.Px(),2) + pow(track_mom4_true.Py(),2) + pow(track_mom4_true.Pz(),2)) / MASS;
           func_D0_decay_vertex->SetParameters(part->Gamma(), MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
-          decay_length = func_D0_decay_length->GetRandom();
-          decay_dir_phi = track_mom4_true->Phi();
-          decay_dir_theta = track_mom4_true->Theta();
+          double_t decay_length = func_D0_decay_length->GetRandom();
+          double_t decay_dir_phi = track_mom4_true->Phi();
+          double_t decay_dir_theta = track_mom4_true->Theta();
 
           //make new vertex
-          TVector3 new_vtx_true();
+          TVector3 new_vtx_true;
           new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
 
           //set new vertex
