@@ -402,6 +402,9 @@ class D0_reco
         //patch for issue where D0 vtx is always at (0,0,0)
         if (abs(part->GetParentId()) == 421) // TODO
         {
+          cout<<"TRIED VERTEX LENGTH:";
+          (part->GetVertex())->Print();
+          cout<<endl;
           //calculate new vertex coords
           double_t velocity_mag = sqrt(pow(track_mom4_true.Px(),2) + pow(track_mom4_true.Py(),2) + pow(track_mom4_true.Pz(),2)) / MASS;
           func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
