@@ -390,6 +390,14 @@ class D0_reco
       {
         erhic::ParticleMC* part = py_evt->GetTrack(ipart);
 
+        // for debugging
+        if(abs(part->Id()) == 421)
+        {
+          cout<<"This is a D0 ================================================================"<<endl;
+          (part->GetVertex()).Print();
+          cout<<endl;
+        }
+
         if (part->GetStatus()!=1) continue; // only loop through final stable particles
 
         if (abs(part->Id())!=2212 && abs(part->Id())!=211 && abs(part->Id())!=321 && abs(part->Id())!=11 && abs(part->Id())!=13) continue; // proton, pion, kaon, electron, muon
@@ -399,12 +407,6 @@ class D0_reco
         TLorentzVector track_mom4_true = part->Get4Vector();
         TLorentzVector track_mom4_reco = track_mom4_true;
 
-        if(abs(part->Id()) == 421)
-        {
-          cout<<"This is a D0 ================================================================"<<endl;
-          (part->GetVertex()).Print();
-          cout<<endl;
-        }
         /*
         //patch for issue where D0 vtx is always at (0,0,0)
         if (abs(part->GetParentId()) == 421) // TODO
