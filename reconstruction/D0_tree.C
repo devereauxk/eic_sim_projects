@@ -402,6 +402,7 @@ class D0_reco
         //patch for issue where D0 vtx is always at (0,0,0)
         if (abs(part->GetParentId()) == 421) // TODO
         {
+          cout<<"THIS IS A D0 =========================================================="<<endl;
           cout<<"TRIED VERTEX LENGTH:";
           (part->GetVertex()).Print();
           cout<<endl;
@@ -421,6 +422,7 @@ class D0_reco
           cout<<"patched nonzero D0 vertex @ ";
           (part->GetVertex()).Print();
           cout<<" with decay length "<<decay_length<<endl; // for checking
+          cout<<"========================================================================"<<endl;
         }
 
         TVector3 track_vtx_true = part->GetVertex();
