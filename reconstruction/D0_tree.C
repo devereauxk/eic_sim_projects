@@ -119,9 +119,10 @@ class D0_reco
     float D0_DCA;
     float D0_COSTHETA;
 
-    //metric for vertex patch
+    //metrics for vertex patch
     float MEAN_LIFE;
     float MASS;
+    TF1* func_D0_decay_length;
 
     // mass pair vs pt
     TH2D* fg2d_Kpimass_vs_p[chargebin][etabin]; // 0: K-pi+
@@ -160,7 +161,7 @@ class D0_reco
       MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} s
       MASS = 1.86483; // \pm 0.00005 (GeV/c^2)
 
-      TF1* func_D0_decay_length = new TF1("func_D0_decay_length", "(1/([0]*[1]))*exp(-x/([0]*[1]))*[2]*1E6", 0, 1E-12); // output units of microns (um), x units of 10^{-15}
+      func_D0_decay_length = new TF1("func_D0_decay_length", "(1/([0]*[1]))*exp(-x/([0]*[1]))*[2]*1E6", 0, 1E-12); // output units of microns (um), x units of 10^{-15}
       // [0] = gamma, [1] = MEAN_LIFE, [2] = velocity magnitude
 
       for (int icharge = 0; icharge < chargebin; ++icharge)
@@ -415,7 +416,7 @@ class D0_reco
           //set new vertex
           part->SetVertex(new_vtx_true);
           cout<<"patched nonzero D0 vertex @ ";
-          (part->GetVertex())->Print();
+          (part->GetVertex()).Print();
           cout<<" with decay length "<<decay_length<<endl; // for checking
         }
 
