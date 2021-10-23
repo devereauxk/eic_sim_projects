@@ -399,10 +399,17 @@ class D0_reco
         TLorentzVector track_mom4_true = part->Get4Vector();
         TLorentzVector track_mom4_reco = track_mom4_true;
 
+        if(abs(part->Id()) == 421)
+        {
+          cout<<"This is a D0 ================================================================"<<endl;
+          (part->GetVertex()).Print();
+          cout<<endl;
+        }
+
         //patch for issue where D0 vtx is always at (0,0,0)
         if (abs(part->GetParentId()) == 421) // TODO
         {
-          cout<<"THIS IS A D0 =========================================================="<<endl;
+          cout<<"THIS IS A D0 child =========================================================="<<endl;
           cout<<"TRIED VERTEX LENGTH:";
           (part->GetVertex()).Print();
           cout<<endl;
