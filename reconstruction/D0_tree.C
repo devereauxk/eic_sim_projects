@@ -403,10 +403,10 @@ class D0_reco
         {
           //calculate new vertex coords
           double_t velocity_mag = sqrt(pow(track_mom4_true.Px(),2) + pow(track_mom4_true.Py(),2) + pow(track_mom4_true.Pz(),2)) / MASS;
-          func_D0_decay_vertex->SetParameters(part->Gamma(), MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
+          func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
           double_t decay_length = func_D0_decay_length->GetRandom();
-          double_t decay_dir_phi = track_mom4_true->Phi();
-          double_t decay_dir_theta = track_mom4_true->Theta();
+          double_t decay_dir_phi = track_mom4_true.Phi();
+          double_t decay_dir_theta = track_mom4_true.Theta();
 
           //make new vertex
           TVector3 new_vtx_true;
@@ -414,7 +414,9 @@ class D0_reco
 
           //set new vertex
           part->SetVertex(new_vtx_true);
-          cout<<"patched nonzero D0 vertex @ "<<part->GetVertex()<<" with decay length "<<decay_length<<endl; // for checking
+          cout<<"patched nonzero D0 vertex @ ";
+          (part->GetVertex())->Print();
+          cout<<" with decay length "<<decay_length<<endl; // for checking
         }
 
         TVector3 track_vtx_true = part->GetVertex();
