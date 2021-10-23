@@ -458,6 +458,11 @@ class D0_reco
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
         if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
 
+        if (abs(part->GetParentId()) == 421 || abs(part->Id()) == 421)
+        {
+          cout<<"PASSES DCA CUT!!!!"<<endl;
+        }
+
         //==========================
         //      PID selection
         //==========================
