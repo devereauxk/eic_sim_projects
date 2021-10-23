@@ -405,7 +405,7 @@ class D0_reco
           (part->GetVertex()).Print();
           cout<<endl;
         }
-
+        /*
         //patch for issue where D0 vtx is always at (0,0,0)
         if (abs(part->GetParentId()) == 421) // TODO
         {
@@ -431,7 +431,7 @@ class D0_reco
           (part->GetVertex()).Print();
           cout<<" with decay length "<<decay_length<<endl; // for checking
           cout<<"========================================================================"<<endl;
-        }
+        }*/
 
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
@@ -457,11 +457,6 @@ class D0_reco
         // single track DCA cut
         double track_dca = dcaSigned(track_mom4_reco.Vect(),track_vtx_reco,evt_vtx_reco);
         if (TRK_DCA>-99 && fabs(track_dca)<TRK_DCA) continue;
-
-        if (abs(part->GetParentId()) == 421 || abs(part->Id()) == 421)
-        {
-          cout<<"PASSES DCA CUT!!!!"<<endl;
-        }
 
         //==========================
         //      PID selection
@@ -551,18 +546,6 @@ class D0_reco
           else posl_quark_p.push_back(TLorentzVector(0,0,0,0));
         }
       }
-      //cout<<"[START OF EVENT]"<<"=================================================================================="<<endl;
-      // issue here single tracks not being recorded
-      // debugging eA no entry problem here
-      /*
-      cout<<"================================================================="<<endl;
-      cout<<"negl_p_true:"<<negl_p_true.size()<<endl;
-      cout<<"posl_p_true:"<<posl_p_true.size()<<endl;
-      cout<<"negl_p_reco:"<<negl_p_reco.size()<<endl;
-      cout<<"posl_p_reco:"<<posl_p_reco.size()<<endl;
-      cout<<"================================================================="<<endl;
-      */
-      // end debugging*/
     }
 
     void fill_Kpi_mass(const int charge_type, const int ipart1, const int ipart2)
