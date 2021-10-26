@@ -88,7 +88,7 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       double_t velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
       cout<<"velocity: "<<velocity_mag<<endl;
       cout<<"MEAN_LIFE: "<<D0_MEAN_LIFE<<endl;
-      func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE);  //gamma, D0_MEAN_LIFE
+      func_D0_decay_time>SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE);  //gamma, D0_MEAN_LIFE
       double_t decay_length = (func_D0_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
       cout<<"new decay length(mm): "<<decay_length<<endl;
       double_t decay_dir_phi = track_mom4_true.Phi();
