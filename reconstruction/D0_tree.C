@@ -87,7 +87,6 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       //calculate new vertex coords
       double_t velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
       cout<<"velocity: "<<velocity_mag<<endl;
-      cout<<"MEAN_LIFE: "<<D0_MEAN_LIFE<<endl;
       func_D0_decay_time->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE);  //gamma, D0_MEAN_LIFE
       double_t decay_length = (func_D0_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
       cout<<"new decay length(mm): "<<decay_length<<endl;
@@ -101,6 +100,7 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       //set new vertex for D0 and all D0 children
       part->SetVertex(new_vtx_true);
 
+      /*
       erhic::ParticleMC* child_part;
       for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
       {
@@ -108,7 +108,7 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
         cout<<"child particle vertex corrected"<<endl;
         child_part = py_evt->GetTrack(part->GetChild1Index() + ichild);
         child_part->SetVertex(new_vtx_true);
-      }
+      }*/
 
       // TODO check that vertex actually set
     }
