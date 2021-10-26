@@ -65,8 +65,8 @@ int find_quark_origin(erhic::EventPythia* evt, erhic::ParticleMC* part)
 void correct_D0_verticies(erhic::EventPythia* py_evt)
 { // patches the D0 vertex issue where with BeAGLE, D0 verticies are much smaller than they should be. Manually generates random and apporpraite verticies. Modifies verticies for child particles as well
 
-  TF1* func_D0_decay_length = new TF1("func_D0_decay_length", "(1/([0]*[1]))*exp(-x/([0]*[1]))*[2]*1E3", 0, 1E-10); // output units of mm, x units of 10^{-15} s
-  // [0] = gamma [unitless], [1] = MEAN_LIFE [seconds], [2] = velocity magnitude [m/s]
+  TF1* func_D0_decay_time = new TF1("func_D0_decay_length", "exp(-x/([0]*[1]))", 0, 1E-10); // output unitless, x units of 10^{-15} s
+  // [0] = gamma [unitless], [1] = MEAN_LIFE [seconds]
 
   //changing D0 vertecies to patch zero vertex issue
   for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
@@ -88,9 +88,9 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       double_t velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
       cout<<"velocity: "<<velocity_mag<<endl;
       cout<<"MEAN_LIFE: "<<D0_MEAN_LIFE<<endl;
-      func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
-      double_t decay_length = func_D0_decay_length->GetRandom();
-      cout<<"new decay length: "<<decay_length<<endl;
+      func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE);  //gamma, D0_MEAN_LIFE
+      double_t decay_length = (func_D0_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
+      cout<<"new decay length(mm): "<<decay_length<<endl;
       double_t decay_dir_phi = track_mom4_true.Phi();
       double_t decay_dir_theta = track_mom4_true.Theta();
 
