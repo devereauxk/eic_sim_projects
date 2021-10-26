@@ -30,6 +30,9 @@ const int verbosity = 1;
 const double KMASS = 0.493677; // charged K mass, unit GeV
 const double PIMASS = 0.139570; // charged pi mass, unit GeV
 const double PMASS = 0.938272; // proton, unit GeV
+const double LIGHT_SPEED = 299792458; // unit m/s
+const double D0_MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} (seconds)
+const double D0_MASS = 1.86483; // \pm 0.00005 (GeV/c^2)
 
 using namespace std;
 
@@ -58,6 +61,57 @@ int find_quark_origin(erhic::EventPythia* evt, erhic::ParticleMC* part)
   }
 
   return find_quark_origin(evt, parent);
+}
+
+void correct_D0_verticies(erhic::EventPythia* py_evt)
+{ // patches the D0 vertex issue where with BeAGLE, D0 verticies are much smaller than they should be. Manually generates random and apporpraite verticies. Modifies verticies for child particles as well
+
+  TF1* func_D0_decay_length = new TF1("func_D0_decay_length", "(1/([0]*[1]))*exp(-x/([0]*[1]))*[2]*1E3", 0, 1E-10); // output units of mm, x units of 10^{-15} s
+  // [0] = gamma [unitless], [1] = MEAN_LIFE [seconds], [2] = velocity magnitude [m/s]
+
+  //changing D0 vertecies to patch zero vertex issue
+  for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
+  {
+
+    erhic::ParticleMC* part = py_evt->GetTrack(ipart);
+
+    if(abs(part->Id()) == 421)
+    {
+      cout<<"This is a D0 ================================================================"<<endl;
+      (part->GetVertex()).Print();
+      cout<<endl;
+      cout<<(part->GetVertex()).Mag()<<endl;
+      cout<<endl;
+
+      TLorentzVector track_mom4_true = part->Get4Vector();
+
+      //calculate new vertex coords
+      double_t velocity_mag = (sqrt(pow(track_mom4_true.Px(),2) + pow(track_mom4_true.Py(),2) + pow(track_mom4_true.Pz(),2)) / D0_MASS) * LIGHT_SPEED; // units of m/s
+      cout<<"velocity: "<<velocity_mag<<endl;
+      func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
+      double_t decay_length = func_D0_decay_length->GetRandom();
+      cout<<"new decay length: "<<decay_length<<endl;
+      double_t decay_dir_phi = track_mom4_true.Phi();
+      double_t decay_dir_theta = track_mom4_true.Theta();
+
+      //make new vertex
+      TVector3 new_vtx_true;
+      new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
+
+      //set new vertex for D0 and all D0 children
+      part->SetVertex(new_vtx_true);
+
+      erhic::ParticleMC* child_part;
+      for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
+      {
+        cout<<"child particle vertex corrected"<<endl;
+        child_part = py_evt->GetTrack(part->GetChild1Index() + ichild);
+        child_part->SetVertex(new_vtx_true);
+      }
+
+      // TODO check that vertex actually set
+    }
+  }
 }
 
 class D0_reco
@@ -119,10 +173,8 @@ class D0_reco
     float D0_DCA;
     float D0_COSTHETA;
 
-    //metrics for vertex patch
-    float MEAN_LIFE;
-    float MASS;
-    TF1* func_D0_decay_length;
+    // if D0 vertex issue needs to be corrected, 1 if yes, 0 if no
+    int do_correct_D0_vertecies;
 
     // mass pair vs pt
     TH2D* fg2d_Kpimass_vs_p[chargebin][etabin]; // 0: K-pi+
@@ -158,11 +210,7 @@ class D0_reco
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
 
-      MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} s
-      MASS = 1.86483; // \pm 0.00005 (GeV/c^2)
-
-      func_D0_decay_length = new TF1("func_D0_decay_length", "(1/([0]*[1]))*exp(-x/([0]*[1]))*[2]*1E6", 0, 1E-12); // output units of microns (um), x units of 10^{-15}
-      // [0] = gamma, [1] = MEAN_LIFE, [2] = velocity magnitude
+      do_correct_D0_vertecies = 1; // corrects D0 verticies
 
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
@@ -312,7 +360,7 @@ class D0_reco
 
       if (set_t_f == 1){
         // single
-        TRK_DCA = 0.03;
+        TRK_DCA = 0.03; // in units of mm
 
         // pair
         PAIR_DCA = 0.12; // 120um in unit of mm
@@ -386,19 +434,11 @@ class D0_reco
       }
       else return; // if incoming proton not found, skip the whole event
 
+      if (do_correct_D0_vertecies == 1) correct_D0_verticies(py_evt);
+
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
         erhic::ParticleMC* part = py_evt->GetTrack(ipart);
-
-        // for debugging
-        if(abs(part->Id()) == 421)
-        {
-          cout<<"This is a D0 ================================================================"<<endl;
-          (part->GetVertex()).Print();
-          cout<<endl;
-          cout<<(part->GetVertex()).Mag()<<endl;
-          cout<<endl;
-        }
 
         if (part->GetStatus()!=1) continue; // only loop through final stable particles
 
@@ -408,34 +448,6 @@ class D0_reco
 
         TLorentzVector track_mom4_true = part->Get4Vector();
         TLorentzVector track_mom4_reco = track_mom4_true;
-
-        /*
-        //patch for issue where D0 vtx is always at (0,0,0)
-        if (abs(part->GetParentId()) == 421) // TODO
-        {
-          cout<<"THIS IS A D0 child =========================================================="<<endl;
-          cout<<"TRIED VERTEX LENGTH:";
-          (part->GetVertex()).Print();
-          cout<<endl;
-          cout<<(part->GetVertex()).Mag()<<endl;
-          //calculate new vertex coords
-          double_t velocity_mag = sqrt(pow(track_mom4_true.Px(),2) + pow(track_mom4_true.Py(),2) + pow(track_mom4_true.Pz(),2)) / MASS;
-          func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
-          double_t decay_length = func_D0_decay_length->GetRandom();
-          double_t decay_dir_phi = track_mom4_true.Phi();
-          double_t decay_dir_theta = track_mom4_true.Theta();
-
-          //make new vertex
-          TVector3 new_vtx_true;
-          new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
-
-          //set new vertex
-          part->SetVertex(new_vtx_true);
-          cout<<"patched nonzero D0 vertex @ ";
-          (part->GetVertex()).Print();
-          cout<<" with decay length "<<decay_length<<endl; // for checking
-          cout<<"========================================================================"<<endl;
-        }*/
 
         TVector3 track_vtx_true = part->GetVertex();
         TVector3 track_vtx_reco = track_vtx_true;
