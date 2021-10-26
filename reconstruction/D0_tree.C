@@ -88,6 +88,8 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       //calculate new vertex coords
       double_t velocity_mag = (sqrt(pow(track_mom4_true.Px(),2) + pow(track_mom4_true.Py(),2) + pow(track_mom4_true.Pz(),2)) / D0_MASS) * LIGHT_SPEED; // units of m/s
       cout<<"velocity: "<<velocity_mag<<endl;
+      velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2))));
+      cout<<"velocity: "<<velocity_mag<<endl;
       func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
       double_t decay_length = func_D0_decay_length->GetRandom();
       cout<<"new decay length: "<<decay_length<<endl;
