@@ -85,7 +85,7 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       TLorentzVector track_mom4_true = part->Get4Vector();
 
       //calculate new vertex coords
-      double_t elocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
+      double_t velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
       cout<<"velocity: "<<velocity_mag<<endl;
       cout<<"MEAN_LIFE: "<<D0_MEAN_LIFE<<endl;
       func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
