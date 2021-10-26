@@ -107,7 +107,6 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
         cout<<"supposed child particle. parent id: "<<child_part->GetParentId()<<" child id: "<<child_part->Id()<<" track index: "<<(part->GetChild1Index() + ichild)<<endl;
         child_part->SetVertex(new_vtx_true);
         cout<<"child particle vertex corrected:"<<endl;
-        (child_part->GetVertex()).Print();
       }
 
       // TODO check that vertex actually set
