@@ -78,9 +78,7 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
     {
       cout<<"This is a D0 ================================================================"<<endl;
       (part->GetVertex()).Print();
-      cout<<endl;
       cout<<(part->GetVertex()).Mag()<<endl;
-      cout<<endl;
 
       TLorentzVector track_mom4_true = part->Get4Vector();
 
@@ -99,6 +97,7 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
 
       //set new vertex for D0 and all D0 children
       part->SetVertex(new_vtx_true);
+      (part->GetVertex()).Print();
 
       /*
       erhic::ParticleMC* child_part;
