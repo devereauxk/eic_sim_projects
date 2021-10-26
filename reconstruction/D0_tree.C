@@ -100,10 +100,10 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       (part->GetVertex()).Print();
 
       erhic::ParticleMC* child_part;
-      for (int ichild = -1; ichild <= part->GetNChildren(); ichild++)
+      for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
       {
         if (part->GetChild1Index() == 0) break;
-        child_part = py_evt->GetTrack(part->GetChild1Index() + ichild);
+        child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1);
         cout<<"supposed child particle. parent id: "<<child_part->GetParentId()<<" child id: "<<child_part->Id()<<" track index: "<<(part->GetChild1Index() + ichild)<<endl;
         child_part->SetVertex(new_vtx_true);
         cout<<"child particle vertex corrected"<<endl;
