@@ -32,7 +32,6 @@ const double PIMASS = 0.139570; // charged pi mass, unit GeV
 const double PMASS = 0.938272; // proton, unit GeV
 const double LIGHT_SPEED = 299792458; // unit m/s
 const double D0_MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} (seconds)
-const double D0_MASS = 1.86483; // \pm 0.00005 (GeV/c^2)
 
 using namespace std;
 
@@ -86,10 +85,9 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       TLorentzVector track_mom4_true = part->Get4Vector();
 
       //calculate new vertex coords
-      double_t velocity_mag = (sqrt(pow(track_mom4_true.Px(),2) + pow(track_mom4_true.Py(),2) + pow(track_mom4_true.Pz(),2)) / D0_MASS) * LIGHT_SPEED; // units of m/s
+      double_t elocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
       cout<<"velocity: "<<velocity_mag<<endl;
-      velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2))));
-      cout<<"velocity: "<<velocity_mag<<endl;
+      cout<<"MEAN_LIFE: "<<D0_MEAN_LIFE<<endl;
       func_D0_decay_length->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE, velocity_mag);  //gamma, MEAN_LIFE, velocity magnitude
       double_t decay_length = func_D0_decay_length->GetRandom();
       cout<<"new decay length: "<<decay_length<<endl;
