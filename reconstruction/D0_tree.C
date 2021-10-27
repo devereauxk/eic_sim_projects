@@ -33,6 +33,8 @@ const double PMASS = 0.938272; // proton, unit GeV
 const double LIGHT_SPEED = 299792458; // unit m/s
 const double D0_MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} (seconds)
 
+TH1D* D0_decay_length = TH1D("D0_decay_length","D0_decay_length",0.001,0,1.5);
+
 using namespace std;
 
 double dcaSigned(TVector3 const& p, TVector3 const& pos, TVector3 const& vertex)
@@ -87,6 +89,7 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       //cout<<"velocity: "<<velocity_mag<<endl;
       func_D0_decay_time->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE);  //gamma, D0_MEAN_LIFE
       double_t decay_length = (func_D0_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
+      D0_decay_length->Fill(decay_length);
       //cout<<"new decay length(mm): "<<decay_length<<endl;
       double_t decay_dir_phi = track_mom4_true.Phi();
       double_t decay_dir_theta = track_mom4_true.Theta();
@@ -97,7 +100,7 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
 
       //set new vertex for D0 and all D0 children
       part->SetVertex(new_vtx_true);
-      (part->GetVertex()).Print();
+      //(part->GetVertex()).Print();
 
       erhic::ParticleMC* child_part;
       for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
@@ -434,19 +437,9 @@ class D0_reco
 
       if (do_correct_D0_vertecies == 1) correct_D0_verticies(py_evt);
 
-      for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
-      {
-        erhic::ParticleMC* part = py_evt->GetTrack(ipart);
-        if (abs(part->Id()) == 421) {
-          cout<<"THIS IS A D0 ================================================="<<endl;
-          (part->GetVertex()).Print();
-          for (int ichild = 0; ichild < part->GetNChildren(); ichild++) {
-            erhic::ParticleMC* child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1);
-            cout<<"CHILD: "<<child_part->Id()<<endl;
-            (child_part->GetVertex()).Print();
-          }
-        }
-      }
+      TCanvas * c_all = new TCanvas("c_all", "c_all", 800, 800);
+      D0_decay_length->Draw("colz");
+      c_all->SaveAs("D0_decay_length_hist.pdf");
 
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
