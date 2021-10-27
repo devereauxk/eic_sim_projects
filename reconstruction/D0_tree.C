@@ -76,18 +76,18 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
 
     if(abs(part->Id()) == 421)
     {
-      cout<<"This is a D0 ================================================================"<<endl;
-      (part->GetVertex()).Print();
-      cout<<(part->GetVertex()).Mag()<<endl;
+      //cout<<"This is a D0 ================================================================"<<endl;
+      //(part->GetVertex()).Print();
+      //cout<<(part->GetVertex()).Mag()<<endl;
 
       TLorentzVector track_mom4_true = part->Get4Vector();
 
       //calculate new vertex coords
       double_t velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
-      cout<<"velocity: "<<velocity_mag<<endl;
+      //cout<<"velocity: "<<velocity_mag<<endl;
       func_D0_decay_time->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE);  //gamma, D0_MEAN_LIFE
       double_t decay_length = (func_D0_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
-      cout<<"new decay length(mm): "<<decay_length<<endl;
+      //cout<<"new decay length(mm): "<<decay_length<<endl;
       double_t decay_dir_phi = track_mom4_true.Phi();
       double_t decay_dir_theta = track_mom4_true.Theta();
 
@@ -102,14 +102,12 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       erhic::ParticleMC* child_part;
       for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
       {
-        if (part->GetChild1Index() == 0) break;
+        if (part->GetChild1Index() == 0) break; // breaks if part has no child particles
         child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1); // TODO why the -1 here?
-        cout<<"supposed child particle. parent id: "<<child_part->GetParentId()<<" child id: "<<child_part->Id()<<" track index: "<<(part->GetChild1Index() + ichild)<<endl;
+        //cout<<"supposed child particle. parent id: "<<child_part->GetParentId()<<" child id: "<<child_part->Id()<<" track index: "<<(part->GetChild1Index() + ichild)<<endl;
         child_part->SetVertex(new_vtx_true);
-        cout<<"child particle vertex corrected:"<<endl;
+        //cout<<"child particle vertex corrected:"<<endl;
       }
-
-      // TODO check that vertex actually set
     }
   }
 }
@@ -435,6 +433,20 @@ class D0_reco
       else return; // if incoming proton not found, skip the whole event
 
       if (do_correct_D0_vertecies == 1) correct_D0_verticies(py_evt);
+
+      for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
+      {
+        erhic::ParticleMC* part = py_evt->GetTrack(ipart);
+        if (abs(part->Id()) == 421) {
+          cout<<"THIS IS A D0 ================================================="<<endl;
+          (part->GetVertex()).Print();
+          for (int ichild = 0; ichild < part->GetNChildren(); ichild++) {
+            erhic::ParticleMC* child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1);
+            cout<<"CHILD: "<<child_part->Id()<<endl;
+            (child_part->GetVertex()).Print();
+          }
+        }
+      }
 
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
