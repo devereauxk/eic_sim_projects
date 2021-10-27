@@ -33,7 +33,7 @@ const double PMASS = 0.938272; // proton, unit GeV
 const double LIGHT_SPEED = 299792458; // unit m/s
 const double D0_MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} (seconds)
 
-TH1D* D0_decay_length = new TH1D("D0_decay_length","D0_decay_length",0.001,0,1.5);
+TH1D* D0_decay_length = new TH1D("D0_decay_length","D0_decay_length",50,0,1.5);
 
 using namespace std;
 
