@@ -437,10 +437,6 @@ class D0_reco
 
       if (do_correct_D0_vertecies == 1) correct_D0_verticies(py_evt);
 
-      TCanvas * c_all = new TCanvas("c_all", "c_all", 800, 800);
-      D0_decay_length->Draw("colz");
-      c_all->SaveAs("D0_decay_length_hist.pdf");
-
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
         erhic::ParticleMC* part = py_evt->GetTrack(ipart);
@@ -1700,6 +1696,10 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
     ana_Lc.FillSingleTracks(event);
     ana_Lc.FillLcTriplets();
   }
+
+  TCanvas * c_all = new TCanvas("c_all", "c_all", 800, 800);
+  D0_decay_length->Draw("colz");
+  c_all->SaveAs("D0_decay_length_hist.pdf");
 
   TFile* fout = new TFile(outFile,"recreate");
 
