@@ -1699,7 +1699,7 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
 
   TCanvas * c_all = new TCanvas("c_all", "c_all", 800, 800);
   D0_decay_length->Draw("colz");
-  c_all->SaveAs("D0_decay_length_hist.pdf");
+  c_all->SaveAs("D0_decay_length_hist_ep.pdf");
 
   TFile* fout = new TFile(outFile,"recreate");
 
