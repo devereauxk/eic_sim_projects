@@ -431,7 +431,7 @@ class D0_reco
 
     void SetNuTrue(double _nu_true) { nu_true = _nu_true; };
 
-    void SetDoCorrectVertex(int do) {do_correct_vertex = do; };
+    void SetDoCorrectVertex(int _do_correct) { do_correct_vertex = _do_correct; };
 
     void ClearTracks()
     {
@@ -1105,7 +1105,7 @@ class Lc_reco
 
     void SetNuTrue(double _nu_true) { nu_true = _nu_true; };
 
-    void SetDoCorrectVertex(int do) {do_correct_vertex = do; };
+    void SetDoCorrectVertex(int _do_correct) { do_correct_vertex = _do_correct; };
 
     void ClearTracks()
     {
