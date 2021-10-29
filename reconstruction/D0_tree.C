@@ -33,8 +33,6 @@ const double PMASS = 0.938272; // proton, unit GeV
 const double LIGHT_SPEED = 299792458; // unit m/s
 const double D0_MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} (seconds)
 
-TH1D* D0_decay_length = new TH1D("D0_decay_length","D0_decay_length",50,0,1.5);
-
 using namespace std;
 
 double dcaSigned(TVector3 const& p, TVector3 const& pos, TVector3 const& vertex)
@@ -89,7 +87,6 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       //cout<<"velocity: "<<velocity_mag<<endl;
       func_D0_decay_time->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE);  //gamma, D0_MEAN_LIFE
       double_t decay_length = (func_D0_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
-      D0_decay_length->Fill(decay_length);
       //cout<<"new decay length(mm): "<<decay_length<<endl;
       double_t decay_dir_phi = track_mom4_true.Phi();
       double_t decay_dir_theta = track_mom4_true.Theta();
@@ -98,19 +95,17 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       TVector3 new_vtx_true;
       new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
 
-      //set new vertex for D0 and all D0 children
-      part->SetVertex(new_vtx_true);
-      //(part->GetVertex()).Print();
-
+      //set new vertex for all D0 children
       erhic::ParticleMC* child_part;
       for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
       {
         if (part->GetChild1Index() == 0) break; // breaks if part has no child particles
-        child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1); // TODO why the -1 here?
+        child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1);
         //cout<<"supposed child particle. parent id: "<<child_part->GetParentId()<<" child id: "<<child_part->Id()<<" track index: "<<(part->GetChild1Index() + ichild)<<endl;
         child_part->SetVertex(new_vtx_true);
         //cout<<"child particle vertex corrected:"<<endl;
       }
+      // TODO confirm setting
     }
   }
 }
@@ -175,7 +170,7 @@ class D0_reco
     float D0_COSTHETA;
 
     // if D0 vertex issue needs to be corrected, 1 if yes, 0 if no
-    int do_correct_D0_vertecies;
+    int do_correct_vertex;
 
     // mass pair vs pt
     TH2D* fg2d_Kpimass_vs_p[chargebin][etabin]; // 0: K-pi+
@@ -211,7 +206,7 @@ class D0_reco
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
 
-      do_correct_D0_vertecies = 1; // corrects D0 verticies
+      do_correct_vertex = 0; // corrects D0 verticies
 
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
@@ -310,6 +305,8 @@ class D0_reco
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
 
+      do_correct_vertex = 0;
+
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
         for (int ieta = 0; ieta < etabin; ++ieta)
@@ -385,6 +382,8 @@ class D0_reco
 
     void SetNuTrue(double _nu_true) { nu_true = _nu_true; };
 
+    void SetDoCorrectVertex(int do) {do_correct_vertex = do; };
+
     void ClearTracks()
     {
       negl_p_true.clear();
@@ -435,7 +434,7 @@ class D0_reco
       }
       else return; // if incoming proton not found, skip the whole event
 
-      if (do_correct_D0_vertecies == 1) correct_D0_verticies(py_evt);
+      if (do_correct_vertex == 1) correct_D0_verticies(py_evt);
 
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
@@ -1608,11 +1607,12 @@ class Lc_reco
     }
 };
 
-void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0, const int DCA_cut = 1)
+void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0, const int DCA_cut = 1, const int do_correct_vertex = 0)
 { // smear_2nd_vtx & momentum: 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smearing
   // Bfield_type: 0--Barbar, 1--Beast
   // 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
-  //DCA_cut: 0--no cut, 1--cut on DCA
+  // DCA_cut: 0--no cut, 1--cut on DCA
+  // do_correct_vertex: 0--no correction applied, 1--D0 and Lc vertex decay length recalculated, modifications applied to input root files and data used in above analysis
 
   // PDG data table
   pdg = new TDatabasePDG();
@@ -1649,6 +1649,7 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
   ana_D0.SetIDCuts(PID_option);
   ana_D0.SetSmearType(smear_option);
   ana_D0.SetBFieldType(Bfield_type);
+  ana_D0.SetDoCorrectVertex(do_correct_vertex);
 
   Lc_reco ana_Lc;
   ana_Lc.SetDCACuts(DCA_cut);
@@ -1696,10 +1697,6 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
     ana_Lc.FillSingleTracks(event);
     ana_Lc.FillLcTriplets();
   }
-
-  TCanvas * c_all = new TCanvas("c_all", "c_all", 800, 800);
-  D0_decay_length->Draw("colz");
-  c_all->SaveAs("D0_decay_length_hist_ep.pdf");
 
   TFile* fout = new TFile(outFile,"recreate");
 
