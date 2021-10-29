@@ -77,9 +77,9 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
 
     if(abs(part->Id()) == 421)
     {
-      //cout<<"This is a D0 ================================================================"<<endl;
-      //(part->GetVertex()).Print();
-      //cout<<(part->GetVertex()).Mag()<<endl;
+      cout<<"This is a D0 ================================================================"<<endl;
+      (part->GetVertex()).Print();
+      cout<<(part->GetVertex()).Mag()<<endl;
 
       TLorentzVector track_mom4_true = part->Get4Vector();
 
