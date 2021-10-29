@@ -32,6 +32,7 @@ const double PIMASS = 0.139570; // charged pi mass, unit GeV
 const double PMASS = 0.938272; // proton, unit GeV
 const double LIGHT_SPEED = 299792458; // unit m/s
 const double D0_MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} (seconds)
+const double LC_MEAN_LIFE = 202.4E-15; // \pm 3.1 10^{-15} (seconds)
 
 using namespace std;
 
@@ -96,6 +97,54 @@ void correct_D0_verticies(erhic::EventPythia* py_evt)
       new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
 
       //set new vertex for all D0 children
+      erhic::ParticleMC* child_part;
+      for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
+      {
+        if (part->GetChild1Index() == 0) break; // breaks if part has no child particles
+        child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1);
+        //cout<<"supposed child particle. parent id: "<<child_part->GetParentId()<<" child id: "<<child_part->Id()<<" track index: "<<(part->GetChild1Index() + ichild)<<endl;
+        child_part->SetVertex(new_vtx_true);
+        //cout<<"child particle vertex corrected:"<<endl;
+      }
+      // TODO confirm setting
+    }
+  }
+}
+
+void correct_Lc_verticies(erhic::EventPythia* py_evt)
+{ // patches the D0 vertex issue where with BeAGLE, D0 verticies are much smaller than they should be. Manually generates random and apporpraite verticies. Modifies verticies for child particles as well
+
+  TF1* func_Lc_decay_time = new TF1("func_Lc_decay_length", "exp(-x/([0]*[1]))", 0, 1E-10); // output unitless, x units of 10^{-15} s
+  // [0] = gamma [unitless], [1] = MEAN_LIFE [seconds]
+
+  //changing Lc vertecies to patch zero vertex issue
+  for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
+  {
+
+    erhic::ParticleMC* part = py_evt->GetTrack(ipart);
+
+    if(abs(part->Id()) == 4122)
+    {
+      //cout<<"This is a Lc ================================================================"<<endl;
+      //(part->GetVertex()).Print();
+      //cout<<(part->GetVertex()).Mag()<<endl;
+
+      TLorentzVector track_mom4_true = part->Get4Vector();
+
+      //calculate new vertex coords
+      double_t velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
+      //cout<<"velocity: "<<velocity_mag<<endl;
+      func_Lc_decay_time->SetParameters(track_mom4_true.Gamma(), LC_MEAN_LIFE);  //gamma, LC_MEAN_LIFE
+      double_t decay_length = (func_Lc_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
+      //cout<<"new decay length(mm): "<<decay_length<<endl;
+      double_t decay_dir_phi = track_mom4_true.Phi();
+      double_t decay_dir_theta = track_mom4_true.Theta();
+
+      //make new vertex
+      TVector3 new_vtx_true;
+      new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
+
+      //set new vertex for all Lc children
       erhic::ParticleMC* child_part;
       for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
       {
@@ -851,6 +900,9 @@ class Lc_reco
     float Lc_DCA;
     float Lc_COSTHETA;
 
+    // if Lc vertex issue needs to be corrected, 1 if yes, 0 if no
+    int do_correct_vertex;
+
     // mass pair vs pt
     TH2D* fg2d_Kpipmass_vs_p[chargebin][etabin]; // 0: K-pi+
     TH2D* bg2d_Kpipmass_vs_p[chargebin][etabin]; // 0: K-pi+
@@ -883,6 +935,8 @@ class Lc_reco
       DECAY_L = -9999;
       Lc_DCA = -9999;
       Lc_COSTHETA = -9999;
+
+      do_correct_vertex = 0;
 
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
@@ -978,6 +1032,8 @@ class Lc_reco
       Lc_DCA = -9999;
       Lc_COSTHETA = -9999;
 
+      do_correct_vertex = 0;
+
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
         for (int ieta = 0; ieta < etabin; ++ieta)
@@ -1049,6 +1105,8 @@ class Lc_reco
 
     void SetNuTrue(double _nu_true) { nu_true = _nu_true; };
 
+    void SetDoCorrectVertex(int do) {do_correct_vertex = do; };
+
     void ClearTracks()
     {
       negl_p_true.clear();
@@ -1093,6 +1151,8 @@ class Lc_reco
         hadron_beam = proton->Get4Vector();
       }
       else return; // if incoming proton not found, skip the whole event
+
+      if (do_correct_vertex == 1) correct_Lc_verticies(py_evt);
 
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
@@ -1656,6 +1716,7 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
   ana_Lc.SetIDCuts(PID_option);
   ana_Lc.SetSmearType(smear_option);
   ana_Lc.SetBFieldType(Bfield_type);
+  ana_Lc.SetDoCorrectVertex(do_correct_vertex);
 
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
