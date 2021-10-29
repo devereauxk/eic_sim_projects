@@ -21,6 +21,7 @@ SMEAR_OPT=$3 # 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smeari
 BFIELD=$4 # 0--Barbar, 1--Beast
 ID_OPT=$5 # 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
 DCA=$6 # DCA_cut: 0--no cut, 1--cut on DCA
+DCA_PATCH=$7 # recalculated D0 verticies: 0--nea, 1--yea
 
 mkdir $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}
 
@@ -43,7 +44,7 @@ do
     then
       echo "File already exists"
     else
-      root -b -q 'D0_tree.C("'$file'","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT','$DCA')'
+      root -b -q 'D0_tree.C("'$file'","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT','$DCA','$DCA_PATCH')'
       echo "job done...move output file: ${hname}"
       mv $hname $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}
     fi
