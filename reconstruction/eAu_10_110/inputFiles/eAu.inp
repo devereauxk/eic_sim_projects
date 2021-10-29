@@ -23,7 +23,7 @@ OUTPUT           92
 * ---------------------
 *	     momentum of beam1||momentum of beam2
 *...+....1....+....2....+....3....+....4....+....5....+....6....+....7...
-MOMENTUM        10.0        100.0
+MOMENTUM        10.0        110.0
 *	decay of pi0  2/0  decay/not decayed
 PARDECAY           2
 *	treatment of diffractive events
