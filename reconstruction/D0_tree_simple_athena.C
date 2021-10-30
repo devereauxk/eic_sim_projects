@@ -30,14 +30,12 @@ const int verbosity = 1;
 const double KMASS = 0.493677; // charged K mass, unit GeV
 const double PIMASS = 0.139570; // charged pi mass, unit GeV
 const double PMASS = 0.938272; // proton, unit GeV
-const double LIGHT_SPEED = 299792458; // unit m/s
-const double D0_MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} (seconds)
-const double LC_MEAN_LIFE = 202.4E-15; // \pm 3.1 10^{-15} (seconds)
 
 using namespace std;
 
 double dcaSigned(TVector3 const& p, TVector3 const& pos, TVector3 const& vertex)
 { // calculate the signed DCA value
+  // NB: only use the transverse plane
   TVector3 posDiff = pos - vertex;
   float sign = posDiff.x() * p.y() - posDiff.y() * p.x() > 0 ? +1 : -1;
   return sign * p.Cross(posDiff.Cross(p)).Unit().Dot(posDiff);
@@ -61,102 +59,6 @@ int find_quark_origin(erhic::EventPythia* evt, erhic::ParticleMC* part)
   }
 
   return find_quark_origin(evt, parent);
-}
-
-void correct_D0_verticies(erhic::EventPythia* py_evt)
-{ // patches the D0 vertex issue where with BeAGLE, D0 verticies are much smaller than they should be. Manually generates random and apporpraite verticies. Modifies verticies for child particles as well
-
-  TF1* func_D0_decay_time = new TF1("func_D0_decay_length", "exp(-x/([0]*[1]))", 0, 1E-10); // output unitless, x units of 10^{-15} s
-  // [0] = gamma [unitless], [1] = MEAN_LIFE [seconds]
-
-  //changing D0 vertecies to patch zero vertex issue
-  for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
-  {
-
-    erhic::ParticleMC* part = py_evt->GetTrack(ipart);
-
-    if(abs(part->Id()) == 421)
-    {
-      cout<<"This is a D0 ================================================================"<<endl;
-      (part->GetVertex()).Print();
-      cout<<(part->GetVertex()).Mag()<<endl;
-
-      TLorentzVector track_mom4_true = part->Get4Vector();
-
-      //calculate new vertex coords
-      double_t velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
-      //cout<<"velocity: "<<velocity_mag<<endl;
-      func_D0_decay_time->SetParameters(track_mom4_true.Gamma(), D0_MEAN_LIFE);  //gamma, D0_MEAN_LIFE
-      double_t decay_length = (func_D0_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
-      //cout<<"new decay length(mm): "<<decay_length<<endl;
-      double_t decay_dir_phi = track_mom4_true.Phi();
-      double_t decay_dir_theta = track_mom4_true.Theta();
-
-      //make new vertex
-      TVector3 new_vtx_true;
-      new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
-
-      //set new vertex for all D0 children
-      erhic::ParticleMC* child_part;
-      for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
-      {
-        if (part->GetChild1Index() == 0) break; // breaks if part has no child particles
-        child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1);
-        //cout<<"supposed child particle. parent id: "<<child_part->GetParentId()<<" child id: "<<child_part->Id()<<" track index: "<<(part->GetChild1Index() + ichild)<<endl;
-        child_part->SetVertex(new_vtx_true);
-        //cout<<"child particle vertex corrected:"<<endl;
-      }
-      // TODO confirm setting
-    }
-  }
-}
-
-void correct_Lc_verticies(erhic::EventPythia* py_evt)
-{ // patches the D0 vertex issue where with BeAGLE, D0 verticies are much smaller than they should be. Manually generates random and apporpraite verticies. Modifies verticies for child particles as well
-
-  TF1* func_Lc_decay_time = new TF1("func_Lc_decay_length", "exp(-x/([0]*[1]))", 0, 1E-10); // output unitless, x units of 10^{-15} s
-  // [0] = gamma [unitless], [1] = MEAN_LIFE [seconds]
-
-  //changing Lc vertecies to patch zero vertex issue
-  for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
-  {
-
-    erhic::ParticleMC* part = py_evt->GetTrack(ipart);
-
-    if(abs(part->Id()) == 4122)
-    {
-      //cout<<"This is a Lc ================================================================"<<endl;
-      //(part->GetVertex()).Print();
-      //cout<<(part->GetVertex()).Mag()<<endl;
-
-      TLorentzVector track_mom4_true = part->Get4Vector();
-
-      //calculate new vertex coords
-      double_t velocity_mag = LIGHT_SPEED * (sqrt(1 - (1 / pow(track_mom4_true.Gamma(), 2)))); // units of m/s
-      //cout<<"velocity: "<<velocity_mag<<endl;
-      func_Lc_decay_time->SetParameters(track_mom4_true.Gamma(), LC_MEAN_LIFE);  //gamma, LC_MEAN_LIFE
-      double_t decay_length = (func_Lc_decay_time->GetRandom()) * velocity_mag * 1E3; // units of mm
-      //cout<<"new decay length(mm): "<<decay_length<<endl;
-      double_t decay_dir_phi = track_mom4_true.Phi();
-      double_t decay_dir_theta = track_mom4_true.Theta();
-
-      //make new vertex
-      TVector3 new_vtx_true;
-      new_vtx_true.SetMagThetaPhi(decay_length, decay_dir_theta, decay_dir_phi);
-
-      //set new vertex for all Lc children
-      erhic::ParticleMC* child_part;
-      for (int ichild = 0; ichild < part->GetNChildren(); ichild++)
-      {
-        if (part->GetChild1Index() == 0) break; // breaks if part has no child particles
-        child_part = py_evt->GetTrack(part->GetChild1Index() + ichild - 1);
-        //cout<<"supposed child particle. parent id: "<<child_part->GetParentId()<<" child id: "<<child_part->Id()<<" track index: "<<(part->GetChild1Index() + ichild)<<endl;
-        child_part->SetVertex(new_vtx_true);
-        //cout<<"child particle vertex corrected:"<<endl;
-      }
-      // TODO confirm setting
-    }
-  }
 }
 
 class D0_reco
@@ -218,9 +120,6 @@ class D0_reco
     float D0_DCA;
     float D0_COSTHETA;
 
-    // if D0 vertex issue needs to be corrected, 1 if yes, 0 if no
-    int do_correct_vertex;
-
     // mass pair vs pt
     TH2D* fg2d_Kpimass_vs_p[chargebin][etabin]; // 0: K-pi+
     TH2D* bg2d_Kpimass_vs_p[chargebin][etabin]; // 0: K-pi+
@@ -232,8 +131,8 @@ class D0_reco
     TH2D* h2d_K_D0_p_vs_eta[etabin][pptbin];
     TH2D* h2d_pi_D0_p_vs_eta[etabin][pptbin];
 
-    TH2D* h2d_D0_pt_vs_eta[Q2bin][xbin];
-    TH2D* h2d_D0_z_vs_eta[Q2bin][xbin];
+    TH2D* h2d_D0_pt_vs_eta_reco[Q2bin][xbin];
+    TH2D* h2d_D0_z_vs_eta_reco[Q2bin][xbin];
 
     TH2D* h2d_D0_pt_vs_eta_gen[Q2bin][xbin];
     TH2D* h2d_D0_z_vs_eta_gen[Q2bin][xbin];
@@ -257,8 +156,6 @@ class D0_reco
       DECAY_L = -9999;
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
-
-      do_correct_vertex = 0; // corrects D0 verticies
 
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
@@ -289,16 +186,15 @@ class D0_reco
         }
       }
 
-
       for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_D0_pt_vs_eta[iQ2][ix] = new TH2D(Form("h2d_D0_pt_vs_eta_%d_%d",iQ2,ix),"D0 pt vs eta",100,0,10,160,-4,4);
-          h2d_D0_pt_vs_eta[iQ2][ix]->Sumw2();
+          h2d_D0_pt_vs_eta_reco[iQ2][ix] = new TH2D(Form("h2d_D0_pt_vs_eta_reco_%d_%d",iQ2,ix),"D0 pt vs eta",100,0,10,160,-4,4);
+          h2d_D0_pt_vs_eta_reco[iQ2][ix]->Sumw2();
 
-          h2d_D0_z_vs_eta[iQ2][ix] = new TH2D(Form("h2d_D0_z_vs_eta_%d_%d",iQ2,ix),"D0 z vs eta",100,0,1,160,-4,4);
-          h2d_D0_z_vs_eta[iQ2][ix]->Sumw2();
+          h2d_D0_z_vs_eta_reco[iQ2][ix] = new TH2D(Form("h2d_D0_z_vs_eta_reco_%d_%d",iQ2,ix),"D0 z vs eta",100,0,1,160,-4,4);
+          h2d_D0_z_vs_eta_reco[iQ2][ix]->Sumw2();
 
           h2d_D0_pt_vs_eta_gen[iQ2][ix] = new TH2D(Form("h2d_D0_pt_vs_eta_gen_%d_%d",iQ2,ix),"D0 pt vs eta",100,0,10,160,-4,4);
           h2d_D0_pt_vs_eta_gen[iQ2][ix]->Sumw2();
@@ -338,8 +234,8 @@ class D0_reco
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          delete h2d_D0_pt_vs_eta[iQ2][ix];
-          delete h2d_D0_z_vs_eta[iQ2][ix];
+          delete h2d_D0_pt_vs_eta_reco[iQ2][ix];
+          delete h2d_D0_z_vs_eta_reco[iQ2][ix];
 
           delete h2d_D0_pt_vs_eta_gen[iQ2][ix];
           delete h2d_D0_z_vs_eta_gen[iQ2][ix];
@@ -366,8 +262,6 @@ class D0_reco
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
 
-      do_correct_vertex = 0;
-
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
         for (int ieta = 0; ieta < etabin; ++ieta)
@@ -393,8 +287,8 @@ class D0_reco
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_D0_pt_vs_eta[iQ2][ix]->Reset("ICESM");
-          h2d_D0_z_vs_eta[iQ2][ix]->Reset("ICESM");
+          h2d_D0_pt_vs_eta_reco[iQ2][ix]->Reset("ICESM");
+          h2d_D0_z_vs_eta_reco[iQ2][ix]->Reset("ICESM");
 
           h2d_D0_pt_vs_eta_gen[iQ2][ix]->Reset("ICESM");
           h2d_D0_z_vs_eta_gen[iQ2][ix]->Reset("ICESM");
@@ -406,30 +300,16 @@ class D0_reco
 
     void SetLowP(const float mom_thr) { TRK_P_LO = mom_thr; }
 
-    void SetDCACuts(const int set_t_f = 1)
+    void SetDCACuts()
     {
-      //if set_t_f == 1, sets default DCA cuts
-      //if set_t_f == 0, all dca cuts passed
-
       // single
-      TRK_DCA = -9999;
+      TRK_DCA = 0.03;
 
       // pair
-      PAIR_DCA = -9999; // 120um in unit of mm
-      DECAY_L = -9999;
-      D0_DCA = -9999;
-      D0_COSTHETA = -9999;
-
-      if (set_t_f == 1){
-        // single
-        TRK_DCA = 0.03; // in units of mm
-
-        // pair
-        PAIR_DCA = 0.12; // 120um in unit of mm
-        DECAY_L = 0.04;
-        D0_DCA = 0.01;
-        D0_COSTHETA = 0.98;
-      }
+      PAIR_DCA = 0.12; // 120um in unit of mm
+      DECAY_L = 0.04;
+      D0_DCA = 0.01;
+      D0_COSTHETA = 0.98;
     }
 
     void SetIDCuts(const int id_opt) { ID_OPTION = id_opt; }
@@ -445,8 +325,6 @@ class D0_reco
     void SetXTrue(double _x_true) { x_true = _x_true; }
 
     void SetNuTrue(double _nu_true) { nu_true = _nu_true; };
-
-    void SetDoCorrectVertex(int _do_correct) { do_correct_vertex = _do_correct; };
 
     void ClearTracks()
     {
@@ -533,8 +411,6 @@ class D0_reco
       }
       else return; // if incoming proton not found, skip the whole event
 
-      if (do_correct_vertex == 1) correct_D0_verticies(py_evt);
-
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
         erhic::ParticleMC* part = py_evt->GetTrack(ipart);
@@ -597,7 +473,6 @@ class D0_reco
           passing_eside_dRICH(track_mom4_reco,track_binary_id);
         }
         if (verbosity>2) cout << "track_binary_id " <<track_binary_id.to_ulong() << endl;
-
 
         //==============================================================================
         //    Assumption: Cherekov detectors (mass ordering, no mu/pi separation)
@@ -719,8 +594,6 @@ class D0_reco
 
       double frag_z = hadron_beam.Dot(pair)/(nu_true*hadron_beam.M());  // z= Pp/Pq where Pq=nuM
 
-      cout<<"D0 pt "<<pair.Pt()<<" eta "<<pair.PseudoRapidity()<<endl;
-
       fg2d_Kpimass_vs_p[charge_type][ietabin]->Fill(pair.M(),pair.Pt());
       fg2d_Kpimass_vs_p[2][ietabin]->Fill(pair.M(),pair.Pt());
       fg2d_Kpimass_vs_z[charge_type][ietabin]->Fill(pair.M(),frag_z);
@@ -765,8 +638,8 @@ class D0_reco
 
         if (iQ2bin>=0 && ixbin>=0)
         {
-          h2d_D0_pt_vs_eta[iQ2bin][ixbin]->Fill(pair.Pt(),pair.PseudoRapidity());
-          h2d_D0_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,pair.PseudoRapidity());
+          h2d_D0_pt_vs_eta_reco[iQ2bin][ixbin]->Fill(pair.Pt(),pair.PseudoRapidity());
+          h2d_D0_z_vs_eta_reco[iQ2bin][ixbin]->Fill(frag_z,pair.PseudoRapidity());
         }
 
         h2d_ztheo_vs_zjet->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
@@ -782,23 +655,22 @@ class D0_reco
           //==========================
           //    decay topology cut
           //==========================
-          // if statements are opposite from comments.
           // pair DCA < cut value
           TVector3 dca_pair = negl_vtx_reco[ineg]-posl_vtx_reco[ipos];
           if (PAIR_DCA>-99 && dca_pair.Mag()>PAIR_DCA) continue;
 
           // Decay length > cut value
           TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos])*0.5-evt_vtx_reco;
-          if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue; //eA commented out
+          if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
 
           // D0 DCA > cut value
           TVector3 D0_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos].Vect();
           double D0_dca = dcaSigned(D0_vec, decay_l, evt_vtx_reco);
-          if (D0_DCA>-99 && fabs(D0_dca)<D0_DCA) continue; //eA commented out
+          if (D0_DCA>-99 && fabs(D0_dca)<D0_DCA) continue;
 
           // D0 cos(theta) > cut value
           double D0_costheta = TMath::Cos(D0_vec.Angle(decay_l));
-          if (D0_COSTHETA>-99 && D0_costheta<D0_COSTHETA) continue;
+          if (D0_COSTHETA>-99 && D0_costheta<D0_costheta) continue;
 
           if (ID_OPTION==-1)
           { // no hID (but with eID)
@@ -886,8 +758,8 @@ class D0_reco
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_D0_pt_vs_eta[iQ2][ix]->Write();
-          h2d_D0_z_vs_eta[iQ2][ix]->Write();
+          h2d_D0_pt_vs_eta_reco[iQ2][ix]->Write();
+          h2d_D0_z_vs_eta_reco[iQ2][ix]->Write();
 
           h2d_D0_pt_vs_eta_gen[iQ2][ix]->Write();
           h2d_D0_z_vs_eta_gen[iQ2][ix]->Write();
@@ -958,9 +830,6 @@ class Lc_reco
     float Lc_DCA;
     float Lc_COSTHETA;
 
-    // if Lc vertex issue needs to be corrected, 1 if yes, 0 if no
-    int do_correct_vertex;
-
     // mass pair vs pt
     TH2D* fg2d_Kpipmass_vs_p[chargebin][etabin]; // 0: K-pi+
     TH2D* bg2d_Kpipmass_vs_p[chargebin][etabin]; // 0: K-pi+
@@ -973,8 +842,8 @@ class Lc_reco
     TH2D* h2d_pi_Lc_p_vs_eta[etabin][pptbin];
     TH2D* h2d_p_Lc_p_vs_eta[etabin][pptbin];
 
-    TH2D* h2d_Lc_pt_vs_eta[Q2bin][xbin];
-    TH2D* h2d_Lc_z_vs_eta[Q2bin][xbin];
+    TH2D* h2d_Lc_pt_vs_eta_reco[Q2bin][xbin];
+    TH2D* h2d_Lc_z_vs_eta_reco[Q2bin][xbin];
 
     TH2D* h2d_Lc_pt_vs_eta_gen[Q2bin][xbin];
     TH2D* h2d_Lc_z_vs_eta_gen[Q2bin][xbin];
@@ -996,8 +865,6 @@ class Lc_reco
       DECAY_L = -9999;
       Lc_DCA = -9999;
       Lc_COSTHETA = -9999;
-
-      do_correct_vertex = 0;
 
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
@@ -1034,11 +901,11 @@ class Lc_reco
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_Lc_pt_vs_eta[iQ2][ix] = new TH2D(Form("h2d_Lc_pt_vs_eta_%d_%d",iQ2,ix),"Lc pt vs eta",100,0,10,160,-4,4);
-          h2d_Lc_pt_vs_eta[iQ2][ix]->Sumw2();
+          h2d_Lc_pt_vs_eta_reco[iQ2][ix] = new TH2D(Form("h2d_Lc_pt_vs_eta_reco_%d_%d",iQ2,ix),"Lc pt vs eta",100,0,10,160,-4,4);
+          h2d_Lc_pt_vs_eta_reco[iQ2][ix]->Sumw2();
 
-          h2d_Lc_z_vs_eta[iQ2][ix] = new TH2D(Form("h2d_Lc_z_vs_eta_%d_%d",iQ2,ix),"Lc pt vs eta",100,0,1,160,-4,4);
-          h2d_Lc_z_vs_eta[iQ2][ix]->Sumw2();
+          h2d_Lc_z_vs_eta_reco[iQ2][ix] = new TH2D(Form("h2d_Lc_z_vs_eta_reco_%d_%d",iQ2,ix),"Lc pt vs eta",100,0,1,160,-4,4);
+          h2d_Lc_z_vs_eta_reco[iQ2][ix]->Sumw2();
 
           h2d_Lc_pt_vs_eta_gen[iQ2][ix] = new TH2D(Form("h2d_Lc_pt_vs_eta_gen_%d_%d",iQ2,ix),"Lc pt vs eta",100,0,10,160,-4,4);
           h2d_Lc_pt_vs_eta_gen[iQ2][ix]->Sumw2();
@@ -1076,8 +943,8 @@ class Lc_reco
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          delete h2d_Lc_pt_vs_eta[iQ2][ix];
-          delete h2d_Lc_z_vs_eta[iQ2][ix];
+          delete h2d_Lc_pt_vs_eta_reco[iQ2][ix];
+          delete h2d_Lc_z_vs_eta_reco[iQ2][ix];
 
           delete h2d_Lc_pt_vs_eta_gen[iQ2][ix];
           delete h2d_Lc_z_vs_eta_gen[iQ2][ix];
@@ -1102,8 +969,6 @@ class Lc_reco
       Lc_DCA = -9999;
       Lc_COSTHETA = -9999;
 
-      do_correct_vertex = 0;
-
       for (int icharge = 0; icharge < chargebin; ++icharge)
       {
         for (int ieta = 0; ieta < etabin; ++ieta)
@@ -1127,8 +992,8 @@ class Lc_reco
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_Lc_pt_vs_eta[iQ2][ix]->Reset("ICESM");
-          h2d_Lc_z_vs_eta[iQ2][ix]->Reset("ICESM");
+          h2d_Lc_pt_vs_eta_reco[iQ2][ix]->Reset("ICESM");
+          h2d_Lc_z_vs_eta_reco[iQ2][ix]->Reset("ICESM");
 
           h2d_Lc_pt_vs_eta_gen[iQ2][ix]->Reset("ICESM");
           h2d_Lc_z_vs_eta_gen[iQ2][ix]->Reset("ICESM");
@@ -1138,30 +1003,16 @@ class Lc_reco
 
     void SetLowP(const float mom_thr) { TRK_P_LO = mom_thr; }
 
-    void SetDCACuts(const int set_t_f = 1)
+    void SetDCACuts()
     {
-      //if set_t_f == 1, sets default DCA cuts
-      //if set_t_f == 0, all dca cuts passed
-
       // single
-      TRK_DCA = -9999; // by default no cut
+      TRK_DCA = -9999;
 
       // pair
-      PAIR_DCA = -9999; // 300um in unit of mm
-      DECAY_L = -9999;
-      Lc_DCA = -9999;
+      PAIR_DCA = 0.3; // 300um in unit of mm
+      DECAY_L = 0.01;
+      Lc_DCA = 0.15;
       Lc_COSTHETA = -9999;
-
-      if (set_t_f == 1){
-        // single
-        TRK_DCA = -9999; // by default no cut
-
-        // pair
-        PAIR_DCA = 0.3; // 300um in unit of mm
-        DECAY_L = 0.01;
-        Lc_DCA = 0.15;
-        Lc_COSTHETA = -9999;
-      }
     }
 
     void SetIDCuts(const int id_opt) { ID_OPTION = id_opt; }
@@ -1177,8 +1028,6 @@ class Lc_reco
     void SetXTrue(double _x_true) { x_true = _x_true; }
 
     void SetNuTrue(double _nu_true) { nu_true = _nu_true; };
-
-    void SetDoCorrectVertex(int _do_correct) { do_correct_vertex = _do_correct; };
 
     void ClearTracks()
     {
@@ -1256,8 +1105,6 @@ class Lc_reco
         hadron_beam = proton->Get4Vector();
       }
       else return; // if incoming proton not found, skip the whole event
-
-      if (do_correct_vertex == 1) correct_Lc_verticies(py_evt);
 
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
@@ -1528,7 +1375,7 @@ class Lc_reco
         {
           if (trip.Pt()>=ppt_lo[ipt] && trip.Pt()<ppt_hi[ipt])
           {
-            cout<<"Lc pt "<<trip.Pt()<<" eta "<<trip.PseudoRapidity()<<endl;
+            if (verbosity>1) cout<<"Lc pt "<<trip.Pt()<<" eta "<<trip.PseudoRapidity()<<endl;
             h2d_K_Lc_p_vs_eta[ietabin][ipt]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
             h2d_pi_Lc_p_vs_eta[ietabin][ipt]->Fill(pion_p.P(),pion_p.PseudoRapidity());
             h2d_p_Lc_p_vs_eta[ietabin][ipt]->Fill(proton_p.P(),proton_p.PseudoRapidity());
@@ -1548,8 +1395,8 @@ class Lc_reco
 
         if (iQ2bin>=0 && ixbin>=0)
         {
-          h2d_Lc_pt_vs_eta[iQ2bin][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
-          h2d_Lc_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,trip.PseudoRapidity());
+          h2d_Lc_pt_vs_eta_reco[iQ2bin][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
+          h2d_Lc_z_vs_eta_reco[iQ2bin][ixbin]->Fill(frag_z,trip.PseudoRapidity());
 
           h2d_Lc_pt_vs_eta_gen[iQ2bin][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
           h2d_Lc_z_vs_eta_gen[iQ2bin][ixbin]->Fill(frag_z,trip.PseudoRapidity());
@@ -1577,16 +1424,16 @@ class Lc_reco
 
             // Decay length > cut value
             TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos1]+posl_vtx_reco[ipos2])*(1./3)-evt_vtx_reco;
-            if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue; //commented for eA
+            if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
 
             // Lc DCA > cut value
             TVector3 Lc_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos1].Vect()+posl_p_reco[ipos2].Vect();
             double Lc_dca = dcaSigned(Lc_vec, decay_l, evt_vtx_reco);
-            if (Lc_DCA>-99 && fabs(Lc_dca)<Lc_DCA) continue;
+            if (Lc_DCA>-99 && fabs(Lc_dca)>Lc_DCA) continue;
 
             // Lc cos(theta) > cut value
             double Lc_costheta = TMath::Cos(Lc_vec.Angle(decay_l));
-            if (Lc_COSTHETA>-99 && Lc_costheta<Lc_COSTHETA) continue;
+            if (Lc_COSTHETA>-99 && Lc_costheta<Lc_costheta) continue;
 
             if (ID_OPTION==-1)
             { // no hID (but with eID)
@@ -1773,8 +1620,8 @@ class Lc_reco
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_Lc_pt_vs_eta[iQ2][ix]->Write();
-          h2d_Lc_z_vs_eta[iQ2][ix]->Write();
+          h2d_Lc_pt_vs_eta_reco[iQ2][ix]->Write();
+          h2d_Lc_z_vs_eta_reco[iQ2][ix]->Write();
 
           h2d_Lc_pt_vs_eta_gen[iQ2][ix]->Write();
           h2d_Lc_z_vs_eta_gen[iQ2][ix]->Write();
@@ -1783,36 +1630,30 @@ class Lc_reco
     }
 };
 
-void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0, const int DCA_cut = 1, const int do_correct_vertex = 0)
+void D0_tree_simple(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0)
 { // smear_2nd_vtx & momentum: 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smearing, 4--ATHENA smearing
   // Bfield_type: 0--Barbar, 1--Beast
   // 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
-  // DCA_cut: 0--no cut, 1--cut on DCA
-  // do_correct_vertex: 0--no correction applied, 1--D0 and Lc vertex decay length recalculated, modifications applied to input root files and data used in above analysis
 
   // PDG data table
   pdg = new TDatabasePDG();
 
-  //Event Class
+  // Event Class
   erhic::EventPythia *event(NULL); //Note that I use Pointer
 
-  //Particle Class
+  // Particle Class
   erhic::ParticleMC *particle(NULL); //Also use Pointer
 
-  // erhic::ParticleMC *child(NULL);
-
-  //Load ROOT File
-  //TFile *f = new TFile("../pythia/outfiles/ep_10_100_norad_def.root"); //Not created by eic or jlab version
   TFile *f = new TFile(inFile);
 
-  //Get EICTree Tree
+  // Get EICTree Tree
   TTree *tree = (TTree*)f->Get("EICTree");
 
   Int_t nEntries = tree->GetEntries();
   cout<<"-------------------------------"<<endl;
   cout<<"Total Number of Events = "<<nEntries<<endl<<endl;
 
-  //Access event Branch
+  // Access event Branch
   tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
   // ATHENA smeaing
@@ -1831,18 +1672,17 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
 
   D0_reco ana_D0;
   ana_D0.SetLowP(0.1);
-  ana_D0.SetDCACuts(DCA_cut);
+  ana_D0.SetDCACuts();
   ana_D0.SetIDCuts(PID_option);
   ana_D0.SetSmearType(smear_option);
   ana_D0.SetBFieldType(Bfield_type);
-  ana_D0.SetDoCorrectVertex(do_correct_vertex);
 
   Lc_reco ana_Lc;
-  ana_Lc.SetDCACuts(DCA_cut);
+  ana_Lc.SetLowP(0.1);
+  ana_Lc.SetDCACuts();
   ana_Lc.SetIDCuts(PID_option);
   ana_Lc.SetSmearType(smear_option);
   ana_Lc.SetBFieldType(Bfield_type);
-  ana_Lc.SetDoCorrectVertex(do_correct_vertex);
 
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
@@ -1892,8 +1732,8 @@ void D0_tree(const char* inFile = "ep_allQ2.20x100.small.root", const char* outF
     ana_D0.FillSingleTracks(event);
     ana_D0.FillD0Pairs();
 
-    ana_Lc.SetVectTrue(evt_vtx_true);
-    ana_Lc.SetVectReco(evt_vtx_reco); // NB: no smear on primary vertex yet
+    ana_Lc.SetVectTrue(evt_vtx);
+    ana_Lc.SetVectReco(evt_vtx); // NB: no smear on primary vertex yet
 
     ana_Lc.SetQ2True(event->GetQ2());
     ana_Lc.SetXTrue(event->GetX());
