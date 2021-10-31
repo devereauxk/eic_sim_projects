@@ -1,176 +1,3 @@
-// ATHENA single track smearing
-const int NETA_MAX = 500;
-TH1F* Res_Handler = NULL;
-TGraph *gmom_res[NETA_MAX];
-TGraph *gdca_rphi_res[NETA_MAX];
-TGraph *gdca_z_res[NETA_MAX];
-// ATHENA primary vertex smearing
-TH1F* VertexRes_X = NULL;
-TH1F* VertexRes_Y = NULL;
-TH1F* VertexRes_Z = NULL;
-
-void setup_ATHENA_single_track_smearing(TFile* fin)
-{
-  cout << "Current max eta bin is " << NETA_MAX << ", adjust it inside fastsim.h when neccesary" << endl;
-
-  if (!fin)
-  {
-    cout << "Cannot find the ATHENA setup file, abort..." << endl;
-    exit(0);
-  }
-
-  Res_Handler = (TH1F*)fin->Get("Res_Handler");
-  if (!Res_Handler)
-  {
-    cout << "No Res_Handler found, abort..." << endl;
-    exit(0);
-  }
-
-  for(int ibin = 0; ibin < Res_Handler->GetNbinsX(); ibin++)
-  {
-    gmom_res[ibin] = (TGraph*)fin->Get(Form("gmom_res_%i",ibin));
-    gdca_rphi_res[ibin] = (TGraph*)fin->Get(Form("gdca_rphi_res_%i",ibin));
-    gdca_z_res[ibin] = (TGraph*)fin->Get(Form("gdca_z_res_%i",ibin));
-  }
-}
-
-void setup_ATHENA_PV_smearing(TFile* fin)
-{
-  if (!fin)
-  {
-    cout << "Cannot find the ATHENA setup file, abort..." << endl;
-    exit(0);
-  }
-
-  VertexRes_X = (TH1F*)fin->Get("VertexRes_X");
-  VertexRes_Y = (TH1F*)fin->Get("VertexRes_Y");
-  VertexRes_Z = (TH1F*)fin->Get("VertexRes_Z");
-}
-
-TVector3 smearPVTATHENA(TVector3 const& vtx, const float multi_35 = 3.6)
-{ // smear primary vertex in transverse plane
-  // multi_35 is the charged track multiplicity in |eta| < 3.5
-  if (!VertexRes_X || !VertexRes_Y)
-  {
-    cout << "No PV smearing input found, abort..." << endl;
-    exit(0);
-  }
-
-  TVector3 sVtx(-9999,-9999,vtx.Z());
-  if (multi_35<2)
-  {
-    cout << "Event with too low multiplicty (<2), no primary vertex reconstructed" << endl;
-    return sVtx;
-  } 
-
-  // NB: parameterization only goes up to multi ~ 20. Since it's relatively flat at higher multiplicty, for now we just use the multi==20 resolution for multi>20
-  if (multi_35>20) multi_35 = 20;
-
-  float rand_x = VertexRes_X->GetBinContent( VertexRes_X->FindBin(multi_35) ); // in unit of um
-  float rand_y = VertexRes_Y->GetBinContent( VertexRes_Y->FindBin(multi_35) );
-  rand_x /= 1E3; // convert from um to mm
-  rand_y /= 1E3;
-
-  sVtx.SetX(vtx.X() + rand_x);
-  sVtx.SetY(vtx.Y() + rand_y);
-
-  return sVtx;
-}
-
-TVector3 smearPVZATHENA(TVector3 const& vtx, const float multi_10 = 1.8)
-{ // smear primary vertex in longitudinal direction
-  // multi_10 is the charged track multiplicity in |eta| < 1.0
-  if (!VertexRes_Z)
-  {
-    cout << "No PV smearing input found, abort..." << endl;
-    exit(0);
-  }
-
-  TVector3 sVtx(vtx.X(),vtx.Y(),-9999);
-  if (multi_10<2)
-  {
-    cout << "Event with too low multiplicty (<2), no primary vertex reconstructed" << endl;
-    return sVtx;
-  }
-
-  // NB: parameterization only goes up to multi ~ 20. Since it's relatively flat at higher multiplicty, for now we just use the multi==20 resolution for multi>20
-  if (multi_10>20) multi_10 = 20;
-
-  float rand_z = VertexRes_Z->GetBinContent( VertexRes_Z->FindBin(multi_10) ); // in unit of um
-  rand_z /= 1E3; // convert um to mm
-
-  sVtx.SetZ(vtx.Z() + rand_z);
-
-  return sVtx;
-}
-
-bool passTrackingATHENA(double p, double eta)
-{
-  if (fabs(eta)>3.5) return false;
-  if (p<0.5) return false;
-  if (p>100) return false; // NB: just because the current parameterization goes up to 100
-  return true;
-}
-
-TLorentzVector smearMomATHENA(TLorentzVector const& mom4)
-{ // takes true 4-momentum mom4 as input, return smeared 4-momentum sMom4
-  TLorentzVector sMom4;
-  sMom4.SetXYZM(-9999,-9999,-9999,0);
-
-  int smear_graph_bin = Res_Handler->FindBin(mom4->PseudoRapidity());
-  if (smear_graph_bin<1) return sMom4; // if not valid bin
-  if (!gmom_res[smear_graph_bin-1]) return sMom4; // if no smearing parameter found
-
-  float const pt = mom4.Perp();
-  float const p = mom4.P();
-  float const eta = mom4.PseudoRapidity();
-
-  if (!passTrackingATHENA(p,eta)) return sMom4; // if track not in acceptance
-
-  float rel_p_reso = gmom_res[smear_graph_bin-1]->Eval(p); // in unit of 1
-  float p_reso = p*rel_p_reso;
-
-  sP = gRandom->Gaus(p,p_reso);
-  sPt = sP*TMath::Sin(mom4.Theta());
-
-  sMom->SetXYZM(sPt * cos(mom4.Phi()), sPt * sin(mom4.Phi()), sPt * sinh(eta), mom4.M());
-  return sMom; 
-}
-
-TVector3 smearPosATHENA(TVector3 const& mom, TVector3 const& pos)
-{ // takes true mom and vertex position vector as input, return smeared vertex position sPos
-  TVector3 sPos(-9999,-9999,-9999);
-
-  int smear_graph_bin = Res_Handler->FindBin(mom4->PseudoRapidity());
-  if (smear_graph_bin<1) return sPos; // if not valid bin
-  if (!gdca_rphi_res[smear_graph_bin-1]) return sPos; // if no smearing parameter found
-  if (!gdca_z_res[smear_graph_bin-1]) return sPos; // if no smearing parameter found
-
-  float const pt = mom.Perp();
-  float const p = mom.Mag();
-  float const eta =  TMath::ATanH(mom.Pz()/mom.Mag());//Doing it this way to suppress TVector3 warnings; depends on any pre-cuts
-
-  if (!passTrackingATHENA(p,eta)) return sPos;
-
-  // resolutions are in microns, need in mm
-  float dca_rphi_reso = gdca_rphi_res[smear_graph_bin-1]->Eval(p); // in unit of um
-  float dca_z_reso = gdca_z_res[smear_graph_bin-1]->Eval(p); // in unit of um
-  dca_rphi_reso /= 1E3; // convert to mm
-  dca_z_reso /= 1E3;
-
-  float rand_xy = gRandom->Gaus(0,dca_rphi_reso);
-  float rand_z = gRandom->Gaus(0,dca_z_reso);
-
-  // calculate new vertex position in transverse plane
-  sPos.SetXYZ(pos.X(),pos.Y(),0);
-  TVector3 momPerp(-mom.Y(), mom.X(), 0.0);
-  sPos -= momPerp.Unit() * rand_xy;
-
-  // add back the z dimension
-  sPos.SetZ(pos.Z() + rand_z);
-  return sPos;
-}
-
 TLorentzVector smearMomDM(TLorentzVector const& mom4, const int Bfield_type = 0)
 { // smear magnitude only
   // B field type 0 -- Barbar, 1 -- Beast
@@ -238,8 +65,8 @@ TVector3 smearPosDM(TVector3 const& mom, TVector3 const& pos)
     if (fabs(eta)>=pos_reso_etalo[ieta] && fabs(eta)<pos_reso_etahi[ieta]) ietabin = ieta;
   }
 
-  TVector3 sPos(-9999,-9999,-9999);
-  if (ietabin<0) return sPos; // if outside eta range
+  TVector3 newPos(-9999,-9999,-9999);
+  if (ietabin<0) return newPos; // if outside eta range
 
   // sigma_posxy = A/pT + B (unit um)
   const double Axy[pos_reso_etabin] = {30, 40, 60};
@@ -255,11 +82,11 @@ TVector3 smearPosDM(TVector3 const& mom, TVector3 const& pos)
   if (fabs(eta)<=1) sigmaPosZ = gRandom->Gaus(0, sqrt(30.*30./pt/pt+5.*5.)*1E-3);
   else sigmaPosZ = sigmaPosXY/sin(mom.Theta());
 
-  sPos.SetXYZ(pos.X(),pos.Y(),0);
+  newPos.SetXYZ(pos.X(),pos.Y(),0);
   TVector3 momPerp(-mom.Y(), mom.X(), 0.0);
-  sPos -= momPerp.Unit() * sigmaPosXY;
+  newPos -= momPerp.Unit() * sigmaPosXY;
 
-  return TVector3(sPos.X(), sPos.Y(), pos.Z() + sigmaPosZ);
+  return TVector3(newPos.X(), newPos.Y(), pos.Z() + sigmaPosZ);
 }
 
 TLorentzVector smearMomLBL(TLorentzVector const& mom4, const int Bfield_type = 0)
@@ -331,8 +158,8 @@ TVector3 smearPosLBL(TVector3 const& mom, TVector3 const& pos)
     if (fabs(eta)>=pos_reso_etalo[ieta] && fabs(eta)<pos_reso_etahi[ieta]) ietabin = ieta;
   }
 
-  TVector3 sPos(-9999,-9999,-9999);
-  if (ietabin<0) return sPos; // if outside eta range
+  TVector3 newPos(-9999,-9999,-9999);
+  if (ietabin<0) return newPos; // if outside eta range
 
   // sigma_posxy = A/pT + B (unit um)
   const double Axy[pos_reso_etabin] = {26, 31, 35, 41, 48, 59, 66, 69};
@@ -345,13 +172,13 @@ TVector3 smearPosLBL(TVector3 const& mom, TVector3 const& pos)
   sigmaPosXY=gRandom->Gaus(0, sqrt(Axy[ietabin]*Axy[ietabin]/pt/pt+Bxy[ietabin]*Bxy[ietabin])*1E-3);
   sigmaPosZ = sigmaPosXY/sin(mom.Theta()); // consistent with the parameters for posz
 
-  sPos.SetXYZ(pos.X(),pos.Y(),0);
+  newPos.SetXYZ(pos.X(),pos.Y(),0);
   TVector3 momPerp(-mom.Y(), mom.X(), 0.0);
-  sPos -= momPerp.Unit() * sigmaPosXY;
+  newPos -= momPerp.Unit() * sigmaPosXY;
 
-  sPos.SetXYZ(sPos.X(), sPos.Y(), pos.Z() + sigmaPosZ);
+  newPos.SetXYZ(newPos.X(), newPos.Y(), pos.Z() + sigmaPosZ);
 
-  return sPos;
+  return newPos;
 }
 
 TLorentzVector smearMomHybrid(TLorentzVector const& mom4, const int Bfield_type = 0)
@@ -441,8 +268,8 @@ TVector3 smearPosHybrid(TVector3 const& mom, TVector3 const& pos)
     if (fabs(eta)>=pos_reso_etalo[ieta] && fabs(eta)<pos_reso_etahi[ieta]) ietabin = ieta;
   }
 
-  TVector3 sPos(-9999,-9999,-9999);
-  if (ietabin<0) return sPos; // if outside eta range
+  TVector3 newPos(-9999,-9999,-9999);
+  if (ietabin<0) return newPos; // if outside eta range
 
   // sigma_posxy = A/pT + B (unit um)
   const double Axy[pos_reso_etabin] = {14.1, 23.3, 49.3};
@@ -455,13 +282,13 @@ TVector3 smearPosHybrid(TVector3 const& mom, TVector3 const& pos)
   sigmaPosXY=gRandom->Gaus(0, sqrt(Axy[ietabin]*Axy[ietabin]/pt/pt+Bxy[ietabin]*Bxy[ietabin])*1E-3);
   sigmaPosZ = sigmaPosXY/sin(mom.Theta()); // consistent with the parameters for posz
 
-  sPos.SetXYZ(pos.X(),pos.Y(),0);
+  newPos.SetXYZ(pos.X(),pos.Y(),0);
   TVector3 momPerp(-mom.Y(), mom.X(), 0.0);
-  sPos -= momPerp.Unit() * sigmaPosXY;
+  newPos -= momPerp.Unit() * sigmaPosXY;
 
-  sPos.SetXYZ(sPos.X(), sPos.Y(), pos.Z() + sigmaPosZ);
+  newPos.SetXYZ(newPos.X(), newPos.Y(), pos.Z() + sigmaPosZ);
 
-  return sPos;
+  return newPos;
 }
 
 void passing_DIRC(TLorentzVector const& mom4, bitset<4>& binary_id, const float Bfield_type = 0, const float R_in = 0.9)
