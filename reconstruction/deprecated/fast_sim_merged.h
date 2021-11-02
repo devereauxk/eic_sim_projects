@@ -47,7 +47,7 @@ void setup_ATHENA_PV_smearing(TFile* fin)
   VertexRes_Z = (TH1F*)fin->Get("VertexRes_Z");
 }
 
-TVector3 smearPVTATHENA(TVector3 const& vtx, float multi_35)
+TVector3 smearPVTATHENA(TVector3 const& vtx, const float multi_35 = 3.6)
 { // smear primary vertex in transverse plane
   // multi_35 is the charged track multiplicity in |eta| < 3.5
   if (!VertexRes_X || !VertexRes_Y)
@@ -59,7 +59,7 @@ TVector3 smearPVTATHENA(TVector3 const& vtx, float multi_35)
   TVector3 sVtx(-9999,-9999,vtx.Z());
   if (multi_35<2)
   {
-    // cout << "Event with too low multiplicty (<2), no primary vertex reconstructed" << endl;
+    cout << "Event with too low multiplicty (<2), no primary vertex reconstructed" << endl;
     return sVtx;
   } 
 
@@ -68,7 +68,6 @@ TVector3 smearPVTATHENA(TVector3 const& vtx, float multi_35)
 
   float rand_x = VertexRes_X->GetBinContent( VertexRes_X->FindBin(multi_35) ); // in unit of um
   float rand_y = VertexRes_Y->GetBinContent( VertexRes_Y->FindBin(multi_35) );
-  // cout << "multiplicty " << multi_35 << " rand_x " << rand_x << " um rand_y " << rand_y << " um " << endl;
   rand_x /= 1E3; // convert from um to mm
   rand_y /= 1E3;
 
@@ -78,7 +77,7 @@ TVector3 smearPVTATHENA(TVector3 const& vtx, float multi_35)
   return sVtx;
 }
 
-TVector3 smearPVZATHENA(TVector3 const& vtx, float multi_10)
+TVector3 smearPVZATHENA(TVector3 const& vtx, const float multi_10 = 1.8)
 { // smear primary vertex in longitudinal direction
   // multi_10 is the charged track multiplicity in |eta| < 1.0
   if (!VertexRes_Z)
@@ -90,7 +89,7 @@ TVector3 smearPVZATHENA(TVector3 const& vtx, float multi_10)
   TVector3 sVtx(vtx.X(),vtx.Y(),-9999);
   if (multi_10<2)
   {
-    // cout << "Event with too low multiplicty (<2), no primary vertex reconstructed" << endl;
+    cout << "Event with too low multiplicty (<2), no primary vertex reconstructed" << endl;
     return sVtx;
   }
 
@@ -109,7 +108,7 @@ bool passTrackingATHENA(double p, double eta)
 {
   if (fabs(eta)>3.5) return false;
   if (p<0.5) return false;
-  if (p>100) return false; // FIX ME: just because the current parameterization goes up to 100
+  if (p>100) return false; // NB: just because the current parameterization goes up to 100
   return true;
 }
 
@@ -118,7 +117,7 @@ TLorentzVector smearMomATHENA(TLorentzVector const& mom4)
   TLorentzVector sMom4;
   sMom4.SetXYZM(-9999,-9999,-9999,0);
 
-  int smear_graph_bin = Res_Handler->FindBin(mom4.PseudoRapidity());
+  int smear_graph_bin = Res_Handler->FindBin(mom4->PseudoRapidity());
   if (smear_graph_bin<1) return sMom4; // if not valid bin
   if (!gmom_res[smear_graph_bin-1]) return sMom4; // if no smearing parameter found
 
@@ -131,20 +130,18 @@ TLorentzVector smearMomATHENA(TLorentzVector const& mom4)
   float rel_p_reso = gmom_res[smear_graph_bin-1]->Eval(p); // in unit of 1
   float p_reso = p*rel_p_reso;
 
-  float sP = gRandom->Gaus(p,p_reso);
-  float sPt = sP*TMath::Sin(mom4.Theta());
+  sP = gRandom->Gaus(p,p_reso);
+  sPt = sP*TMath::Sin(mom4.Theta());
 
-  // cout << "p " << p << " p_reso " << p_reso << " smeared p " << sP << " GeV" << endl;
-
-  sMom4.SetXYZM(sPt * cos(mom4.Phi()), sPt * sin(mom4.Phi()), sPt * sinh(eta), mom4.M());
-  return sMom4; 
+  sMom->SetXYZM(sPt * cos(mom4.Phi()), sPt * sin(mom4.Phi()), sPt * sinh(eta), mom4.M());
+  return sMom; 
 }
 
 TVector3 smearPosATHENA(TVector3 const& mom, TVector3 const& pos)
 { // takes true mom and vertex position vector as input, return smeared vertex position sPos
   TVector3 sPos(-9999,-9999,-9999);
 
-  int smear_graph_bin = Res_Handler->FindBin(mom.PseudoRapidity());
+  int smear_graph_bin = Res_Handler->FindBin(mom4->PseudoRapidity());
   if (smear_graph_bin<1) return sPos; // if not valid bin
   if (!gdca_rphi_res[smear_graph_bin-1]) return sPos; // if no smearing parameter found
   if (!gdca_z_res[smear_graph_bin-1]) return sPos; // if no smearing parameter found
@@ -164,14 +161,10 @@ TVector3 smearPosATHENA(TVector3 const& mom, TVector3 const& pos)
   float rand_xy = gRandom->Gaus(0,dca_rphi_reso);
   float rand_z = gRandom->Gaus(0,dca_z_reso);
 
-  // cout << "pos " << pos.X() << ", " << pos.Y() << " mm " << " rand_xy " << rand_xy << " mm" << endl;
-
   // calculate new vertex position in transverse plane
   sPos.SetXYZ(pos.X(),pos.Y(),0);
   TVector3 momPerp(-mom.Y(), mom.X(), 0.0);
   sPos -= momPerp.Unit() * rand_xy;
-
-  // cout << "smeared pos " << sPos.X() << ", " << sPos.Y() << " mm" << endl;
 
   // add back the z dimension
   sPos.SetZ(pos.Z() + rand_z);
