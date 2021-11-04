@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/eAu_18_110
+FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/eAu_10_110
 
 LIST=`ls -lhtr $FOLDER/outForPythiaMode/*.root | awk '{printf("%s\n",$9)}'` # since file full dir given as 9th output paran for ls -lhtr
 NUM=0
