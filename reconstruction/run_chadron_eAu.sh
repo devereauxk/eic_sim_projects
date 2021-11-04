@@ -26,7 +26,10 @@ DCA_PATCH=$7 # recalculated D0 verticies: 0--nea, 1--yea
 mkdir $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}
 
 ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/fast_sim.h .
-ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/D0_tree.C .
+ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/bins.h .
+ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/D0_tree_patch.C .
+ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/ATHENA_Resolutions_r.root .
+ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/VertexRes_ATHENA.root .
 
 for file in $LIST
 do
@@ -44,7 +47,7 @@ do
     then
       echo "File already exists"
     else
-      root -b -q 'D0_tree.C("'$file'","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT','$DCA','$DCA_PATCH')'
+      root -b -q 'D0_tree_patch.C("'$file'","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT','$DCA','$DCA_PATCH')'
       echo "job done...move output file: ${hname}"
       mv $hname $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}
     fi
