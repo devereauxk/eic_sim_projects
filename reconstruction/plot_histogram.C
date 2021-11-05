@@ -1,6 +1,4 @@
-const int etabin = 3;
-static double eta_lo[etabin] = {-3,-1,1};
-static double eta_hi[etabin] = {-1,1,3};
+#include "bins.h"
 
 void plot_histogram(const char* inFile, const char* outDir, const char* title = "", const double events = 1000000)
 {
