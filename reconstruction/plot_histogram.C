@@ -13,7 +13,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
   c->SetRightMargin(0.15);
   c->SetBottomMargin(0.1);
 
-  for (int ieta = 0; ieta < 3; ieta++) {
+  for (int ieta = 0; ieta < etabin; ieta++) {
 
     // D0
     c = new TCanvas("c3","c3",800,800);
