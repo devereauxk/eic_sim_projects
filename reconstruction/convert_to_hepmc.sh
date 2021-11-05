@@ -34,9 +34,12 @@ do
     hname=`echo $species.hepmc`
     echo hepmc file name is $hname
 
-    if [ -a $FOLDER/$fname ]
+    if [ -a $FOLDER/outHepMC/$hname ]
     then
+      echo "File already exists"
+    else
       echo 'TreeToHepMC("'$fname'")' | eic-smear
+      echo "job done...move output file: ${hname}"
       mv $hname $FOLDER/outHepMC
     fi
   fi
