@@ -28,7 +28,7 @@ do
     fname=`echo $file | awk -F \/ '{printf("%s\n",$10)}'` # $10 since files are ten levels down from root directory
     ln -s $FOLDER/outForPythiaMode/$fname .
     fno=`echo $fname | awk -F \_ '{printf("%s\n",$2)}' | awk -F \. '{printf("%s\n",$1)}'`    # $2 since file of form ep_<some number>.root
-    species=`echo $fname | awk -F \. 'printf("%s/n",$2)'`
+    species=`echo $fname | awk -F \. 'printf("%s/n",$1)'`
     echo $species
     echo file name is $fname with file number $fno
     hname=`echo $species.hepmc`
