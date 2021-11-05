@@ -36,7 +36,7 @@ do
 
     if [ -a $FOLDER/$fname ]
     then
-      echo 'TreeToHepMC("'$FOLDER/$fname'.root")' | eic-smear
+      echo 'TreeToHepMC("'$fname'")' | eic-smear
       mv $hname $FOLDER/outHepMC
     fi
   fi
