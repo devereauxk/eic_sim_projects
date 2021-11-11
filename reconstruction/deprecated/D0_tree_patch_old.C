@@ -1,10 +1,3 @@
-// changes made:
-// remove the condition before applying ATHENA smearing
-// Lc DCA cut change to < cutting value (better to confirm with Yuanjing)
-// remove struck quark requirement in D0 FillSingleTracks
-// change all cut to transverse cuts
-// remove single track DCA cut and D0 DCA cut
-
 R__LOAD_LIBRARY(libeicsmear);
 
 #include "fast_sim.h"
@@ -30,22 +23,6 @@ double dcaSigned(TVector3 const& p, TVector3 const& pos, TVector3 const& vertex)
   TVector3 posDiff = pos - vertex;
   float sign = posDiff.x() * p.y() - posDiff.y() * p.x() > 0 ? +1 : -1;
   return sign * p.Cross(posDiff.Cross(p)).Unit().Dot(posDiff);
-}
-
-double dcaXY(TVector3 const& p, TVector3 const& pos, TVector3 const& vertex)
-{
- TVector3 newPos(pos);
- newPos.SetZ(0);
-
- TVector3 newP(p);
- newP.SetZ(0);
-
- TVector3 newVertex(vertex);
- newVertex.SetZ(0);
-
- TVector3 posDiff = newPos - newVertex;
- double sign = posDiff.x() * p.y() - posDiff.y() * p.x() > 0 ? +1 : -1;
- return sign * newP.Cross(posDiff.Cross(newP)).Unit().Dot(posDiff);
 }
 
 int find_quark_origin(erhic::EventPythia* evt, erhic::ParticleMC* part)
@@ -417,16 +394,30 @@ class D0_reco
 
     void SetLowP(const float mom_thr) { TRK_P_LO = mom_thr; }
 
-    void SetDCACuts()
+    void SetDCACuts(const int set_t_f = 1)
     {
+      //if set_t_f == 1, sets default DCA cuts
+      //if set_t_f == 0, all dca cuts passed
+
       // single
-      TRK_DCA = -9999; //0.03; // in units of mm
+      TRK_DCA = -9999;
 
       // pair
-      PAIR_DCA = 0.15; //0.12; // 120um in unit of mm
-      DECAY_L = 0.04;
-      D0_DCA = -9999; //0.01;
-      D0_COSTHETA = 0.98;
+      PAIR_DCA = -9999; // 120um in unit of mm
+      DECAY_L = -9999;
+      D0_DCA = -9999;
+      D0_COSTHETA = -9999;
+
+      if (set_t_f == 1){
+        // single
+        TRK_DCA = 0.03; // in units of mm
+
+        // pair
+        PAIR_DCA = 0.12; // 120um in unit of mm
+        DECAY_L = 0.04;
+        D0_DCA = 0.01;
+        D0_COSTHETA = 0.98;
+      }
     }
 
     void SetIDCuts(const int id_opt) { ID_OPTION = id_opt; }
@@ -526,6 +517,13 @@ class D0_reco
       }
       else return; // if incoming proton not found, skip the whole event
 
+      erhic::ParticleMC* quark = py_evt->GetTrack(9);
+      if (quark!=NULL && py_evt->GetProcess()==99)
+      {
+        struck_quark = quark->Get4Vector();
+      }
+      else return; // if incoming proton not found, skip the whole event
+
       if (do_correct_vertex == 1) correct_D0_verticies(py_evt);
 
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
@@ -563,7 +561,7 @@ class D0_reco
         if (SMEAR_OPTION==4)
         {
           track_mom4_reco = smearMomATHENA(track_mom4_true);
-          track_vtx_reco = smearPosATHENA(track_mom4_true.Vect(), track_vtx_true);
+          if (abs(part->GetParentId())==421) track_vtx_reco = smearPosATHENA(track_mom4_true.Vect(), track_vtx_true);
         }
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
@@ -775,31 +773,25 @@ class D0_reco
       {
         for (int ipos = 0; ipos < posl_id_true.size(); ++ipos)
         {
-          // ==========================
+          //==========================
           //    decay topology cut
-          // ==========================
+          //==========================
+          // if statements are opposite from comments.
           // pair DCA < cut value
           TVector3 dca_pair = negl_vtx_reco[ineg]-posl_vtx_reco[ipos];
-          dca_pair.SetZ(0);
-          // cout << "dca.pair " << dca_pair.Mag() << endl;
           if (PAIR_DCA>-99 && dca_pair.Mag()>PAIR_DCA) continue;
-          // cout << "double check dca.pair " << dca_pair.Mag() << endl;
 
           // Decay length > cut value
-          TVector3 decay_vtx_reco = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos])*0.5;
-          TVector3 decay_l = decay_vtx_reco-evt_vtx_reco;
-          decay_l.SetZ(0);
-          if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue;
+          TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos])*0.5-evt_vtx_reco;
+          if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue; //eA commented out
 
           // D0 DCA > cut value
           TVector3 D0_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos].Vect();
-          double D0_dca = dcaXY(D0_vec, decay_vtx_reco, evt_vtx_reco);
-          if (D0_DCA>-99 && fabs(D0_dca)<D0_DCA) continue;
+          double D0_dca = dcaSigned(D0_vec, decay_l, evt_vtx_reco);
+          if (D0_DCA>-99 && fabs(D0_dca)<D0_DCA) continue; //eA commented out
 
           // D0 cos(theta) > cut value
-          TVector3 D0_vecT = D0_vec;
-          D0_vecT.SetZ(0);
-          double D0_costheta = TMath::Cos(D0_vecT.Angle(decay_l));
+          double D0_costheta = TMath::Cos(D0_vec.Angle(decay_l));
           if (D0_COSTHETA>-99 && D0_costheta<D0_COSTHETA) continue;
 
           if (ID_OPTION==-1)
@@ -1140,15 +1132,30 @@ class Lc_reco
 
     void SetLowP(const float mom_thr) { TRK_P_LO = mom_thr; }
 
-    void SetDCACuts()
+    void SetDCACuts(const int set_t_f = 1)
     {
+      //if set_t_f == 1, sets default DCA cuts
+      //if set_t_f == 0, all dca cuts passed
+
+      // single
       TRK_DCA = -9999; // by default no cut
 
       // pair
-      PAIR_DCA = 0.3; // 300um in unit of mm
-      DECAY_L = 0.01;
-      Lc_DCA = 0.15;
+      PAIR_DCA = -9999; // 300um in unit of mm
+      DECAY_L = -9999;
+      Lc_DCA = -9999;
       Lc_COSTHETA = -9999;
+
+      if (set_t_f == 1){
+        // single
+        TRK_DCA = -9999; // by default no cut
+
+        // pair
+        PAIR_DCA = 0.3; // 300um in unit of mm
+        DECAY_L = 0.01;
+        Lc_DCA = 0.15;
+        Lc_COSTHETA = -9999;
+      }
     }
 
     void SetIDCuts(const int id_opt) { ID_OPTION = id_opt; }
@@ -1284,7 +1291,7 @@ class Lc_reco
         if (SMEAR_OPTION==4)
         {
           track_mom4_reco = smearMomATHENA(track_mom4_true);
-          track_vtx_reco = smearPosATHENA(track_mom4_true.Vect(), track_vtx_true);
+          if (abs(part->GetParentId())==421) track_vtx_reco = smearPosATHENA(track_mom4_true.Vect(), track_vtx_true);
         }
         if (track_mom4_reco.E()>1000 || track_vtx_reco.Mag()>1000) continue; // outside eta or momentum range
 
@@ -1568,27 +1575,20 @@ class Lc_reco
             TVector3 dca_pair1 = negl_vtx_reco[ineg]-posl_vtx_reco[ipos1];
             TVector3 dca_pair2 = negl_vtx_reco[ineg]-posl_vtx_reco[ipos2];
             TVector3 dca_pair3 = posl_vtx_reco[ipos1]-posl_vtx_reco[ipos2];
-            dca_pair1.SetZ(0);
-            dca_pair2.SetZ(0);
-            dca_pair3.SetZ(0);
             double dca_pair[3] = {dca_pair1.Mag(),dca_pair2.Mag(),dca_pair3.Mag()};
             if (PAIR_DCA>-99 && TMath::MaxElement(3,dca_pair)>PAIR_DCA) continue;
 
             // Decay length > cut value
-            TVector3 decay_vtx_reco = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos1]+posl_vtx_reco[ipos2])*(1./3);
-            TVector3 decay_l = decay_vtx_reco-evt_vtx_reco;
-            decay_l.SetZ(0);
+            TVector3 decay_l = (negl_vtx_reco[ineg]+posl_vtx_reco[ipos1]+posl_vtx_reco[ipos2])*(1./3)-evt_vtx_reco;
             if (DECAY_L>-99 && decay_l.Mag()<DECAY_L) continue; //commented for eA
 
-            // Lc DCA < cut value
+            // Lc DCA > cut value
             TVector3 Lc_vec = negl_p_reco[ineg].Vect()+posl_p_reco[ipos1].Vect()+posl_p_reco[ipos2].Vect();
-            double Lc_dca = dcaXY(Lc_vec, decay_vtx_reco, evt_vtx_reco);
-            if (Lc_DCA>-99 && fabs(Lc_dca)>Lc_DCA) continue;
+            double Lc_dca = dcaSigned(Lc_vec, decay_l, evt_vtx_reco);
+            if (Lc_DCA>-99 && fabs(Lc_dca)<Lc_DCA) continue;
 
             // Lc cos(theta) > cut value
-            TVector3 Lc_vecT = Lc_vec;
-            Lc_vecT.SetZ(0);
-            double Lc_costheta = TMath::Cos(Lc_vecT.Angle(decay_l));
+            double Lc_costheta = TMath::Cos(Lc_vec.Angle(decay_l));
             if (Lc_COSTHETA>-99 && Lc_costheta<Lc_COSTHETA) continue;
 
             if (ID_OPTION==-1)
@@ -1786,7 +1786,7 @@ class Lc_reco
     }
 };
 
-void D0_tree_patch(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0)
+void D0_tree_patch(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0, const int DCA_cut = 1, const int do_correct_vertex = 0)
 { // smear_2nd_vtx & momentum: 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smearing, 4--ATHENA smearing
   // Bfield_type: 0--Barbar, 1--Beast
   // 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
@@ -1833,18 +1833,18 @@ void D0_tree_patch(const char* inFile = "ep_allQ2.20x100.small.root", const char
 
   D0_reco ana_D0;
   ana_D0.SetLowP(0.1);
-  ana_D0.SetDCACuts();
+  ana_D0.SetDCACuts(DCA_cut);
   ana_D0.SetIDCuts(PID_option);
   ana_D0.SetSmearType(smear_option);
   ana_D0.SetBFieldType(Bfield_type);
-  // ana_D0.SetDoCorrectVertex(do_correct_vertex);
+  ana_D0.SetDoCorrectVertex(do_correct_vertex);
 
   Lc_reco ana_Lc;
-  ana_Lc.SetDCACuts();
+  ana_Lc.SetDCACuts(DCA_cut);
   ana_Lc.SetIDCuts(PID_option);
   ana_Lc.SetSmearType(smear_option);
   ana_Lc.SetBFieldType(Bfield_type);
-  // ana_Lc.SetDoCorrectVertex(do_correct_vertex);
+  ana_Lc.SetDoCorrectVertex(do_correct_vertex);
 
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
