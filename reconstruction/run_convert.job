@@ -12,4 +12,4 @@ Error          = /dev/null
 Requirements   = (CPU_Speed >= 1)
 
 Arguments      = convert_to_hepmc.sh $(Process) 0
-Queue 1
+Queue 500
