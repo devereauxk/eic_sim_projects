@@ -41,13 +41,13 @@ do
     hname=`echo hists-$fno.root`
     echo histogram name is $hname
 
-    if [ -a $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}/$hname ]
+    if [ -a $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}/$hname ]
     then
       echo "File already exists"
     else
       root -b -q 'D0_tree_patch.C("'$file'","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT')'
       echo "job done...move output file: ${hname}"
-      mv $hname $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}_DCA${DCA}
+      mv $hname $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
     fi
   fi
   NUM=$(( $NUM + 1 ))
