@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FOLDER=/gpfs/mnt/gpfs02/eic/wfan/event_gen/pythiaeRHIC/10_100/
+FOLDER=/gpfs/mnt/gpfs02/eic/wfan/event_gen/pythiaeRHIC/10_100
 FOLDER_OUT=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/hepmc_out
 
 LIST=`ls -lhtr $FOLDER/ep_filtered_highQ2_*.root | awk '{printf("%s\n",$9)}'`
