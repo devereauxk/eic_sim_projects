@@ -1,8 +1,9 @@
 #!/bin/sh
 
-FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/eAu_10_110
+FOLDER=/gpfs/mnt/gpfs02/eic/wfan/event_gen/pythiaeRHIC/10_100/
+FOLDER_OUT=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/hepmc_out
 
-LIST=`ls -lhtr $FOLDER/outForPythiaMode/*.root | awk '{printf("%s\n",$9)}'`
+LIST=`ls -lhtr $FOLDER/ep_filtered_highQ2_*.root | awk '{printf("%s\n",$9)}'`
 NUM=0
 
 chmod g+rx ${_CONDOR_SCRATCH_DIR}
@@ -18,7 +19,7 @@ echo start running in directory $DIR
 
 NEVT=$(( $2 ))
 
-mkdir $FOLDER/outHepMC
+#mkdir $FOLDER/outHepMC
 
 for file in $LIST
 do
@@ -26,7 +27,7 @@ do
   then
     echo $file
     fname=`echo $file | awk -F \/ '{printf("%s\n",$10)}'` # $10 since files are ten levels down from root directory
-    ln -s $FOLDER/outForPythiaMode/$fname .
+    ln -s $FOLDER/$fname .
     fno=`echo $fname | awk -F \_ '{printf("%s\n",$2)}' | awk -F \. '{printf("%s\n",$1)}'`    # $2 since file of form ep_<some number>.root
     species=`echo $fname | awk -F \. '{printf("%s\n",$1)}'`
     echo $species
@@ -34,13 +35,13 @@ do
     hname=`echo $species.hepmc`
     echo hepmc file name is $hname
 
-    if [ -a $FOLDER/outHepMC/$hname ]
+    if [ -a $FOLDER_OUT/$hname ]
     then
       echo "File already exists"
     else
       echo 'TreeToHepMC("'$fname'")' | eic-smear
       echo "job done...move output file: ${hname}"
-      mv $hname $FOLDER/outHepMC
+      mv $hname $FOLDER_OUT/
     fi
   fi
   NUM=$(( $NUM + 1 ))
