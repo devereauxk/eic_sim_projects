@@ -11,7 +11,7 @@ double pi=3.14159;
 // gSystem->Load("/Users/wenqingfan/install/lib/libMyEvent");
 // gSystem->Load("/Users/wenqingfan/install/lib/libMyPion");
 
-// printf("Welcome to the Norbert's ROOT session \n");
+printf("Welcome to the Norbert's ROOT session \n");
 //bb();
 //mc();
 }
