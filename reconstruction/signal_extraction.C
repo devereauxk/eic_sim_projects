@@ -4,8 +4,6 @@ R__LOAD_LIBRARY(libeicsmear);
 
 static int cno = 0;
 
-// TODO mcs and myhset alias
-
 void plot_1D(const int ismear = 4, const int ibfield = 1, const int ipid = 1, const int isys = 0)
 {
   TGaxis::SetMaxDigits(3);
