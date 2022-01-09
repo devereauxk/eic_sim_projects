@@ -160,7 +160,7 @@ void plot_1D(const int sys_ep_option, const int energy_ep_option, const int sys_
           h1d_D0_z_in_eta_gen_eA[iQ2][ix][ieta]->Draw("same");
           // leg.AddEntry(h1d_D0_z_in_eta_gen_eA[iQ2][ix][ieta],"BeAGLE e+Au 10+110GeV","lp");
           leg.AddEntry(h1d_D0_z_in_eta_gen_eA[iQ2][ix][ieta],Form("%s @ %s",sys_name[sys_eA_option],energy_name[energy_eA_option]),"lp");
-          
+
           leg.Draw("same");
 
           TLatex* tl = new TLatex();
@@ -202,7 +202,7 @@ void plot_1D(const int sys_ep_option, const int energy_ep_option, const int sys_
           h1d_Lc_z_in_eta_gen_eA[iQ2][ix][ieta]->SetMarkerColor(kRed);
           h1d_Lc_z_in_eta_gen_eA[iQ2][ix][ieta]->Draw("same");
           leg.AddEntry(h1d_Lc_z_in_eta_gen_eA[iQ2][ix][ieta],Form("%s @ %s",sys_name[sys_eA_option],energy_name[energy_eA_option]),"lp");
-          
+
           leg.Draw("same");
 
           TLatex* tl = new TLatex();
@@ -244,7 +244,7 @@ void plot_1D(const int sys_ep_option, const int energy_ep_option, const int sys_
           h1d_pion_z_in_eta_gen_eA[iQ2][ix][ieta]->SetMarkerColor(kRed);
           h1d_pion_z_in_eta_gen_eA[iQ2][ix][ieta]->Draw("same");
           leg.AddEntry(h1d_pion_z_in_eta_gen_eA[iQ2][ix][ieta],Form("%s @ %s",sys_name[sys_eA_option],energy_name[energy_eA_option]),"lp");
-          
+
           leg.Draw("same");
 
           TLatex* tl = new TLatex();
@@ -254,7 +254,7 @@ void plot_1D(const int sys_ep_option, const int energy_ep_option, const int sys_
 
           gROOT->ProcessLine( Form("cc%d->Print(\"figs/pion_z_in_eta_%d_%d_%d.pdf\")", cno-1, iQ2, ix, ieta) );
         }
-      }     
+      }
     }
   }
 }
@@ -292,7 +292,7 @@ void plot_ratio(const int sys_ep_option, const int energy_ep_option, const int s
           h1d_D0_z_in_eta_gen_ratio[iQ2][ix][ieta]->SetMarkerSize(0.7);
           h1d_D0_z_in_eta_gen_ratio[iQ2][ix][ieta]->SetMarkerStyle(21);
           h1d_D0_z_in_eta_gen_ratio[iQ2][ix][ieta]->Draw("same");
-          
+
           TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
           l1.SetLineStyle(7);
           l1.SetLineColor(kGray+2);
@@ -326,7 +326,7 @@ void plot_ratio(const int sys_ep_option, const int energy_ep_option, const int s
           h1d_Lc_z_in_eta_gen_ratio[iQ2][ix][ieta]->SetMarkerSize(0.7);
           h1d_Lc_z_in_eta_gen_ratio[iQ2][ix][ieta]->SetMarkerStyle(21);
           h1d_Lc_z_in_eta_gen_ratio[iQ2][ix][ieta]->Draw("same");
-          
+
           TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
           l1.SetLineStyle(7);
           l1.SetLineColor(kGray+2);
@@ -360,7 +360,7 @@ void plot_ratio(const int sys_ep_option, const int energy_ep_option, const int s
           h1d_pion_z_in_eta_gen_ratio[iQ2][ix][ieta]->SetMarkerSize(0.7);
           h1d_pion_z_in_eta_gen_ratio[iQ2][ix][ieta]->SetMarkerStyle(21);
           h1d_pion_z_in_eta_gen_ratio[iQ2][ix][ieta]->Draw("same");
-          
+
           TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
           l1.SetLineStyle(7);
           l1.SetLineColor(kGray+2);
@@ -375,7 +375,7 @@ void plot_ratio(const int sys_ep_option, const int energy_ep_option, const int s
 
           gROOT->ProcessLine( Form("cc%d->Print(\"figs/pion_ratio_z_in_eta_%d_%d_%d.pdf\")", cno-1, iQ2, ix, ieta) );
         }
-      }     
+      }
     }
   }
 }
@@ -491,7 +491,7 @@ void plot_ratio_comparison(const int sys_ep_option, const int energy_ep_option, 
       }
     }
   }
-
+/*
   for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
   {
     if (iQ2<Q2bin-1) continue;
@@ -548,6 +548,7 @@ void plot_ratio_comparison(const int sys_ep_option, const int energy_ep_option, 
       }
     }
   }
+*/
 
   for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
   {
@@ -659,6 +660,7 @@ void plot_ratio_comparison(const int sys_ep_option, const int energy_ep_option, 
     }
   }
 
+/*
   for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
   {
     if (iQ2<Q2bin-1) continue;
@@ -714,7 +716,7 @@ void plot_ratio_comparison(const int sys_ep_option, const int energy_ep_option, 
         gROOT->ProcessLine( Form("cc%d->Print(\"figs/Lc_ratio_z_in_eta_alleta_%d_%d.pdf\")", cno-1, ix, ieta) );
       }
     }
-  }
+  }*/
 
   for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
   {
@@ -825,7 +827,7 @@ void plot_ratio_comparison(const int sys_ep_option, const int energy_ep_option, 
       }
     }
   }
-
+/*
   for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
   {
     if (iQ2<Q2bin-1) continue;
@@ -882,6 +884,7 @@ void plot_ratio_comparison(const int sys_ep_option, const int energy_ep_option, 
       }
     }
   }
+  */
 }
 
 void plot_2D(const int sys_ep_option, const int energy_ep_option, const int sys_eA_option, const int energy_eA_option)
@@ -915,7 +918,7 @@ void plot_2D(const int sys_ep_option, const int energy_ep_option, const int sys_
         leg.SetMargin(0.1);
 
         h2d_D0_z_vs_eta_gen_ep[iQ2][ix]->Draw("samecolz");
-        
+
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
         tl->SetTextSize(0.03);
@@ -945,7 +948,7 @@ void plot_2D(const int sys_ep_option, const int energy_ep_option, const int sys_
         leg.SetMargin(0.1);
 
         h2d_D0_z_vs_eta_gen_eA[iQ2][ix]->Draw("samecolz");
-        
+
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
         tl->SetTextSize(0.03);
@@ -975,7 +978,7 @@ void plot_2D(const int sys_ep_option, const int energy_ep_option, const int sys_
         leg.SetMargin(0.1);
 
         h2d_Lc_z_vs_eta_gen_ep[iQ2][ix]->Draw("samecolz");
-        
+
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
         tl->SetTextSize(0.03);
@@ -1005,7 +1008,7 @@ void plot_2D(const int sys_ep_option, const int energy_ep_option, const int sys_
         leg.SetMargin(0.1);
 
         h2d_Lc_z_vs_eta_gen_eA[iQ2][ix]->Draw("samecolz");
-        
+
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
         tl->SetTextSize(0.03);
@@ -1035,7 +1038,7 @@ void plot_2D(const int sys_ep_option, const int energy_ep_option, const int sys_
         leg.SetMargin(0.1);
 
         h2d_pion_z_vs_eta_gen_ep[iQ2][ix]->Draw("samecolz");
-        
+
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
         tl->SetTextSize(0.03);
@@ -1065,7 +1068,7 @@ void plot_2D(const int sys_ep_option, const int energy_ep_option, const int sys_
         leg.SetMargin(0.1);
 
         h2d_pion_z_vs_eta_gen_eA[iQ2][ix]->Draw("samecolz");
-        
+
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
         tl->SetTextSize(0.03);
@@ -1074,14 +1077,14 @@ void plot_2D(const int sys_ep_option, const int energy_ep_option, const int sys_
         gROOT->ProcessLine( Form("cc%d->Print(\"figs/eA_pion_z_vs_eta_%d_%d.pdf\")", cno-1, iQ2, ix) );
       }
     }
-  }  
+  }
 }
 
 void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys_ep_option = 0, const int energy_ep_option = 0, const char* inFile_eA = "hists_gen_eA.root", const int sys_eA_option = 0, const int energy_eA_option = 0, const char* outFile = "hists_gen.root")
 {
   mcs(-1);
 
-  TFile* fin_ep = new TFile(inFile_ep,"READ"); 
+  TFile* fin_ep = new TFile(inFile_ep,"READ");
   // const int nevt_ep = h1d_nevt_ep->Integral();
   // const int nevt_ep = 1.1E8;
   // fin_ep->ls();
@@ -1106,14 +1109,14 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
 
       if (nevt_ep>0)
       {
-        h2d_D0_z_vs_eta_gen_ep[iQ2][ix]->Scale(1./nevt_ep); 
+        h2d_D0_z_vs_eta_gen_ep[iQ2][ix]->Scale(1./nevt_ep);
         h2d_Lc_z_vs_eta_gen_ep[iQ2][ix]->Scale(1./nevt_ep);
         h2d_pion_z_vs_eta_gen_ep[iQ2][ix]->Scale(1./nevt_ep);
       }
     }
   }
 
-  TFile* fin_eA = new TFile(inFile_eA,"READ"); 
+  TFile* fin_eA = new TFile(inFile_eA,"READ");
   // h1d_nevt_eA = (TH1D*)fin_eA->Get("h1d_nevt");
   // const int nevt_eA = h1d_nevt_eA->Integral();
   // const int nevt_eA = 4.99E7 /5.; // 5x41 = 499*2E4
@@ -1127,7 +1130,7 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
       h1d_nevt_eA[iQ2][ix] = (TH1D*)fin_eA->Get(Form("h1d_nevt_%d_%d",iQ2,ix));
       h1d_nevt_eA[iQ2][ix]->SetName(Form("h1d_nevt_%s_%s_Q2%d_x%d",sys_abbr[sys_eA_option],energy_abbr[energy_eA_option],iQ2,ix));
       int nevt_eA = h1d_nevt_eA[iQ2][ix]->Integral();
-      cout << "eA # of events " << nevt_eA << " (Q2, x) bin (" << iQ2 << ", " << ix << ")" <<endl; 
+      cout << "eA # of events " << nevt_eA << " (Q2, x) bin (" << iQ2 << ", " << ix << ")" <<endl;
 
       // h2d_D0_z_vs_eta_gen_eA[iQ2][ix] = (TH2D*)fin_eA->Get(Form("h2d_D0_z_vs_eta_gen_%d_%d",iQ2,ix));
       h2d_D0_z_vs_eta_gen_eA[iQ2][ix] = (TH2D*)fin_eA->Get(Form("h2d_hadron_421_z_vs_eta_gen_%d_%d",iQ2,ix));
@@ -1141,7 +1144,7 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
 
       if (nevt_eA>0)
       {
-        h2d_D0_z_vs_eta_gen_eA[iQ2][ix]->Scale(1./nevt_eA); 
+        h2d_D0_z_vs_eta_gen_eA[iQ2][ix]->Scale(1./nevt_eA);
         h2d_Lc_z_vs_eta_gen_eA[iQ2][ix]->Scale(1./nevt_eA);
         h2d_pion_z_vs_eta_gen_eA[iQ2][ix]->Scale(1./nevt_eA);
       }
