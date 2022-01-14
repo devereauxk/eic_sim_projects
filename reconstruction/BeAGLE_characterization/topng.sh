@@ -1,12 +1,7 @@
-for folder in ./*
+# converts all pdfs in containing folder into pngs
+
+for pdffile in ./*
 do
-	echo "${folder}"
-	if [[ -d "${folder}" ]]
-	then
-		echo "is folder"
-		for pdfile in $folder/figs/*
-		do
-			pdftoppm "${pdfile}" "${pdfile%.*}" -png -x 500 -q
-		done
-	fi
+	echo "converting ${pdffile}"
+	pdftoppm "${pdffile}" "${pdffile%.*}" -png -x 500 -q
 done
