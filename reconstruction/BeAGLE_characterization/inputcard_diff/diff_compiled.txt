@@ -1,6 +1,6 @@
 diff BeAGLE pythia
 so....     	< means deletion from beagle card
-			> means insertion to beagle card
+						> means insertion to beagle card
 
 
 < 1e-06, 1.00       ! xmin and xmax
@@ -29,7 +29,7 @@ so....     	< means deletion from beagle card
 ---
 > MSTP(20)=0 ! Hermes MSTP(20)=0 , default MSTP(20)=3
 22,23c24,26
-< MSTP(51)=10042   ! if pdflib is linked than non pythia-pdfs are available,                         10042=CTEQ6L1 - good for EPS09LO 
+< MSTP(51)=10042   ! if pdflib is linked than non pythia-pdfs are available,                         10042=CTEQ6L1 - good for EPS09LO
 ---
 > MSTP(51)=10050 ! if pdflib is linked than non pythia-pdfs are available,                         like MSTP(51)=4046
 ---
