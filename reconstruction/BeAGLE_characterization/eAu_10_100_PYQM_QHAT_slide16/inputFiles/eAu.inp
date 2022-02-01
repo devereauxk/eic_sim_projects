@@ -33,8 +33,7 @@ PARDECAY           2
 L-TAG           1e-9      1.00      10.0    20000.0       0.0      6.29
 *VDM-PAR2           1        1         0
 * model selection
-USERSET         11         9.0
-MODEL                                                       PYTHIA
+MODEL                                                                 PYTHIA
 *               0=all, 1=rho, 2=omega, 3=phi, 4=J/psi
 PYVECTORS       4
 *PYQM_CTRL  E*     Pt model      #gluons    Supfac    SW     iet
