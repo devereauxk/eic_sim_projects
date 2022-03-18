@@ -11,5 +11,5 @@ Output        = /gpfs/mnt/gpfs02/eic/kdevereaux/jobs/jobout/out$(Process).out
 Error          = /dev/null
 Requirements   = (CPU_Speed >= 1)
 
-Arguments      = run_chadron_eAu.sh $(Process) 0 4 1 1
-Queue 500
+Arguments      = run_chadron_ep.sh $(Process) 0 4 1 1
+Queue 100

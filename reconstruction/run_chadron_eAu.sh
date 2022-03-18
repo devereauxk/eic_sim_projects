@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/eAu_10_110
+FOLDER=/gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/BeAGLE_charcterization/ep_10_100_BeAGLE
 
 LIST=`ls -lhtr $FOLDER/outForPythiaMode/*.root | awk '{printf("%s\n",$9)}'` # since file full dir given as 9th output paran for ls -lhtr
 NUM=0
@@ -17,7 +17,7 @@ pushd $DIR
 echo start running in directory $DIR
 
 NEVT=$(( $2 ))
-SMEAR_OPT=$3 # 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smearing
+SMEAR_OPT=$3 # 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smearing, 4--ATHENA smearing
 BFIELD=$4 # 0--Barbar, 1--Beast
 ID_OPT=$5 # 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
 
