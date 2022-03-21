@@ -23,27 +23,8 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     c->SetLogz();
     c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
 
-    c = new TCanvas("c3","c3",800,800);
+
     TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
-    fg1d_Kpimass_vs_p->Draw("hsame");
-    fg1d_Kpimass_vs_p->GetXaxis()->SetRangeUser(1.7,2);
-    fg1d_Kpimass_vs_p->SetTitle("");
-    fg1d_Kpimass_vs_p->GetXaxis()->SetTitle("M(K^{#pm}#pi^{#mp}) [GeV/c^{2}]");
-    fg1d_Kpimass_vs_p->GetYaxis()->SetTitle("counts");
-    fg1d_Kpimass_vs_p->GetXaxis()->SetTitleOffset(1.3);
-    fg1d_Kpimass_vs_p->GetYaxis()->SetTitleOffset(1.5);
-    fg1d_Kpimass_vs_p->SetStats(0);
-    TLatex* tl = new TLatex();
-    tl->SetTextAlign(11);
-    tl->SetTextSize(0.035);
-    tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.15,0.85,title);
-    tl->DrawLatexNDC(0.15,0.80,Form("%.1e events",events));
-    tl->DrawLatexNDC(0.15,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
-    //c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
-
-    // D0 signal extraction
-
     TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     TH1D* sg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
@@ -65,14 +46,32 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       func_peak->FixParameter(5,gaus->GetParameter(2));
       fg1d_Kpimass_vs_p->Fit(func_peak,"R","",temp_mean-8*temp_sigma,temp_mean+8*temp_sigma);
     }*/
-
     float int_range_lo = sg1d_Kpimass_vs_p->FindBin(temp_mean-3*temp_sigma);
     float int_range_hi = sg1d_Kpimass_vs_p->FindBin(temp_mean+3*temp_sigma);
     float N_SG = sg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
     float N_BG = bg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
-
+    
+    c = new TCanvas("c3","c3",800,800);
+    fg1d_Kpimass_vs_p->Draw("hsame");
+    fg1d_Kpimass_vs_p->GetXaxis()->SetRangeUser(1.7,2);
+    fg1d_Kpimass_vs_p->SetTitle("");
+    fg1d_Kpimass_vs_p->GetXaxis()->SetTitle("M(K^{#pm}#pi^{#mp}) [GeV/c^{2}]");
+    fg1d_Kpimass_vs_p->GetYaxis()->SetTitle("counts");
+    fg1d_Kpimass_vs_p->GetXaxis()->SetTitleOffset(1.3);
+    fg1d_Kpimass_vs_p->GetYaxis()->SetTitleOffset(1.5);
+    fg1d_Kpimass_vs_p->SetStats(0);
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.035);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.15,0.85,title);
+    tl->DrawLatexNDC(0.15,0.80,Form("%.1e events",events));
+    tl->DrawLatexNDC(0.15,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
     tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
     c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
+    //c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
+
+
 
     /*
     //Lc
