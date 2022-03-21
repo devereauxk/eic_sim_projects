@@ -44,8 +44,8 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
     // D0 signal extraction
 
-    TH2D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
-    TH2D* sg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
+    TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
+    TH1D* sg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
 
     float temp_mean = -9999;
@@ -59,7 +59,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       temp_sigma = gaus->GetParameter(2);
 
       TF1* func_peak = new TF1("func_peak","[0]+[1]*x+[2]*x*x+[3]*exp(-0.5*pow(x-[4],2)/pow([5],2))",temp_mean-3*temp_sigma,temp_mean+3*temp_sigma);
-      func_peak->SetLineColor(pid_color[ipid]);
+      //func_peak->SetLineColor(pid_color[ipid]);
       func_peak->FixParameter(3,gaus->GetParameter(0));
       func_peak->FixParameter(4,gaus->GetParameter(1));
       func_peak->FixParameter(5,gaus->GetParameter(2));
@@ -71,7 +71,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     float N_SG = sg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
     float N_BG = bg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
 
-    t1->DrawLatexNDC(0.15,0.70,Form("signal = .1e, background = .1e", N_SG, N_BG));
+    tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
     c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
 
     /*
