@@ -17,13 +17,13 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
     // D0
     c = new TCanvas("c3","c3",800,800);
-
     TH2D* fg2d_Kpimass_vs_p = (TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta));
     fg2d_Kpimass_vs_p->Draw("colz");
     fg2d_Kpimass_vs_p->SetStats(0);
     c->SetLogz();
     c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
 
+    c = new TCanvas("c3","c3",800,800);
     TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     fg1d_Kpimass_vs_p->Draw("hsame");
     fg1d_Kpimass_vs_p->GetXaxis()->SetRangeUser(1.7,2);
