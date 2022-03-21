@@ -52,7 +52,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     float temp_sigma = 0;
     sg1d_Kpimass_vs_p->Fit("gaus","0R","",1.8,1.95);
     TF1* gaus = sg1d_Kpimass_vs_p->GetFunction("gaus");
-
+    /*
     if (gaus!=NULL)
     {
       temp_mean = gaus->GetParameter(1);
@@ -64,7 +64,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       func_peak->FixParameter(4,gaus->GetParameter(1));
       func_peak->FixParameter(5,gaus->GetParameter(2));
       fg1d_Kpimass_vs_p->Fit(func_peak,"R","",temp_mean-8*temp_sigma,temp_mean+8*temp_sigma);
-    }
+    }*/
 
     float int_range_lo = sg1d_Kpimass_vs_p->FindBin(temp_mean-3*temp_sigma);
     float int_range_hi = sg1d_Kpimass_vs_p->FindBin(temp_mean+3*temp_sigma);
