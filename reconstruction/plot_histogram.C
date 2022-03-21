@@ -27,7 +27,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     TH1D* sg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
-    sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
+    //sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
 
     float temp_mean = -9999;
     float temp_sigma = 0;
@@ -50,7 +50,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     float int_range_hi = sg1d_Kpimass_vs_p->FindBin(temp_mean+3*temp_sigma);
     float N_SG = sg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
     float N_BG = bg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
-    
+
     c = new TCanvas("c3","c3",800,800);
     fg1d_Kpimass_vs_p->Draw("hsame");
     fg1d_Kpimass_vs_p->GetXaxis()->SetRangeUser(1.7,2);
