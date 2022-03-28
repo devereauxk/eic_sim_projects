@@ -23,21 +23,38 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     c->SetLogz();
     c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
 
+
     TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
-    //TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
+    TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
     TH1D* sg1d_Kpimass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
     sg1d_Kpimass_vs_p->SetName(Form("sg2d_Kpimass_vs_p_2_%d", ieta));
     sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
 
-    c = new TCanvas("c3","c3",800,800);
-    sg1d_Kpimass_vs_p->Draw("hsame");
-    sg1d_Kpimass_vs_p->GetXaxis()->SetRangeUser(1.75,1.95);
-    sg1d_Kpimass_vs_p->SetTitle("");
-    sg1d_Kpimass_vs_p->GetXaxis()->SetTitle("M(K^{#pm}#pi^{#mp}) [GeV/c^{2}]");
-    sg1d_Kpimass_vs_p->GetYaxis()->SetTitle("counts");
-    sg1d_Kpimass_vs_p->GetXaxis()->SetTitleOffset(1.3);
-    sg1d_Kpimass_vs_p->GetYaxis()->SetTitleOffset(1.5);
-    sg1d_Kpimass_vs_p->SetStats(0);
+    float plot_xrange_lo = 1.5;
+    float plot_xrange_hi = 2.2;
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 2.0*fg1d_Kpimass_vs_p->GetMaximum();
+
+    TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp.Draw();
+    htemp.GetXaxis()->SetTitle("m_{K#pi} [GeV/c^{2}]");
+    htemp.GetYaxis()->SetTitle("Counts");
+    myhset(&htemp,1.2,1.6,0.05,0.045);
+
+    TLegend leg(0.2,0.65,0.83,0.80);
+    leg.SetBorderSize(0);
+    leg.SetTextSize(0.03);
+    leg.SetFillStyle(0);
+    leg.SetMargin(0.1);
+
+    TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
+    TH1D* sg1d_Kpimass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
+    sg1d_Kpimass_vs_p->SetName(Form("sg2d_Kpimass_vs_p_2_%d", ieta));
+    sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
+
+    fg1d_Kpimass_vs_p->SetLineColor(kBlue);
+    bg1d_Kpimass_vs_p->SetLineColor(kRed);
+    sg1d_Kpimass_vs_p->SetLineColor(kGreen+1);
 
     /*
     float temp_mean = -9999;
@@ -72,8 +89,8 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     tl->DrawLatexNDC(0.15,0.80,Form("%.1e events",events));
     tl->DrawLatexNDC(0.15,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
     //tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
-    c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
     //c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
+    gROOT->ProcessLine( Form("cc%d->Print(\"hist_output/20220327/kpimass_vs_z_%d_%d.pdf\")", cno-1, ieta, iz) ); // TODO change 'figs' to other folder
 
 
 
