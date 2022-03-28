@@ -423,7 +423,7 @@ class D0_reco
       TRK_DCA = -9999; //0.03; // in units of mm
 
       // pair
-      PAIR_DCA = 0.15; //0.12; // 120um in unit of mm
+      PAIR_DCA = 0.13; //0.12; // 120um in unit of mm
       DECAY_L = 0.04;
       D0_DCA = -9999; //0.01;
       D0_COSTHETA = 0.98;
