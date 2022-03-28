@@ -18,9 +18,9 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     {
       TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("fg1d");
       TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("bg1d");
-      //TH1D* sg1d_Kpimass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
-      //sg1d_Kpimass_vs_p->SetName(Form("sg2d_Kpimass_vs_p_2_%d", ieta));
-      //sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
+      TH1D* sg1d_Kpimass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
+      sg1d_Kpimass_vs_p->SetName(Form("sg2d", ieta));
+      sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
 
       float plot_xrange_lo = 1.5;
       float plot_xrange_hi = 2.2;
@@ -40,13 +40,12 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       leg.SetMargin(0.1);
 
       fg1d_Kpimass_vs_p->SetLineColor(kBlue);
-      //bg1d_Kpimass_vs_p->SetLineColor(kRed);
-      //sg1d_Kpimass_vs_p->SetLineColor(kGreen+1);
+      bg1d_Kpimass_vs_p->SetLineColor(kRed);
+      sg1d_Kpimass_vs_p->SetLineColor(kGreen+1);
       fg1d_Kpimass_vs_p->Draw("hsame");
-      //bg1d_Kpimass_vs_p->Draw("hsame");
-      //sg1d_Kpimass_vs_p->Draw("hsame");
+      bg1d_Kpimass_vs_p->Draw("hsame");
+      sg1d_Kpimass_vs_p->Draw("hsame");
 
-      /*
       float temp_mean = -9999;
       float temp_sigma = 0;
       sg1d_Kpimass_vs_p->Fit("gaus","0R","",1.8,1.95);
@@ -69,7 +68,6 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       float int_range_hi = sg1d_Kpimass_vs_p->FindBin(temp_mean+3*temp_sigma);
       float N_SG = sg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
       float N_BG = bg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
-      */
 
       TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
@@ -78,8 +76,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       tl->DrawLatexNDC(0.2,0.85,title);
       tl->DrawLatexNDC(0.2,0.80,Form("%.1e events",events));
       tl->DrawLatexNDC(0.2,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
-      //tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
-      //c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
+      tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
       gROOT->ProcessLine( Form("cc%d->Print(\"%skpimass_vs_p_%d.pdf\")", cno-1, outDir, ieta) ); // TODO change 'figs' to other folder
 
 
