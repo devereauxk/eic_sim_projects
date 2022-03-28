@@ -30,7 +30,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
 
     c = new TCanvas("c3","c3",800,800);
-    c->Clear();
+    /*
     fg1d_Kpimass_vs_p->Draw("hsame");
     fg1d_Kpimass_vs_p->GetXaxis()->SetRangeUser(1.75,1.95);
     fg1d_Kpimass_vs_p->SetTitle("");
@@ -39,6 +39,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     fg1d_Kpimass_vs_p->GetXaxis()->SetTitleOffset(1.3);
     fg1d_Kpimass_vs_p->GetYaxis()->SetTitleOffset(1.5);
     fg1d_Kpimass_vs_p->SetStats(0);
+    */
 
     /*
     float temp_mean = -9999;
