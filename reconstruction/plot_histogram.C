@@ -30,16 +30,14 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
 
     c = new TCanvas("c3","c3",800,800);
-    /*
-    fg1d_Kpimass_vs_p->Draw("hsame");
-    fg1d_Kpimass_vs_p->GetXaxis()->SetRangeUser(1.75,1.95);
-    fg1d_Kpimass_vs_p->SetTitle("");
-    fg1d_Kpimass_vs_p->GetXaxis()->SetTitle("M(K^{#pm}#pi^{#mp}) [GeV/c^{2}]");
-    fg1d_Kpimass_vs_p->GetYaxis()->SetTitle("counts");
-    fg1d_Kpimass_vs_p->GetXaxis()->SetTitleOffset(1.3);
-    fg1d_Kpimass_vs_p->GetYaxis()->SetTitleOffset(1.5);
-    fg1d_Kpimass_vs_p->SetStats(0);
-    */
+    sg1d_Kpimass_vs_p->Draw("hsame");
+    sg1d_Kpimass_vs_p->GetXaxis()->SetRangeUser(1.75,1.95);
+    sg1d_Kpimass_vs_p->SetTitle("");
+    sg1d_Kpimass_vs_p->GetXaxis()->SetTitle("M(K^{#pm}#pi^{#mp}) [GeV/c^{2}]");
+    sg1d_Kpimass_vs_p->GetYaxis()->SetTitle("counts");
+    sg1d_Kpimass_vs_p->GetXaxis()->SetTitleOffset(1.3);
+    sg1d_Kpimass_vs_p->GetYaxis()->SetTitleOffset(1.5);
+    sg1d_Kpimass_vs_p->SetStats(0);
 
     /*
     float temp_mean = -9999;
