@@ -92,7 +92,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       tl->DrawLatexNDC(0.15,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
       //tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
       //c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
-      gROOT->ProcessLine( Form("cc%d->Print(\"hist_output/20220327/kpimass_vs_p_%d.pdf\")", cno-1, ieta) ); // TODO change 'figs' to other folder
+      gROOT->ProcessLine( Form("cc%d->Print(\"%skpimass_vs_p_%d.pdf\")", cno-1, outDir, ieta) ); // TODO change 'figs' to other folder
 
 
 
