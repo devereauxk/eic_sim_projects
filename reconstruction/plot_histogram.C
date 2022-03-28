@@ -12,22 +12,8 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
   TTree* t = (TTree*) f->Get("EICTree");
 
   TGaxis::SetMaxDigits(3);
-  for (int ieta = 0; ieta < etabin; ieta++) {
-
-    // D0
-    /*
-    TCanvas* c = new TCanvas("c3","c3",800,800);
-    c->Range(0,0,1,1);
-    c->SetLeftMargin(0.15);
-    c->SetRightMargin(0.15);
-    c->SetBottomMargin(0.1);
-    TH2D* fg2d_Kpimass_vs_p = (TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta));
-    fg2d_Kpimass_vs_p->Draw("colz");
-    fg2d_Kpimass_vs_p->SetStats(0);
-    c->SetLogz();
-    c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
-    */
-
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
     mcs(cno++);
     {
       TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
@@ -56,6 +42,9 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       fg1d_Kpimass_vs_p->SetLineColor(kBlue);
       bg1d_Kpimass_vs_p->SetLineColor(kRed);
       sg1d_Kpimass_vs_p->SetLineColor(kGreen+1);
+      fg1d_Kpimass_vs_p->Draw("hsame");
+      bg1d_Kpimass_vs_p->Draw("hsame");
+      sg1d_Kpimass_vs_p->Draw("hsame");
 
       /*
       float temp_mean = -9999;
@@ -86,9 +75,9 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       tl->SetTextAlign(11);
       tl->SetTextSize(0.035);
       tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.15,0.85,title);
-      tl->DrawLatexNDC(0.15,0.80,Form("%.1e events",events));
-      tl->DrawLatexNDC(0.15,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
+      tl->DrawLatexNDC(0.2,0.85,title);
+      tl->DrawLatexNDC(0.2,0.80,Form("%.1e events",events));
+      tl->DrawLatexNDC(0.2,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
       //tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
       //c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
       gROOT->ProcessLine( Form("cc%d->Print(\"%skpimass_vs_p_%d.pdf\")", cno-1, outDir, ieta) ); // TODO change 'figs' to other folder
