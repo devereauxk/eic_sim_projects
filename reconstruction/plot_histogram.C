@@ -70,7 +70,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     tl->DrawLatexNDC(0.15,0.85,title);
     tl->DrawLatexNDC(0.15,0.80,Form("%.1e events",events));
     tl->DrawLatexNDC(0.15,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
-    tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
+    //tl->DrawLatexNDC(0.15,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
     c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
     //c->SaveAs(Form("%sfg1d_Kpimass_2_%d.pdf", outDir, ieta));
 
