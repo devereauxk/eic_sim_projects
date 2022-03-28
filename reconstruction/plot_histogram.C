@@ -1,3 +1,5 @@
+R__LOAD_LIBRARY(libeicsmear);
+
 #include "bins.h"
 
 static int cno = 0;
@@ -19,7 +21,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
   for (int ieta = 0; ieta < etabin; ieta++) {
 
     mcs(cno++);
-      {
+    {
       // D0
       c = new TCanvas("c3","c3",800,800);
       TH2D* fg2d_Kpimass_vs_p = (TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta));
