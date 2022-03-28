@@ -39,6 +39,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     fg1d_Kpimass_vs_p->GetYaxis()->SetTitleOffset(1.5);
     fg1d_Kpimass_vs_p->SetStats(0);
 
+    /*
     float temp_mean = -9999;
     float temp_sigma = 0;
     sg1d_Kpimass_vs_p->Fit("gaus","0R","",1.8,1.95);
@@ -61,6 +62,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     float int_range_hi = sg1d_Kpimass_vs_p->FindBin(temp_mean+3*temp_sigma);
     float N_SG = sg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
     float N_BG = bg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
+    */
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
