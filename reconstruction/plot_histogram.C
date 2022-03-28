@@ -17,10 +17,10 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
     mcs(cno++);
     {
       TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
-      TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
-      TH1D* sg1d_Kpimass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
-      sg1d_Kpimass_vs_p->SetName(Form("sg2d_Kpimass_vs_p_2_%d", ieta));
-      sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
+      //TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
+      //TH1D* sg1d_Kpimass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
+      //sg1d_Kpimass_vs_p->SetName(Form("sg2d_Kpimass_vs_p_2_%d", ieta));
+      //sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
 
       float plot_xrange_lo = 1.5;
       float plot_xrange_hi = 2.2;
@@ -40,11 +40,11 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       leg.SetMargin(0.1);
 
       fg1d_Kpimass_vs_p->SetLineColor(kBlue);
-      bg1d_Kpimass_vs_p->SetLineColor(kRed);
-      sg1d_Kpimass_vs_p->SetLineColor(kGreen+1);
+      //bg1d_Kpimass_vs_p->SetLineColor(kRed);
+      //sg1d_Kpimass_vs_p->SetLineColor(kGreen+1);
       fg1d_Kpimass_vs_p->Draw("hsame");
-      bg1d_Kpimass_vs_p->Draw("hsame");
-      sg1d_Kpimass_vs_p->Draw("hsame");
+      //bg1d_Kpimass_vs_p->Draw("hsame");
+      //sg1d_Kpimass_vs_p->Draw("hsame");
 
       /*
       float temp_mean = -9999;
