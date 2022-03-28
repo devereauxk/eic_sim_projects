@@ -11,26 +11,25 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
   TTree* t = (TTree*) f->Get("EICTree");
 
-  TCanvas* c = new TCanvas("c3","c3",800,800);
-  c->Range(0,0,1,1);
-  c->SetLeftMargin(0.15);
-  c->SetRightMargin(0.15);
-  c->SetBottomMargin(0.1);
-
   TGaxis::SetMaxDigits(3);
   for (int ieta = 0; ieta < etabin; ieta++) {
 
+    // D0
+    /*
+    TCanvas* c = new TCanvas("c3","c3",800,800);
+    c->Range(0,0,1,1);
+    c->SetLeftMargin(0.15);
+    c->SetRightMargin(0.15);
+    c->SetBottomMargin(0.1);
+    TH2D* fg2d_Kpimass_vs_p = (TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta));
+    fg2d_Kpimass_vs_p->Draw("colz");
+    fg2d_Kpimass_vs_p->SetStats(0);
+    c->SetLogz();
+    c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
+    */
+
     mcs(cno++);
     {
-      // D0
-      c = new TCanvas("c3","c3",800,800);
-      TH2D* fg2d_Kpimass_vs_p = (TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta));
-      fg2d_Kpimass_vs_p->Draw("colz");
-      fg2d_Kpimass_vs_p->SetStats(0);
-      c->SetLogz();
-      c->SaveAs(Form("%sfg2d_Kpimass_vs_p_2_%d.pdf", outDir, ieta));
-
-
       TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
       TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("x");
       TH1D* sg1d_Kpimass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
