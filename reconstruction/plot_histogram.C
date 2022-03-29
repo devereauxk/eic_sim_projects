@@ -121,8 +121,8 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
       if (gaus!=NULL)
       {
-        float temp_mean = gaus->GetParameter(1);
-        float temp_sigma = gaus->GetParameter(2);
+        temp_mean = gaus->GetParameter(1);
+        temp_sigma = gaus->GetParameter(2);
 
         TF1* func_peak = new TF1("func_peak","[0]+[1]*x+[2]*x*x+[3]*exp(-0.5*pow(x-[4],2)/pow([5],2))",temp_mean-3*temp_sigma,temp_mean+3*temp_sigma);
         //func_peak->SetLineColor(pid_color[ipid]);
