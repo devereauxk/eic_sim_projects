@@ -79,7 +79,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       tl->DrawLatexNDC(0.2,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
       gROOT->ProcessLine( Form("cc%d->Print(\"%skpimass_vs_p_%d.pdf\")", cno-1, outDir, ieta) );
 
-      gROOT->ProcessLine( Form("cc%d->Clear()", cno-1,) );
+      gROOT->ProcessLine( Form("cc%d->Clear()", cno-1) );
 
       //Lc
       TH1D* fg1d_Kpipmass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpipmass_vs_p_2_%d", ieta)))->ProjectionX("fg1d");
