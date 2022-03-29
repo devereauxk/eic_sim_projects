@@ -45,7 +45,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       sg1d_Kpimass_vs_p->SetLineColor(kGreen+1);
       fg1d_Kpimass_vs_p->Draw("hsame");
       bg1d_Kpimass_vs_p->Draw("hsame");
-      sg1d_Kpimass_vs_p->Draw("hsame");
+      //sg1d_Kpimass_vs_p->Draw("hsame");
 
       float temp_mean = -9999;
       float temp_sigma = 0;
@@ -112,7 +112,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       sg1d_Kpipmass_vs_p->SetLineColor(kGreen+1);
       fg1d_Kpipmass_vs_p->Draw("hsame");
       bg1d_Kpipmass_vs_p->Draw("hsame");
-      sg1d_Kpipmass_vs_p->Draw("hsame");
+      //sg1d_Kpipmass_vs_p->Draw("hsame");
 
       float temp_mean = -9999;
       float temp_sigma = 0;
