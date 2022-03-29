@@ -79,6 +79,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       tl->DrawLatexNDC(0.2,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
       gROOT->ProcessLine( Form("cc%d->Print(\"%skpimass_vs_p_%d.pdf\")", cno-1, outDir, ieta) );
 
+      gROOT->ProcessLine( Form("cc%d->Clear()", cno-1,) );
 
       //Lc
       TH1D* fg1d_Kpipmass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpipmass_vs_p_2_%d", ieta)))->ProjectionX("fg1d");
@@ -92,17 +93,17 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       plot_yrange_lo = 0;
       plot_yrange_hi = 1.7*fg1d_Kpipmass_vs_p->GetMaximum();
 
-      htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-      htemp.Draw();
-      htemp.GetXaxis()->SetTitle("m_{K^{#pm}#pi^{#mp}p^{#mp}} [GeV/c^{2}]");
-      htemp.GetYaxis()->SetTitle("Counts");
-      myhset(&htemp,1.2,1.6,0.05,0.045);
+      TH2F htemp2("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+      htemp2.Draw();
+      htemp2.GetXaxis()->SetTitle("m_{K^{#pm}#pi^{#mp}p^{#mp}} [GeV/c^{2}]");
+      htemp2.GetYaxis()->SetTitle("Counts");
+      myhset(&htemp2,1.2,1.6,0.05,0.045);
 
-      leg(0.2,0.65,0.83,0.80);
-      leg.SetBorderSize(0);
-      leg.SetTextSize(0.03);
-      leg.SetFillStyle(0);
-      leg.SetMargin(0.1);
+      TLegend leg2(0.2,0.65,0.83,0.80);
+      leg2.SetBorderSize(0);
+      leg2.SetTextSize(0.03);
+      leg2.SetFillStyle(0);
+      leg2.SetMargin(0.1);
 
       fg1d_Kpipmass_vs_p->SetLineColor(kBlue);
       bg1d_Kpipmass_vs_p->SetLineColor(kRed);
@@ -113,7 +114,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
       temp_mean = -9999;
       temp_sigma = 0;
-      sg1d_Kpimass_vs_p->Fit("gaus","0R","",2.1,2.4);
+      sg1d_Kpipmass_vs_p->Fit("gaus","0R","",2.1,2.4);
       gaus = sg1d_Kpipmass_vs_p->GetFunction("gaus");
 
       if (gaus!=NULL)
