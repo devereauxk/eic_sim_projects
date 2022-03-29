@@ -92,13 +92,13 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       plot_yrange_lo = 0;
       plot_yrange_hi = 1.7*fg1d_Kpipmass_vs_p->GetMaximum();
 
-      TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+      htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
       htemp.GetXaxis()->SetTitle("m_{K^{#pm}#pi^{#mp}p^{#mp}} [GeV/c^{2}]");
       htemp.GetYaxis()->SetTitle("Counts");
       myhset(&htemp,1.2,1.6,0.05,0.045);
 
-      TLegend leg(0.2,0.65,0.83,0.80);
+      leg(0.2,0.65,0.83,0.80);
       leg.SetBorderSize(0);
       leg.SetTextSize(0.03);
       leg.SetFillStyle(0);
@@ -121,7 +121,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
         temp_mean = gaus->GetParameter(1);
         temp_sigma = gaus->GetParameter(2);
 
-        func_peak = new TF1("func_peak","[0]+[1]*x+[2]*x*x+[3]*exp(-0.5*pow(x-[4],2)/pow([5],2))",temp_mean-3*temp_sigma,temp_mean+3*temp_sigma);
+        TF1* func_peak = new TF1("func_peak","[0]+[1]*x+[2]*x*x+[3]*exp(-0.5*pow(x-[4],2)/pow([5],2))",temp_mean-3*temp_sigma,temp_mean+3*temp_sigma);
         //func_peak->SetLineColor(pid_color[ipid]);
         func_peak->FixParameter(3,gaus->GetParameter(0));
         func_peak->FixParameter(4,gaus->GetParameter(1));
