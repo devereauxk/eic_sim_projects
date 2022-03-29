@@ -90,8 +90,8 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       sg1d_Kpipmass_vs_p->SetName("sg1d_Kpip");
       sg1d_Kpipmass_vs_p->Add(bg1d_Kpipmass_vs_p, -1);
 
-      float plot_xrange_lo = 2.1;
-      float plot_xrange_hi = 2.45;
+      float plot_xrange_lo = 2.2;
+      float plot_xrange_hi = 2.4;
       float plot_yrange_lo = 0;
       float plot_yrange_hi = 1.7*fg1d_Kpipmass_vs_p->GetMaximum();
 
@@ -116,7 +116,7 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
       float temp_mean = -9999;
       float temp_sigma = 0;
-      sg1d_Kpipmass_vs_p->Fit("gaus","0R","",2.1,2.4);
+      sg1d_Kpipmass_vs_p->Fit("gaus","0R","",2.23,2.31);
       TF1* gaus = sg1d_Kpipmass_vs_p->GetFunction("gaus");
 
       if (gaus!=NULL)
