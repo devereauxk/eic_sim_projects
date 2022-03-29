@@ -16,10 +16,11 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
   {
     mcs(cno++);
     {
-      TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("fg1d");
-      TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("bg1d");
+      //D0
+      TH1D* fg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("fg1d_Kpi");
+      TH1D* bg1d_Kpimass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpimass_vs_p_2_%d", ieta)))->ProjectionX("bg1d_Kpi");
       TH1D* sg1d_Kpimass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
-      sg1d_Kpimass_vs_p->SetName("sg1d");
+      sg1d_Kpimass_vs_p->SetName("sg1d_Kpi");
       sg1d_Kpimass_vs_p->Add(bg1d_Kpimass_vs_p, -1);
 
       float plot_xrange_lo = 1.7;
@@ -79,13 +80,14 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       tl->DrawLatexNDC(0.2,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
       gROOT->ProcessLine( Form("cc%d->Print(\"%skpimass_vs_p_%d.pdf\")", cno-1, outDir, ieta) );
 
-      gROOT->ProcessLine( Form("cc%d->Clear()", cno-1) );
-
+    }
+    mcs(cno++);
+    {
       //Lc
-      TH1D* fg1d_Kpipmass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpipmass_vs_p_2_%d", ieta)))->ProjectionX("fg1d");
-      TH1D* bg1d_Kpipmass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpipmass_vs_p_2_%d", ieta)))->ProjectionX("bg1d");
+      TH1D* fg1d_Kpipmass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("fg2d_Kpipmass_vs_p_2_%d", ieta)))->ProjectionX("fg1d_Kpip");
+      TH1D* bg1d_Kpipmass_vs_p = (TH1D*) ((TH2D*) f->Get(Form("bg2d_Kpipmass_vs_p_2_%d", ieta)))->ProjectionX("bg1d_Kpip");
       TH1D* sg1d_Kpipmass_vs_p = (TH1D*) fg1d_Kpimass_vs_p->Clone();
-      sg1d_Kpipmass_vs_p->SetName("sg1d");
+      sg1d_Kpipmass_vs_p->SetName("sg1d_Kpip");
       sg1d_Kpipmass_vs_p->Add(bg1d_Kpipmass_vs_p, -1);
 
       plot_xrange_lo = 2.1;
