@@ -2,6 +2,12 @@ R__LOAD_LIBRARY(libeicsmear);
 
 #include "bins.h"
 
+// 1 fb-1 = 10^9 mb-1
+const double L_10 = 1E10; // 10 fb-1 in mb-1 unit
+
+// cross section (microbarn)
+const double cs_highQ2 = 4.1970876822297380E-002; // 10-10000
+
 static int cno = 0;
 
 void plot_histogram(const char* inFile, const char* outDir, const char* title = "", const double events = 1000000)
@@ -137,6 +143,14 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       float N_SG = sg1d_Kpipmass_vs_p->Integral(int_range_lo, int_range_hi);
       float N_BG = bg1d_Kpipmass_vs_p->Integral(int_range_lo, int_range_hi);
 
+      double L_highQ2 = 100*1E6/cs_highQ2;
+      double scale_highQ2 = L_10/L_highQ2;
+      cout<<"High Q2 event sample (cross section: "<<cs_highQ2<<", L: "<<L_highQ2<<") need scaling factor "<<scale_highQ2<<" for "<<L_10<<" fm-1 luminosity"<<endl;
+      float sg_scaled = N_SG * scale_highQ2;
+      float bg_scaled = N_BG * scale_highQ2;
+      float statistical_uncertainty_scaled = sqrt(sg_scaled + bg_scaled);
+      float relative_uncertainty_scaled = statistical_uncertainty_scaled / sg_scaled;
+
       TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
       tl->SetTextSize(0.035);
@@ -145,6 +159,10 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       tl->DrawLatexNDC(0.2,0.80,Form("%.1e events",events));
       tl->DrawLatexNDC(0.2,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
       tl->DrawLatexNDC(0.2,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
+      tl->DrawLatexNDC(0.6,0.80,Form("[for %.1e fm-1 luminosity]", L_10));
+      tl->DrawLatexNDC(0.6,0.75,Form("signal = %.1e, background = %.1e", sg_scaled, bg_scaled));
+      tl->DrawLatexNDC(0.6,0.70,Form("uncertainty = %.1e", statistical_uncertainty_scaled));
+      tl->DrawLatexNDC(0.6,0.65 ,Form("relative uncertainty = %.1e", relative_uncertainty_scaled));
       gROOT->ProcessLine( Form("cc%d->Print(\"%skpipmass_vs_p_%d.pdf\")", cno-1, outDir, ieta) );
 
 
