@@ -153,12 +153,13 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
 
       TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
-      tl->SetTextSize(0.035);
+      tl->SetTextSize(0.02);
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.2,0.85,Form("%s, %.1e events",title,events));
-      tl->DrawLatexNDC(0.2,0.80,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
-      tl->DrawLatexNDC(0.2,0.75,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
-      tl->DrawLatexNDC(0.2,0.70,Form("[for %.1e fm-1 luminosity]", L_10));
+      tl->DrawLatexNDC(0.2,0.81,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
+      tl->DrawLatexNDC(0.2,0.77,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
+      tl->DrawLatexNDC(0.2,0.73,Form("[for %.1e fm-1 luminosity]", L_10));
+      tl->DrawLatexNDC(0.2,0.69,Form("signal = %.1e, background = %.1e", sg_scaled, bg_scaled));
       tl->DrawLatexNDC(0.2,0.65,Form("uncertainty = %.1e, rel. uncertainty = %.1e", statistical_uncertainty_scaled, relative_uncertainty_scaled));
       gROOT->ProcessLine( Form("cc%d->Print(\"%skpipmass_vs_p_%d.pdf\")", cno-1, outDir, ieta) );
 
