@@ -6,7 +6,7 @@ R__LOAD_LIBRARY(libeicsmear);
 const double L_10 = 1E10; // 10 fb-1 in mb-1 unit
 
 // cross section (microbarn)
-const double cs_highQ2 = 4.1970876822297380E-002; // 10-10000
+const double cs_highQ2 = 4.0867696064575042E-002; // 10-10000,    original value: 4.1970876822297380E-002
 
 static int cno = 0;
 
