@@ -76,14 +76,24 @@ void plot_histogram(const char* inFile, const char* outDir, const char* title = 
       float N_SG = sg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
       float N_BG = bg1d_Kpimass_vs_p->Integral(int_range_lo, int_range_hi);
 
+      double L_highQ2 = 100*1E6/cs_highQ2;
+      double scale_highQ2 = L_10/L_highQ2;
+      cout<<"High Q2 event sample (cross section: "<<cs_highQ2<<", L: "<<L_highQ2<<") need scaling factor "<<scale_highQ2<<" for "<<L_10<<" fm-1 luminosity"<<endl;
+      float sg_scaled = N_SG * scale_highQ2;
+      float bg_scaled = N_BG * scale_highQ2;
+      float statistical_uncertainty_scaled = sqrt(sg_scaled + bg_scaled);
+      float relative_uncertainty_scaled = statistical_uncertainty_scaled / sg_scaled;
+
       TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
-      tl->SetTextSize(0.035);
+      tl->SetTextSize(0.025);
       tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.2,0.85,title);
-      tl->DrawLatexNDC(0.2,0.80,Form("%.1e events",events));
-      tl->DrawLatexNDC(0.2,0.75,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
-      tl->DrawLatexNDC(0.2,0.70,Form("signal = %.1e, background = %.1e", N_SG, N_BG));
+      tl->DrawLatexNDC(0.2,0.85,Form("%s, %.1e events",title,events));
+      tl->DrawLatexNDC(0.2,0.81,Form("%.1f < #eta < %.1f",eta_lo[ieta],eta_hi[ieta]));
+      tl->DrawLatexNDC(0.2,0.77,Form("sg = %.2e, bg = %.2e", N_SG, N_BG));
+      tl->DrawLatexNDC(0.2,0.73,Form("[for %.1e fm-1 luminosity]", L_10));
+      tl->DrawLatexNDC(0.2,0.69,Form("sg = %.2e, bg = %.2e", sg_scaled, bg_scaled));
+      tl->DrawLatexNDC(0.2,0.65,Form("uncertainty = %.2e, rel. uncertainty = %.2e", statistical_uncertainty_scaled, relative_uncertainty_scaled));
       gROOT->ProcessLine( Form("cc%d->Print(\"%skpimass_vs_p_%d.pdf\")", cno-1, outDir, ieta) );
 
     }
