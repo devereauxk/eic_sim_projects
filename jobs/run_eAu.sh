@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
-WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/eAu_10_110_1E6perFile
+WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_characterization/eAu_10_100_true_temp
 
 if [ -z "$1" ]
 then
