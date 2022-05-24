@@ -1,0 +1,52 @@
+diff BeAGLE pythia
+so....     	< means deletion from beagle card
+						> means insertion to beagle card
+
+
+< 1e-06, 1.00       ! xmin and xmax
+> 11                ! lepton beam type
+> 100.,10.          ! proton and electron beam energy
+> 100000,10           ! Number of events
+> 1e-09,1.00        ! xmin and xmax
+> 1e-11,1.00        ! ymin and ymax
+> 10,20000            ! Q2min and Q2max
+---
+7,11c12,13
+< 3                 ! switch for shadowing: genShd
+< 101		  ! USED LO - nuclear pdf parameter2: correction order x*100+y x= 1:LO, 2:NLO y:error set
+< 1		    ! switch for quenching 1:on, 0:off
+< 0.0		    ! QHAT value
+---
+> 1,1               ! nuclear pdf parameter1: nucleon mass number A, charge number Z
+> 201               ! nuclear pdf parameter2: correction order x*100+y x= 1:LO, 2:NLO y:error set
+---
+17c19
+< MSTP(17)=6 ! MSTP 17=6 is the R-rho measured as by hermes, =4 Default
+---
+> MSTP(17)=4 ! MSTP 17=6 is the R-rho measured as by hermes, =4 Default
+20c22
+< MSTP(20)=4 ! Hermes MSTP(20)=4 , default MSTP(20)=3
+---
+> MSTP(20)=0 ! Hermes MSTP(20)=0 , default MSTP(20)=3
+22,23c24,26
+< MSTP(51)=10042   ! if pdflib is linked than non pythia-pdfs are available,                         10042=CTEQ6L1 - good for EPS09LO
+---
+> MSTP(51)=10050 ! if pdflib is linked than non pythia-pdfs are available,                         like MSTP(51)=4046
+---
+40,41c43
+< MSTP(94)=2      ! D=3 modified to 2 based on Mark tune
+< MSTP(101)=1
+---
+> MSTP(101)=3
+46d47
+< PARP(2)=2     ! lower cut for accepted c.m.s energy
+48c49
+< PARP(18)=0.17 ! hermes PARP(18)=0.17
+---
+> PARP(18)=0.40 ! hermes PARP(18)=0.17
+---
+54,55c55
+< PARP(97)=6.0  ! D=1.0, tuned by Mark 6.0
+---
+79d78
+< PARJ(170)= 0.32
