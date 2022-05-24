@@ -25,20 +25,27 @@ class hadron_gen
 
     int iQ2bin;
     int ixbin;
-    TH2D* h2d_hadron_pt_vs_eta_gen[Q2bin][xbin];
-    TH2D* h2d_hadron_z_vs_eta_gen[Q2bin][xbin];
+    int inubin;
+
+    TH2D* h2d_hadron_pt_vs_eta_gen_in_x[Q2bin][xbin];
+    TH2D* h2d_hadron_z_vs_eta_gen_in_x[Q2bin][xbin];
+    
+    TH2D* h2d_hadron_pt_vs_eta_gen_in_nu[Q2bin][nubin];
+    TH2D* h2d_hadron_z_vs_eta_gen_in_nu[Q2bin][nubin];
 
   public:
     hadron_gen(int _hadron_id)
     {
       cout << "Constructing analyzing module to study hadronization of particle with ID " << _hadron_id << endl;
       hadron_id = abs(_hadron_id);
+
       x_true = 1E1; // unphysical
       Q2_true = 1E-5; // out of range
       nu_true = -9999;
 
       iQ2bin = -9999;
       ixbin = -9999;
+      inubin = -9999;
 
       h1d_parent_id = new TH1D(Form("h1d_hadron_%d_parent_id",hadron_id),"parent ID",10000,-0.5,9999.5);
       h1d_parent_id->Sumw2();
@@ -47,11 +54,20 @@ class hadron_gen
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_hadron_pt_vs_eta_gen[iQ2][ix] = new TH2D(Form("h2d_hadron_%d_pt_vs_eta_gen_%d_%d",hadron_id,iQ2,ix),"D0 pt vs eta",100,0,10,160,-4,4);
-          h2d_hadron_pt_vs_eta_gen[iQ2][ix]->Sumw2();
+          h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix] = new TH2D(Form("h2d_hadron_%d_pt_vs_eta_gen_in_x_%d_%d",hadron_id,iQ2,ix),"D0 pt vs eta",100,0,10,40,-10,10);
+          h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix]->Sumw2();
 
-          h2d_hadron_z_vs_eta_gen[iQ2][ix] = new TH2D(Form("h2d_hadron_%d_z_vs_eta_gen_%d_%d",hadron_id,iQ2,ix),"D0 z vs eta",100,0,1,160,-4,4);
-          h2d_hadron_z_vs_eta_gen[iQ2][ix]->Sumw2();
+          h2d_hadron_z_vs_eta_gen_in_x[iQ2][ix] = new TH2D(Form("h2d_hadron_%d_z_vs_eta_gen_in_x_%d_%d",hadron_id,iQ2,ix),"D0 z vs eta",100,0,1,40,-10,10);
+          h2d_hadron_z_vs_eta_gen_in_x[iQ2][ix]->Sumw2();
+        }
+
+        for (int inu = 0; inu < nubin; ++inu)
+        {
+          h2d_hadron_pt_vs_eta_gen_in_nu[iQ2][inu] = new TH2D(Form("h2d_hadron_%d_pt_vs_eta_gen_in_nu_%d_%d",hadron_id,iQ2,inu),"D0 pt vs eta",100,0,10,40,-10,10);
+          h2d_hadron_pt_vs_eta_gen_in_nu[iQ2][inu]->Sumw2();
+
+          h2d_hadron_z_vs_eta_gen_in_nu[iQ2][inu] = new TH2D(Form("h2d_hadron_%d_z_vs_eta_gen_in_nu_%d_%d",hadron_id,iQ2,inu),"D0 z vs eta",100,0,1,40,-10,10);
+          h2d_hadron_z_vs_eta_gen_in_nu[iQ2][inu]->Sumw2();
         }
       }
     }
@@ -62,8 +78,14 @@ class hadron_gen
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          delete h2d_hadron_pt_vs_eta_gen[iQ2][ix];
-          delete h2d_hadron_z_vs_eta_gen[iQ2][ix];
+          delete h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix];
+          delete h2d_hadron_z_vs_eta_gen_in_x[iQ2][ix];
+        }
+
+        for (int inu = 0; inu < nubin; ++inu)
+        {
+          delete h2d_hadron_pt_vs_eta_gen_in_nu[iQ2][inu];
+          delete h2d_hadron_z_vs_eta_gen_in_nu[iQ2][inu];
         }
       }
     };
@@ -82,8 +104,14 @@ class hadron_gen
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_hadron_pt_vs_eta_gen[iQ2][ix]->Reset("ICESM");
-          h2d_hadron_z_vs_eta_gen[iQ2][ix]->Reset("ICESM");
+          h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix]->Reset("ICESM");
+          h2d_hadron_z_vs_eta_gen_in_x[iQ2][ix]->Reset("ICESM");
+        }
+
+        for (int inu = 0; inu < nubin; ++inu)
+        {
+          h2d_hadron_pt_vs_eta_gen_in_nu[iQ2][inu]->Reset("ICESM");
+          h2d_hadron_z_vs_eta_gen_in_nu[iQ2][inu]->Reset("ICESM");
         }
       }
     }
@@ -98,6 +126,7 @@ class hadron_gen
         if (Q2_true>=Q2_lo[iQ2] && Q2_true<Q2_hi[iQ2]) iQ2bin = iQ2;
       }      
     }
+
     void SetXTrue(double _x_true)
     { 
       x_true = _x_true; 
@@ -109,7 +138,16 @@ class hadron_gen
       }
     }
 
-    void SetNuTrue(double _nu_true) { nu_true = _nu_true; };
+    void SetNuTrue(double _nu_true)
+    {
+      nu_true = _nu_true;
+
+      inubin = -9999;
+      for (int inu = 0; inu < nubin-1; ++inu)
+      { // NB: do not loop the last bin which is inclusive
+        if (nu_true>=nu_lo[inu] && nu_true<nu_hi[inu]) inubin = inu;
+      }
+    }
 
     void FillGenKin(erhic::EventPythia* py_evt)
     {
@@ -126,11 +164,14 @@ class hadron_gen
         erhic::ParticleMC* part = py_evt->GetTrack(ipart);
 
         if (abs(part->Id())!=hadron_id) continue;
+        if (part->GetStatus()!=1 && part->GetStatus()!=11 && part->GetStatus()!=2) continue; // 1 -- stable particles, 11 -- decay particles in Pythia, 2 -- decay particles in BeAGLE
 
         h1d_parent_id->Fill(abs(part->GetParentId()));
 
         TLorentzVector hadron_mom4_gen = part->Get4Vector();
         double frag_z = hadron_beam.Dot(hadron_mom4_gen)/(nu_true*hadron_beam.M());
+
+        // if (hadron_mom4_gen.Pt()<0.1) continue;
 
         if (verbosity>1) std::cout << "Particle id " << hadron_id << " with pt " << hadron_mom4_gen.Pt() << " z " << frag_z << " eta " << hadron_mom4_gen.PseudoRapidity() << std::endl;
 
@@ -138,16 +179,30 @@ class hadron_gen
 
         if (iQ2bin>=0 && ixbin>=0)
         {
-          h2d_hadron_pt_vs_eta_gen[iQ2bin][ixbin]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
-          h2d_hadron_z_vs_eta_gen[iQ2bin][ixbin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_pt_vs_eta_gen_in_x[iQ2bin][ixbin]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_z_vs_eta_gen_in_x[iQ2bin][ixbin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
 
           // Now fill the inclusive bin
-          h2d_hadron_pt_vs_eta_gen[iQ2bin][xbin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
-          h2d_hadron_z_vs_eta_gen[iQ2bin][xbin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
-          h2d_hadron_pt_vs_eta_gen[Q2bin-1][ixbin]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
-          h2d_hadron_z_vs_eta_gen[Q2bin-1][ixbin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
-          h2d_hadron_pt_vs_eta_gen[Q2bin-1][xbin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
-          h2d_hadron_z_vs_eta_gen[Q2bin-1][xbin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_pt_vs_eta_gen_in_x[iQ2bin][xbin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_z_vs_eta_gen_in_x[iQ2bin][xbin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_pt_vs_eta_gen_in_x[Q2bin-1][ixbin]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_z_vs_eta_gen_in_x[Q2bin-1][ixbin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_pt_vs_eta_gen_in_x[Q2bin-1][xbin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_z_vs_eta_gen_in_x[Q2bin-1][xbin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+        } 
+
+        if (iQ2bin>=0 && inubin>=0)
+        {
+          h2d_hadron_pt_vs_eta_gen_in_nu[iQ2bin][inubin]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_z_vs_eta_gen_in_nu[iQ2bin][inubin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+
+          // Now fill the inclusive bin
+          h2d_hadron_pt_vs_eta_gen_in_nu[iQ2bin][nubin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_z_vs_eta_gen_in_nu[iQ2bin][nubin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_pt_vs_eta_gen_in_nu[Q2bin-1][inubin]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_z_vs_eta_gen_in_nu[Q2bin-1][inubin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_pt_vs_eta_gen_in_nu[Q2bin-1][nubin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
+          h2d_hadron_z_vs_eta_gen_in_nu[Q2bin-1][nubin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
         } 
       }
     }
@@ -159,17 +214,67 @@ class hadron_gen
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
-          h2d_hadron_pt_vs_eta_gen[iQ2][ix]->Write();
-          h2d_hadron_z_vs_eta_gen[iQ2][ix]->Write();
+          h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix]->Write();
+          h2d_hadron_z_vs_eta_gen_in_x[iQ2][ix]->Write();
+        }
+
+        for (int inu = 0; inu < nubin; ++inu)
+        {
+          h2d_hadron_pt_vs_eta_gen_in_nu[iQ2][inu]->Write();
+          h2d_hadron_z_vs_eta_gen_in_nu[iQ2][inu]->Write();
         }
       }
     }
 };
 
-void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0)
-{ 
-  //Event Class
-  erhic::EventPythia *event(NULL); //Note that I use Pointer
+bool event_w_charm(erhic::EventPythia* event, int gen_type)
+{
+  if (gen_type==0)
+  { // Pythia 6
+    bool flag_search_group = false; // flag if the group of particles has been searched
+    for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
+    {
+      erhic::ParticleMC* part = event->GetTrack(ipart);
+
+      if ( part->GetStatus()!=21 && !flag_search_group ) continue;
+      if ( part->GetStatus()==21 )
+      { // entering into the group of particles with KS=21
+        flag_search_group = true;
+        if ( part->Id()==4 || part->Id()==-4 ) return true;
+      }
+      if ( part->GetStatus()!=21 && flag_search_group ) break;
+    }
+  }
+  else
+  { // BeAGLE
+    bool flag_search_group = false; // flag if the group of particles has been searched
+    for (int ipart = event->GetNTracks()-1; ipart >=0; ipart--)
+    { // faster looping backwards
+      erhic::ParticleMC* part = event->GetTrack(ipart);
+
+      if ( part->GetStatus()!=3 && !flag_search_group ) continue;
+      if ( part->GetStatus()==3 )
+      { // entering into the group of particles with KS=3
+        flag_search_group = true;
+        if ( part->Id()==4 || part->Id()==-4 ) return true;
+      }
+      if ( part->GetStatus()!=3 && flag_search_group ) break;
+    }
+  }
+
+  return false;
+}
+
+void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, int data_type = 0, int gen_type = 0)
+{
+  cout << "Data Type: "; 
+  if (data_type==0) cout << "EIC" << endl;
+  else if (data_type==1) cout << "HERMES" << endl;
+  else cout << "CLAS" << endl;
+
+  cout << "Generator Type: "; 
+  if (gen_type==0) cout << "Pythia6" << endl;
+  else cout << "BeAGLE" << endl;
 
   TFile *f = new TFile(inFile);
 
@@ -180,27 +285,52 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
   cout<<"-------------------------------"<<endl;
   cout<<"Total Number of Events = "<<nEntries<<endl<<endl;
 
-  //Access event Branch
+  // Event Class
+  erhic::EventPythia *event(NULL); //Note that I use Pointer
+
+  // Access event Branch
   tree->SetBranchAddress("event",&event);
 
+  // Inclusive event counter before any event selections
+  TH2D* h2d_logx_logQ2 = new TH2D("h2d_logx_logQ2","inclusive event counter",100,-3,0,100,0,3);
+  h2d_logx_logQ2->Sumw2();
+
+  // Event counter after event selections
+  TH1D* h1d_nevt_in_x[Q2bin][xbin] = {0};
+  TH1D* h1d_nevt_w_charm_in_x[Q2bin][xbin] = {0};
+  for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
+  {
+    for (int ix = 0; ix < xbin; ++ix)
+    {
+      h1d_nevt_in_x[iQ2][ix] = new TH1D(Form("h1d_nevt_in_x_%d_%d",iQ2,ix),"event counter",1,0.5,1.5);
+      h1d_nevt_in_x[iQ2][ix]->Sumw2(); 
+
+      h1d_nevt_w_charm_in_x[iQ2][ix] = new TH1D(Form("h1d_nevt_w_charm_in_x_%d_%d",iQ2,ix),"event counter",1,0.5,1.5);
+      h1d_nevt_w_charm_in_x[iQ2][ix]->Sumw2(); 
+    }
+  }
+
+  TH1D* h1d_nevt_in_nu[Q2bin][nubin] = {0};
+  TH1D* h1d_nevt_w_charm_in_nu[Q2bin][nubin] = {0};
+  for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
+  {
+    for (int inu = 0; inu < nubin; ++inu)
+    {
+      h1d_nevt_in_nu[iQ2][inu] = new TH1D(Form("h1d_nevt_in_nu_%d_%d",iQ2,inu),"event counter",1,0.5,1.5);
+      h1d_nevt_in_nu[iQ2][inu]->Sumw2(); 
+
+      h1d_nevt_w_charm_in_nu[iQ2][inu] = new TH1D(Form("h1d_nevt_w_charm_in_nu_%d_%d",iQ2,inu),"event counter",1,0.5,1.5);
+      h1d_nevt_w_charm_in_nu[iQ2][inu]->Sumw2(); 
+    }
+  }
+
+  // Hadron analyzers
   hadron_gen ana_D0(421); // which will also analyze -421
   hadron_gen ana_Lc(4122);
   hadron_gen ana_charged_pion(211);
   hadron_gen ana_neutral_pion(111);
   hadron_gen ana_charged_kaon(321);
   hadron_gen ana_proton(2212);
-
-  TH1D* h1d_nevt[Q2bin][xbin] = {0};
-  for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
-  {
-    for (int ix = 0; ix < xbin; ++ix)
-    {
-      h1d_nevt[iQ2][ix] = new TH1D(Form("h1d_nevt_%d_%d",iQ2,ix),"event counter",1,0.5,1.5);
-      h1d_nevt[iQ2][ix]->Sumw2(); 
-    }
-  }
-  TH2D* h2d_logx_logQ2 = new TH2D("h2d_logx_logQ2","inclusive event counter",100,-3,0,100,0,3);
-  h2d_logx_logQ2->Sumw2();
   
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
@@ -211,16 +341,32 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
     tree->GetEntry(ievt);
 
     //Write Out Q2
-    double Q2 = event->GetQ2(); // Can also do event->QSquared
-    double x = event->GetX();
+    double Q2 = event->GetTrueQ2(); // Can also do event->QSquared
+    double x = event->GetTrueX();
+    double nu = event->GetTrueNu();
 
     h2d_logx_logQ2->Fill(log10(x),log10(Q2));
     // printf("For Event %d, Q^2 = %.3f GeV^2!\n",ievt,Q2);
-    // if (Q2>10) continue; // process low Q2
 
-    if (event->GetTrueY()<0.05 || event->GetTrueY()>0.8) continue;
+    bool flag_event_select = true;
+    if (data_type==0)
+    { // EIC event selection (from Yuxiang)
+      if (event->GetTrueY()<0.05 || event->GetTrueY()>0.8) flag_event_select = false;
+    }
+    else if (data_type==1)
+    { // HERMES event selections (from HERMES paper)
+      if (event->GetTrueY()>0.85) flag_event_select = false;
+      if (event->GetTrueW2()<4) flag_event_select = false;
+      if (event->GetTrueNu()<6) flag_event_select = false;
+    }
+    else
+    { // CLAS event selection (to be implemented)
 
-    int iQ2bin = -9999, ixbin = -9999;
+    }
+
+    if (!flag_event_select) continue;
+
+    int iQ2bin = -9999, ixbin = -9999, inubin = -9999;
     for (int iQ2 = 0; iQ2 < Q2bin-1; ++iQ2)
     { // NB: do not loop the last bin which is inclusive
       if (Q2>=Q2_lo[iQ2] && Q2<Q2_hi[iQ2]) iQ2bin = iQ2;
@@ -229,55 +375,91 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
     { // NB: do not loop the last bin which is inclusive
       if (x>=x_lo[ix] && x<x_hi[ix]) ixbin = ix;
     } 
+    for (int inu = 0; inu < nubin-1; ++inu)
+    { // NB: do not loop the last bin which is inclusive
+      if (nu>=nu_lo[inu] && nu<nu_hi[inu]) inubin = inu;
+    } 
 
     if (iQ2bin>=0 && ixbin>=0)
     {
-      h1d_nevt[iQ2bin][ixbin]->Fill(1);
-      h1d_nevt[iQ2bin][xbin-1]->Fill(1);
-      h1d_nevt[Q2bin-1][ixbin]->Fill(1);
-      h1d_nevt[Q2bin-1][xbin-1]->Fill(1);
+      h1d_nevt_in_x[iQ2bin][ixbin]->Fill(1);
+      h1d_nevt_in_x[iQ2bin][xbin-1]->Fill(1);
+      h1d_nevt_in_x[Q2bin-1][ixbin]->Fill(1);
+      h1d_nevt_in_x[Q2bin-1][xbin-1]->Fill(1);
+
+      if ( event_w_charm(event,gen_type) )
+      {
+        h1d_nevt_w_charm_in_x[iQ2bin][ixbin]->Fill(1);
+        h1d_nevt_w_charm_in_x[iQ2bin][xbin-1]->Fill(1);
+        h1d_nevt_w_charm_in_x[Q2bin-1][ixbin]->Fill(1);
+        h1d_nevt_w_charm_in_x[Q2bin-1][xbin-1]->Fill(1);
+      }
+    } 
+
+    if (iQ2bin>=0 && inubin>=0)
+    {
+      h1d_nevt_in_nu[iQ2bin][inubin]->Fill(1);
+      h1d_nevt_in_nu[iQ2bin][nubin-1]->Fill(1);
+      h1d_nevt_in_nu[Q2bin-1][inubin]->Fill(1);
+      h1d_nevt_in_nu[Q2bin-1][nubin-1]->Fill(1);
+
+      if ( event_w_charm(event,gen_type) )
+      {
+        h1d_nevt_w_charm_in_nu[iQ2bin][inubin]->Fill(1);
+        h1d_nevt_w_charm_in_nu[iQ2bin][nubin-1]->Fill(1);
+        h1d_nevt_w_charm_in_nu[Q2bin-1][inubin]->Fill(1);
+        h1d_nevt_w_charm_in_nu[Q2bin-1][nubin-1]->Fill(1);
+      }
     } 
     
-    ana_D0.SetQ2True(event->GetQ2());
-    ana_D0.SetXTrue(event->GetX());
-    ana_D0.SetNuTrue(event->GetNu());
+    ana_D0.SetQ2True(event->GetTrueQ2());
+    ana_D0.SetXTrue(event->GetTrueX());
+    ana_D0.SetNuTrue(event->GetTrueNu());
     ana_D0.FillGenKin(event);
 
-    ana_Lc.SetQ2True(event->GetQ2());
-    ana_Lc.SetXTrue(event->GetX());
-    ana_Lc.SetNuTrue(event->GetNu());
+    ana_Lc.SetQ2True(event->GetTrueQ2());
+    ana_Lc.SetXTrue(event->GetTrueX());
+    ana_Lc.SetNuTrue(event->GetTrueNu());
     ana_Lc.FillGenKin(event);
 
-    ana_charged_pion.SetQ2True(event->GetQ2());
-    ana_charged_pion.SetXTrue(event->GetX());
-    ana_charged_pion.SetNuTrue(event->GetNu());
+    ana_charged_pion.SetQ2True(event->GetTrueQ2());
+    ana_charged_pion.SetXTrue(event->GetTrueX());
+    ana_charged_pion.SetNuTrue(event->GetTrueNu());
     ana_charged_pion.FillGenKin(event);
 
-    ana_neutral_pion.SetQ2True(event->GetQ2());
-    ana_neutral_pion.SetXTrue(event->GetX());
-    ana_neutral_pion.SetNuTrue(event->GetNu());
+    ana_neutral_pion.SetQ2True(event->GetTrueQ2());
+    ana_neutral_pion.SetXTrue(event->GetTrueX());
+    ana_neutral_pion.SetNuTrue(event->GetTrueNu());
     ana_neutral_pion.FillGenKin(event);
 
-    ana_charged_kaon.SetQ2True(event->GetQ2());
-    ana_charged_kaon.SetXTrue(event->GetX());
-    ana_charged_kaon.SetNuTrue(event->GetNu());
+    ana_charged_kaon.SetQ2True(event->GetTrueQ2());
+    ana_charged_kaon.SetXTrue(event->GetTrueX());
+    ana_charged_kaon.SetNuTrue(event->GetTrueNu());
     ana_charged_kaon.FillGenKin(event);
 
-    ana_proton.SetQ2True(event->GetQ2());
-    ana_proton.SetXTrue(event->GetX());
-    ana_proton.SetNuTrue(event->GetNu());
+    ana_proton.SetQ2True(event->GetTrueQ2());
+    ana_proton.SetXTrue(event->GetTrueX());
+    ana_proton.SetNuTrue(event->GetTrueNu());
     ana_proton.FillGenKin(event);
   }
 
   TFile* fout = new TFile(outFile,"recreate");
+  h2d_logx_logQ2->Write();
   for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
   {
     for (int ix = 0; ix < xbin; ++ix)
     {
-      h1d_nevt[iQ2][ix]->Write();
+      h1d_nevt_in_x[iQ2][ix]->Write();
+      h1d_nevt_w_charm_in_x[iQ2][ix]->Write();
+    }
+
+    for (int inu = 0; inu < nubin; ++inu)
+    {
+      h1d_nevt_in_nu[iQ2][inu]->Write();
+      h1d_nevt_w_charm_in_nu[iQ2][inu]->Write();
     }
   }
-  h2d_logx_logQ2->Write();
+  
   ana_D0.Write();
   ana_Lc.Write();
   ana_charged_pion.Write();
