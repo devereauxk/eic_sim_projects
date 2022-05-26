@@ -143,7 +143,7 @@ class PlotHadron
         {
           // e+p
           h1d_nevt_ep[iQ2][ivar] = (TH1D*)fin_ep->Get(Form("h1d_nevt_in_%s_%d_%d",var_abbr,iQ2,ivar));
-          h1d_nevt_ep[iQ2][ivar]->SetName(Form("h1d_nevt_ep_Q2%s_%s%d%d",sys_abbr[sys_ep_option],energy_abbr[energy_ep_option],var_abbr,iQ2,,ivar));
+          h1d_nevt_ep[iQ2][ivar]->SetName(Form("h1d_nevt_ep_Q2%s_%s%d%d",sys_abbr[sys_ep_option],energy_abbr[energy_ep_option],var_abbr,iQ2,ivar));
 
           h1d_nevt_w_charm_ep[iQ2][ivar] = (TH1D*)fin_ep->Get(Form("h1d_nevt_w_charm_in_%s_%d_%d",var_abbr,iQ2,ivar));
           h1d_nevt_w_charm_ep[iQ2][ivar]->SetName(Form("h1d_nevt_w_charm_ep_Q2%s_%s%d%d",sys_abbr[sys_ep_option],energy_abbr[energy_ep_option],var_abbr,iQ2,ivar));
