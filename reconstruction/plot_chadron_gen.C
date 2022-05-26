@@ -117,7 +117,7 @@ class PlotHadron
           var_lo[ivar] = x_lo[ivar];
           var_hi[ivar] = x_hi[ivar];
         }
-      } 
+      }
       else
       {
         varbin = nubin;
@@ -129,7 +129,7 @@ class PlotHadron
           var_hi[ivar] = nu_hi[ivar];
         }
       }
-      
+
       cout << var_abbr << " bins" << endl;
     }
 
@@ -252,7 +252,7 @@ class PlotHadron
           var_mid_err[ivar] = 0.5*(nu_hi[ivar]-nu_lo[ivar]);
         }
       }
-      
+
       for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
       {
         double incl_ratio[MaxVarbin] = {0};
@@ -323,7 +323,7 @@ class PlotHadron
           TLatex* tl = new TLatex();
           tl->SetTextAlign(11);
           tl->SetTextSize(0.03);
-          tl->DrawLatexNDC(0.21,0.85,Form("%.0f < Q^{2} < %.0f GeV^{2}, %.0e < %s < %.0e, 0.05 < y < 0.8",Q2_lo[iQ2],Q2_hi[iQ2],var_latex,var_lo[ivar],var_hi[ivar]));
+          tl->DrawLatexNDC(0.21,0.85,Form("%.0f < Q^{2} < %.0f GeV^{2}, 0.05 < y < 0.8",Q2_lo[iQ2],Q2_hi[iQ2],var_latex));
 
           gROOT->ProcessLine( Form("cc%d->Print(\"figs/event_ratio_%d.pdf\")", cno-1, iQ2) );
 
@@ -331,11 +331,6 @@ class PlotHadron
           delete leg;
           delete tl;
         }
-      }
-      
-      for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
-      {
-        
       }
     }
 
@@ -360,7 +355,7 @@ class PlotHadron
             myhset(htemp,1.2,1.6,0.05,0.045);
 
             h2d_hadron_z_vs_eta_gen_ep[iQ2][ivar]->Draw("samecolz");
-            
+
             TLatex* tl = new TLatex();
             tl->SetTextAlign(11);
             tl->SetTextSize(0.03);
@@ -388,7 +383,7 @@ class PlotHadron
             myhset(htemp,1.2,1.6,0.05,0.045);
 
             h2d_hadron_pt_vs_eta_gen_ep[iQ2][ivar]->Draw("samecolz");
-            
+
             TLatex* tl = new TLatex();
             tl->SetTextAlign(11);
             tl->SetTextSize(0.03);
@@ -401,7 +396,7 @@ class PlotHadron
             delete tl;
           }
         }
-      }  
+      }
     }
 
     void SliceInEta()
@@ -489,7 +484,7 @@ class PlotHadron
               h1d_hadron_z_in_eta_gen_eA[iQ2][ivar][ieta]->SetMarkerColor(kRed);
               h1d_hadron_z_in_eta_gen_eA[iQ2][ivar][ieta]->Draw("same");
               leg->AddEntry(h1d_hadron_z_in_eta_gen_eA[iQ2][ivar][ieta],Form("%s @ %s",sys_name[sys_eA_option],energy_name[energy_eA_option]),"lp");
-              
+
               leg->Draw("same");
 
               TLatex* tl = new TLatex();
@@ -524,7 +519,7 @@ class PlotHadron
               h1d_hadron_z_in_eta_gen_ratio[iQ2][ivar][ieta]->SetLineColor(kRed);
               h1d_hadron_z_in_eta_gen_ratio[iQ2][ivar][ieta]->SetMarkerColor(kRed);
               h1d_hadron_z_in_eta_gen_ratio[iQ2][ivar][ieta]->Draw("same");
-              
+
               TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
               l1.SetLineStyle(7);
               l1.SetLineColor(kGray+2);
@@ -540,10 +535,9 @@ class PlotHadron
               gROOT->ProcessLine( Form("cc%d->Print(\"figs/%s_ratio_z_in_eta_%d_%d_%d.pdf\")", cno-1, hadron_abbr, iQ2, ivar, ieta) );
 
               delete htemp;
-              delete leg;
               delete tl;
             }
-          }     
+          }
         }
       }
     }
@@ -720,7 +714,7 @@ class PlotHadron
             tl->DrawLatexNDC(0.21,0.85,Form("%.0f < Q^{2} < %.0f GeV^{2}, %.0e < %s < %.0e, 0.05 < y < 0.8",Q2_lo[iQ2],Q2_hi[iQ2],var_latex,var_lo[ivar],var_hi[ivar]));
             tl->DrawLatexNDC(0.21,0.80,Form("%s @ %s / %s @ %s",sys_name[sys_eA_option],energy_name[energy_eA_option],sys_name[sys_ep_option],energy_name[energy_ep_option]));
 
-            gROOT->ProcessLine( Form("cc%d->Print(\"figs/%s_ratio_z_in_eta_diff_eta_%d_%d.pdf\")", cno-1, hadron_abbr, ivar, ieta) );
+            gROOT->ProcessLine( Form("cc%d->Print(\"figs/%s_ratio_z_in_eta_diff_eta_%d.pdf\")", cno-1, hadron_abbr, ivar) );
 
             delete htemp;
             delete leg;
@@ -751,9 +745,9 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
 {
   mcs(-1);
 
-  TFile* fin_ep = new TFile(inFile_ep,"READ"); 
-  TFile* fin_eA = new TFile(inFile_eA,"READ"); 
-  
+  TFile* fin_ep = new TFile(inFile_ep,"READ");
+  TFile* fin_eA = new TFile(inFile_eA,"READ");
+
   int var_option = 0; // 0: x, 1: nu
   PlotHadron plot_pion(211,sys_ep_option,energy_ep_option,sys_eA_option,energy_eA_option,var_option);
   plot_pion.ReadEvtHists(fin_ep,fin_eA);
