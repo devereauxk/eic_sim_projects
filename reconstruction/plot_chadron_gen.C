@@ -219,8 +219,7 @@ class PlotHadron
             }
           }
 
-          cout << "ep normalization factor: " << norm_ep << endl;
-          cout << "eA normalization factor: " << norm_eA << endl;
+          //cout << "ep normalization factor: " << norm_ep << " ; eA normalization factor: " << norm_eA << endl;
 
           // e+p
           h2d_hadron_z_vs_eta_gen_ep[iQ2][ivar]->Scale(norm_ep);
