@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
-WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_characterization/ep_10_100_BeAGLE_temp
+WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_v102/ep_10_100_BeAGLE
 
 if [ -z "$1" ]
 then
