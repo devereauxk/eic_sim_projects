@@ -14,8 +14,8 @@ root -l -q "ana_hadron_gen.C(\"$EA_DIR/outForPythiaMode/merged.root\", \"$EA_DIR
 echo "generating histogram plots for ep/eA (writing to figs/ folder)..."
 mkdir figs
 root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 1, 1, \"$EA_DIR/figs/hists_gen.root\")"
-mkdir $EA_DIR/figs
-mv figs/* $EA_DIR/figs
+mkdir $EA_DIR/figs_norm_1
+mv figs/* $EA_DIR/figs_norm_1
 rm -r figs
 
 #echo "converting plot files from pdf to png..."
