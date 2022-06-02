@@ -6,6 +6,6 @@ do
 	if [[ -d "${folder}" ]]
 	then
 		echo "is folder"
-		rm outForPythiaMode/*.txt
+		rm $folder/outForPythiaMode/*.txt
 	fi
 done
