@@ -1,7 +1,10 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
-WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_v102/eAu_10_100_tauforOff_qhat10
+WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo
+
+mkdir $WORKING_DIR/logs
+mkdir $WORKING_DIR/outForPythiaMode
 
 if [ -z "$1" ]
 then
