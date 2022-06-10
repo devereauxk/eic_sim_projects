@@ -743,7 +743,7 @@ class PlotHadron
     }
 };
 
-void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys_ep_option = 0, const int energy_ep_option = 0, const char* inFile_eA = "hists_gen_eA.root", const int sys_eA_option = 0, const int energy_eA_option = 0, const char* outFile = "hists_gen.root")
+void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys_ep_option = 0, const int energy_ep_option = 0, const char* inFile_eA = "hists_gen_eA.root", const int sys_eA_option = 0, const int energy_eA_option = 0, const char* outFile = "hists_gen.root", const int charm_norm_option = 1)
 {
   mcs(-1);
 
@@ -782,7 +782,7 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
   plot_D0.ReadEvtHists(fin_ep,fin_eA);
   plot_D0.ReadHadronHists(fin_ep,fin_eA);
   plot_D0.PlotEvents();
-  plot_D0.SetNorm(1);
+  plot_D0.SetNorm(charm_norm_option);
   // plot_D0.Plot2D();
   plot_D0.SliceInEta();
   plot_D0.Plot1D();
@@ -792,7 +792,7 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
   plot_Lc.ReadEvtHists(fin_ep,fin_eA);
   plot_Lc.ReadHadronHists(fin_ep,fin_eA);
   plot_Lc.PlotEvents();
-  plot_Lc.SetNorm(1);
+  plot_Lc.SetNorm(charm_norm_option);
   // plot_Lc.Plot2D();
   plot_Lc.SliceInEta();
   plot_Lc.Plot1D();
