@@ -33,12 +33,10 @@ PARDECAY           2
 L-TAG           1e-9      1.00      10.0    20000.0       0.0      6.29
 *VDM-PAR2           1        1         0
 * model selection
-MODEL                                                                 PYTHIA
-*PYQM_CTRL E*  Pt model #gluons Supfac SW    iet
-PYQM-CTRL  0.0    1.0    1.0    1.0    1.0   0.25
 USERSET         11         9.0
+MODEL                                                                 PYTHIA
 * if PYTHIA model specify pythia input cards
-PY-INPUT                                                              S1ALL003
+PY-INPUT                                                              S3ALL003
 * PHOJET-specific input
 * ---------------------
 * The following lines control the event-generation with PHOJET for

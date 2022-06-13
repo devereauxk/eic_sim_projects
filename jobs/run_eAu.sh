@@ -35,7 +35,7 @@ source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0
 #ln -s /eic/data/baraks/BeAGLE/nuclear.bin
 #ln -s /eic/data/baraks/BeAGLE/make_tree.C
 ln -s ${WORKING_DIR}/inputFiles/eAu.inp
-ln -s ${WORKING_DIR}/inputFiles/S1ALL003
+ln -s ${WORKING_DIR}/inputFiles/S3ALL003
 ln -s ${WORKING_DIR}/nuclear.bin
 ln -s ${WORKING_DIR}/make_tree.C
 
