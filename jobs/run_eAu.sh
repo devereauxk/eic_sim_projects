@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
-WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_v102/eAu_10_100_equivalent
+WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_v101/eAu_10_100_true_taufor_05
 
 if [ -z "$1" ]
 then
@@ -44,7 +44,8 @@ ln -s ${WORKING_DIR}/make_tree.C
 echo "start running in directory $PWD"
 
 echo "Running Job Number $1"
-$BEAGLESYS/BeAGLE < eAu.inp > eAu.log
+#$BEAGLESYS/BeAGLE < eAu.inp > eAu.log
+$BEAGLESYS/BeAGLE-v1.00.00 < eAu.inp > eAu.log
 echo "Completed Simulation!!!"
 
 echo ""
