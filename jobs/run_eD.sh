@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
+WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_v102/eD_27.6_0_tauforOff_nlo
+
 if [ -z "$1" ]
 then
         echo "No job number set."
@@ -21,16 +23,16 @@ mkdir $DIR
 cd $DIR
 
 #Environmental Variables
-export BEAGLESYS="${EICDIRECTORY}/PACKAGES/BeAGLE"
+export BEAGLESYS=/afs/rhic.bnl.gov/eic/PACKAGES/BeAGLE
 export LHAPDF5="${EICDIRECTORY}/gcc-8.3/lib"
 export LD_LIBRARY_PATH="${LHAPDF5}:$LD_LIBRARY_PATH"
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
 
 #Soft links to necessary files
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eD_18_110/inputFiles/eD.inp
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eD_18_110/inputFiles/S1ALL003
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eD_18_110/nuclear.bin
-ln -s /eic/u/kdevereaux/work/multiplicity/condor/eD_18_110/make_tree.C
+ln -s ${WORKING_DIR}/inputFiles/eD.inp
+ln -s ${WORKING_DIR}/inputFiles/S1ALL003
+ln -s ${WORKING_DIR}/nuclear.bin
+ln -s ${WORKING_DIR}/make_tree.C
 
 #Run simulation
 echo "start running in directory $PWD"
@@ -48,7 +50,7 @@ echo ""
 
 #Move output files and cleanup
 echo "Cleaning Up..."
-mv -v eD.txt /eic/u/kdevereaux/work/multiplicity/condor/eD_18_110/outForPythiaMode/eD_${INPUT}.txt
-mv -v eD.root /eic/u/kdevereaux/work/multiplicity/condor/eD_18_110/outForPythiaMode/eD_${INPUT}.root
-mv -v eD.log /eic/u/kdevereaux/work/multiplicity/condor/eD_18_110/logs/eD_${INPUT}.log
+mv -v eD.txt ${WORKING_DIR}/outForPythiaMode/eD_${INPUT}.txt
+mv -v eD.root ${WORKING_DIR}/outForPythiaMode/eD_${INPUT}.root
+mv -v eD.log ${WORKING_DIR}/logs/eD_${INPUT}.log
 echo "DONE!!!"
