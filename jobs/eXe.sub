@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_eXe.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eXejob.out.$(Process)
+Error          = jobout/eXejob.err.$(Process)
+Log            = jobout/eXejob.log.$(Process)
+Queue 100
