@@ -5,7 +5,7 @@ F2PY,1998         ! F2-Model, R-Parametrisation
 1                 ! Pythia-Model = 0 standard GVMD generation in Pythia-x and Q2; = 1 GVMD model with generation in y and Q2 as for radgen
 1,1               ! A-Tar and Z-Tar
 1                 ! switch for shadowing: genShd
-101		  ! USED LO - nuclear pdf parameter2: correction order x*100+y x= 1:LO, 2:NLO y:error set
+201		  ! USED LO - nuclear pdf parameter2: correction order x*100+y x= 1:LO, 2:NLO y:error set
 1		    ! switch for quenching 1:on, 0:off
 0.5	    ! QHAT value
 ! FSEED 1234567 ! only use fixed seed for debugging
