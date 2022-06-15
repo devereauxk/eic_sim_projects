@@ -1,6 +1,7 @@
 R__LOAD_LIBRARY(libeicsmear);
 
-#include "bins.h"
+//#include "bins.h"
+#include "bins_HERMES.h"
 
 const double degree = 180./TMath::Pi();
 
@@ -29,7 +30,7 @@ class hadron_gen
 
     TH2D* h2d_hadron_pt_vs_eta_gen_in_x[Q2bin][xbin];
     TH2D* h2d_hadron_z_vs_eta_gen_in_x[Q2bin][xbin];
-    
+
     TH2D* h2d_hadron_pt_vs_eta_gen_in_nu[Q2bin][nubin];
     TH2D* h2d_hadron_z_vs_eta_gen_in_nu[Q2bin][nubin];
 
@@ -117,19 +118,19 @@ class hadron_gen
     }
 
     void SetQ2True(double _Q2_true)
-    { 
-      Q2_true = _Q2_true; 
+    {
+      Q2_true = _Q2_true;
 
       iQ2bin = -9999;
       for (int iQ2 = 0; iQ2 < Q2bin-1; ++iQ2)
       { // NB: do not loop the last bin which is inclusive
         if (Q2_true>=Q2_lo[iQ2] && Q2_true<Q2_hi[iQ2]) iQ2bin = iQ2;
-      }      
+      }
     }
 
     void SetXTrue(double _x_true)
-    { 
-      x_true = _x_true; 
+    {
+      x_true = _x_true;
 
       ixbin = -9999;
       for (int ix = 0; ix < xbin-1; ++ix)
@@ -189,7 +190,7 @@ class hadron_gen
           h2d_hadron_z_vs_eta_gen_in_x[Q2bin-1][ixbin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_pt_vs_eta_gen_in_x[Q2bin-1][xbin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_z_vs_eta_gen_in_x[Q2bin-1][xbin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
-        } 
+        }
 
         if (iQ2bin>=0 && inubin>=0)
         {
@@ -203,7 +204,7 @@ class hadron_gen
           h2d_hadron_z_vs_eta_gen_in_nu[Q2bin-1][inubin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_pt_vs_eta_gen_in_nu[Q2bin-1][nubin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_z_vs_eta_gen_in_nu[Q2bin-1][nubin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
-        } 
+        }
       }
     }
 
@@ -267,12 +268,12 @@ bool event_w_charm(erhic::EventPythia* event, int gen_type)
 
 void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, int data_type = 0, int gen_type = 0)
 {
-  cout << "Data Type: "; 
+  cout << "Data Type: ";
   if (data_type==0) cout << "EIC" << endl;
   else if (data_type==1) cout << "HERMES" << endl;
   else cout << "CLAS" << endl;
 
-  cout << "Generator Type: "; 
+  cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
   else cout << "BeAGLE" << endl;
 
@@ -303,10 +304,10 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
     for (int ix = 0; ix < xbin; ++ix)
     {
       h1d_nevt_in_x[iQ2][ix] = new TH1D(Form("h1d_nevt_in_x_%d_%d",iQ2,ix),"event counter",1,0.5,1.5);
-      h1d_nevt_in_x[iQ2][ix]->Sumw2(); 
+      h1d_nevt_in_x[iQ2][ix]->Sumw2();
 
       h1d_nevt_w_charm_in_x[iQ2][ix] = new TH1D(Form("h1d_nevt_w_charm_in_x_%d_%d",iQ2,ix),"event counter",1,0.5,1.5);
-      h1d_nevt_w_charm_in_x[iQ2][ix]->Sumw2(); 
+      h1d_nevt_w_charm_in_x[iQ2][ix]->Sumw2();
     }
   }
 
@@ -317,10 +318,10 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
     for (int inu = 0; inu < nubin; ++inu)
     {
       h1d_nevt_in_nu[iQ2][inu] = new TH1D(Form("h1d_nevt_in_nu_%d_%d",iQ2,inu),"event counter",1,0.5,1.5);
-      h1d_nevt_in_nu[iQ2][inu]->Sumw2(); 
+      h1d_nevt_in_nu[iQ2][inu]->Sumw2();
 
       h1d_nevt_w_charm_in_nu[iQ2][inu] = new TH1D(Form("h1d_nevt_w_charm_in_nu_%d_%d",iQ2,inu),"event counter",1,0.5,1.5);
-      h1d_nevt_w_charm_in_nu[iQ2][inu]->Sumw2(); 
+      h1d_nevt_w_charm_in_nu[iQ2][inu]->Sumw2();
     }
   }
 
@@ -331,11 +332,11 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
   hadron_gen ana_neutral_pion(111);
   hadron_gen ana_charged_kaon(321);
   hadron_gen ana_proton(2212);
-  
+
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
   for(Int_t ievt = 0; ievt < nevt; ievt++)
-  {    
+  {
     if (ievt%10000==0) cout<<"Processing event = "<<ievt<<"/"<<nevt<<endl;
 
     tree->GetEntry(ievt);
@@ -370,15 +371,15 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
     for (int iQ2 = 0; iQ2 < Q2bin-1; ++iQ2)
     { // NB: do not loop the last bin which is inclusive
       if (Q2>=Q2_lo[iQ2] && Q2<Q2_hi[iQ2]) iQ2bin = iQ2;
-    } 
+    }
     for (int ix = 0; ix < xbin-1; ++ix)
     { // NB: do not loop the last bin which is inclusive
       if (x>=x_lo[ix] && x<x_hi[ix]) ixbin = ix;
-    } 
+    }
     for (int inu = 0; inu < nubin-1; ++inu)
     { // NB: do not loop the last bin which is inclusive
       if (nu>=nu_lo[inu] && nu<nu_hi[inu]) inubin = inu;
-    } 
+    }
 
     if (iQ2bin>=0 && ixbin>=0)
     {
@@ -394,7 +395,7 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
         h1d_nevt_w_charm_in_x[Q2bin-1][ixbin]->Fill(1);
         h1d_nevt_w_charm_in_x[Q2bin-1][xbin-1]->Fill(1);
       }
-    } 
+    }
 
     if (iQ2bin>=0 && inubin>=0)
     {
@@ -410,8 +411,8 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
         h1d_nevt_w_charm_in_nu[Q2bin-1][inubin]->Fill(1);
         h1d_nevt_w_charm_in_nu[Q2bin-1][nubin-1]->Fill(1);
       }
-    } 
-    
+    }
+
     ana_D0.SetQ2True(event->GetTrueQ2());
     ana_D0.SetXTrue(event->GetTrueX());
     ana_D0.SetNuTrue(event->GetTrueNu());
@@ -459,7 +460,7 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
       h1d_nevt_w_charm_in_nu[iQ2][inu]->Write();
     }
   }
-  
+
   ana_D0.Write();
   ana_Lc.Write();
   ana_charged_pion.Write();
