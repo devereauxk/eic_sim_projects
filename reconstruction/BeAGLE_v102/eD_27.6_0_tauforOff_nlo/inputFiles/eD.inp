@@ -30,7 +30,7 @@ PARDECAY           2
 *DIFFRACT         -3         0         0         0
 * lepton tagger to sample events with certain kinematics cuts
 *               yMin      yMax    Q2Min    Q2Max   theta_Min theta_Max
-L-TAG           1e-9      1.00      10.0    20000.0       0.0      6.29
+L-TAG           1e-9      1.00      1.0    20000.0       0.0      6.29
 *VDM-PAR2           1        1         0
 * model selection
 MODEL                                                                 PYTHIA

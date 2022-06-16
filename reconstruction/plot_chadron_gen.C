@@ -779,6 +779,7 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
   // plot_proton.Plot1D();
   // plot_proton.PlotComparison();
 
+  /*
   PlotHadron plot_D0(421,sys_ep_option,energy_ep_option,sys_eA_option,energy_eA_option,var_option);
   plot_D0.ReadEvtHists(fin_ep,fin_eA);
   plot_D0.ReadHadronHists(fin_ep,fin_eA);
@@ -797,7 +798,7 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
   // plot_Lc.Plot2D();
   plot_Lc.SliceInEta();
   plot_Lc.Plot1D();
-  plot_Lc.PlotComparison();
+  plot_Lc.PlotComparison();*/
 
   TFile* fout = new TFile(outFile,"recreate");
   plot_pion.WriteHadronHists(fout);
