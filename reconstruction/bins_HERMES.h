@@ -19,11 +19,15 @@ static double Q2_hi[Q2bin] = {5E0, 1E1, 5E1, 5E1};
 const int Q2_color[Q2bin] = {kGreen+1, kBlue, kOrange+1, kRed};
 
 const int xbin = 4; // last bin inclusive
-static double x_lo[xbin] = {1E-3, 1E-2, 1E-1, 1E-3};
-static double x_hi[xbin] = {1E-2, 1E-1, 1E0, 1E0};
+//static double x_lo[xbin] = {1E-3, 1E-2, 1E-1, 1E-3};
+//static double x_hi[xbin] = {1E-2, 1E-1, 1E0, 1E0};
+static double x_lo[xbin] = {1E-3, 1E-2, 1E-1, 0.023};
+static double x_hi[xbin] = {1E-2, 1E-1, 1E0, 0.8};
 const int x_color[xbin] = {kGreen+1, kBlue, kOrange+1, kRed};
 
 const int nubin = 4; // last bin inclusive
-static double nu_lo[nubin] = {0, 12, 17, 0};
+//static double nu_lo[nubin] = {0, 12, 17, 0};
+//static double nu_hi[nubin] = {12, 17, 23.5, 25};
+static double nu_lo[nubin] = {0, 12, 17, 6};
 static double nu_hi[nubin] = {12, 17, 23.5, 25};
 const int nu_color[nubin] = {kGreen+1, kBlue, kOrange+1, kRed};
