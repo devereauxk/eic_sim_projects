@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_ePb.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/ePbjob.out.$(Process)
+Error          = jobout/ePbjob.err.$(Process)
+Log            = jobout/ePbjob.log.$(Process)
+Queue 100
