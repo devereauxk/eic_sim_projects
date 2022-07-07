@@ -1,5 +1,5 @@
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/eCu_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/ePb_10_100_qhat0_nlo
 #EA_DIR=./BeAGLE_v102/eXe_27.6_0_tauforOff_nlo
 
 
