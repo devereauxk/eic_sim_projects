@@ -12,18 +12,18 @@ EA_DIR=./BeAGLE_v102/eC_10_100_qhat0_nlo
 #echo "generating hadron histograms for eA (writing to ana_merged.root file)..."
 #root -l -q "ana_hadron_gen.C(\"$EA_DIR/outForPythiaMode/merged.root\", \"$EA_DIR/outForPythiaMode/ana_merged.root\", 0, 0, 1)"
 
-echo "generating histogram plots for eA/ep (writing to figs/ folder)..."
-mkdir figs
-mkdir $EA_DIR/figs_norm_0
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 4, 1, \"$EA_DIR/figs_norm_0/hists_gen.root\", 0)"
-mv figs/* $EA_DIR/figs_norm_0
-rm -r figs
-
+#echo "generating histogram plots for eA/ep (writing to figs/ folder)..."
 #mkdir figs
-#mkdir $EA_DIR/figs_norm_1
-#root -l -q "plot_chadron_gen.C(\"$EP_DIR/outForPythiaMode/ana_merged.root\", 6, 5, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 8, 5, \"$EA_DIR/figs_norm_1/hists_gen.root\", 1)"
-#mv figs/* $EA_DIR/figs_norm_1
+#mkdir $EA_DIR/figs_norm_0
+#root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 4, 1, \"$EA_DIR/figs_norm_0/hists_gen.root\", 0)"
+#mv figs/* $EA_DIR/figs_norm_0
 #rm -r figs
+
+mkdir figs
+mkdir $EA_DIR/figs_norm_1
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outForPythiaMode/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 4, 1, \"$EA_DIR/figs_norm_1/hists_gen.root\", 1)"
+mv figs/* $EA_DIR/figs_norm_1
+rm -r figs
 
 #echo "converting plot files from pdf to png..."
 #cp topng.sh $EA_DIR/figs
