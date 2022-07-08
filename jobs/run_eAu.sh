@@ -44,8 +44,8 @@ ln -s ${WORKING_DIR}/make_tree.C
 echo "start running in directory $PWD"
 
 echo "Running Job Number $1"
-#$BEAGLESYS/BeAGLE < eAu.inp > eAu.log
-$BEAGLESYS/BeAGLE-v1.00.00 < eAu.inp > eAu.log
+$BEAGLESYS/BeAGLE < eAu.inp > eAu.log
+#$BEAGLESYS/BeAGLE-v1.00.00 < eAu.inp > eAu.log
 echo "Completed Simulation!!!"
 
 echo ""
