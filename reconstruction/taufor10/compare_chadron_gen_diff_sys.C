@@ -80,7 +80,7 @@ void plot_comparison(const int energy_eA_option = 3)
           tl->SetTextSize(0.03);
           tl->DrawLatexNDC(0.19,0.17,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8, |#eta|<3.5");
 
-          gROOT->ProcessLine( Form("cc%d->Print(\"figs/D0_ratio_z_in_eta_%d_%d_5d.pdf\")", cno-1, iQ2, ix, ieta) );
+          gROOT->ProcessLine( Form("cc%d->Print(\"figs/D0_ratio_z_in_eta_%d_%d_%d.pdf\")", cno-1, iQ2, ix, ieta) );
         }
 
         mcs(cno++);
@@ -123,7 +123,7 @@ void plot_comparison(const int energy_eA_option = 3)
           tl->SetTextSize(0.03);
           tl->DrawLatexNDC(0.19,0.17,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8, |#eta|<3.5");
 
-          gROOT->ProcessLine( Form("cc%d->Print(\"figs/Lc_ratio_z_in_eta_%d_%d_5d.pdf\")", cno-1, iQ2, ix, ieta) );
+          gROOT->ProcessLine( Form("cc%d->Print(\"figs/Lc_ratio_z_in_eta_%d_%d_%d.pdf\")", cno-1, iQ2, ix, ieta) );
         }
 
         mcs(cno++);
@@ -166,7 +166,7 @@ void plot_comparison(const int energy_eA_option = 3)
           tl->SetTextSize(0.03);
           tl->DrawLatexNDC(0.19,0.17,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8, |#eta|<3.5");
 
-          gROOT->ProcessLine( Form("cc%d->Print(\"figs/pion_ratio_z_in_eta_%d_%d_5d.pdf\")", cno-1, iQ2, ix, ieta) );
+          gROOT->ProcessLine( Form("cc%d->Print(\"figs/pion_ratio_z_in_eta_%d_%d_%d.pdf\")", cno-1, iQ2, ix, ieta) );
         }
       }
     }
