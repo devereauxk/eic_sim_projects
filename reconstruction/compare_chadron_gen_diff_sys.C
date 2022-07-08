@@ -4,10 +4,17 @@
 using namespace std;
 unsigned int verbosity = 0;
 
+/*
 const int sys_bins = 5;
 const char* sys_name[sys_bins] = {"e+p", "e+Au", "e+Cu", "e+Ca", "e+C"};
 const char* sys_abbr[sys_bins] = {"ep", "eAu", "eCu", "eCa", "eC"};
 const int sys_color[sys_bins] = {kBlack, kRed, kOrange+1, kGreen+1, kBlue};
+*/
+
+const int sys_bins = 4;
+const char* sys_name[sys_bins] = {"e+C", "e+Cu", "e+Au", "e+Pb"};
+const char* sys_abbr[sys_bins] = {"eC", "eCu", "eAu", "ePb"};
+const int sys_color[sys_bins] = {kBlack, kRed, kOrange+1, kGreen+1};
 
 const int energy_bins = 5;
 const char* energy_name[energy_bins] = {"5x41 GeV", "10x100 GeV", "10x110 GeV", "18x110 GeV", "18x275 GeV"};
@@ -173,7 +180,7 @@ void compare_chadron_gen_diff_sys(const int energy_eA_option = 3)
   TFile* fin[sys_bins] = {0};
   for (int isys = 1; isys < sys_bins; ++isys)
   { // skipping e+p system
-    fin[isys] = new TFile(Form("hists_gen_%s.root",sys_abbr[isys]),"READ"); 
+    fin[isys] = new TFile(Form("hists_gen_%s.root",sys_abbr[isys]),"READ");
     for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
     {
       for (int ix = 0; ix < xbin; ++ix)
