@@ -198,6 +198,8 @@ void compare_chadron_gen_diff_sys(const int energy_eA_option = 3)
         }
       }
     }
+
+    cout<<"system #"<<isys<<" works"<<endl;
   }
 
   plot_comparison(energy_eA_option);
