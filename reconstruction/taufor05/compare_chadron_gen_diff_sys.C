@@ -26,7 +26,7 @@ TH1D* h1d_pion_z_in_eta_gen_ratio[sys_bins][Q2bin][xbin][etabin] = {0};
 
 static int cno = 0;
 
-void plot_comparison(const int energy_eA_option = 2)
+void plot_comparison(const int energy_eA_option = 1)
 {
   for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
   {
@@ -173,7 +173,7 @@ void plot_comparison(const int energy_eA_option = 2)
   }
 }
 
-void compare_chadron_gen_diff_sys(const int energy_eA_option = 2)
+void compare_chadron_gen_diff_sys(const int energy_eA_option = 1)
 {
   mcs(-1);
 
