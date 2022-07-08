@@ -2,7 +2,7 @@
 #const char* sys_abbr[sys_bins] = {"ep", "eAu", "eCu", "eCa", "eC", "ep_BeAGLE", "eD", "eAu_pythia", "eXe", "eC_pythia", "ePb"};
 
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/eC_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/eC_10_100_taufor05_qhat0_nlo
 
 echo "generating histogram plots for eA/ep (writing to figs/ folder)..."
 mkdir figs
@@ -16,11 +16,11 @@ mkdir $EA_DIR/figs_norm_1
 root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 4, 1, \"$EA_DIR/figs_norm_1/hists_gen.root\", 1)"
 mv figs/* $EA_DIR/figs_norm_1
 rm -r figs
-cp $EA_DIR/figs_norm_1/hists_gen.root taufor10/hists_gen_eC.root
+cp $EA_DIR/figs_norm_1/hists_gen.root taufor05/hists_gen_eC.root
 
 
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/eCu_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/eCu_10_100_taufor05_qhat0_nlo
 
 echo "generating histogram plots for eA/ep (writing to figs/ folder)..."
 mkdir figs
@@ -34,11 +34,11 @@ mkdir $EA_DIR/figs_norm_1
 root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 2, 1, \"$EA_DIR/figs_norm_1/hists_gen.root\", 1)"
 mv figs/* $EA_DIR/figs_norm_1
 rm -r figs
-cp $EA_DIR/figs_norm_1/hists_gen.root taufor10/hists_gen_eCu.root
+cp $EA_DIR/figs_norm_1/hists_gen.root taufor05/hists_gen_eCu.root
 
 
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/eAu_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo
 
 echo "generating histogram plots for eA/ep (writing to figs/ folder)..."
 mkdir figs
@@ -52,11 +52,11 @@ mkdir $EA_DIR/figs_norm_1
 root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 1, 1, \"$EA_DIR/figs_norm_1/hists_gen.root\", 1)"
 mv figs/* $EA_DIR/figs_norm_1
 rm -r figs
-cp $EA_DIR/figs_norm_1/hists_gen.root taufor10/hists_gen_eAu.root
+cp $EA_DIR/figs_norm_1/hists_gen.root taufor05/hists_gen_eAu.root
 
 
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/ePb_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/ePb_10_100_taufor05_qhat0_nlo
 
 echo "generating histogram plots for eA/ep (writing to figs/ folder)..."
 mkdir figs
@@ -70,4 +70,4 @@ mkdir $EA_DIR/figs_norm_1
 root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 10, 1, \"$EA_DIR/figs_norm_1/hists_gen.root\", 1)"
 mv figs/* $EA_DIR/figs_norm_1
 rm -r figs
-cp $EA_DIR/figs_norm_1/hists_gen.root taufor10/hists_gen_ePb.root
+cp $EA_DIR/figs_norm_1/hists_gen.root taufor05/hists_gen_ePb.root
