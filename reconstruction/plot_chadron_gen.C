@@ -801,6 +801,7 @@ void plot_chadron_gen(const char* inFile_ep = "hists_gen_ep.root", const int sys
   TFile* fout = new TFile(outFile,"recreate");
   plot_pion.WriteHadronHists(fout);
   plot_kaon.WriteHadronHists(fout);
-  // plot_D0.WriteHadronHists(fout);
+  plot_D0.WriteHadronHists(fout);
+  plot_Lc.WriteHadronHists(fout);
   fout->Write();
 }

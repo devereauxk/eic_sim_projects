@@ -187,14 +187,14 @@ void compare_chadron_gen_diff_sys(const int energy_eA_option = 3)
       {
         for (int ieta = 0; ieta < etabin; ++ieta)
         {
-          h1d_D0_z_in_eta_gen_ratio[isys][iQ2][ix][ieta] = (TH1D*)fin[isys]->Get( Form("h1d_D0_z_in_eta_gen_ratio_Q2%d_x%d_eta%d",iQ2,ix,ieta) );
-          h1d_D0_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetName( Form("h1d_D0_z_in_eta_gen_ratio_%s_Q2%d_x%d_eta%d",sys_abbr[isys],iQ2,ix,ieta) );
+          h1d_D0_z_in_eta_gen_ratio[isys][iQ2][ix][ieta] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_z_in_eta_gen_ratio_Q2%d_x%d_eta%d",iQ2,ix,ieta) );
+          h1d_D0_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetName( Form("h1d_hadron_421_z_in_eta_gen_ratio_%s_Q2%d_x%d_eta%d",sys_abbr[isys],iQ2,ix,ieta) );
 
-          h1d_Lc_z_in_eta_gen_ratio[isys][iQ2][ix][ieta] = (TH1D*)fin[isys]->Get( Form("h1d_Lc_z_in_eta_gen_ratio_Q2%d_x%d_eta%d",iQ2,ix,ieta) );
-          h1d_Lc_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetName( Form("h1d_Lc_z_in_eta_gen_ratio_%s_Q2%d_x%d_eta%d",sys_abbr[isys],iQ2,ix,ieta) );
+          h1d_Lc_z_in_eta_gen_ratio[isys][iQ2][ix][ieta] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_4122_z_in_eta_gen_ratio_Q2%d_x%d_eta%d",iQ2,ix,ieta) );
+          h1d_Lc_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetName( Form("h1d_hadron_4122_z_in_eta_gen_ratio_%s_Q2%d_x%d_eta%d",sys_abbr[isys],iQ2,ix,ieta) );
 
-          h1d_pion_z_in_eta_gen_ratio[isys][iQ2][ix][ieta] = (TH1D*)fin[isys]->Get( Form("h1d_pion_z_in_eta_gen_ratio_Q2%d_x%d_eta%d",iQ2,ix,ieta) );
-          h1d_pion_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetName( Form("h1d_pion_z_in_eta_gen_ratio_%s_Q2%d_x%d_eta%d",sys_abbr[isys],iQ2,ix,ieta) );
+          h1d_pion_z_in_eta_gen_ratio[isys][iQ2][ix][ieta] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_211_z_in_eta_gen_ratio_Q2%d_x%d_eta%d",iQ2,ix,ieta) );
+          h1d_pion_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetName( Form("h1d_hadron_211_z_in_eta_gen_ratio_%s_Q2%d_x%d_eta%d",sys_abbr[isys],iQ2,ix,ieta) );
         }
       }
     }
