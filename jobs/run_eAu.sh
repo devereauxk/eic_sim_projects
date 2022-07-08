@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
-WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_v101/eAu_10_100_true_taufor_05
+WORKING_DIR=/eic/u/kdevereaux/work/reconstruction/BeAGLE_v102/eAu_10_100_qhat0_nlo
 
 if [ -z "$1" ]
 then
@@ -24,7 +24,7 @@ cd $DIR
 
 #Environmental Variables
 #export BEAGLESYS="${EICDIRECTORY}/PACKAGES/BeAGLE" # manual overide
-export BEAGLESYS=/afs/rhic.bnl.gov/eic/PACKAGES/BeAGLE
+export BEAGLESYS="${EICDIRECTORY}/PACKAGES/BeAGLE"
 export LHAPDF5="${EICDIRECTORY}/gcc-8.3/lib"
 export LD_LIBRARY_PATH="${LHAPDF5}:$LD_LIBRARY_PATH"
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
@@ -35,7 +35,7 @@ source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0
 #ln -s /eic/data/baraks/BeAGLE/nuclear.bin
 #ln -s /eic/data/baraks/BeAGLE/make_tree.C
 ln -s ${WORKING_DIR}/inputFiles/eAu.inp
-ln -s ${WORKING_DIR}/inputFiles/S3ALL003
+ln -s ${WORKING_DIR}/inputFiles/S1ALL003
 ln -s ${WORKING_DIR}/nuclear.bin
 ln -s ${WORKING_DIR}/make_tree.C
 

@@ -1,5 +1,4 @@
-//#include "bins.h"
-#include "bins_HERMES.h"
+#include "bins.h"
 #include "TStyle.h"
 #include "TGraphErrors.h"
 using namespace std;

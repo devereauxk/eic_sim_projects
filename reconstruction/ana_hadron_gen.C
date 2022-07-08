@@ -1,7 +1,6 @@
 R__LOAD_LIBRARY(libeicsmear);
 
-//#include "bins.h"
-#include "bins_HERMES.h"
+#include "bins.h"
 
 const double degree = 180./TMath::Pi();
 
