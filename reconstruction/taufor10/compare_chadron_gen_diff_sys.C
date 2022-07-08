@@ -60,7 +60,7 @@ void plot_comparison(const int energy_eA_option = 2)
           leg.SetFillStyle(0);
           leg.SetMargin(0.1);
 
-          for (int isys = 1; isys < sys_bins; ++isys)
+          for (int isys = 0; isys < sys_bins; ++isys)
           {
             h1d_D0_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetMarkerColor(sys_color[isys]);
             h1d_D0_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetLineColor(sys_color[isys]);
@@ -103,7 +103,7 @@ void plot_comparison(const int energy_eA_option = 2)
           leg.SetFillStyle(0);
           leg.SetMargin(0.1);
 
-          for (int isys = 1; isys < sys_bins; ++isys)
+          for (int isys = 0; isys < sys_bins; ++isys)
           {
             h1d_Lc_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetMarkerColor(sys_color[isys]);
             h1d_Lc_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetLineColor(sys_color[isys]);
@@ -146,7 +146,7 @@ void plot_comparison(const int energy_eA_option = 2)
           leg.SetFillStyle(0);
           leg.SetMargin(0.1);
 
-          for (int isys = 1; isys < sys_bins; ++isys)
+          for (int isys = 0; isys < sys_bins; ++isys)
           {
             h1d_pion_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetMarkerColor(sys_color[isys]);
             h1d_pion_z_in_eta_gen_ratio[isys][iQ2][ix][ieta]->SetLineColor(sys_color[isys]);
@@ -178,7 +178,7 @@ void compare_chadron_gen_diff_sys(const int energy_eA_option = 2)
   mcs(-1);
 
   TFile* fin[sys_bins] = {0};
-  for (int isys = 1; isys < sys_bins; ++isys)
+  for (int isys = 0; isys < sys_bins; ++isys)
   { // skipping e+p system
     fin[isys] = new TFile(Form("hists_gen_%s.root",sys_abbr[isys]),"READ");
     for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
