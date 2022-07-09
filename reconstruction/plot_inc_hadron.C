@@ -35,10 +35,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 10;
+    float plot_xrange_hi = 4;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 10;
+    float plot_yrange_hi = 4;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
@@ -54,6 +54,60 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sthickness_vs_b.pdf\")", cno-1, outDir) );
+
+    delete htemp;
+    delete tl;
+  }
+
+  mcs(cno++);
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 4;
+
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 4;
+
+    TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp->Draw();
+    htemp->GetXaxis()->SetTitle("thickness [fm]");
+    htemp->GetYaxis()->SetTitle("N_{inc}");
+    myhset(htemp, 1.2, 1.6, 0.05, 0.045);
+
+    h2d_event_Ninc_vs_thickness->Draw("colz");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.03);
+    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sNinc_vs_thickness.pdf\")", cno-1, outDir) );
+
+    delete htemp;
+    delete tl;
+  }
+
+  mcs(cno++);
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 4;
+
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 4;
+
+    TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp->Draw();
+    htemp->GetXaxis()->SetTitle("thickness [fm]");
+    htemp->GetYaxis()->SetTitle("N_{incch}");
+    myhset(htemp, 1.2, 1.6, 0.05, 0.045);
+
+    h2d_event_Nincch_vs_thickness->Draw("colz");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.03);
+    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sNincch_vs_b.pdf\")", cno-1, outDir) );
 
     delete htemp;
     delete tl;
