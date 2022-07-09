@@ -8,7 +8,7 @@ const int verbosity = 1; // use this to control debugging messages
 
 using namespace std;
 
-void inc_hadron_gen(const char* inFile = "merged.root", const char* outFile = "inc_hadron.root", int nevt = 0, int data_type = 0, int gen_type = 0)
+void inc_hadron_gen(const char* inFile = "merged.root", const char* outFile = "inc_merged.root", int nevt = 0, int data_type = 0, int gen_type = 0)
 {
   cout << "Data Type: ";
   if (data_type==0) cout << "EIC" << endl;

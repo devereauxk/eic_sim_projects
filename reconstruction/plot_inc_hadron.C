@@ -32,7 +32,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
   TH2D* h2d_event_Ninc_vs_thickness = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("yx");
   TH2D* h2d_event_Ninc_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("zx");
 
-  mcs(cno++)
+  mcs(cno++);
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 10;
@@ -48,12 +48,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
     h2d_event_thickness_vs_b->Draw("samecolz");
 
-    h2d_hadron_z_vs_eta_gen_ep[iQ2][ivar]->Draw("samecolz");
-
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
     tl->SetTextSize(0.03);
-    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_ep_option],energy_name[energy_ep_option]));
+    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sthickness_vs_b.pdf\")", cno-1, outDir) );
 
