@@ -28,7 +28,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
   TH3D* h3d_event_Nincch_vs_thickness_vs_b = (TH3D*)fin->Get("h3d_event_Nincch_vs_thickness_vs_b");
 
   // 2d plots
-  TH2D* h2d_event_thickness_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("xy");
+  TH2D* h2d_event_thickness_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("yz");
   TH2D* h2d_event_Ninc_vs_thickness = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("yx");
   TH2D* h2d_event_Ninc_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("zx");
 
