@@ -100,14 +100,14 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     htemp->GetYaxis()->SetTitle("N_{incch}");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
-    h2d_event_Nincch_vs_thickness->Draw("colz");
+    h2d_event_Ninc_vs_b->Draw("colz");
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
     tl->SetTextSize(0.03);
     tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sNincch_vs_b.pdf\")", cno-1, outDir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sNinc_vs_b.pdf\")", cno-1, outDir) );
 
     delete htemp;
     delete tl;
