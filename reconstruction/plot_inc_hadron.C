@@ -40,13 +40,13 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_yrange_lo = 0;
     float plot_yrange_hi = 10;
 
-    TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    TH2F* htemp = new TH2F("htemp","",20,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
     htemp->GetXaxis()->SetTitle("thickness [fm]");
     htemp->GetYaxis()->SetTitle("b [fm]");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
-    h2d_event_thickness_vs_b->Draw("samecolz");
+    h2d_event_thickness_vs_b->Draw("colz");
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
