@@ -193,7 +193,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
-    htemp->GetXaxis()->SetTitle("x [fm]");
+    htemp->GetXaxis()->SetTitle("b [fm]");
     htemp->GetYaxis()->SetTitle("thickness [fm]");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
@@ -257,7 +257,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     tl->SetTextSize(0.03);
     tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sNinc_vs_thickness.pdf\")", cno-1, outDir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sNinc_vs_thickness_profile.pdf\")", cno-1, outDir) );
 
     delete htemp;
     delete tl;
