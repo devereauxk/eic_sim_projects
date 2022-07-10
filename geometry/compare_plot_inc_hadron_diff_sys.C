@@ -29,7 +29,7 @@ void standardLatex()
   tl->DrawLatexNDC(0.19,0.17,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8");
 }
 
-void plot_comparison(const int energy_option = 1)
+void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
 {
   mcs(cno++);
   {
