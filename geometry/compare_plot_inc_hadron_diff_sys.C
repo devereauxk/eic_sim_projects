@@ -58,7 +58,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
       prof_thickness_in_b[isys]->SetMarkerColor(sys_color[isys]);
       prof_thickness_in_b[isys]->SetLineColor(sys_color[isys]);
       prof_thickness_in_b[isys]->Draw("same");
-      leg.AddEntry(prof_thickness_in_b[isys],Form("%s @ %s", sys_name[isys], energy_name[isys], "p"));
+      leg.AddEntry(prof_thickness_in_b[isys],Form("%s @ %s", sys_name[isys], energy_name[isys]), "p");
     }
 
     leg.Draw("same");
