@@ -28,9 +28,12 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
   TH3D* h3d_event_Nincch_vs_thickness_vs_b = (TH3D*)fin->Get("h3d_event_Nincch_vs_thickness_vs_b");
 
   // 2d plots
-  TH2D* h2d_event_thickness_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("yz");
-  TH2D* h2d_event_Ninc_vs_thickness = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("yx");
-  TH2D* h2d_event_Ninc_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("zx");
+  TH2D* h2d_event_thickness_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("zy");
+  TH2D* h2d_event_Ninc_vs_thickness = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("xy");
+  TH2D* h2d_event_Ninc_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("xz");
+
+  // profiles of 2d plots
+  TProfile* prof_thickness_in_b = (TProfile*)h2d_event_thickness_vs_b->ProfileX("prof_thickness_in_b");
 
   mcs(cno++);
   {
@@ -58,7 +61,35 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     delete htemp;
     delete tl;
   }
+  mcs(cno++)
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 4;
 
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 4;
+
+    TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp->Draw();
+    htemp->GetXaxis()->SetTitle("thickness [fm]");
+    htemp->GetYaxis()->SetTitle("b [fm]");
+    myhset(htemp, 1.2, 1.6, 0.05, 0.045);
+
+    prof_thickness_in_b->Draw();
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.03);
+    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sthickness_vs_b_profile.pdf\")", cno-1, outDir) );
+
+    delete htemp;
+    delete tl;
+  }
+
+
+  /*
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
@@ -96,8 +127,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
-    htemp->GetXaxis()->SetTitle("thickness [fm]");
-    htemp->GetYaxis()->SetTitle("N_{incch}");
+    htemp->GetXaxis()->SetTitle("b [fm]");
+    htemp->GetYaxis()->SetTitle("N_{inc}");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     h2d_event_Ninc_vs_b->Draw("colz");
@@ -111,6 +142,6 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
     delete htemp;
     delete tl;
-  }
+  }*/
 
 }
