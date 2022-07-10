@@ -171,7 +171,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     htemp->GetYaxis()->SetTitle("b [fm]");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
-    h2d_event_thickness_vs_b->Draw("same");
+    h2d_event_thickness_vs_b->Draw("colz");
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
