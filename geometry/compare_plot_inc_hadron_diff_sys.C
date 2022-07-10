@@ -99,6 +99,6 @@ void compare_plot_inc_hadron_diff_sys(const char* inDir = "./", const int energy
     cout<<"system #"<<isys<<" works"<<endl;
   }
 
-  plot_comparison(energy_option);
+  plot_comparison(energy_option, outDir);
 
 }
