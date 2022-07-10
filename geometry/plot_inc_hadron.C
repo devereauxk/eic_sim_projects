@@ -81,8 +81,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     h1d_event_thickness->Draw("same");
     h1d_event_thickness->SetMarkerSize(0.7);
     h1d_event_thickness->SetMarkerStyle(21);
-    h1d_event_thickness->SetMarkerColor(kBlue);
-    h1d_event_thickness->SetLineColor(kBlue);
+    h1d_event_thickness->SetMarkerColor(38);
+    h1d_event_thickness->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -111,8 +111,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     h1d_event_b->Draw("same");
     h1d_event_b->SetMarkerSize(0.7);
     h1d_event_b->SetMarkerStyle(21);
-    h1d_event_b->SetMarkerColor(kBlue);
-    h1d_event_b->SetLineColor(kBlue);
+    h1d_event_b->SetMarkerColor(38);
+    h1d_event_b->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -141,8 +141,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     h1d_event_Ninc->Draw("same");
     h1d_event_Ninc->SetMarkerSize(0.7);
     h1d_event_Ninc->SetMarkerStyle(21);
-    h1d_event_Ninc->SetMarkerColor(kBlue);
-    h1d_event_Ninc->SetLineColor(kBlue);
+    h1d_event_Ninc->SetMarkerColor(38);
+    h1d_event_Ninc->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -171,8 +171,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     h1d_event_Nincch->Draw("same");
     h1d_event_Nincch->SetMarkerSize(0.7);
     h1d_event_Nincch->SetMarkerStyle(21);
-    h1d_event_Nincch->SetMarkerColor(kBlue);
-    h1d_event_Nincch->SetLineColor(kBlue);
+    h1d_event_Nincch->SetMarkerColor(38);
+    h1d_event_Nincch->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -231,8 +231,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     prof_thickness_in_b->Draw("same");
     prof_thickness_in_b->SetMarkerSize(0.7);
     prof_thickness_in_b->SetMarkerStyle(21);
-    prof_thickness_in_b->SetMarkerColor(kBlue);
-    prof_thickness_in_b->SetLineColor(kBlue);
+    prof_thickness_in_b->SetMarkerColor(38);
+    prof_thickness_in_b->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -291,8 +291,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     prof_Ninc_in_thickness->Draw("same");
     prof_Ninc_in_thickness->SetMarkerSize(0.7);
     prof_Ninc_in_thickness->SetMarkerStyle(21);
-    prof_Ninc_in_thickness->SetMarkerColor(kBlue);
-    prof_Ninc_in_thickness->SetLineColor(kBlue);
+    prof_Ninc_in_thickness->SetMarkerColor(38);
+    prof_Ninc_in_thickness->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -348,8 +348,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     prof_Ninc_in_b->Draw("same");
     prof_Ninc_in_b->SetMarkerSize(0.7);
     prof_Ninc_in_b->SetMarkerStyle(21);
-    prof_Ninc_in_b->SetMarkerColor(kBlue);
-    prof_Ninc_in_b->SetLineColor(kBlue);
+    prof_Ninc_in_b->SetMarkerColor(38);
+    prof_Ninc_in_b->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -408,8 +408,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     prof_Nincch_in_thickness->Draw("same");
     prof_Nincch_in_thickness->SetMarkerSize(0.7);
     prof_Nincch_in_thickness->SetMarkerStyle(21);
-    prof_Nincch_in_thickness->SetMarkerColor(kBlue);
-    prof_Nincch_in_thickness->SetLineColor(kBlue);
+    prof_Nincch_in_thickness->SetMarkerColor(38);
+    prof_Nincch_in_thickness->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -465,8 +465,8 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     prof_Nincch_in_b->Draw("same");
     prof_Nincch_in_b->SetMarkerSize(0.7);
     prof_Nincch_in_b->SetMarkerStyle(21);
-    prof_Nincch_in_b->SetMarkerColor(kBlue);
-    prof_Nincch_in_b->SetLineColor(kBlue);
+    prof_Nincch_in_b->SetMarkerColor(38);
+    prof_Nincch_in_b->SetLineColor(38);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);

@@ -53,6 +53,8 @@ void plot_comparison(const int energy_option = 1)
 
     for (int isys = 0; isys < sys_bins; isys++)
     {
+      prof_thickness_in_b[isys]->SetMarkerStyle(21);
+      prof_thickness_in_b[isys]->SetMarkerSize(0.7);
       prof_thickness_in_b[isys]->SetMarkerColor(sys_color[isys]);
       prof_thickness_in_b[isys]->SetLineColor(sys_color[isys]);
       prof_thickness_in_b[isys]->Draw("same");
