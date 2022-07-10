@@ -376,7 +376,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
     htemp->GetXaxis()->SetTitle("thickness [fm]");
-    htemp->GetYaxis()->SetTitle("N_{inc}");
+    htemp->GetYaxis()->SetTitle("N_{incch}");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     h2d_event_Nincch_vs_thickness->Draw("colz");
@@ -402,7 +402,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
     htemp->GetXaxis()->SetTitle("thickness [fm]");
-    htemp->GetYaxis()->SetTitle("N_{inc}");
+    htemp->GetYaxis()->SetTitle("N_{incch}");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     prof_Nincch_in_thickness->Draw("same");
@@ -433,7 +433,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
     htemp->GetXaxis()->SetTitle("b [fm]");
-    htemp->GetYaxis()->SetTitle("N_{inc}");
+    htemp->GetYaxis()->SetTitle("N_{incch}");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     h2d_event_Nincch_vs_b->Draw("colz");
@@ -459,7 +459,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
     htemp->GetXaxis()->SetTitle("b [fm]");
-    htemp->GetYaxis()->SetTitle("N_{inc}");
+    htemp->GetYaxis()->SetTitle("N_{incch}");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     prof_Nincch_in_b->Draw("same");
