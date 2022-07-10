@@ -69,7 +69,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     htemp->GetYaxis()->SetTitle("counts");
     myhset(htemp, 1.2, 1.6, 0.05, 0.05);
 
-    h1d_event_thickness->Draw();
+    h1d_event_thickness->Draw("same");
 
     standardLatex(sys_option, energy_option);
 
