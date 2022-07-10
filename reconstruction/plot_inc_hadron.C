@@ -63,7 +63,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_xrange_lo = thickness_lo;
     float plot_xrange_hi = thickness_hi;
 
-    TH1F* htemp = new TH1F("htemp",10,plot_xrange_lo,plot_xrange_hi);
+    TH1F* htemp = new TH1F("htemp","",10,plot_xrange_lo,plot_xrange_hi);
     htemp->GetXaxis()->SetTitle("thickness [fm]");
     htemp->GetYaxis()->SetTitle("counts");
 
@@ -74,7 +74,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     gROOT->ProcessLine( Form("cc%d->Print(\"%sthickness.pdf\")", cno-1, outDir) );
 
     delete htemp;
-    delete t1;
+    delete tl;
 
   }
 
