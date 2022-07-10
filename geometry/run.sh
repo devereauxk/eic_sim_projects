@@ -16,7 +16,7 @@ root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outFo
 
 echo "generating histogram plots for species (writing to inc_figs/ folder)..."
 mkdir $DIR/inc_figs
-root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 4, 1, \"$DIR/inc_figs/\")"
+root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 2, 1, \"$DIR/inc_figs/\")"
 
 DIR=../reconstruction/BeAGLE_v102/eAu_10_100_qhat0_nlo
 
@@ -28,7 +28,7 @@ root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outFo
 
 echo "generating histogram plots for species (writing to inc_figs/ folder)..."
 mkdir $DIR/inc_figs
-root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 2, 1, \"$DIR/inc_figs/\")"
+root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 1, 1, \"$DIR/inc_figs/\")"
 
 DIR=../reconstruction/BeAGLE_v102/ePb_10_100_qhat0_nlo
 
