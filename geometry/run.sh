@@ -16,4 +16,4 @@ DIR=../reconstruction/BeAGLE_v102/eC_10_100_qhat0_nlo
 
 echo "generating histogram plots for species (writing to inc_figs/ folder)..."
 mkdir $DIR/inc_figs
-root -l -q "plot_inc_hadron.C(\"$DIR/outfiles/inc_merged.root\", 4, 1, \"$DIR/inc_figs/\")"
+root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 4, 1, \"$DIR/inc_figs/\")"
