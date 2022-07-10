@@ -71,14 +71,14 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
 
 }
 
-void compare_plot_inc_hadron_diff_sys(const int energy_option = 1, const char* outDir = "figs/")
+void compare_plot_inc_hadron_diff_sys(const char* inDir = "./", const int energy_option = 1, const char* outDir = "figs/")
 {
   mcs(-1);
 
   TFile* fin[sys_bins] = {0};
   for (int isys = 0; isys < sys_bins; ++isys)
   {
-    fin[isys] = new TFile(Form("inc_hists_gen_%s.root",sys_abbr[isys]),"READ");
+    fin[isys] = new TFile(Form("%sinc_hists_gen_%s.root", inDir, sys_abbr[isys]), "READ");
 
     prof_thickness_in_b[isys] = (TProfile*)fin[isys]->Get("prof_thickness_in_b");
     prof_thickness_in_b[isys]->SetName(Form("prof_thickness_in_b_%s", sys_abbr[isys]));
