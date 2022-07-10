@@ -41,9 +41,9 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
   TH1D* h1d_event_Nincch = (TH1D*)h3d_event_Nincch_vs_thickness_vs_b->ProjectionX("Nincc");
 
   // 2d plots
-  TH2D* h2d_event_thickness_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("zy");
-  TH2D* h2d_event_Ninc_vs_thickness = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("xy");
-  TH2D* h2d_event_Ninc_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("xz");
+  TH2D* h2d_event_thickness_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("yz");
+  TH2D* h2d_event_Ninc_vs_thickness = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("yx");
+  TH2D* h2d_event_Ninc_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("zx");
 
   // profiles of 2d plots
   TProfile* prof_thickness_in_b = (TProfile*)h2d_event_thickness_vs_b->ProfileX("prof_thickness_in_b");
@@ -159,11 +159,11 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
   mcs(cno++);
   {
-    float plot_xrange_lo = 0;
-    float plot_xrange_hi = 4;
+    float plot_xrange_lo = b_lo;
+    float plot_xrange_hi = b_hi;
 
-    float plot_yrange_lo = 0;
-    float plot_yrange_hi = 4;
+    float plot_yrange_lo = thickness_lo;
+    float plot_yrange_hi = thickness_hi;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
@@ -171,7 +171,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     htemp->GetYaxis()->SetTitle("b [fm]");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
-    h2d_event_thickness_vs_b->Draw("colz");
+    h2d_event_thickness_vs_b->Draw("same");
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -185,11 +185,11 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
   }
   mcs(cno++);
   {
-    float plot_xrange_lo = 0;
-    float plot_xrange_hi = 4;
+    float plot_xrange_lo = b_lo;
+    float plot_xrange_hi = b_hi;
 
-    float plot_yrange_lo = 0;
-    float plot_yrange_hi = 4;
+    float plot_yrange_lo = thickness_lo;
+    float plot_yrange_hi = thickness_hi;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
@@ -197,7 +197,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     htemp->GetYaxis()->SetTitle("b [fm]");
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
-    prof_thickness_in_b->Draw();
+    prof_thickness_in_b->Draw("same");
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
