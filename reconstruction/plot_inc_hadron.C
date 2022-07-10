@@ -74,7 +74,6 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     gROOT->ProcessLine( Form("cc%d->Print(\"%sthickness.pdf\")", cno-1, outDir) );
 
     delete htemp;
-    delete tl;
 
   }
 
