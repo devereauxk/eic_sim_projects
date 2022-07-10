@@ -24,14 +24,6 @@ const float Nincch_lo = 0;
 const float Nincch_hi = 4;
 
 
-void standardLatex(int sys_option, int energy_option)
-{
-  TLatex* tl = new TLatex();
-  tl->SetTextAlign(11);
-  tl->SetTextSize(0.03);
-  tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
-}
-
 void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_option = 0, const int energy_option = 0, const char* outDir = "figs/")
 {
   mcs(-1);
@@ -74,13 +66,96 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
     h1d_event_thickness->Draw("same");
 
-    standardLatex(sys_option, energy_option);
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.03);
+    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sthickness.pdf\")", cno-1, outDir) );
 
     delete htemp;
-
+    delete tl;
   }
+  mcs(cno++);
+  {
+    float plot_xrange_lo = b_lo;
+    float plot_xrange_hi = b_hi;
+
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 1.2*h1d_event_b->GetMaximum();
+
+    TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp->Draw();
+    htemp->GetXaxis()->SetTitle("b [fm]");
+    htemp->GetYaxis()->SetTitle("counts");
+    myhset(htemp, 1.2, 1.6, 0.05, 0.045);
+
+    h1d_event_b->Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.03);
+    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sb.pdf\")", cno-1, outDir) );
+
+    delete htemp;
+    delete tl;
+  }
+  mcs(cno++);
+  {
+    float plot_xrange_lo = Ninc_lo;
+    float plot_xrange_hi = Ninc_hi;
+
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 1.2*h1d_event_Ninc->GetMaximum();
+
+    TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp->Draw();
+    htemp->GetXaxis()->SetTitle("N_{inc}");
+    htemp->GetYaxis()->SetTitle("counts");
+    myhset(htemp, 1.2, 1.6, 0.05, 0.045);
+
+    h1d_event_Ninc->Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.03);
+    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sNinc.pdf\")", cno-1, outDir) );
+
+    delete htemp;
+    delete tl;
+  }
+  mcs(cno++);
+  {
+    float plot_xrange_lo = Nincch_lo;
+    float plot_xrange_hi = Nincch_hi;
+
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 1.2*h1d_event_Nincch->GetMaximum();
+
+    TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp->Draw();
+    htemp->GetXaxis()->SetTitle("N_{inc}");
+    htemp->GetYaxis()->SetTitle("counts");
+    myhset(htemp, 1.2, 1.6, 0.05, 0.045);
+
+    h1d_event_Nincch->Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.03);
+    tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sNincch.pdf\")", cno-1, outDir) );
+
+    delete htemp;
+    delete tl;
+  }
+
+  // ############################################################################
 
   mcs(cno++);
   {
