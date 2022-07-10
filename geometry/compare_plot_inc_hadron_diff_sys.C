@@ -34,10 +34,10 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 1;
+    float plot_xrange_hi = 10;
 
-    float plot_yrange_lo = 0.;
-    float plot_yrange_hi = 2;
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 15;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();

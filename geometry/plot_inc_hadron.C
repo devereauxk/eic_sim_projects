@@ -46,13 +46,13 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
   // setting histogram bounds
   float thickness_lo = 0;
-  float thickness_hi = 10;
+  float thickness_hi = 15;
   float b_lo = 0;
-  float b_hi = 10;
+  float b_hi = 15;
   float Ninc_lo = 0;
-  float Ninc_hi = 10;
+  float Ninc_hi = 15;
   float Nincch_lo = 0;
-  float Nincch_hi = 10;
+  float Nincch_hi = 15;
 
   // writing profiles to outfile
   TFile* fout = new TFile(Form("%sinc_hists_gen_%s.root", outDir, sys_abbr[sys_option]),"recreate");
@@ -280,7 +280,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_xrange_hi = thickness_hi;
 
     float plot_yrange_lo = Ninc_lo;
-    float plot_yrange_hi = 2;
+    float plot_yrange_hi = 3;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
@@ -337,7 +337,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_xrange_hi = b_hi;
 
     float plot_yrange_lo = Ninc_lo;
-    float plot_yrange_hi = 2;
+    float plot_yrange_hi = 3;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
@@ -397,7 +397,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_xrange_hi = thickness_hi;
 
     float plot_yrange_lo = Nincch_lo;
-    float plot_yrange_hi = 2;
+    float plot_yrange_hi = 3;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
@@ -454,7 +454,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_xrange_hi = b_hi;
 
     float plot_yrange_lo = Nincch_lo;
-    float plot_yrange_hi = 2;
+    float plot_yrange_hi = 3;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
