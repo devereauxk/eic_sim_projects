@@ -35,9 +35,9 @@ void inc_hadron_gen(const char* inFile = "merged.root", const char* outFile = "i
   tree->SetBranchAddress("event",&event);
 
   // Initialize histograms
-  TH3D* h3d_event_Ninc_vs_thickness_vs_b = new TH3D("h3d_event_Ninc_vs_thickness_vs_b","Ninc vs thickness vs b",20,0,4,20,0,10,20,0,4);
+  TH3D* h3d_event_Ninc_vs_thickness_vs_b = new TH3D("h3d_event_Ninc_vs_thickness_vs_b","Ninc vs thickness vs b",50,0,10,50,0,10,50,0,10);
   h3d_event_Ninc_vs_thickness_vs_b->Sumw2();
-  TH3D* h3d_event_Nincch_vs_thickness_vs_b = new TH3D("h3d_event_Nincch_vs_thickness_vs_b","Nincch vs thickness vs b",20,0,4,20,0,4,20,0,4);
+  TH3D* h3d_event_Nincch_vs_thickness_vs_b = new TH3D("h3d_event_Nincch_vs_thickness_vs_b","Nincch vs thickness vs b",50,0,10,50,0,10,50,0,10);
   h3d_event_Nincch_vs_thickness_vs_b->Sumw2();
 
   //Loop Over Events
