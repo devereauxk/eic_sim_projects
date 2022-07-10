@@ -61,7 +61,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     delete htemp;
     delete tl;
   }
-  mcs(cno++)
+  mcs(cno++);
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 4;
