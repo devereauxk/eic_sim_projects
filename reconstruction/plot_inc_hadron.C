@@ -64,11 +64,11 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_xrange_hi = thickness_hi;
 
     TH1F* htemp = new TH1F("htemp","",10,plot_xrange_lo,plot_xrange_hi);
-    htemp->Draw();
     htemp->GetXaxis()->SetTitle("thickness [fm]");
     htemp->GetYaxis()->SetTitle("counts");
+    htemp->Draw();
 
-    h1d_event_thickness->Draw();
+    h1d_event_thickness->Draw("same");
 
     standardLatex(sys_option, energy_option);
 
