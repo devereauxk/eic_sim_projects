@@ -15,13 +15,13 @@ const char* energy_abbr[energy_bins] = {"5_41", "10_100", "10_110", "18_110", "1
 static int cno = 0;
 
 const float thickness_lo = 0;
-const float thickness_hi = 4;
+const float thickness_hi = 10;
 const float b_lo = 0;
-const float b_hi = 4;
+const float b_hi = 10;
 const float Ninc_lo = 0;
-const float Ninc_hi = 4;
+const float Ninc_hi = 10;
 const float Nincch_lo = 0;
-const float Nincch_hi = 4;
+const float Nincch_hi = 10;
 
 
 void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_option = 0, const int energy_option = 0, const char* outDir = "figs/")
