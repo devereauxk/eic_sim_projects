@@ -14,8 +14,23 @@ const char* energy_abbr[energy_bins] = {"5_41", "10_100", "10_110", "18_110", "1
 
 static int cno = 0;
 
-const int MaxVarbin = 10;
+const float thickness_lo = 0;
+const float thickness_hi = 4;
+const float b_lo = 0;
+const float b_hi = 4;
+const float Ninc_lo = 0;
+const float Ninc_hi = 4;
+const float Nincch_lo = 0;
+const float Nincch_hi = 4;
 
+
+void standardLatex(int sys_option, int energy_option)
+{
+  TLatex* tl = new TLatex();
+  tl->SetTextAlign(11);
+  tl->SetTextSize(0.03);
+  tl->DrawLatexNDC(0.21,0.85,Form("%s @ %s",sys_name[sys_option],energy_name[energy_option]));
+}
 
 void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_option = 0, const int energy_option = 0, const char* outDir = "figs/")
 {
@@ -27,6 +42,12 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
   TH3D* h3d_event_Ninc_vs_thickness_vs_b = (TH3D*)fin->Get("h3d_event_Ninc_vs_thickness_vs_b");
   TH3D* h3d_event_Nincch_vs_thickness_vs_b = (TH3D*)fin->Get("h3d_event_Nincch_vs_thickness_vs_b");
 
+  // 1d plots
+  TH1D* h1d_event_thickness = (TH1D*)h3d_event_Ninc_vs_thickness_vs_b->ProjectionY("thickness");
+  TH1D* h1d_event_b = (TH1D*)h3d_event_Ninc_vs_thickness_vs_b->ProjectionZ("b");
+  TH1D* h1d_event_Ninc = (TH1D*)h3d_event_Ninc_vs_thickness_vs_b->ProjectionX("Ninc");
+  TH1D* h1d_event_Nincch = (TH1D*)h3d_event_Nincch_vs_thickness_vs_b->ProjectionX("Nincc");
+
   // 2d plots
   TH2D* h2d_event_thickness_vs_b = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("zy");
   TH2D* h2d_event_Ninc_vs_thickness = (TH2D*)h3d_event_Ninc_vs_thickness_vs_b->Project3D("xy");
@@ -34,6 +55,28 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
   // profiles of 2d plots
   TProfile* prof_thickness_in_b = (TProfile*)h2d_event_thickness_vs_b->ProfileX("prof_thickness_in_b");
+  TProfile* prof_Ninc_in_thickness = (TProfile*)h2d_event_Ninc_vs_thickness->ProfileX("prof_Ninc_in_thickness");
+  TProfile* prof_Ninc_in_b = (TProfile*)h2d_event_Ninc_vs_b->ProfileX("prof_Ninc_in_b");
+
+  mcs(cno++);
+  {
+    float plot_xrange_lo = thickness_lo;
+    float plot_xrange_hi = thickness_hi;
+
+    TH1F* htemp = new TH1F("htemp",10,plot_xrange_lo,plot_xrange_hi);
+    htemp->GetXaxis()->SetTitle("thickness [fm]");
+    htemp->GetYaxis()->SetTitle("counts");
+
+    h1d_event_thickness->Draw();
+
+    standardLatex(sys_option, energy_option);
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sthickness.pdf\")", cno-1, outDir) );
+
+    delete htemp;
+    delete t1;
+
+  }
 
   mcs(cno++);
   {
