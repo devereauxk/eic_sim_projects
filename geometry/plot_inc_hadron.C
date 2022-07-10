@@ -46,13 +46,13 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
 
   // setting histogram bounds
   float thickness_lo = 0;
-  float thickness_hi = 6;
+  float thickness_hi = 10;
   float b_lo = 0;
-  float b_hi = 6;
+  float b_hi = 10;
   float Ninc_lo = 0;
-  float Ninc_hi = 6;
+  float Ninc_hi = 10;
   float Nincch_lo = 0;
-  float Nincch_hi = 6;
+  float Nincch_hi = 10;
 
   // writing profiles to outfile
   TFile* fout = new TFile(Form("%sinc_hists_gen_%s.root", outDir, sys_abbr[sys_option]),"recreate");
