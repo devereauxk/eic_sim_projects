@@ -14,7 +14,6 @@ const char* energy_abbr[energy_bins] = {"5_41", "10_100", "10_110", "18_110", "1
 
 static int cno = 0;
 
-
 void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_option = 0, const int energy_option = 0, const char* outDir = "figs/")
 {
   mcs(-1);
@@ -80,7 +79,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     h1d_event_thickness->Draw("same");
+    h1d_event_thickness->SetMarkerSize(0.7);
     h1d_event_thickness->SetMarkerStyle(21);
+    h1d_event_thickness->SetMarkerColor(kBlue);
+    h1d_event_thickness->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -107,6 +109,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     h1d_event_b->Draw("same");
+    h1d_event_b->SetMarkerSize(0.7);
+    h1d_event_b->SetMarkerStyle(21);
+    h1d_event_b->SetMarkerColor(kBlue);
+    h1d_event_b->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -133,6 +139,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     h1d_event_Ninc->Draw("same");
+    h1d_event_Ninc->SetMarkerSize(0.7);
+    h1d_event_Ninc->SetMarkerStyle(21);
+    h1d_event_Ninc->SetMarkerColor(kBlue);
+    h1d_event_Ninc->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -159,6 +169,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     h1d_event_Nincch->Draw("same");
+    h1d_event_Nincch->SetMarkerSize(0.7);
+    h1d_event_Nincch->SetMarkerStyle(21);
+    h1d_event_Nincch->SetMarkerColor(kBlue);
+    h1d_event_Nincch->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -215,6 +229,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     prof_thickness_in_b->Draw("same");
+    prof_thickness_in_b->SetMarkerSize(0.7);
+    prof_thickness_in_b->SetMarkerStyle(21);
+    prof_thickness_in_b->SetMarkerColor(kBlue);
+    prof_thickness_in_b->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -271,6 +289,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     prof_Ninc_in_thickness->Draw("same");
+    prof_Ninc_in_thickness->SetMarkerSize(0.7);
+    prof_Ninc_in_thickness->SetMarkerStyle(21);
+    prof_Ninc_in_thickness->SetMarkerColor(kBlue);
+    prof_Ninc_in_thickness->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -324,6 +346,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     prof_Ninc_in_b->Draw("same");
+    prof_Ninc_in_b->SetMarkerSize(0.7);
+    prof_Ninc_in_b->SetMarkerStyle(21);
+    prof_Ninc_in_b->SetMarkerColor(kBlue);
+    prof_Ninc_in_b->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -380,6 +406,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     prof_Nincch_in_thickness->Draw("same");
+    prof_Nincch_in_thickness->SetMarkerSize(0.7);
+    prof_Nincch_in_thickness->SetMarkerStyle(21);
+    prof_Nincch_in_thickness->SetMarkerColor(kBlue);
+    prof_Nincch_in_thickness->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -433,6 +463,10 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     myhset(htemp, 1.2, 1.6, 0.05, 0.045);
 
     prof_Nincch_in_b->Draw("same");
+    prof_Nincch_in_b->SetMarkerSize(0.7);
+    prof_Nincch_in_b->SetMarkerStyle(21);
+    prof_Nincch_in_b->SetMarkerColor(kBlue);
+    prof_Nincch_in_b->SetLineColor(kBlue);
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
