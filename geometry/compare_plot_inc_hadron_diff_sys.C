@@ -76,7 +76,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 15;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 9;
+    float plot_yrange_hi = 8;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -112,7 +112,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 10;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 9;
+    float plot_yrange_hi = 8;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -150,7 +150,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 15;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 7;
+    float plot_yrange_hi = 8;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -186,7 +186,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 10;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 7;
+    float plot_yrange_hi = 8;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
