@@ -46,7 +46,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     htemp.GetYaxis()->SetTitle("thickness [fm]");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
-    TLegend leg(0.55,0.67,0.84,0.83);
+    TLegend leg(0.55,0.66,0.84,0.82);
     leg.SetBorderSize(0);
     leg.SetTextSize(0.03);
     leg.SetFillStyle(0);
@@ -186,7 +186,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 10;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 8;
+    float plot_yrange_hi = 7;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
