@@ -13,8 +13,8 @@ DIR=../reconstruction/BeAGLE_v102/eC_10_100_taufor05_qhat0_nlo
 #echo "merging root files..."
 #hadd -f -j $DIR/outForPythiaMode/merged.root $DIR/outForPythiaMode/*.root
 
-echo "generating Ninc/Nincch histogram (writing to inc_merged.root file)..."
-root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outForPythiaMode/inc_merged.root\", 0, 0, 1)"
+#echo "generating Ninc/Nincch histogram (writing to inc_merged.root file)..."
+#root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outForPythiaMode/inc_merged.root\", 0, 0, 1)"
 
 echo "generating histogram plots for species (writing to inc_figs/ folder)..."
 mkdir $DIR/inc_figs
@@ -27,8 +27,8 @@ DIR=../reconstruction/BeAGLE_v102/eCu_10_100_taufor05_qhat0_nlo
 #echo "merging root files..."
 #hadd -f -j $DIR/outForPythiaMode/merged.root $DIR/outForPythiaMode/*.root
 
-echo "generating Ninc/Nincch histogram (writing to inc_merged.root file)..."
-root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outForPythiaMode/inc_merged.root\", 0, 0, 1)"
+#echo "generating Ninc/Nincch histogram (writing to inc_merged.root file)..."
+#root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outForPythiaMode/inc_merged.root\", 0, 0, 1)"
 
 echo "generating histogram plots for species (writing to inc_figs/ folder)..."
 mkdir $DIR/inc_figs
@@ -41,8 +41,8 @@ DIR=../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo
 #echo "merging root files..."
 #hadd -f -j $DIR/outForPythiaMode/merged.root $DIR/outForPythiaMode/*.root
 
-echo "generating Ninc/Nincch histogram (writing to inc_merged.root file)..."
-root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outForPythiaMode/inc_merged.root\", 0, 0, 1)"
+#echo "generating Ninc/Nincch histogram (writing to inc_merged.root file)..."
+#root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outForPythiaMode/inc_merged.root\", 0, 0, 1)"
 
 echo "generating histogram plots for species (writing to inc_figs/ folder)..."
 mkdir $DIR/inc_figs
@@ -55,10 +55,13 @@ DIR=../reconstruction/BeAGLE_v102/ePb_10_100_taufor05_qhat0_nlo
 #echo "merging root files..."
 #hadd -f -j $DIR/outForPythiaMode/merged.root $DIR/outForPythiaMode/*.root
 
-echo "generating Ninc/Nincch histogram (writing to inc_merged.root file)..."
-root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outForPythiaMode/inc_merged.root\", 0, 0, 1)"
+#echo "generating Ninc/Nincch histogram (writing to inc_merged.root file)..."
+#root -l -q "inc_hadron_gen.C(\"$DIR/outForPythiaMode/merged.root\", \"$DIR/outForPythiaMode/inc_merged.root\", 0, 0, 1)"
 
 echo "generating histogram plots for species (writing to inc_figs/ folder)..."
 mkdir $DIR/inc_figs
 root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 10, 1, \"$DIR/inc_figs/\")"
 cp $DIR/inc_figs/inc_hists_gen_ePb.root $END_DIR
+
+
+root -l -q "compare_plot_inc_hadron_diff_sys.C(\"./$END_DIR/\", 1, \"./$END_DIR/figs/\")"

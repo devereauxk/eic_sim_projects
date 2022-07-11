@@ -280,7 +280,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_xrange_hi = thickness_hi;
 
     float plot_yrange_lo = Ninc_lo;
-    float plot_yrange_hi = 3;
+    float plot_yrange_hi = 5;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
@@ -337,7 +337,7 @@ void plot_inc_hadron(const char* inFile = "inc_merged.root", const int sys_optio
     float plot_xrange_hi = b_hi;
 
     float plot_yrange_lo = Ninc_lo;
-    float plot_yrange_hi = 3;
+    float plot_yrange_hi = 5;
 
     TH2F* htemp = new TH2F("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp->Draw();
