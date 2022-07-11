@@ -6,9 +6,9 @@
 #const char* energy_name[energy_bins] = {"5x41 GeV", "10x100 GeV", "10x110 GeV", "18x110 GeV", "18x275 GeV", "27.6x0 GeV"};
 #const char* energy_abbr[energy_bins] = {"5_41", "10_100", "10_110", "18_110", "18_275", "27.6_0"};
 
-END_DIR=overlay_taufor05
+END_DIR=overlay_taufor10
 
-DIR=../reconstruction/BeAGLE_v102/eC_10_100_taufor05_qhat0_nlo
+DIR=../reconstruction/BeAGLE_v102/eC_10_100_qhat0_nlo
 
 #echo "merging root files..."
 #hadd -f -j $DIR/outForPythiaMode/merged.root $DIR/outForPythiaMode/*.root
@@ -22,7 +22,7 @@ root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 4, 1, \
 cp $DIR/inc_figs/inc_hists_gen_eC.root $END_DIR
 
 
-DIR=../reconstruction/BeAGLE_v102/eCu_10_100_taufor05_qhat0_nlo
+DIR=../reconstruction/BeAGLE_v102/eCu_10_100_qhat0_nlo
 
 #echo "merging root files..."
 #hadd -f -j $DIR/outForPythiaMode/merged.root $DIR/outForPythiaMode/*.root
@@ -36,7 +36,7 @@ root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 2, 1, \
 cp $DIR/inc_figs/inc_hists_gen_eCu.root $END_DIR
 
 
-DIR=../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo
+DIR=../reconstruction/BeAGLE_v102/eAu_10_100_qhat0_nlo
 
 #echo "merging root files..."
 #hadd -f -j $DIR/outForPythiaMode/merged.root $DIR/outForPythiaMode/*.root
@@ -50,7 +50,7 @@ root -l -q "plot_inc_hadron.C(\"$DIR/outForPythiaMode/inc_merged.root\", 1, 1, \
 cp $DIR/inc_figs/inc_hists_gen_eAu.root $END_DIR
 
 
-DIR=../reconstruction/BeAGLE_v102/ePb_10_100_taufor05_qhat0_nlo
+DIR=../reconstruction/BeAGLE_v102/ePb_10_100_qhat0_nlo
 
 #echo "merging root files..."
 #hadd -f -j $DIR/outForPythiaMode/merged.root $DIR/outForPythiaMode/*.root
