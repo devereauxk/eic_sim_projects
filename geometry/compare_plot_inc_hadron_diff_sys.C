@@ -26,7 +26,7 @@ void standardLatex()
   TLatex* tl = new TLatex();
   tl->SetTextAlign(11);
   tl->SetTextSize(0.03);
-  tl->DrawLatexNDC(0.19,0.17,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8");
+  tl->DrawLatexNDC(0.50,0.87,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8");
 }
 
 void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
@@ -46,7 +46,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     htemp.GetYaxis()->SetTitle("thickness [fm]");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
-    TLegend leg(0.55,0.71,0.84,0.87);
+    TLegend leg(0.55,0.67,0.84,0.83);
     leg.SetBorderSize(0);
     leg.SetTextSize(0.03);
     leg.SetFillStyle(0);
@@ -59,7 +59,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
       prof_thickness_in_b[isys]->SetMarkerColor(sys_color[isys]);
       prof_thickness_in_b[isys]->SetLineColor(sys_color[isys]);
       prof_thickness_in_b[isys]->Draw("same");
-      leg.AddEntry(prof_thickness_in_b[isys],Form("%s @ %s", sys_name[isys], energy_name[isys]), "p");
+      leg.AddEntry(prof_thickness_in_b[isys],Form("%s @ %s", sys_name[isys], energy_name[energy_option]), "p");
     }
 
     leg.Draw("same");
@@ -76,7 +76,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 15;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 5;
+    float plot_yrange_hi = 7;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -97,7 +97,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
       prof_Ninc_in_thickness[isys]->SetMarkerColor(sys_color[isys]);
       prof_Ninc_in_thickness[isys]->SetLineColor(sys_color[isys]);
       prof_Ninc_in_thickness[isys]->Draw("same");
-      leg.AddEntry(prof_Ninc_in_thickness[isys],Form("%s @ %s", sys_name[isys], energy_name[isys]), "p");
+      leg.AddEntry(prof_Ninc_in_thickness[isys],Form("%s @ %s", sys_name[isys], energy_name[energy_option]), "p");
     }
 
     leg.Draw("same");
@@ -112,7 +112,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 10;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 5;
+    float plot_yrange_hi = 7;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -133,7 +133,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
       prof_Ninc_in_b[isys]->SetMarkerColor(sys_color[isys]);
       prof_Ninc_in_b[isys]->SetLineColor(sys_color[isys]);
       prof_Ninc_in_b[isys]->Draw("same");
-      leg.AddEntry(prof_Ninc_in_b[isys],Form("%s @ %s", sys_name[isys], energy_name[isys]), "p");
+      leg.AddEntry(prof_Ninc_in_b[isys],Form("%s @ %s", sys_name[isys], energy_name[energy_option]), "p");
     }
 
     leg.Draw("same");
@@ -150,7 +150,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 15;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 3;
+    float plot_yrange_hi = 5;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -171,7 +171,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
       prof_Nincch_in_thickness[isys]->SetMarkerColor(sys_color[isys]);
       prof_Nincch_in_thickness[isys]->SetLineColor(sys_color[isys]);
       prof_Nincch_in_thickness[isys]->Draw("same");
-      leg.AddEntry(prof_Nincch_in_thickness[isys],Form("%s @ %s", sys_name[isys], energy_name[isys]), "p");
+      leg.AddEntry(prof_Nincch_in_thickness[isys],Form("%s @ %s", sys_name[isys], energy_name[energy_option]), "p");
     }
 
     leg.Draw("same");
@@ -186,7 +186,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
     float plot_xrange_hi = 10;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 3;
+    float plot_yrange_hi = 5;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -207,7 +207,7 @@ void plot_comparison(const int energy_option = 1, const char* outDir = "figs/")
       prof_Nincch_in_b[isys]->SetMarkerColor(sys_color[isys]);
       prof_Nincch_in_b[isys]->SetLineColor(sys_color[isys]);
       prof_Nincch_in_b[isys]->Draw("same");
-      leg.AddEntry(prof_Nincch_in_b[isys],Form("%s @ %s", sys_name[isys], energy_name[isys]), "p");
+      leg.AddEntry(prof_Nincch_in_b[isys],Form("%s @ %s", sys_name[isys], energy_name[energy_option]), "p");
     }
 
     leg.Draw("same");
