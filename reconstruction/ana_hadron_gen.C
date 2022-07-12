@@ -265,7 +265,7 @@ bool event_w_charm(erhic::EventPythia* event, int gen_type)
   return false;
 }
 
-void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, int data_type = 0, int gen_type = 0)
+void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, int data_type = 0, int gen_type = 0, int thickness_lo = 0, int thickness_hi = 20)
 {
   cout << "Data Type: ";
   if (data_type==0) cout << "EIC" << endl;
@@ -286,7 +286,8 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
   cout<<"Total Number of Events = "<<nEntries<<endl<<endl;
 
   // Event Class
-  erhic::EventPythia *event(NULL); //Note that I use Pointer
+  if (gen_type==0) erhic::EventPythia *event(NULL); //Note that I use Pointer
+  else erhic::EventBeagle *event(NULL);
 
   // Access event Branch
   tree->SetBranchAddress("event",&event);
@@ -349,6 +350,9 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
     // printf("For Event %d, Q^2 = %.3f GeV^2!\n",ievt,Q2);
 
     bool flag_event_select = true;
+    // thickness cut
+    if (gen_type != 0 && (event->Thickness < thickness_lo || event->Thickness > thickness_hi)) flag_event_select = false;
+    // kinematics cuts
     if (data_type==0)
     { // EIC event selection (from Yuxiang)
       if (event->GetTrueY()<0.05 || event->GetTrueY()>0.8) flag_event_select = false;
