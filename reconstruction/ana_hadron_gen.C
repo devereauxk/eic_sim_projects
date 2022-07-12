@@ -286,8 +286,8 @@ void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const cha
   cout<<"Total Number of Events = "<<nEntries<<endl<<endl;
 
   // Event Class
+  erhic::EventBeagle *event(NULL);
   if (gen_type==0) erhic::EventPythia *event(NULL); //Note that I use Pointer
-  else erhic::EventBeagle *event(NULL);
 
   // Access event Branch
   tree->SetBranchAddress("event",&event);
