@@ -42,3 +42,9 @@ root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA
 mv figs/* $EA_DIR/figs_norm_1/figs_in_thickness/9_13
 rm -r figs
 cp $EA_DIR/figs_norm_1/figs_in_thickness/9_13/hists_gen_eAu_9_13.root ./
+
+mkdir figs
+mkdir $EA_DIR/figs_norm_1/figs_in_thickness/compare_figs
+root -l -q "compare_chadron_gen_diff_sys.C(1)"
+mv figs/* $EA_DIR/figs_norm_1/figs_in_thickness/compare_figs
+rm -r figs
