@@ -14,6 +14,6 @@ mkdir $EA_DIR/figs_in_thickness
 echo "generating histogram plots for eA/ep in appropriate thickness bin (writing to figs_in_thickness/<subfolder> folder)..."
 mkdir figs
 mkdir $EA_DIR/figs_in_thickness/0_3
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_0_3.root\", 1, 1, \"$EA_DIR/figs_norm_1/hists_gen.root\", 1)"
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_0_3.root\", 1, 1, \"$EA_DIR/figs_norm_1/hists_gen_eAu_0_3.root\", 1)"
 mv figs/* $EA_DIR/figs_in_thickness/0_3
 rm -r figs
