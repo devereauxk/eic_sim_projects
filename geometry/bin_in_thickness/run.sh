@@ -6,6 +6,9 @@
 #const char* energy_name[energy_bins] = {"5x41 GeV", "10x100 GeV", "10x110 GeV", "18x110 GeV", "18x275 GeV", "27.6x0 GeV"};
 #const char* energy_abbr[energy_bins] = {"5_41", "10_100", "10_110", "18_110", "18_275", "27.6_0"};
 
+# RUN THIS LINE BEFORE TO MAKE APPROPRIATE ana_merged_in_thickness FILES
+# root -l -q "ana_hadron_gen.C(\"../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo/outForPythiaMode/merged.root\", \"../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo/outForPythiaMode/ana_merged_in_thickness_0_3.root\", 0, 0, 1, 0, 3)"
+
 EP_DIR=../../reconstruction/BeAGLE_v101/ep_10_100_baseline_parp2
 EA_DIR=../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo
 
