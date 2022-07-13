@@ -265,7 +265,7 @@ bool event_w_charm(erhic::EventPythia* event, int gen_type)
   return false;
 }
 
-void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, int data_type = 0, int gen_type = 0, int thickness_lo = 0, int thickness_hi = 20)
+void ana_hadron_gen(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, int data_type = 0, int gen_type = 0, double thickness_lo = 0, double thickness_hi = 20)
 {
   cout << "Data Type: ";
   if (data_type==0) cout << "EIC" << endl;
