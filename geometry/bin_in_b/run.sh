@@ -10,7 +10,7 @@
 # root -l -q "ana_hadron_gen.C(\"../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo/outForPythiaMode/merged.root\", \"../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo/outForPythiaMode/ana_merged_in_b_0_25.root\", 0, 0, 1, 0, 2.5)"
 
 EP_DIR=../../reconstruction/BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo
+EA_DIR=../../reconstruction/BeAGLE_v102/eAu_10_100_qhat0_nlo
 
 mkdir $EA_DIR/figs_norm_1/figs_in_b
 

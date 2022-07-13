@@ -1,4 +1,4 @@
-#const int sys_bins = 5;
+o#const int sys_bins = 5;
 #const char* sys_name[sys_bins] = {"e+p", "e+Au [0,3]", "e+Au [3,6]", "e+Au [6,9]", "e+Au[9,13]"};
 #const char* sys_abbr[sys_bins] = {"ep", "eAu_0_3", "eAu_3_6", "eAu_6_9", "eAu_9_13"};
 #
@@ -10,7 +10,7 @@
 # root -l -q "ana_hadron_gen.C(\"../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo/outForPythiaMode/merged.root\", \"../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo/outForPythiaMode/ana_merged_in_thickness_0_3.root\", 0, 0, 1, 0, 3)"
 
 EP_DIR=../../reconstruction/BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=../../reconstruction/BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo
+EA_DIR=../../reconstruction/BeAGLE_v102/eAu_10_100_qhat0_nlo
 
 mkdir $EA_DIR/figs_norm_1/figs_in_thickness
 
