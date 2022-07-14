@@ -12,43 +12,45 @@ o#const int sys_bins = 5;
 EP_DIR=../../reconstruction/BeAGLE_v101/ep_10_100_baseline_parp2
 EA_DIR=../../reconstruction/BeAGLE_v102/eAu_10_100_qhat0_nlo
 
-mkdir $EA_DIR/figs_norm_1/figs_in_thickness
+SUB_DIR=$EA_DIR/figs_norm_1/figs_in_thickness_no_eta
+
+mkdir $SUB_DIR
 
 echo "generating histogram plots for eA/ep in appropriate thickness bin (writing to figs_in_thickness/<subfolder> folder)..."
 mkdir figs
-mkdir $EA_DIR/figs_norm_1/figs_in_thickness/0_3
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_0_3.root\", 1, 1, \"$EA_DIR/figs_norm_1/figs_in_thickness/0_3/hists_gen_eAu_0_3.root\", 1)"
-mv figs/* $EA_DIR/figs_norm_1/figs_in_thickness/0_3
+mkdir $SUB_DIR/0_3
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_0_3.root\", 1, 1, \"$SUB_DIR/0_3/hists_gen_eAu_0_3.root\", 1)"
+mv figs/* $SUB_DIR/0_3
 rm -r figs
-cp $EA_DIR/figs_norm_1/figs_in_thickness/0_3/hists_gen_eAu_0_3.root ./
+cp $SUB_DIR/0_3/hists_gen_eAu_0_3.root ./
 
 echo "generating histogram plots for eA/ep in appropriate thickness bin (writing to figs_in_thickness/<subfolder> folder)..."
 mkdir figs
-mkdir $EA_DIR/figs_norm_1/figs_in_thickness/3_6
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_3_6.root\", 2, 1, \"$EA_DIR/figs_norm_1/figs_in_thickness/3_6/hists_gen_eAu_3_6.root\", 1)"
-mv figs/* $EA_DIR/figs_norm_1/figs_in_thickness/3_6
+mkdir $SUB_DIR/3_6
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_3_6.root\", 2, 1, \"$SUB_DIR/3_6/hists_gen_eAu_3_6.root\", 1)"
+mv figs/* $SUB_DIR/3_6
 rm -r figs
-cp $EA_DIR/figs_norm_1/figs_in_thickness/3_6/hists_gen_eAu_3_6.root ./
+cp $SUB_DIR/3_6/hists_gen_eAu_3_6.root ./
 
 echo "generating histogram plots for eA/ep in appropriate thickness bin (writing to figs_in_thickness/<subfolder> folder)..."
 mkdir figs
-mkdir $EA_DIR/figs_norm_1/figs_in_thickness/6_9
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_6_9.root\", 3, 1, \"$EA_DIR/figs_norm_1/figs_in_thickness/6_9/hists_gen_eAu_6_9.root\", 1)"
-mv figs/* $EA_DIR/figs_norm_1/figs_in_thickness/6_9
+mkdir $SUB_DIR/6_9
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_6_9.root\", 3, 1, \"$SUB_DIR/6_9/hists_gen_eAu_6_9.root\", 1)"
+mv figs/* $SUB_DIR/6_9
 rm -r figs
-cp $EA_DIR/figs_norm_1/figs_in_thickness/6_9/hists_gen_eAu_6_9.root ./
+cp $SUB_DIR/6_9/hists_gen_eAu_6_9.root ./
 
 echo "generating histogram plots for eA/ep in appropriate thickness bin (writing to figs_in_thickness/<subfolder> folder)..."
 mkdir figs
-mkdir $EA_DIR/figs_norm_1/figs_in_thickness/9_13
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_9_13.root\", 4, 1, \"$EA_DIR/figs_norm_1/figs_in_thickness/9_13/hists_gen_eAu_9_13.root\", 1)"
-mv figs/* $EA_DIR/figs_norm_1/figs_in_thickness/9_13
+mkdir $SUB_DIR/9_13
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged_in_thickness_9_13.root\", 4, 1, \"$SUB_DIR/9_13/hists_gen_eAu_9_13.root\", 1)"
+mv figs/* $SUB_DIR/9_13
 rm -r figs
-cp $EA_DIR/figs_norm_1/figs_in_thickness/9_13/hists_gen_eAu_9_13.root ./
+cp $SUB_DIR/9_13/hists_gen_eAu_9_13.root ./
 
 mkdir figs
-mkdir $EA_DIR/figs_norm_1/figs_in_thickness/compare_figs
+mkdir $SUB_DIR/compare_figs
 root -l -q "compare_chadron_gen_diff_sys.C(1)"
-mv figs/* $EA_DIR/figs_norm_1/figs_in_thickness/compare_figs
+mv figs/* $SUB_DIR/compare_figs
 rm -r figs
 rm *.root
