@@ -51,3 +51,4 @@ mkdir $EA_DIR/figs_norm_1/figs_in_thickness/compare_figs
 root -l -q "compare_chadron_gen_diff_sys.C(1)"
 mv figs/* $EA_DIR/figs_norm_1/figs_in_thickness/compare_figs
 rm -r figs
+rm *.root
