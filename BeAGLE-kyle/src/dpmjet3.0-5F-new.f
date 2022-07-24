@@ -140,7 +140,7 @@
 
 * properties of interacting particles
       COMMON /DTPRTA/ IT,ITZ,IP,IPZ,IJPROJ,IBPROJ,IJTARG,IBTARG,ITMODE,
-     &     ITMMOD,MODHYP,NHYPER,IDHYP(5) 
+     &     ITMMOD,MODHYP,NHYPER,IDHYP(5)
 
 * properties of photon/lepton projectiles
       COMMON /DTGPRO/ VIRT,PGAMM(4),PLEPT0(4),PLEPT1(4),PNUCL(4),IDIREC
@@ -251,9 +251,9 @@ C     Local
 C... MDB 14-Dec-2016 - Let's find the datafiles
          CALL GETENV("BEAGLESYS",ENVDIR)
          IF (ENVDIR(1:1).EQ." ") THEN
-            WRITE(*,*) 
+            WRITE(*,*)
      &         "WARNING: BEAGLESYS environment variable undefined."
-            WRITE(*,*)"Will use PWD(.) to look for data files." 
+            WRITE(*,*)"Will use PWD(.) to look for data files."
             ENVDIR="."
          ELSE
             WRITE(*,*)"Will use BEAGLESYS for .dat files: ",
@@ -403,15 +403,15 @@ C1000 FORMAT(A10,6E10.0,A8)
      &  530     ,  540     ,  550     ,  560     ,  565     ,
 *
 *------------------------------------------------------------
-*       PY-INPUT, INPFILE,   OUTFILE,   VDM-PAR2 , XS-QELPRO, 
+*       PY-INPUT, INPFILE,   OUTFILE,   VDM-PAR2 , XS-QELPRO,
      &  566     ,  568     ,  569     ,  570     ,  580     ,
 *
 *------------------------------------------------------------
-*      RNDMINIT ,LEPTO-CUT, LEPTO-LST,LEPTO-PARL, FSEED    , 
+*      RNDMINIT ,LEPTO-CUT, LEPTO-LST,LEPTO-PARL, FSEED    ,
      &  590     ,600      ,  610     ,  620     ,  621     ,
 *------------------------------------------------------------
 *      OUTPUT   ,PYQM-CTRL, USERSET  ,PYVECTORS , GLAU-MODRN,
-     &  622     , 623     ,    624   ,    625,       626   ,  
+     &  622     , 623     ,    624   ,    625,       626   ,
 *------------------------------------------------------------
 *      START  ,  STOP    )
      &  630,       640   ) , ICW
@@ -501,7 +501,7 @@ C1000 FORMAT(A10,6E10.0,A8)
 *                                 2 = all ep collisions             *
 *                                 3 = random mix                    *
 *       what (4) =  Target Mass calculation method                  *
-*                                -1 = old inconsistent approach     * 
+*                                -1 = old inconsistent approach     *
 *                                 0 = AZMASS method 0 (D)           *
 *                                 1,2,3 = AZMASS method 1,2,3       *
 *       what (5) = Handling of Hypernuclei                          *
@@ -552,13 +552,13 @@ C MDB - 2017-05-25 Add WHAT(3) functionality
       ENDIF
       TARINP=.TRUE.
       IF (IT.EQ.3 .AND. KTAUGE.GT.0) THEN
-         WRITE(LOUT,*) 
+         WRITE(LOUT,*)
          WRITE(LOUT,*) 'WARNING!'
          WRITE(LOUT,*) 'WARNING!'
          WRITE(LOUT,*) 'WARNING WILL ROBISON!'
          WRITE(LOUT,*) 'Intranuclear cascade disallowed for A=3'
          WRITE(LOUT,*) 'KTAUGE set to 0 to turn off INC'
-         WRITE(LOUT,*) 
+         WRITE(LOUT,*)
          KTAUGE = 0
       ENDIF
       GOTO 10
@@ -807,13 +807,13 @@ C        CALL SHMAKF(IDUM,IDUM,IEMUMA(NCOMPO),IEMUCH(NCOMPO))
       IF ((WHAT(4).GE.1.0D0).AND.(WHAT(4).LE.3.0D0))
      &                                    INCMOD = NINT(WHAT(4))
       IF (IT.EQ.3 .AND. KTAUGE.GT.0) THEN
-         WRITE(LOUT,*) 
+         WRITE(LOUT,*)
          WRITE(LOUT,*) 'WARNING!'
          WRITE(LOUT,*) 'WARNING!'
          WRITE(LOUT,*) 'WARNING WILL ROBISON!'
          WRITE(LOUT,*) 'Intranuclear cascade disallowed for A=3'
          WRITE(LOUT,*) 'KTAUGE set to 0 to turn off INC'
-         WRITE(LOUT,*) 
+         WRITE(LOUT,*)
          KTAUGE = 0
       ENDIF
       GOTO 10
@@ -1072,7 +1072,7 @@ C...for pythia model
 *       what (5)         = Apply potential correction to:           *
 *                          0 (D) = wounded nucleons except the pair *
 *                          +1    = all wounded nucleons             *
-*                          -1    = no nucleons                       * 
+*                          -1    = no nucleons                       *
 *********************************************************************
 
   240 CONTINUE
@@ -1097,14 +1097,14 @@ C     &       (IWHAT.EQ.10).OR.(IWHAT.EQ.11))
 C     &      NEUDEC = IWHAT
          WRITE(*,*) 'Error: QNEUTRIN not supported. Using PYTHIA'
          WRITE(*,*) 'QNEUTRIN is available in DPMJET3'
-c...added by liang for to use pythia 2/17/12     
+c...added by liang for to use pythia 2/17/12
       ELSEIF (SDUM.EQ.CMODEL(5)) THEN
          MCGENE = 5
 c...when using pythia use hera fit cross section as well
          MODEGA = 5
 c...when use pythia lower down the allowed ECMS
          ECMIN = 0.5
-c...added by Mark to include rapgap 6/12/2018   
+c...added by Mark to include rapgap 6/12/2018
       ELSEIF (SDUM.EQ.CMODEL(6)) THEN
          MCGENE = 6
          MODEGA = 5
@@ -1113,7 +1113,7 @@ c...added by Mark to include rapgap 6/12/2018
          MCGENE = 7
 C         MODEGA = 0               ! Try this.
          ECMIN = 0.5
-         ITMODE = -1     
+         ITMODE = -1
          IFSEED = NINT(WHAT(1))
          INRLEV = NINT(WHAT(2))
          IGDOBST = NINT(WHAT(3))
@@ -2090,7 +2090,7 @@ C        WRITE(LOUT,*) 'CMENER = ',CMENER
 *********************************************************************
 *                                                                   *
 *               control card:  codewd = GLAUB-INI                   *
-*                                                                   * 
+*                                                                   *
 *                         NOT USED IN BEAGLE                        *
 *                                                                   *
 *********************************************************************
@@ -2303,7 +2303,7 @@ C        WRITE(LOUT,*) 'CMENER = ',CMENER
 *               added by liang for setting random number seed       *
 *                                                                   *
 *********************************************************************
-  
+
   621 CONTINUE
       INSEED = NINT(WHAT(1))
       IJKLIN = NINT(WHAT(2))
@@ -2321,7 +2321,7 @@ C        WRITE(LOUT,*) 'CMENER = ',CMENER
 *              what (2) = output format  -1 = old                   *
 *                                        +1 = DPMJET for nuclei     *
 *                                        +2 = GEANT for nuclei (D)  *
-*                                                                   *   
+*                                                                   *
 *********************************************************************
 
   622 CONTINUE
@@ -2354,8 +2354,8 @@ C        WRITE(LOUT,*) 'CMENER = ',CMENER
 *       what (4) = SupFactor (needed for iPtF=2)  default=1.0       *
 *                                                                   *
 *       what (5) = New SW calculation for heavy quarks              *
-*                  0: No                                            *  
-*                  1: Yes                                           * 
+*                  0: No                                            *
+*                  1: Yes                                           *
 *                                                                   *
 *********************************************************************
 
@@ -2523,7 +2523,7 @@ C        WRITE(LOUT,*) 'CMENER = ',CMENER
          B2G3D = WHAT(4)
          B4G3D = WHAT(5)
          ITEMP = NINT(WHAT(6))
-         USEFX3D = (1.LE.ITEMP .AND. ITEMP.LE.3) 
+         USEFX3D = (1.LE.ITEMP .AND. ITEMP.LE.3)
          IF (ITEMP.EQ.1) XORIENT = 1.0D0
          IF (ITEMP.EQ.2) YORIENT = 1.0D0
          IF (ITEMP.EQ.3) ZORIENT = 1.0D0
@@ -2540,7 +2540,7 @@ C        WRITE(LOUT,*) 'CMENER = ',CMENER
             WRITE(*,*) 'Ratio(cos(theta)=+/-1) = ',RATONE
             IF (ABS(WG3D).GT.1.0D-9)
      &           WRITE(*,*) 'WARNING: NON-ZERO W AND NON-ZERO BETA'
-C           Ratio of volumes: sphere(R)/3Dshape(R,beta2,beta4) 
+C           Ratio of volumes: sphere(R)/3Dshape(R,beta2,beta4)
 C           Terms of O(beta^3) are dropped. Negligible for realistic beta
 C           0.23873241 is 3/4pi
             DENSFAC = 1.0D0/
@@ -2548,7 +2548,7 @@ C           0.23873241 is 3/4pi
             IF (ABS(B4G3D).GT.1.0D-9) THEN
                C2EXT = (3.0D0-0.8944272D0*B2G3D/B4G3D)/7.0D0
                IF(0.LE.C2EXT .AND. C2EXT.LE.1) THEN
-                  RATEXT  = 1.0D0 + (2.2360680D0*B2G3D -9.0D0*B4G3D 
+                  RATEXT  = 1.0D0 + (2.2360680D0*B2G3D -9.0D0*B4G3D
      &                 -1.5D0*B2G3D*B2G3D/B4G3D)/(24.8143539D0)
                   WRITE(*,*) 'Ratio(extremum) = ',RATONE
                   RATMAX3D = MAX(RATMAX3D,RATEXT)
@@ -2671,7 +2671,7 @@ C      ENDIF
 * initialization of pythia scattering
 * added by liang 2/17/12
       IF (MCGENE.EQ.5 .OR. MCGENE.EQ.6) THEN
-* transform the beam energy into lab frame      
+* transform the beam energy into lab frame
          MODEGA = 5
          !DIS collisions to be initialzed
          IF(IJPROJ.EQ.3.OR.IJPROJ.EQ.4.OR.IJPROJ.EQ.10.OR.
@@ -2806,7 +2806,7 @@ C     ENDIF
 
 * properties of interacting particles
       COMMON /DTPRTA/ IT,ITZ,IP,IPZ,IJPROJ,IBPROJ,IJTARG,IBTARG,ITMODE,
-     &     ITMMOD,MODHYP,NHYPER,IDHYP(5) 
+     &     ITMMOD,MODHYP,NHYPER,IDHYP(5)
 
 * Lorentz-parameters of the current interaction
       COMMON /DTLTRA/ GACMS(2),BGCMS(2),GALAB,BGLAB,BLAB,
@@ -2824,7 +2824,7 @@ C     ENDIF
       LOGICAL LPROD
       CHARACTER*8 CGLB
       COMMON /DTGLGP/ JSTATB,JBINSB,CGLB,IOGLB,LPROD
-   
+
       DIMENSION WHAT(6)
       DIMENSION P5TMP(5)
 
@@ -2939,7 +2939,7 @@ C Use old DPMJET logic for GCF-QE
                   IF (IREJ1.GT.1) GOTO 101
                   IF (IREJ1.EQ.1) GOTO 100
                ENDIF
-            ENDIF 
+            ENDIF
          ENDIF
 
          if(IOULEV(4).GE.2 .AND. NEVHKK.LE.IOULEV(5)) then
@@ -2956,7 +2956,7 @@ C     IF (NEVHKK.EQ.5) CALL DT_EVTOUT(4)
 c         WRITE(*,*) 'before call decay in DT_KKINC:'
 c         CALL DT_PYOUTEP(4)
 c         CALL DT_DECAY1
-          !liang-2021-10 move long-lifetime decay to the event 
+          !liang-2021-10 move long-lifetime decay to the event
           !output routine to avoid lorentz transform the decay vertex
 c         CALL DT_DECPI0
 
@@ -3009,7 +3009,7 @@ c         CALL DT_PYOUTEP(4)
 
 * properties of interacting particles
       COMMON /DTPRTA/ IT,ITZ,IP,IPZ,IJPROJ,IBPROJ,IJTARG,IBTARG,ITMODE,
-     &     ITMMOD,MODHYP,NHYPER,IDHYP(5) 
+     &     ITMMOD,MODHYP,NHYPER,IDHYP(5)
 
 * properties of photon/lepton projectiles
       COMMON /DTGPRO/ VIRT,PGAMM(4),PLEPT0(4),PLEPT1(4),PNUCL(4),IDIREC
@@ -3089,9 +3089,9 @@ C     COMMON /PQCTRL/ PQRECF, PYQ_SUPF, PYQ_IPTF, PYQ_IEG
 
 * common /BEAEVT/
       USERSET=0
-      EEXCMAX=9.0D0     
+      EEXCMAX=9.0D0
 
-* common /PQCTRL/ in bea_pyqm.inc 
+* common /PQCTRL/ in bea_pyqm.inc
       PQRECF = ZERO
       PYQ_IPTF = 3
       PYQ_IEG = 0
@@ -3256,12 +3256,12 @@ C     CSEA   = 0.3D0
       CMODEL(3) = 'LEPTO   '
       CMODEL(4) = 'QNEUTRIN'
 C...added by liang 2/17/12 to add pythia model option++
-      CMODEL(5) = 'PYTHIA  '      
+      CMODEL(5) = 'PYTHIA  '
 C...added by liang 2/17/12 to add pythia model option--
       LPHOIN    = .TRUE.
       ELOJET    = 5.0D0
 C...added by Mark 6/12/2018 to add rapgap model option--
-      CMODEL(6) = 'RAPGAP  '      
+      CMODEL(6) = 'RAPGAP  '
 C...added by Mark 4/25/2019 to add GCF-FT model option--
       CMODEL(7) = 'GCF-FT  '
 
@@ -3378,7 +3378,7 @@ C...added by Mark 4/25/2019 to add GCF-FT model option--
 
 C     CHARACTER*72 HEADER
 
-C...Pythia Parameters. 
+C...Pythia Parameters.
       COMMON/PYPARS/MSTP(200),PARP(200),MSTI(200),PARI(200)
 
       INTEGER PYCHGE
@@ -3475,14 +3475,14 @@ C...Pythia event counter (since we keep PYINITing) Mark 2017-01-31
       COMMON /DTLTRA/ GACMS(2),BGCMS(2),GALAB,BGLAB,BLAB,
      &                UMO,PPCM,EPROJ,PPROJ
 
-C... RANLUX is also used in Pythia inside PYR. 
+C... RANLUX is also used in Pythia inside PYR.
 C      EXTERNAL RANLUX
 C      EXTERNAL NRAN
       EXTERNAL NRBINOM
 C
       DOUBLE PRECISION PDUMM
 
-C     Simplified GCF-FT loop if full DPMJET treatment not needed. 
+C     Simplified GCF-FT loop if full DPMJET treatment not needed.
       IREJ = 0
       IF (MCGENE.EQ.7 .AND. INRLEV.LE.2) THEN
          WRITE(*,*)'Starting oversimplified GCF-FT loop, NEVTS=',NEVTS
@@ -3641,7 +3641,7 @@ C...modified by liang to include pythia mode
          IF (SIGXX.GT.SIGMAX) EGNXX = EGNMIN
          SIGMAX = MAX(SIGMAX,SIGXX)
          WRITE(LOUT,'(9X,A,F8.3,A)') 'Sigma_tot (max) =',SIGMAX,' mb'
-         
+
 * maximum residual weight for flux sampling (dy/y)
          YY     = YMIN
          Q2LOW  = MAX(Q2MIN,AMLPT2*YY**2/(ONE-YY))
@@ -3678,28 +3678,28 @@ C...modified by liang to include pythia mode
          WRITE(*,*) " "
          IF (MCGENE.EQ.6 .AND. ITMODE.NE.2) THEN
             WRITE(*,*) "DT_LAEVNT FATAL ERROR: RAPGAP requires Mode 2 ",
-     &           "(ep subevent) only" 
+     &           "(ep subevent) only"
             STOP
          ENDIF
 C MDB 2017-05-26 ITMODE=0 runs all en collisions first and then all ep.
-         IF (ITMODE.EQ.0) THEN 
-            WRITE(*,*) "DT_LAEVT: ITMODE=0 (Default) selected." 
+         IF (ITMODE.EQ.0) THEN
+            WRITE(*,*) "DT_LAEVT: ITMODE=0 (Default) selected."
             PROPRB = DBLE(ITZ)/DBLE(IT)
             NPROEVS = NRBINOM(NEVTS,PROPRB,.FALSE.)
-            NNEUEVS = NEVTS - NPROEVS 
+            NNEUEVS = NEVTS - NPROEVS
             WRITE(*,*) 'Sequential Mode: ',NNEUEVS,' en sub-collisions.'
             WRITE(*,*) '    followed by: ',NPROEVS,' ep sub-collisions.'
             WRITE(*,*) ' for a total of: ',NEVTS,' sub-collisions.'
          ELSEIF (ITMODE.EQ.1) THEN
-            WRITE(*,*) "DT_LAEVT: ITMODE=1 selected."          
+            WRITE(*,*) "DT_LAEVT: ITMODE=1 selected."
             WRITE(*,*) "en mode - for a total of: ",NEVTS,
      &           " en sub-collisions."
          ELSEIF (ITMODE.EQ.2) THEN
-            WRITE(*,*) "DT_LAEVT: ITMODE=2 selected."          
+            WRITE(*,*) "DT_LAEVT: ITMODE=2 selected."
             WRITE(*,*) "ep mode - for a total of: ",NEVTS,
      &           " ep sub-collisions."
          ELSEIF (ITMODE.EQ.3) THEN
-            WRITE(*,*) "DT_LAEVT: ITMODE=3 selected."          
+            WRITE(*,*) "DT_LAEVT: ITMODE=3 selected."
             WRITE(*,*) "Mixed mode: ",NEVTS,
      &           " random mix of en & ep sub-collisions."
             WRITE(*,*) "Warning: PYINIT will be called frequently."
@@ -3838,7 +3838,7 @@ C        THETA = ACOS( (E1Y-Q2E)/(E1Y+Q2E) )
             IF (MCGENE.NE.7) THEN
                ECMTMP = SQRT((PPG(4)+AAM(IDT)-PGTOT)*
      &              (PPG(4)+AAM(IDT)+PGTOT))
-               IF (ABS(ECMGN-ECMTMP).GT.TINY10) WRITE(LOUT,1002) 
+               IF (ABS(ECMGN-ECMTMP).GT.TINY10) WRITE(LOUT,1002)
      &              ECMGN,ECMTMP
             ENDIF
  1002       FORMAT(1X,'LAEVT: inconsistent kinematics (ECMGN,ECMTMP) ',
@@ -3860,7 +3860,7 @@ C For now don't use these for MCGENE=7. Could be put back in.
 *     x_Bj cut
             XBJ = ABS(Q2/(2.0D0*AAM(IDT)*PPG(4)))
             IF (XBJ.LT.XBJMIN) GOTO 101
-            
+
 c...store the event variable for output added by liang 1/20/12
             XBJOUT=XBJ
             YYOUT=YY
@@ -3901,7 +3901,7 @@ C         ENDIF
 *  !!PGAMM ist set in cms (ECMGN) along z
             EPN = ZERO
             PPN = ZERO
-C For QE (or DIS x>1), naive HCMS does not exist! 
+C For QE (or DIS x>1), naive HCMS does not exist!
 C Setup identity xform instead
             IF (MCGENE.EQ.7) THEN
                BGCMS(2)=0.0D0
@@ -3937,7 +3937,7 @@ C            IF ((DT_RNDM(Q2)*STOTX.GT.STOT).AND.(MCGENE.NE.5)) GOTO 100
 *  composite targets only
             KKMAT = -KKMAT
 
-c...added by liang to initialize the subprocess id IPROCE and MSPR 
+c...added by liang to initialize the subprocess id IPROCE and MSPR
 c...used in phojet for every event 12/07/11
             IPROCE = 0
             MSPR = 0
@@ -3957,14 +3957,14 @@ C....added by liang to suppress output of bad events++
                   CALL DT_GCFOUTQE(1)
                ENDIF
                WRITE(*,*) 'KKEVNT: Old Q2,y:',Q2,YY,'Rerolling.'
-               WRITE(*,*) ' ' 
+               WRITE(*,*) ' '
                Q2SPLAT=Q2
                YYSPLAT=YY
                PTFSPLAT=SQRT(PXF*PXF+PYF*PYF)
                PZFSPLAT=PZF
                EKFSPLAT=EKF
                IREJ=0
-               IF ((MYNGEN-NGEN0).GT.1000) 
+               IF ((MYNGEN-NGEN0).GT.1000)
      &            STOP 'BeAGLE Fatal Error: >1000 retries in DT_KKINC'
                GOTO 100
             ENDIF
@@ -3983,7 +3983,7 @@ C               CALL DT_PYOUTEP(4)
             ELSEIF (MCGENE.EQ.7) THEN
                CALL DT_GCFOUTQE(2)
             ENDIF
-            
+
             IF(MOD(IEVT,INT(NEVTS/10)).EQ.0) print*,IEVT,
      &           ' events output done'
 C            ELSE
@@ -4759,11 +4759,11 @@ C      CALL DT_PYOUTEP(4)
       ELSEIF (IJPROJ.EQ.7) THEN
          IF (MCGENE.EQ.5) THEN
 *  pythia model
-            CALL DT_PYEVNTEP(DUMMY,DUMMY,2,IREJ1)      
+            CALL DT_PYEVNTEP(DUMMY,DUMMY,2,IREJ1)
          ELSEIF (MCGENE.EQ.6) THEN
-            CALL DT_RGEVNTEP(DUMMY,DUMMY,2,IREJ1)      
+            CALL DT_RGEVNTEP(DUMMY,DUMMY,2,IREJ1)
          ELSEIF (MCGENE.EQ.7) THEN
-            CALL DT_GCFEVNTQE(DUMMY,DUMMY,2,IREJ1)      
+            CALL DT_GCFEVNTQE(DUMMY,DUMMY,2,IREJ1)
          ELSE
             WRITE(LOUT,1002) MCGENE
  1002       FORMAT(1X,'KKEVNT: FATAL ERROR. Event-generator',I4,
@@ -5077,7 +5077,7 @@ C            ENDIF
          PHKK(4,3) = SQRT(PHKK(5,3)**2+PHKK(1,3)**2+
      &                    PHKK(2,3)**2+PHKK(3,3)**2)
       ELSEIF (NMASS.GE.2) THEN
-* balance Fermi-momenta 
+* balance Fermi-momenta
          DO 5 I=1,NMASS
             NC = NC+1
             DO 6 K=1,3
@@ -5104,11 +5104,11 @@ C            ENDIF
       INTEGER J,K,NMASS,IIMAIN
       DOUBLE PRECISION Md, PI, B
       DOUBLE PRECISION EEN, MNUC
-      DOUBLE PRECISION ANMT2, SNMT2 
-      ! Active Nucleon OR Spectator Nucleon Transverse mass squared 
+      DOUBLE PRECISION ANMT2, SNMT2
+      ! Active Nucleon OR Spectator Nucleon Transverse mass squared
 
-      DOUBLE PRECISION ALPHA_AN, ALPHA_SN 
-      !Active Nucleon Alpha, LF momentum fraction. 0<ALPHA_AN<2 
+      DOUBLE PRECISION ALPHA_AN, ALPHA_SN
+      !Active Nucleon Alpha, LF momentum fraction. 0<ALPHA_AN<2
       !Spectator Nucleon Alpha - ALPHA_SN = 2-ALPHA_AN
       DOUBLE PRECISION PHKK(5,NMASS)
 
@@ -5131,7 +5131,7 @@ C            ENDIF
       DO J=2,NMASS+1
         IF( J .EQ. IIMAIN ) THEN
           CONTINUE
-        ELSE 
+        ELSE
           K = J
         ENDIF
       ENDDO
@@ -5139,10 +5139,10 @@ C            ENDIF
       !to save the spectator pz before in order to be compared with
       !after LF kinematics fix used in USERSET = 16
       B = PHKK(3,K)
-      
+
       !Set the alpha for spectator nucleon
-      !Attention - Strikman & Weiss uses average nucleon mass as 
-      !approximation instead of proton & neutron mass. 
+      !Attention - Strikman & Weiss uses average nucleon mass as
+      !approximation instead of proton & neutron mass.
       MNUC = (PHKK(5,K) + PHKK(5,IIMAIN))/2.0D0
       EEN = SQRT(PHKK(1,K)*PHKK(1,K)+PHKK(2,K)*PHKK(2,K)+
      & PHKK(3,K)*PHKK(3,K) + MNUC*MNUC)
@@ -5154,7 +5154,7 @@ C            ENDIF
      & PHKK(1,IIMAIN)*PHKK(1,IIMAIN) + PHKK(2,IIMAIN)*PHKK(2,IIMAIN)
 
       !Only modify the E and pz. Note that pz has a opposite sign
-      !comparing to the paper because of the opposite convensions. 
+      !comparing to the paper because of the opposite convensions.
       !virtual photon +z and d is -z direction
       PHKK(4,IIMAIN) = (ALPHA_AN*Md)/4.0D0 + ANMT2/(ALPHA_AN*Md)
       PHKK(3,IIMAIN) = -(ALPHA_AN*Md)/4.0D0 + ANMT2/(ALPHA_AN*Md)
@@ -5203,10 +5203,10 @@ C            ENDIF
       COMMON /DTNPOT/ PFERMP(2),PFERMN(2),FERMOD,
      &                EBINDP(2),EBINDN(2),EPOT(2,210),
      &                ETACOU(2),EUNBIND,ICOUL,LFERMI
-      
+
 C     for now only A > 12 assign SRC pairs and bring them half way
 C     closer without changing the center of mass position.
-      
+
 C     Initialize SRC_PARTNER_INDEX = -1 & User variables
 
       SRC_PARTNER_INDEX = -1
@@ -5228,10 +5228,10 @@ C     Initialize SRC_PARTNER_INDEX = -1 & User variables
         C00 = 9999.0D0
         D00 = DT_RNDM(D00)
         IF( D00 .LE. 0.2D0 ) THEN ! now hard-coded 20% SRC nucleons probability
-          
+
 C     find the nearest neighbor and record its index number K2 with 5 times
-C     more probability of finding pn pair than pp/nn pair, using B00 random number. 
-C     MDB Use 18x, not 4x which was coded up before. 
+C     more probability of finding pn pair than pp/nn pair, using B00 random number.
+C     MDB Use 18x, not 4x which was coded up before.
 
           K1 = IIMAIN
           B00 = DT_RNDM(B00)
@@ -5240,9 +5240,9 @@ C          IF( B00 .LE. 0.2D0 ) THEN
             IS_PN = 0
           ELSE
             IS_PN = 1
-          ENDIF  
+          ENDIF
           DO J=2,NMASS+1
-            IF( J .EQ. K1 ) THEN 
+            IF( J .EQ. K1 ) THEN
 C               WRITE(*,*) 'SAME NUCLEON! '
               CONTINUE
             ELSEIF ((IS_PN.EQ.1).AND.(PHKK(5,K1).NE.PHKK(5,J))) THEN
@@ -5250,9 +5250,9 @@ C               WRITE(*,*) 'PN pair is required, continue looking '
               CONTINUE
             ELSEIF ((IS_PN.EQ.0).AND.(PHKK(5,K1).EQ.PHKK(5,J))) THEN
 C               WRITE(*,*) 'PN pair is not required, continue looking '
-              CONTINUE  
+              CONTINUE
             ENDIF
-          
+
             DIST1 = (VHKK(1,K1)-VHKK(1,J))**2
             DIST2 = (VHKK(2,K1)-VHKK(2,J))**2
             DIST3 = (VHKK(3,K1)-VHKK(3,J))**2
@@ -5272,9 +5272,9 @@ C               WRITE(*,*) 'PN pair is not required, continue looking '
              WRITE(*,*) 'mass: ', PHKK(5,K2)
           endif
 
-          CALL DT_KFERMI(P00,NMASS,IFMDIST) 
+          CALL DT_KFERMI(P00,NMASS,IFMDIST)
             !re-sample momentum using deuteron high momentum tail
-          P00=P00*(PFERMP(2)+PFERMN(2))/2.0D0 
+          P00=P00*(PFERMP(2)+PFERMN(2))/2.0D0
             !Take the average of proton and neutron momentum
 
           if(IOULEV(4).GE.2 .AND. NEVENT.LE.IOULEV(5)) then
@@ -5291,7 +5291,7 @@ C               WRITE(*,*) 'PN pair is not required, continue looking '
           MAIN_PY = PHKK(2,K1) + CYTA*P00
           MAIN_PZ = PHKK(3,K1) + CZTA*P00
           MAIN_E  = SQRT(MAIN_PX**2+MAIN_PY**2+MAIN_PZ**2+PHKK(5,K1)**2)
-          
+
           PAIR_PX = PHKK(1,K2) - CXTA*P00
           PAIR_PY = PHKK(2,K2) - CYTA*P00
           PAIR_PZ = PHKK(3,K2) - CZTA*P00
@@ -5312,7 +5312,7 @@ C     MDB - Fill variables needed elsewhere.
           PYF = MAIN_PY
           PZF = MAIN_PZ
           EKF = MAIN_E - PHKK(5,K1)
-          
+
           IF (USERSET.EQ.14) THEN
              USER1 = CXTA*P00
              USER2 = CYTA*P00
@@ -5348,12 +5348,12 @@ C          PHKK(3,IIMAIN)  = PHKK(3,IIMAIN)
 
           K1 = -1
           K2 = -1
-        ENDIF  
+        ENDIF
 
-         
+
 C       start to bring them together at a distance of ~ 1/n(k) fm
 C       IFMDIST = 3 and 4 -> switching "MOVING" on and off, respectively
-        
+
         IF( (K1 .GT. 0) .AND. (K2 .GT. 0) .AND. (IFMDIST .EQ. 5) ) THEN
           WRITE(*,*) "Start to move the nucleons"
           DIST_VALUE = SQRT(C00)
@@ -5381,10 +5381,10 @@ C       IFMDIST = 3 and 4 -> switching "MOVING" on and off, respectively
 
         ENDIF
 
-      ENDIF  
+      ENDIF
 
-C     for Deuteron only, if IFMDIST .EQ. 3, bring them closer 
-C     at a distance ~ 1/n(k) without changing momentum. IFMDIST = 1 
+C     for Deuteron only, if IFMDIST .EQ. 3, bring them closer
+C     at a distance ~ 1/n(k) without changing momentum. IFMDIST = 1
 C     already samples high momentum for deuteron.
 
       IF( (NMASS .EQ. 2) .AND. (IFMDIST .EQ. 3) ) THEN
@@ -5395,13 +5395,13 @@ C     already samples high momentum for deuteron.
         DIST3 = (VHKK(3,K1+1)-VHKK(3,K2+1))**2
         DIST_3D = DIST1+DIST2+DIST3
         DIST_VALUE = SQRT(DIST_3D)
-        
+
         X_SPACE = (VHKK(1,K1+1) - VHKK(1,K2+1))/DIST_VALUE
         Y_SPACE = (VHKK(2,K1+1) - VHKK(2,K2+1))/DIST_VALUE
         Z_SPACE = (VHKK(3,K1+1) - VHKK(3,K2+1))/DIST_VALUE
 
         P00 = SQRT(PHKK(1,K1+1)**2+PHKK(2,K1+1)**2+PHKK(3,K1+1)**2)
-        
+
         IF( P00 .LT. 0.25D0 ) THEN
           MOVE = 0.0D0
         ELSE
@@ -5414,10 +5414,10 @@ C     already samples high momentum for deuteron.
 
         VHKK(1,K2+1) = VHKK(1,K2+1) + MOVE*X_SPACE
         VHKK(2,K2+1) = VHKK(2,K2+1) + MOVE*Y_SPACE
-        VHKK(3,K2+1) = VHKK(3,K2+1) + MOVE*Z_SPACE 
+        VHKK(3,K2+1) = VHKK(3,K2+1) + MOVE*Z_SPACE
 
       ENDIF
-    
+
       RETURN
       END
 
@@ -5469,13 +5469,13 @@ C     already samples high momentum for deuteron.
             LSTART = .FALSE.
          ENDIF
     1    CONTINUE
-         ! Use IFMDIST, 3rd varaible in control card of FERMI, 
+         ! Use IFMDIST, 3rd varaible in control card of FERMI,
          ! 1.) -1 is the default DPMJet setting
          ! 2.) 0 is most up-to-date AND suggested version with fermi momentum based on
          !     Claudio Ciofi & S. Simula PRC paper
          ! 3.) >=1, are reserved for other distributions for now.
          !     See DT_KFERMI COMMENT for details.
-         
+
          IF ((NMASS.GE.2) .AND. (NMASS.LE.4) .AND. (IFMDIST.GE.0) ) THEN
             CALL DT_KFERMI(PABS,NMASS,IFMDIST)
          ELSE IF ( (IFMDIST .EQ. -1) ) THEN
@@ -5488,7 +5488,7 @@ C        IF (PABS.GE.PBIND) THEN
 C           ILOOP = ILOOP+1
 C           IF (MOD(ILOOP,500).EQ.0) THEN
 C              WRITE(LOUT,1001) PABS,PBIND,ILOOP
- 
+
 C    &                ' energy ',2E12.3,I6)
 C           ENDIF
 C           GOTO 1
@@ -6075,7 +6075,7 @@ C      ENDIF
 * projectile-nucleon xsection (in fm)
       IF (IJPROJ.EQ.7) THEN
 * SIGVP is used to get the total cross section for both phojet
-* and pythia model (MODEGA=2 or 5) commented by liang        
+* and pythia model (MODEGA=2 or 5) commented by liang
          SIGSH = DT_SIGVP(X,Q2)/10.0D0
       ELSE
          ELAB  = (S-AAM(IJPROJ)**2-AMP2)/(TWO*AMP)
@@ -6174,11 +6174,11 @@ C        CALL GSET(XAMLO,XAMHI,NPOINT,ABSZX,WEIGHT)
 * since we cannot seperate point process, we just use the total
 * cross section with considering the direct process as a temp
 * solution now 2/19/12
-* RPNT is the ratio for the xsection of direct/total 
+* RPNT is the ratio for the xsection of direct/total
 C         IF(MCGENE.EQ.5) THEN
          IPNT=0
          RPNT=ZERO
-C         ELSE   
+C         ELSE
 C            Remove MCGENE.NE.5
 C            CALL DT_POILIK(NB,NTARG,ECMNN(IE),Q2,IPNT,RPNT,1)
 C         ENDIF
@@ -6324,9 +6324,9 @@ c               DCOH = 1.0D10
                CA  = DCMPLX(RCA,FCA)
                CI  = CONE
 
-C...added by liang to simplify the nucleus calculation and exclude the 
+C...added by liang to simplify the nucleus calculation and exclude the
 C   shadowing from coherence length, since in pythia model, we can consider
-C   the shadowing effect from nPDF               
+C   the shadowing effect from nPDF
 C...Let's only run this one as if there's only 1 nucleon no matter what
 C   target is. And whatever else is folded in the PDFs
 
@@ -6410,9 +6410,9 @@ C               IF((MCGENE.EQ.5).AND.(IJPROJ.EQ.7)) THEN
    16             CONTINUE
    15          CONTINUE
 
-C...added by liang to simplify the nucleus calculation and exclude the 
+C...added by liang to simplify the nucleus calculation and exclude the
 C   shadowing from coherence length, since in pythia model, we can consider
-C   the shadowing effect from nPDF               
+C   the shadowing effect from nPDF
 C...after the coherence thing, we need to get the real NB back
 
                IF(IJPROJ.EQ.7) NB=NBTMP
@@ -6552,7 +6552,7 @@ C                 OMPP22 = OMPP22+(CONE-PP22(K))
 C      XSTOT(IE,IQ,NTARG) = STOT
 C      IF (IJPROJ.EQ.7)
 C     &   XSTOT(IE,IQ,NTARG) = XSTOT(IE,IQ,NTARG)+DBLE(NB)*SDIR
-c...modified by liang to get a pythia cross section table( but 
+c...modified by liang to get a pythia cross section table( but
 c...not used in pythia sampling, only for a double check or make
 c...the program running ), this value sigma_eA = A*sigma_ep
 C      IF( MCGENE.EQ.5 ) XSTOT(IE,IQ,NTARG)=DT_SIGVP(X,Q2)*DBLE(NB)
@@ -7024,7 +7024,7 @@ C...added by liang to implement alternative nuclear density function
       DT_DENSIT = ZERO
 C...added by liang to import the nuclear density from PyQM
 C...Modified by Mark 2018-05-05 first bin goes from 0 to step_size_dens
-C...init_dens=step_size_dens/2 is the center of bin 1. 
+C...init_dens=step_size_dens/2 is the center of bin 1.
 C      idex = INT((R-init_dens)/step_size_dens)
       idex = INT(R/step_size_dens)+1
       IF(idex.le.0) idex=1
@@ -7956,7 +7956,7 @@ C... NOTE: SIGEFF =effective cross-section in mb
                XY  = GAM*(QQ1*QQ1+QQ2*QQ2)
             ELSE
                XY  = QQ1*QQ1+QQ2*QQ2
-            ENDIF               
+            ENDIF
             IF (XY.LE.D2MAX) THEN
                C  = CI-CA*AFLUC*EXP(-XY)
                AR = DBLE(C)
@@ -7994,7 +7994,7 @@ C... NOTE: SIGEFF =effective cross-section in mb
             ENDIF
     5    CONTINUE
     4 CONTINUE
-    
+
 C...2016-08-13 Pythia nuclear shadowing - reroll b more often
 C-TEMP-TEMP-TEMP
 C      write(*,*) 'b, bx, by, RAVAL, JNT= ',BBEA,' ',BX,' ',BY,' ',RAVAL,
@@ -8026,11 +8026,11 @@ C...modified by liang to include pythia model
 C   since we cannot seperate point process, we just use the total
 C   cross section with considering the direct process as a temp
 C   solution now 2/19/12
-C   RPNT is the ratio for the xsection of direct/total 
+C   RPNT is the ratio for the xsection of direct/total
 C         IF(MCGENE.EQ.5) THEN
          IPNT=0
          RPNT=ZERO
-C         ELSE   
+C         ELSE
 C            Remove MCGENE.NE.5
 C            CALL DT_POILIK(NB,NTARG,ECMNOW,SQ2,IPNT,RPNT,2)
 C         ENDIF
@@ -8517,7 +8517,7 @@ c         IF (ABS(ISTHKK(I)).EQ.1) THEN
             IDXIN = IDBAM(I)
             CALL DT_DECAYS(PIN,IDXIN,POUT,IDXOUT,NSEC,IREJ)
             IF(ABS(IDHKK(I)).EQ.411.AND.NSEC.LE.1) IBUG=1
-            
+
             IF (NSEC.GT.1) THEN
                !added by liang to change decay particle status
                ISTHKK(I)=2
@@ -8707,11 +8707,11 @@ C mdb: Change to +2 to agree with usual (Pythia) convention
       !changed by liang to fit with INC particle status 4/6/2017
       CALL DT_PYDECY(1)
 
-      !put back the proton beam 
+      !put back the proton beam
       P(2,1)=P2XOLD
       P(2,2)=P2YOLD
       P(2,3)=P2ZOLD
-      !put back the electron beam 
+      !put back the electron beam
 C     lepton is defined in negative z and as beam
       P(1,1)=P1XOLD
       P(1,2)=P1YOLD
@@ -9565,6 +9565,9 @@ C9990 CONTINUE
 
       IREJ = 0
 
+      WRITE(*,999) IDXCAS, NCAS, IDCH(IDXCAS), NOBAM(IDXCAS)
+  999 FORMAT(1X, "@debug : DT_INUCAS : called on IDXCAS = ", I5, " which has NCAS = ", I3, ", IDCH = ", I3, ", NOBAM = ", I3)
+
 * update counter
       IF (NINCEV(1).NE.NEVHKK) THEN
          NINCEV(1) = NEVHKK
@@ -9969,6 +9972,10 @@ C              ENDIF
          ELSE
 * sample secondary interaction
             IDNUC = IDBAM(IDXSPE(1))
+
+            WRITE(*,1003) IDXCAS, IDCAS, IDNUC, IPROC
+ 1003       FORMAT(1X, "@kdebug : DT_HADRIN : called from DT_INUCAS on particle IDXCAS = ", I5, ", IDPR = ", I5, ", IDTA = ", I5, ", MODE = ", I5)
+
             CALL DT_HADRIN(IDCAS,PCAS1,IDNUC,PNUC,IPROC,IREJ1)
             IF (IREJ1.EQ.1) GOTO 9999
             IF (IREJ1.GT.1) GOTO 9998
@@ -11115,7 +11122,7 @@ C           EPNI = EPNI+EPOT(2,IJPROJ)
 * re-initialization of DTLTRA
             DUM1 = ZERO
             DUM2 = ZERO
-c...modified by liang to use uniform dtltra parameter in event generation      C...Removed by Mark - MCGENE 1-4 no longer used. MCGENE 6 same as 5.      
+c...modified by liang to use uniform dtltra parameter in event generation      C...Removed by Mark - MCGENE 1-4 no longer used. MCGENE 6 same as 5.
 C            IF(MCGENE.NE.5)CALL DT_LTINI(IJPROJ,IJTARG,EPNI,DUM1,DUM2,0)
          ENDIF
       ENDIF
@@ -11197,7 +11204,7 @@ C     WRITE(LOUT,*) 'event ',NEVHKK,NLOOP,SCPOT
 *       there is no target nucleus --> skip
 *       Include diproton or dineutron as "no target nucleus" for A=3
                   IF ((IT.LE.1).OR.((IT-NTW).LE.1) .OR.
-     &              (IT.EQ.3.AND.((IT-NTW).EQ.2).AND.((ITZ-NTCW).NE.1))) 
+     &              (IT.EQ.3.AND.((IT-NTW).EQ.2).AND.((ITZ-NTCW).NE.1)))
      &                 GOTO 900
                ENDIF
 * particle moving into backward direction
@@ -11376,10 +11383,10 @@ C                    PSEC(4) = PSEC(4)-XSCPOT*SCPOT*FDEN*EPOT(IPOT,IDSEC)
                   ENDIF
                ELSEIF (IPOT.EQ.2) THEN
 C  In the case of GCF, the mean field FSI between the SRC pair and the
-C  nuclear remnant is in the spectral function. We shouldn't double 
+C  nuclear remnant is in the spectral function. We shouldn't double
 C  count. IUSEPOT=1 forces double counting anyway. IUSEPOT=-1 in GCF
 C  will force NO potential drag.
-                  USEPOTDRG = (MCGENE.NE.7 .OR. IUSEPOT.EQ.1 .OR. 
+                  USEPOTDRG = (MCGENE.NE.7 .OR. IUSEPOT.EQ.1 .OR.
      &                 (IUSEPOT.EQ.0 .AND. ISTHKK(JMOHKK(1,I)).NE.3))
                   IF ((JTW.GT.0).AND.(IOTHER.EQ.0)) THEN
 *      this is most likely a wounded nucleon
@@ -11539,7 +11546,7 @@ C... 2017-02-23 Added by Mark - the Pythia event is MISSING the wounded
 C... nucleon's original momentum and kinetic energy. Add these back in.
 C... Note: DPF(mu) = P(mu)_true - P(mu)_naive is a 4-momentum too.
 C... We boost this into the HCMS in DT_PYEVENTEP now
-         
+
 C         DPF(1) = PXF
 C         DPF(2) = PYF
 C         CALL DT_LTNUC(PZF,EKF,DPF(3),DPF(4),3)
@@ -11559,12 +11566,12 @@ C         WRITE(*,*)'PFSP(pre): ',PFSP(1),PFSP(2),PFSP(3),PFSP(4)
          DO 32 K=1,4
             PRCLPR(K) = ZERO
 C...added by liang to consider quenching effect from PyQM routines
-C            IF(MCGENE.EQ.5) PFSP(K)=PFSP(K)+PAUX(K)          
-C...DPF added by Mark to fix Pythia/DPMJet p-nonconservation  
-C            PFSP(K)=PFSP(K)+PAUX(K)+DPF(K)            
+C            IF(MCGENE.EQ.5) PFSP(K)=PFSP(K)+PAUX(K)
+C...DPF added by Mark to fix Pythia/DPMJet p-nonconservation
+C            PFSP(K)=PFSP(K)+PAUX(K)+DPF(K)
 C...Use PYQREC rather than PAUX for q-hat recoil.
 C...Adding PYQREC to PFSP **SUPPRESSES** the recoil absorption
-C...    so PQRECF=0 means recoil not taken 
+C...    so PQRECF=0 means recoil not taken
 C...If pF is added back into the event, don't add it here
             IF (IFERPY.GT.1) THEN
                FERFAC=0.0D0
@@ -11575,7 +11582,7 @@ C...If pF is added back into the event, don't add it here
                PFSP(K)=PFSP(K)+(1.0D0-PQRECF)*PYQREC(K)+FERFAC*DPF(K)
             ELSE
                PFSP(K)=PFSP(K)+FERFAC*DPF(K)
-            ENDIF            
+            ENDIF
             PRCLTA(K) = PINIPR(K)+PINITA(K)-PFSP(K)
    32    CONTINUE
          IF (IOULEV(3).GT.1) THEN
@@ -11836,8 +11843,8 @@ C           ENDIF
             ENDIF
          ENDDO
          IREST = 0
-         IF (IREMNUC.NE.2) 
-     &        STOP 'FATAL in DT_SCN4BA: Expected 2 spectator nucleons.' 
+         IF (IREMNUC.NE.2)
+     &        STOP 'FATAL in DT_SCN4BA: Expected 2 spectator nucleons.'
       ENDIF
 
 * get nuclear potential corresp. to the residual nucleus
@@ -12118,7 +12125,7 @@ C Local variable for High E* protection & LT storage
             ELSEIF (IDHKK(I).EQ.2112) THEN
                NN(KF) = NN(KF)+1
             ELSE
-*   number of baryons other than n, p. 
+*   number of baryons other than n, p.
                IF (IIBAR(IDTMP).EQ.1) THEN
                   NH(KF) = NH(KF)+1
                   IF (KF.EQ.2 .AND. NH(KF).LE.5) IDHYP(NH(KF))=IDHKK(I)
@@ -12223,12 +12230,12 @@ C              Boost back to naive HCMS
                AMRCL(I) = ZERO
                EEXC(I)  = ZERO
                IF (NLOOP.LE.500) THEN
-                  IF (IOULEV(1).GT.0)  
+                  IF (IOULEV(1).GT.0)
      &               WRITE(*,*) 'REJECTION FLAG ~1st GOTO 9998 ~ ',IREJ
                   GOTO 9998
                ELSE
                   IREXCI(2) = IREXCI(2)+1
-                  IF (IOULEV(1).GT.0)  
+                  IF (IOULEV(1).GT.0)
      &               WRITE(*,*) 'REJECTION FLAG ~2nd GOTO 9999 ~ ',IREJ
                   GOTO 9999
                ENDIF
@@ -12297,12 +12304,12 @@ C              Boost back to naive HCMS
                AMRCL(I) = ZERO
                EEXC(I)  = ZERO
                IF (NLOOP.LE.500) THEN
-                  IF (IOULEV(1).GT.0)  
+                  IF (IOULEV(1).GT.0)
      &               WRITE(*,*) 'REJECTION FLAG ~2nd GOTO 9998 ~ ',IREJ
                   GOTO 9998
                ELSE
                   IREXCI(2) = IREXCI(2)+1
-                  IF (IOULEV(1).GT.0)  
+                  IF (IOULEV(1).GT.0)
      &               WRITE(*,*) 'REJECTION FLAG ~3rd GOTO 9999 ~ ',IREJ
                   GOTO 9999
                ENDIF
@@ -12431,7 +12438,7 @@ C                     REDORI = ONE / ( FRMRDC )**(2.D+00/3.D+00)
      &             ',  nucleon config. 1:',2I4,' 2:',2I4,
      &             2(/,11X,3E12.3))
             IF (NLOOP.LE.500) THEN
-               IF (IOULEV(1).GT.0)  
+               IF (IOULEV(1).GT.0)
      &              WRITE(*,*) 'REJECTION FLAG ~3rd GOTO 9998 ~ ',IREJ
                GOTO 9998
             ELSE
@@ -13295,7 +13302,7 @@ C  energy-interpolation table
          ECMS   = SQRT(2.0D0*AAM(1)**2+2.0D0*AAM(1)*PHOELA)
 C...Comment added by liang for explanation 19/2/12
 C   if MCGENE = 2 then phojet mode xsection read from a table, otherwise
-C   just using a parameterization         
+C   just using a parameterization
          IF (MCGENE.EQ.2) THEN
             IF (ECMS.LE.SIGECM(1,ISIMAX)) THEN
                CALL DT_PHOXS(1,1,DUM0,PHOPLA,PHOSTO,PHOSIN,DUM1,DUM2,0)
@@ -13376,7 +13383,7 @@ C   just using a parameterization
             ELSE
                DUM0   = ZERO
 C...use a parameterization for pythia model, added by liang to fill
-C   the cross section tables which are read but not used when sampling               
+C   the cross section tables which are read but not used when sampling
                IF(MCGENE.LT.5) THEN
                   CALL DT_PHOXS(1,1,DUM0,PLAB,PHOSTO,PHOSIN,DUM1,DUM2,0)
                ELSE
@@ -13951,7 +13958,7 @@ C    &            /
 
       SCALE = SQRT(Q2)
 
-      IF ( MODEGA.EQ.5 ) THEN  
+      IF ( MODEGA.EQ.5 ) THEN
          !herafit provides a parametrization for F2 in a wide energy
          !range, the unit of output F2 is GeV^4
          F2=herafit(x,Q2,W2,'p')
@@ -13975,7 +13982,7 @@ c         call DT_PYF2QPM(Q2,X,F2)
 *     output is F2
 *----------------------------------------------------
       DOUBLE PRECISION FUNCTION herafit(dx,dQ2,dW2,target)
-      
+
       IMPLICIT NONE
 
       CHARACTER*1 TARGET
@@ -14001,7 +14008,7 @@ c         call DT_PYF2QPM(Q2,X,F2)
          param( 12)=       0.358903
          param( 13)=       0.114424
          param( 14)=       1.120841
-         param( 15)=       0.336422 
+         param( 15)=       0.336422
          param( 16)=       1.113998
          param( 17)=       0.598313
          param( 18)=      -7.908678
@@ -14013,38 +14020,38 @@ c         call DT_PYF2QPM(Q2,X,F2)
 
       elseif(target.eq.'d') then
 
-         param(  1 )=               0.455872      
-         param(  2 )=               0.531614      
-         param(  3 )=               2.719053      
-         param(  4 )=              17.494116      
-         param(  5 )=               0.065270      
-         param(  6 )=              -0.135367      
-         param(  7 )=              -0.909263      
-         param(  8 )=               0.677523      
-         param(  9 )=              -6.934579      
-         param(  10)=               0.400460      
-         param(  11)=               0.067910      
-         param(  12)=               0.175499      
-         param(  13)=               0.706134      
-         param(  14)=               2.062847      
-         param(  15)=               0.654724      
-         param(  16)=               6.036018      
-         param(  17)=               1.173878      
-         param(  18)=              -1.196548      
-         param(  19)=               9.159108      
-         param(  20)=               0.222962      
-         param(  21)=               0.575077      
-         param(  22)=              31.152266      
-         param(  23)=               1.488237      
+         param(  1 )=               0.455872
+         param(  2 )=               0.531614
+         param(  3 )=               2.719053
+         param(  4 )=              17.494116
+         param(  5 )=               0.065270
+         param(  6 )=              -0.135367
+         param(  7 )=              -0.909263
+         param(  8 )=               0.677523
+         param(  9 )=              -6.934579
+         param(  10)=               0.400460
+         param(  11)=               0.067910
+         param(  12)=               0.175499
+         param(  13)=               0.706134
+         param(  14)=               2.062847
+         param(  15)=               0.654724
+         param(  16)=               6.036018
+         param(  17)=               1.173878
+         param(  18)=              -1.196548
+         param(  19)=               9.159108
+         param(  20)=               0.222962
+         param(  21)=               0.575077
+         param(  22)=              31.152266
+         param(  23)=               1.488237
       else
          write(*,*) 'target unknown- STOP'
          stop
       endif
-      
+
       t=dlog((dQ2+param(4))/param(5)) / log(param(4)/param(5))
       t=dlog(t)
 
-      if (dQ2.ne.0.d0) then         
+      if (dQ2.ne.0.d0) then
          XP=(dQ2+param(2))/(dQ2/dx+param(2))
          XR=(dQ2+param(3))/(dQ2/dx+param(3))
       else
@@ -14064,9 +14071,9 @@ c         call DT_PYF2QPM(Q2,X,F2)
 
       F2P=CP*(XP**AP)*(1.d0-dX)**BP
       F2R=CR*(XR**AR)*(1.d0-dX)**BR
-      
+
       herafit=(F2P+F2R)*dQ2/(dQ2+param(1))
-      
+
       return
       end
 
@@ -16923,7 +16930,7 @@ C     SID = SQRT((ONE-COD)*(ONE+COD))
 
       DO 10 I=1,3
         G(I)=DT_RNDM(GPART)
-  
+
    10 CONTINUE
       IF (G(3).LT.G(2)) GOTO 40
       IF (G(3).LT.G(1)) GOTO 30
@@ -16952,7 +16959,7 @@ C Anything between Fe and Pb will be Pb n(k), similar for other nucleus.
 
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
-      
+
       INTEGER ANUCLEUS
       DOUBLE PRECISION X0,Z0,Z1,Z2,A0,B0,C0,D0,E0,F0,CDFN,
      &     CDF,CDFPLUS,CDFMINUS
@@ -16966,7 +16973,7 @@ C Anything between Fe and Pb will be Pb n(k), similar for other nucleus.
         D0 = 0.0D0
         E0 = 0.0D0
         F0 = 0.0D0
-      ELSE IF( (ANUCLEUS .LE. 208) .OR. (ANUCLEUS .GT. 56) ) THEN 
+      ELSE IF( (ANUCLEUS .LE. 208) .OR. (ANUCLEUS .GT. 56) ) THEN
         A0 = 1.80D0
         B0 = 4.77D0
         C0 = 0.0D0
@@ -17000,12 +17007,12 @@ C Anything between Fe and Pb will be Pb n(k), similar for other nucleus.
         C0 = 0.0D0
         D0 = 0.0D0
         E0 = 0.0D0
-        F0 = 0.0D0  
-      ELSE 
+        F0 = 0.0D0
+      ELSE
         WRITE(*,*) "Should not be called here.ERROR2!ANUCLEUS=",ANUCLEUS
-      ENDIF 
+      ENDIF
 
-C     Random number generation between 0 and 1     
+C     Random number generation between 0 and 1
       E = DT_RNDM(GPART)
 !First, calculate the normalization:
 
@@ -17042,7 +17049,7 @@ C     Random number generation between 0 and 1
         ELSE
           T = CDFT(I)-CDFT(I-1)
         ENDIF
-        
+
         CDFPLUS = CDF + T
         CDFMINUS = CDF + 10D-20
 
@@ -17052,7 +17059,7 @@ C     Random number generation between 0 and 1
         ELSE
           GOTO 20
         ENDIF
-     
+
    20 CONTINUE
 
       END
@@ -17064,7 +17071,7 @@ C     Random number generation between 0 and 1
 
 ****************************************************************************
 * Sample realistic momentum k distribution in A = 2-4 (Deuteron to Helium4)*
-* These are n0k parametrization not including n1k                          *        
+* These are n0k parametrization not including n1k                          *
 ****************************************************************************
 
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
@@ -17088,32 +17095,32 @@ C     Random number generation between 0 and 1
       C1 = 0.0D0
       A2 = 0.00623D0
       B2 = 0.220D0
-      C2 = 0.0D0 
+      C2 = 0.0D0
       NN = 1.0D0
 
       X0 = 0.0D0
       CDF = 0.0D0
 
-C     Random number generation between 0 and 1     
+C     Random number generation between 0 and 1
       C = DT_RNDM(GGPART)
-C     Random number generation between 0.993 and 1, to select higher k 
+C     Random number generation between 0.993 and 1, to select higher k
 C     momentum tail as for k > 3 fm**-1
-      D = 0.993D0 + (1.0D0-0.993D0)*C  
+      D = 0.993D0 + (1.0D0-0.993D0)*C
 
 
 C     Instructions on SETTING different KRANGE or IFMDIST
 
-C     - 0 is the most recommended settings for all A>=2, other numbers below are 
+C     - 0 is the most recommended settings for all A>=2, other numbers below are
 C     reserved for other distributions or uses.
 
-C     - 1 and 3 are NOW the same with 0, where 3 turns on "MOVING". 
+C     - 1 and 3 are NOW the same with 0, where 3 turns on "MOVING".
 C       "MOVING" study is NOT completed yet.
 
 C     - 2 is > 0.993 cross section of the n(k)
 
 C     - 4 and 5 are heavy tails, where 5 turns on "MOVING" for A>12
 
-C     - Different n(k) distribution.  
+C     - Different n(k) distribution.
 C       11, 12, 13, 14 are alt distributions different from default n(k).
 C       11-14, from smaller tail to larger tail.
 C       NN is normalization to unity.
@@ -17124,7 +17131,7 @@ C       NN is normalization to unity.
         E = C
         B2 = 0.220D0
         NN = 1.0D0
-      ELSE IF( (KRANGE .EQ. 1) .OR. (KRANGE .EQ. 3)  ) THEN ! 
+      ELSE IF( (KRANGE .EQ. 1) .OR. (KRANGE .EQ. 3)  ) THEN !
         E = C
         B2 = 0.220D0
         NN = 1.0D0
@@ -17147,20 +17154,20 @@ C        A1 = 0.0D0
       ELSE IF( KRANGE .EQ. 12 ) THEN
         E = C
         A2 = 0.00623D0
-        B2 = 0.13D0  
+        B2 = 0.13D0
         C2 = 0.05D0
         NN = 0.99788104D0
       ELSE IF( KRANGE .EQ. 13 ) THEN
         E = C
         A2 = 0.00923D0
-        B2 = 0.27D0  
+        B2 = 0.27D0
         C2 = 0.001D0
         NN = 0.99793068D0
       ELSE IF( KRANGE .EQ. 14 ) THEN
         E = C
         B2 = 0.40D0
         NN = 1.0160458D0
-      ELSE 
+      ELSE
         E = C
       ENDIF
 
@@ -17175,7 +17182,7 @@ C     Overwrite KRANGE for He3 and He4
         C1 = 0.0D0
         A2 = 0.0D0
         B2 = 0.0D0
-        C2 = 0.0D0 
+        C2 = 0.0D0
         NN = 1.0D0
         E = C
       ELSE IF( ANUCLEUS .EQ. 4 ) THEN
@@ -17187,14 +17194,14 @@ C     Overwrite KRANGE for He3 and He4
         C1 = 0.0D0
         A2 = 0.0D0
         B2 = 0.0D0
-        C2 = 0.0D0 
+        C2 = 0.0D0
         NN = 1.0D0
         E = C
 C       ELSE IF( ANUCLEUS .EQ. 2 ) THEN
-C C       DO NOTHING  
+C C       DO NOTHING
 C       ELSE
 C         WRITE(*,*) "Should not be called here.ERROR1!ANUCLEUS=",ANUCLEUS
-      ENDIF 
+      ENDIF
 
 
 
@@ -17231,7 +17238,7 @@ C         WRITE(*,*) "Should not be called here.ERROR1!ANUCLEUS=",ANUCLEUS
         ELSE
           T = CDFT(I)-CDFT(I-1)
         ENDIF
-        
+
         CDFPLUS = CDF + T
         CDFMINUS = CDF + 10D-20
 
@@ -17241,7 +17248,7 @@ C         WRITE(*,*) "Should not be called here.ERROR1!ANUCLEUS=",ANUCLEUS
         ELSE
           GOTO 20
         ENDIF
-     
+
    20 CONTINUE
 
       END
@@ -18838,12 +18845,12 @@ C     ROTATION INTO THE ORIGINAL DIRECTION
 * Sampling from Gaussian distribution with mean and sigma.             *
 * Written by Kong Tu                                                   *
 ************************************************************************
-  
+
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
       PARAMETER (TINY10=1.0D-10)
 
-      
+
       DOUBLE PRECISION A0,E,Z0,Z1,Z2,X0,CDFN,
      &   STEPSIZE,CDF,CDFPLUS,CDFMINUS
       DOUBLE PRECISION CDFT(1:10000)
@@ -18879,7 +18886,7 @@ C     ROTATION INTO THE ORIGINAL DIRECTION
         ELSE
           T = CDFT(I)-CDFT(I-1)
         ENDIF
-        
+
         CDFPLUS = CDF + T
         CDFMINUS = CDF + 10D-20
 
@@ -18889,7 +18896,7 @@ C     ROTATION INTO THE ORIGINAL DIRECTION
         ELSE
           GOTO 20
         ENDIF
-     
+
    20 CONTINUE
 
 
@@ -19433,31 +19440,31 @@ C      END
       DATA CVERSI,CCHANG /'3.0-5 ','06 Jan 2010'/
 
       CALL DT_XTIME
-      WRITE(LOUT,665) 
-      WRITE(LOUT,667) 
+      WRITE(LOUT,665)
+      WRITE(LOUT,667)
   665 FORMAT(
      &  ' +-----------------------------------------------------------',
      &  '------------+',/,
      &  ' | Welcome to BeAGLE - Benchmark eA Generator for LEptoproduc',
-     &  'tion        |',/,  
+     &  'tion        |',/,
      &  ' |                                                           ',
-     &  '            |',/,   
+     &  '            |',/,
      &  ' |         BBBBBB  EEEEEEE     A     GGGGGG  LL       EEEEEEE',
-     &  '            |',/,             
+     &  '            |',/,
      &  ' |         BB   B  EE         A A    GG      LL       EE     ',
-     &  '            |',/,             
+     &  '            |',/,
      &  ' |         BB  B   EE        A   A   GG      LL       EE     ',
-     &  '            |',/,             
+     &  '            |',/,
      &  ' |         BBBBB   EEEEE     AAAAA   GG  GG  LL       EEEEE  ',
-     &  '            |',/,             
+     &  '            |',/,
      &  ' |         BB  B   EE       A     A  GG   G  LL       EE     ',
-     &  '            |',/,             
+     &  '            |',/,
      &  ' |         BB   B  EE       A     A  GG   G  LL       EE     ',
-     &  '            |',/,             
+     &  '            |',/,
      &  ' |         BBBBBB  EEEEEEE  A     A  GGGGGG  LLLLLLL  EEEEEEE',
-     &  '            |',/,               
+     &  '            |',/,
      &  ' |                                                           ',
-     &  '            |',/,   
+     &  '            |',/,
      &  ' | BeAGLE Version 1.01.04    ',44X,'|',/,1X,'|',71X,'|',/,
      &  ' | Authors: Elke Aschenauer, Mark D. Baker, J.H. Lee, Zhoudun',
      &  'ming Tu,    |',/,
@@ -19514,7 +19521,7 @@ C      END
      &"        '~~~~                 ~==/`     \c__=`",/,/,
      &" Art credit: asciiworld.com",/,/)
 C
-C ' - unconfuse emacs 
+C ' - unconfuse emacs
       WRITE(LOUT,1000) CVERSI,CCHANG
  1000 FORMAT(1X,'+-------------------------------------------------',
      &                  '----------------------+',/,
@@ -22970,7 +22977,7 @@ C      END
       COMMON /DTCOMP/ EMUFRA(NCOMPX),IEMUMA(NCOMPX),IEMUCH(NCOMPX),
      &                NCOMPO,IEMUL
 
-* /BPYVEC/ 
+* /BPYVEC/
       DATA IDXVECBP / 0 /
 
 * /BEGL3D/
