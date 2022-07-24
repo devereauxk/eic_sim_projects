@@ -1,14 +1,13 @@
-This directory contains a slightly reduced subset of the RAPGAP 3.302 
+This directory contains a slightly reduced subset of the RAPGAP 3.302
 libraries:
 
-libar4.a - dummy ARIADNE routines. 
+libar4.a - dummy ARIADNE routines.
 libbases.a - BASES numerical integration package
-librapgap33.a - RAPGAP, but removed sfecfe.o 
+librapgap33.a - RAPGAP, but removed sfecfe.o          NAMED librapgap33-mod.a NO FOR SOMREASON? HAD TO CHANGE A FLAG IN THE MAKEFILE FOR IT TO WORK
 
 using command ar d librapgap33.a sfecfe.o
-	       
+
 SFECFE, used in HERACLES in RAPGAP is copied from FLUKA. We will use the one
 from the Fluka library.
 
 We do not use libmycern.a - "CERNLIB-lite" because we link to CERNLIB already.
-
