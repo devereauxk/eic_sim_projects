@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
+WORKING_DIR=/eic/u/kdevereaux/work/BeAGLE-debug/eAu_10_100_qhat0_nlo
+
 if [ -z "$1" ]
 then
         echo "No job number set."
@@ -32,10 +34,10 @@ source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0
 #ln -s /eic/data/baraks/BeAGLE/inputFiles/S3ALL003
 #ln -s /eic/data/baraks/BeAGLE/nuclear.bin
 #ln -s /eic/data/baraks/BeAGLE/make_tree.C
-ln -s ./inputFiles/eAu.inp
-ln -s ./inputFiles/S1ALL003
-ln -s ./nuclear.bin
-ln -s ./make_tree.C
+ln -s ${WORKING_DIR}/inputFiles/eAu.inp
+ln -s ${WORKING_DIR}/inputFiles/S1ALL003
+ln -s ${WORKING_DIR}/nuclear.bin
+ln -s ${WORKING_DIR}/make_tree.C
 
 
 #Run simulation
@@ -55,7 +57,7 @@ echo ""
 
 #Move output files and cleanup
 echo "Cleaning Up..."
-mv -v eAu.txt ./outForPythiaMode/eAu_${INPUT}.txt
-mv -v eAu.root ./outForPythiaMode/eAu_${INPUT}.root
-mv -v eAu.log ./logs/eAu_${INPUT}.log
+mv -v eAu.txt ${WORKING_DIR}/outForPythiaMode/eAu_${INPUT}.txt
+mv -v eAu.root ${WORKING_DIR}/outForPythiaMode/eAu_${INPUT}.root
+mv -v eAu.log ${WORKING_DIR}/logs/eAu_${INPUT}.log
 echo "DONE!!!"
