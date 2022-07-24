@@ -1,0 +1,15 @@
+0
+start running in directory /home/condor/local/sdcc/execute/dir_79028/0000
+Running Job Number 0
+Completed Simulation!!!
+
+Making Output ROOT File...
+Welcome to the Norbert's ROOT session 
+
+Processing make_tree.C("eAu.txt")...
+Done!!!
+
+Cleaning Up...
+‘eAu.log’ -> ‘/eic/u/kdevereaux/work/BeAGLE-debug/eAu_10_100_qhat0_nlo/logs/eAu_0.log’
+removed ‘eAu.log’
+DONE!!!

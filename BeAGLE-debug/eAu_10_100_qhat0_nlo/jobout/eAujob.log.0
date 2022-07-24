@@ -1,0 +1,64 @@
+000 (323587.000.000) 07/24 18:17:33 Job submitted from host: <130.199.48.114:9618?addrs=130.199.48.114-9618&noUDP&sock=2572_1ae2_3>
+...
+001 (323587.000.000) 07/24 18:17:45 Job executing on host: <130.199.200.114:9618?addrs=130.199.200.114-9618&noUDP&sock=239656_32b2_3>
+...
+006 (323587.000.000) 07/24 18:17:54 Image size of job updated: 53836
+	24  -  MemoryUsage of job (MB)
+	24004  -  ResidentSetSize of job (KB)
+...
+005 (323587.000.000) 07/24 18:17:57 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :        0        1         1 
+	   Disk (KB)            :        2        2   5106390 
+	   Memory (MB)          :       24     1500      1536 
+	   Xferslots            :                           0 
+...
+000 (323588.000.000) 07/24 18:21:06 Job submitted from host: <130.199.48.114:9618?addrs=130.199.48.114-9618&noUDP&sock=2572_1ae2_3>
+...
+001 (323588.000.000) 07/24 18:21:24 Job executing on host: <130.199.157.141:9618?addrs=130.199.157.141-9618&noUDP&sock=135271_a9ce_3>
+...
+007 (323588.000.000) 07/24 18:21:24 Shadow exception!
+	Error from slot1_66@spool0681.sdcc.bnl.gov: Failed to execute '/gpfs/mnt/gpfs02/eic/kdevereaux/BeAGLE-debug/eAu_10_100_qhat0_nlo/run_eAu.sh' with arguments 0: (errno=13: 'Permission denied')
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (323588.000.000) 07/24 18:21:24 Job was held.
+	Error from slot1_66@spool0681.sdcc.bnl.gov: Failed to execute '/gpfs/mnt/gpfs02/eic/kdevereaux/BeAGLE-debug/eAu_10_100_qhat0_nlo/run_eAu.sh' with arguments 0: (errno=13: 'Permission denied')
+	Code 6 Subcode 13
+...
+009 (323588.000.000) 07/24 18:24:35 Job was aborted by the user.
+	via condor_rm (by user kdevereaux)
+...
+000 (323589.000.000) 07/24 18:24:42 Job submitted from host: <130.199.48.114:9618?addrs=130.199.48.114-9618&noUDP&sock=2572_1ae2_3>
+...
+001 (323589.000.000) 07/24 18:25:02 Job executing on host: <130.199.157.156:9618?addrs=130.199.157.156-9618&noUDP&sock=135092_0317_3>
+...
+006 (323589.000.000) 07/24 18:25:11 Image size of job updated: 70264
+	28  -  MemoryUsage of job (MB)
+	28036  -  ResidentSetSize of job (KB)
+...
+005 (323589.000.000) 07/24 18:25:12 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.08        1         1 
+	   Disk (KB)            :     2           2  14337837 
+	   Memory (MB)          :    28        1500      1536 
+	   Xferslots            :                           0 
+...

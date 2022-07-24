@@ -1,0 +1,20 @@
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x2ab99f90724f in ???
+#1  0xa00039 in oauxfi_
+	at /home/alfredo/fluprogfor/linuxmvax/oauxfi.f:110
+#2  0x9ee209 in ncdtrd_
+	at /home/alfredo/fluprogfor/evffrmvax/ncdtrd.f:80
+#3  0x4692f4 in dt_init_
+	at /eic/u/kdevereaux/work/BeAGLE-kyle/src/dpmjet3.0-5F-new.f:276
+#4  0x4026c9 in dpmjet
+	at /eic/u/kdevereaux/work/BeAGLE-kyle/user-eA3.0-5.f:43
+#5  0x402804 in main
+	at /eic/u/kdevereaux/work/BeAGLE-kyle/user-eA3.0-5.f:59
+/gpfs/mnt/gpfs02/eic/kdevereaux/BeAGLE-debug/run_eAu.sh: line 47: 79350 Segmentation fault      $BEAGLESYS/BeAGLE < eAu.inp > eAu.log
+Caught exception in Forester::Plant(): Unable to open file ./eAu.txt
+Tree building failed
+mv: cannot stat ‘eAu.txt’: No such file or directory
+mv: cannot stat ‘eAu.root’: No such file or directory
