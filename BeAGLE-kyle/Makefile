@@ -12,7 +12,7 @@ CXX      = gfortran
 CXXFLAGS = -c -g -Wall -m64 -fno-inline -fno-automatic -fno-align-commons
 CXXFLAGS +=  -Wno-unused-parameter -Wno-unused-dummy-argument
 CXXFLAGS +=  -Wno-unused
-LD = $(CXX) -g -m64 
+LD = $(CXX) -g -m64
 
 ##################directories###############################
 
@@ -45,13 +45,13 @@ RADGENOBJ = $(TOP)/obj/$(RADGEN)/
 MAINOBJ = $(TOP)/obj/$(MAIN)
 MAINSRC = $(TOP)/$(MAIN)
 
-# Rapgap includes BASES51 (integration) & a dummy ARIADNE (libar4) 
+# Rapgap includes BASES51 (integration) & a dummy ARIADNE (libar4)
 # It also includes a stripped down mini-CERNLIB (libmycern) Skip this one.
 #LIBRG = -L$(RAPGAP)/bin -lrapgap33 -lar4 -lbases -lmycern
-LIBRAP = -L$(RAPGAP)/lib -lrapgap33 -lar4 -lbases
+LIBRAP = -L$(RAPGAP)/lib -lrapgap33-mod -lar4 -lbases
 
 #####################libraries######################################
-#change the following library path according to the setting in 
+#change the following library path according to the setting in
 #your environment
 
 FLUKA =$(FLUPRO)
@@ -61,19 +61,19 @@ LIB2 = -L$(FLUKA) -lflukahp
 
 # BNL:
 ###OLD: FLUKA = /afs/rhic/eic/PACKAGES/fluka-64/
-LIB1 = -L/cern64/pro/lib -lmathlib -lkernlib -lpacklib_noshift -ldl -lm 
-LIB3 = -L/afs/rhic/eic/lib -lLHAPDF 
-#LIB3 = -L/afs/rhic.bnl.gov/eic/restructured/env/EIC2018a/lib -lLHAPDF 
+LIB1 = -L/cern64/pro/lib -lmathlib -lkernlib -lpacklib_noshift -ldl -lm
+LIB3 = -L/afs/rhic/eic/lib -lLHAPDF
+#LIB3 = -L/afs/rhic.bnl.gov/eic/restructured/env/EIC2018a/lib -lLHAPDF
 #
 # JLAB:
 ###OLD: FLUKA = /u/group/ldgeom/PACKAGES/fluka-64/
-#LIB1 = -L/u/site/cernlib/x86_64_rhel6/2005/lib -lmathlib -lkernlib -lpacklib -ldl -lm 
-#LIB3 = -L/u/group/ldgeom/PACKAGES/LHAPDF-5.9.1-64BIT/lib -lLHAPDF 
+#LIB1 = -L/u/site/cernlib/x86_64_rhel6/2005/lib -lmathlib -lkernlib -lpacklib -ldl -lm
+#LIB3 = -L/u/group/ldgeom/PACKAGES/LHAPDF-5.9.1-64BIT/lib -lLHAPDF
 
 #####################include directories###########################
 INCLUDE = $(TOP)/include
 RAPINC = $(RAPGAP)/include
-#change the following fluka path according to the setting in 
+#change the following fluka path according to the setting in
 #your environment
 FLUINC = $(FLUKA)/flukapro
 
@@ -138,11 +138,10 @@ dir_maker:
 $(EXE): $(MAINOBJ).o obj/libdpmjet.a obj/libpythia6.a obj/libradgen.a obj/libpyqm.a
 	cd $(TOP); $(LD) -I$(INCLUDE) -I$(FLUINC) -I$(RAPINC) -o $(EXE) $(MAINOBJ).o \
 	     -Lobj/ -ldpmjet -lpyqm $(LIBRAP) -Lobj -lpythia6 -lradgen \
-				$(LIB1) $(LIB2) $(LIB3) 
+				$(LIB1) $(LIB2) $(LIB3)
 #	-L/opt/gcc/4.6.3/lib64/
 #	-Lobj/ -ldpmjet -L/afs/rhic/eic/PACKAGES/PYTHIA-RAD-CORR-32BIT/PYTHIA-6.4.28/ -lpythia6 -Lobj/ -lradgen -lpyqm \
 
 #########################clean up utility##############################
-clean:   
+clean:
 	rm -f $(EXE) core.* $(MAINOBJ).o $(PYTHIAOBJ)/*.o $(PROGRAMOBJ)/*.o $(PYQMOBJ)/*.o $(RADGENOBJ)/*.o obj/*.o obj/*.a
-
