@@ -9565,8 +9565,8 @@ C9990 CONTINUE
 
       IREJ = 0
 
-      WRITE(LOUT,999) IDXCAS, NCAS, IDCH(IDXCAS), NOBAM(IDXCAS)
   999 FORMAT(1X, "@debug : DT_INUCAS : called on IDXCAS = ", I5, " which has NCAS = ", I3, ", IDCH = ", I3, ", NOBAM = ", I3)
+      WRITE(LOUT,999) IDXCAS, NCAS, IDCH(IDXCAS), NOBAM(IDXCAS)
 
 * update counter
       IF (NINCEV(1).NE.NEVHKK) THEN
@@ -9973,8 +9973,8 @@ C              ENDIF
 * sample secondary interaction
             IDNUC = IDBAM(IDXSPE(1))
 
-            WRITE(LOUT,1002) IDXCAS, IDCAS, IDNUC, IPROC
  1002       FORMAT(1X, "@kdebug : DT_HADRIN : called from DT_INUCAS on particle IDXCAS = ", I5, ", IDPR = ", I5, ", IDTA = ", I5, ", MODE = ", I5)
+            WRITE(LOUT,1002) IDXCAS, IDCAS, IDNUC, IPROC
 
             CALL DT_HADRIN(IDCAS,PCAS1,IDNUC,PNUC,IPROC,IREJ1)
             IF (IREJ1.EQ.1) GOTO 9999
