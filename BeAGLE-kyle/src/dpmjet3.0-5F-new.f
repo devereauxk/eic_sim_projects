@@ -3712,6 +3712,9 @@ C MDB 2017-05-26 ITMODE=0 runs all en collisions first and then all ep.
 
 * generate events
       DO 2 IEVT=1,NEVTS
+
+         WRITE(LOUT, "(a,I5)") "@kdebug : event ", IEVT
+
          IF (IT.GT.1 .AND. ITMODE.EQ.0 .AND. IEVT.EQ.NNEUEVS+1) THEN
 C...Print the Pythia cross section so far (microbarns)
             write(*,*)'===============================================',
