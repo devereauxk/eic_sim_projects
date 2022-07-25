@@ -1,5 +1,5 @@
 0
-start running in directory /home/condor/local/sdcc/execute/dir_79028/0000
+start running in directory /home/condor/local/sdcc/execute/dir_129241/0000
 Running Job Number 0
 Completed Simulation!!!
 
@@ -7,9 +7,25 @@ Making Output ROOT File...
 Welcome to the Norbert's ROOT session 
 
 Processing make_tree.C("eAu.txt")...
+
+Processing ./eAu.txt
+
+Processed ./eAu.txt
+TFile**		./eAu.root	
+ TFile*		./eAu.root	
+  OBJ: TTree	EICTree	my EIC tree : 0 at: 0x69b1a00
+  KEY: TProcessID	ProcessID0;1	98993bd8-0bb0-11ed-86ba-919dc782beef
+  KEY: TTree	EICTree;1	my EIC tree
+Began on Sun Jul 24 20:27:53 2022
+Ended on Sun Jul 24 20:27:53 2022
+Processed 10 events containing 2543 particles in 0.180704 seconds (0.0180704 sec/event)
 Done!!!
 
 Cleaning Up...
+‘eAu.txt’ -> ‘/eic/u/kdevereaux/work/BeAGLE-debug/eAu_10_100_qhat0_nlo/outForPythiaMode/eAu_0.txt’
+removed ‘eAu.txt’
+‘eAu.root’ -> ‘/eic/u/kdevereaux/work/BeAGLE-debug/eAu_10_100_qhat0_nlo/outForPythiaMode/eAu_0.root’
+removed ‘eAu.root’
 ‘eAu.log’ -> ‘/eic/u/kdevereaux/work/BeAGLE-debug/eAu_10_100_qhat0_nlo/logs/eAu_0.log’
 removed ‘eAu.log’
 DONE!!!

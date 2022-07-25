@@ -1,0 +1,174 @@
+reading through eAu_10_100_qhat0_nlo/logs/eAu_0.log for @kdebug statements ... 
+@kdebug : DT_INUCAS : called on IDXCAS = 213 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 214 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 216 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 219 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 222 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 223 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 224 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 225 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 226 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 227 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 228 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 229 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 230 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 230, IDPR = 23, IDTA = 8, MODE = 1
+@kdebug : DT_INUCAS : called on IDXCAS = 231 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 232 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 233 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 234 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 235 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 236 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 214 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 218 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 219 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 222 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 223 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 224 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 225 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 225, IDPR = 23, IDTA = 8, MODE = 1
+@kdebug : DT_INUCAS : called on IDXCAS = 226 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 226, IDPR = 19, IDTA = 1, MODE = 1
+@kdebug : DT_INUCAS : called on IDXCAS = 227 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 228 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 229 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 230 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 232 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 233 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 215 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 218 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 220 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 221 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 221, IDPR = 8, IDTA = 1, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 222 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 224 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 225 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 226 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 227 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 229 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 215 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 220 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 221 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 222 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 223 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 224 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 225 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 226 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 226, IDPR = 23, IDTA = 8, MODE = 1
+@kdebug : DT_INUCAS : called on IDXCAS = 227 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 228 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 230 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 232 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 233 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 234 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 235 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 236 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 237 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 238 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 209 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 209, IDPR = 1, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 217 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 218 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 221 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 222 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 223 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 224 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 225 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 226 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 227 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 228 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 207 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 208 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 209 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 209, IDPR = 8, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 211 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 212 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 214 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 214, IDPR = 8, IDTA = 8, MODE = 1
+@kdebug : DT_INUCAS : called on IDXCAS = 215 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 215, IDPR = 23, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 217 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 219 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 221 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 222 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 224 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 225 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 226 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 227 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 228 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 229 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 229, IDPR = 8, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 230 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 230, IDPR = 8, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 231 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 231, IDPR = 8, IDTA = 1, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 233 which has NCAS = -1, IDCH = 3, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 233, IDPR = 8, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 214 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 215 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 216 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 217 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 218 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 214 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 216 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 217 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 218 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 222 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 223 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 224 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 225 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 226 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 227 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 228 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 229 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 230 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 231 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 217 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 219 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 219, IDPR = 14, IDTA = 1, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 222 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 223 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 224 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 225 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 226 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 227 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 228 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 229 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 230 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 231 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 232 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 232, IDPR = 23, IDTA = 1, MODE = 1
+@kdebug : DT_INUCAS : called on IDXCAS = 233 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 234 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 235 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 235, IDPR = 8, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 236 which has NCAS = -1, IDCH = 0, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 236, IDPR = 23, IDTA = 1, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 237 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 237, IDPR = 14, IDTA = 1, MODE = 1
+@kdebug : DT_INUCAS : called on IDXCAS = 238 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 238, IDPR = 1, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 239 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 240 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 241 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 242 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 243 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 243, IDPR = 23, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 244 which has NCAS = -1, IDCH = 1, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 244, IDPR = 1, IDTA = 1, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 245 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 246 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 246, IDPR = 14, IDTA = 1, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 247 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 248 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 249 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 249, IDPR = 8, IDTA = 8, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 250 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 251 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 251, IDPR = 8, IDTA = 1, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 252 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 253 which has NCAS = -1, IDCH = 2, NOBAM = 0
+@kdebug : DT_HADRIN : particle IDXCAS = 253, IDPR = 1, IDTA = 1, MODE = 2
+@kdebug : DT_INUCAS : called on IDXCAS = 254 which has NCAS = -1, IDCH = 3, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 256 which has NCAS = -1, IDCH = 3, NOBAM = 0
+@kdebug : DT_INUCAS : called on IDXCAS = 257 which has NCAS = -1, IDCH = 3, NOBAM = 0
