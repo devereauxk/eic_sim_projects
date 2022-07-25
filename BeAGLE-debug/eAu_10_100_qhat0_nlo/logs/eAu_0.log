@@ -342,10 +342,10 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
  the output file is: eAu.txt                                                                                                                                                                                                                                                         
  kinematics cut read by PYTHIA:
    1.0000000000000001E-009  < y <   0.99900000000000000      ,    10.000000000000000       < Q2 <    20000.000000000000     
- Successfully got seed from /dev/urandom:   1568459049
- SEED =   1568459049
+ Successfully got seed from /dev/urandom:    593793163
+ SEED =    593793163
  RANLUX LUXURY LEVEL SET BY RLUXGO : 4     P= 389
- RANLUX INITIALIZED BY RLUXGO FROM SEEDS  1568459049           0           0
+ RANLUX INITIALIZED BY RLUXGO FROM SEEDS   593793163           0           0
    2147.9657238125324        10.000000013005000       -2147.9657238124719       -10.000000000000000     
  *********************************************
  Nucleus: Z, A:           79           197
@@ -1023,6 +1023,7 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
  Mixed mode:           10  random mix of en & ep sub-collisions.
  Warning: PYINIT will be called frequently.
  PYINIT output will be suppressed after the first few calls.
+@kdebug : event     1
         0 events sampled
 1****************** PYINIT: initialization of PYTHIA routines *****************
  ==== PYTHIA WILL USE LHAPDF ====
@@ -1129,45 +1130,140 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
           formation time parameter: 10.0  fm/c         modus: 1
           p_t dependent formation zone
 
-@kdebug : DT_INUCAS : called on IDXCAS =   213 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   214 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   209 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   216 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   219 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   229 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   230, IDPR =    23, IDTA =     8, MODE =   1
-@kdebug : DT_INUCAS : called on IDXCAS =   231 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   233 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   234 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   235 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   236 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-           1  events output done
-        1 events sampled
-@kdebug : DT_INUCAS : called on IDXCAS =   214 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   216, IDPR =     8, IDTA =     1, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   219 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   224, IDPR =    13, IDTA =     8, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_HADRIN : particle IDXCAS =   225, IDPR =    23, IDTA =     8, MODE =   1
 @kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   226, IDPR =    19, IDTA =     1, MODE =   1
 @kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   229 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   233 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   231 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   233 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   234 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   235 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   236 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   236, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   237 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   238 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   240 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   240, IDPR =    14, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   241 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   242 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   243 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   244 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   244, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   245 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   245, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   246 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   247 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   249 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   249, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   250 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+           1  events output done
+@kdebug : event     2
+        1 events sampled
+1****************** PYINIT: initialization of PYTHIA routines *****************
+ ==== PYTHIA WILL USE LHAPDF ====
+ Strong coupling at Mz for PDF is:  0.12978
+
+ ==============================================================================
+ I                                                                            I
+ I      PYTHIA will be initialized for gamma/e- on n0 user configuration      I
+ I                                                                            I
+ I                  px (GeV/c)   py (GeV/c)   pz (GeV/c)      E (GeV)         I
+ I        gamma/e-       0.000        0.000      -10.000       10.000         I
+ I        n0             0.000        0.000      100.906      100.910         I
+ I                                                                            I
+ I           corresponding to     63.539 GeV center-of-mass energy            I
+ I                                                                            I
+ ==============================================================================
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I   91   Elastic scattering            I    3.9887D-03   I
+           I   92   Single diffractive (XB)       I    3.1057D-03   I
+           I   93   Single diffractive (AX)       I    2.5472D-03   I
+           I   94   Double  diffractive           I    2.3207D-03   I
+           I   95   Low-pT scattering             I    1.8804D-02   I
+           I   96   Semihard QCD 2 -> 2           I    1.7443D-01   I
+           I                                      I                 I
+           ==========================================================
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I  131   f + gamma*_T -> f + g         I    1.1830D-03   I
+           I  132   f + gamma*_L -> f + g         I    6.5596D-05   I
+           I  135   g + gamma*_T -> f + fbar      I    5.5299D-03   I
+           I  136   g + gamma*_L -> f + fbar      I    9.8579D-04   I
+           I                                      I                 I
+           ==========================================================
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I   91   Elastic scattering            I    1.8088D-04   I
+           I   92   Single diffractive (XB)       I    1.4383D-04   I
+           I   93   Single diffractive (AX)       I    1.1469D-04   I
+           I   94   Double  diffractive           I    1.0668D-04   I
+           I   95   Low-pT scattering             I    9.1393D-04   I
+           I   96   Semihard QCD 2 -> 2           I    1.0385D-01   I
+           I                                      I                 I
+           ==========================================================
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I   99   q + gamma* -> q               I    1.3169D-02   I
+           I                                      I                 I
+           ==========================================================
+
+ ********************** PYINIT: initialization completed **********************
+@kdebug : DT_INUCAS : called on IDXCAS =   209 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   209, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   215 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   216 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   217 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   219 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   220 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   220, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   221, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   222, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   3, NOBAM =   0
            2  events output done
+@kdebug : event     3
         2 events sampled
 1****************** PYINIT: initialization of PYTHIA routines *****************
  ==== PYTHIA WILL USE LHAPDF ====
@@ -1175,118 +1271,6 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
 
  ==============================================================================
  I                                                                            I
- I      PYTHIA will be initialized for gamma/e- on n0 user configuration      I
- I                                                                            I
- I                  px (GeV/c)   py (GeV/c)   pz (GeV/c)      E (GeV)         I
- I        gamma/e-       0.000        0.000      -10.000       10.000         I
- I        n0             0.000        0.000      100.906      100.910         I
- I                                                                            I
- I           corresponding to     63.539 GeV center-of-mass energy            I
- I                                                                            I
- ==============================================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   91   Elastic scattering            I    3.9887D-03   I
-           I   92   Single diffractive (XB)       I    3.1057D-03   I
-           I   93   Single diffractive (AX)       I    2.5472D-03   I
-           I   94   Double  diffractive           I    2.3207D-03   I
-           I   95   Low-pT scattering             I    1.8804D-02   I
-           I   96   Semihard QCD 2 -> 2           I    1.7443D-01   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I  131   f + gamma*_T -> f + g         I    1.1830D-03   I
-           I  132   f + gamma*_L -> f + g         I    6.5596D-05   I
-           I  135   g + gamma*_T -> f + fbar      I    5.5299D-03   I
-           I  136   g + gamma*_L -> f + fbar      I    9.8579D-04   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   91   Elastic scattering            I    1.8088D-04   I
-           I   92   Single diffractive (XB)       I    1.4383D-04   I
-           I   93   Single diffractive (AX)       I    1.1469D-04   I
-           I   94   Double  diffractive           I    1.0668D-04   I
-           I   95   Low-pT scattering             I    9.1393D-04   I
-           I   96   Semihard QCD 2 -> 2           I    1.0385D-01   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   99   q + gamma* -> q               I    1.3169D-02   I
-           I                                      I                 I
-           ==========================================================
-
- ********************** PYINIT: initialization completed **********************
-@kdebug : DT_INUCAS : called on IDXCAS =   215 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   220 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   221, IDPR =     8, IDTA =     1, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   229 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-           3  events output done
-        3 events sampled
-@kdebug : DT_INUCAS : called on IDXCAS =   215 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   220 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   226, IDPR =    23, IDTA =     8, MODE =   1
-@kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   233 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   234 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   235 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   236 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   237 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   238 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-           4  events output done
-        4 events sampled
-1****************** PYINIT: initialization of PYTHIA routines *****************
- ==== PYTHIA WILL USE LHAPDF ====
- Strong coupling at Mz for PDF is:  0.12978
-
- ==============================================================================
- I                                                                            I
  I      PYTHIA will be initialized for gamma/e- on p+ user configuration      I
  I                                                                            I
  I                  px (GeV/c)   py (GeV/c)   pz (GeV/c)      E (GeV)         I
@@ -1359,218 +1343,104 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
            ==========================================================
 
  ********************** PYINIT: initialization completed **********************
+@kdebug : DT_INUCAS : called on IDXCAS =   215 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   216 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   216, IDPR =     1, IDTA =     1, MODE =   1
+@kdebug : DT_INUCAS : called on IDXCAS =   217 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   220 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   221, IDPR =    12, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   222, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   224, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   229 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   229, IDPR =     1, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   231 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+           3  events output done
+@kdebug : event     4
+        3 events sampled
 @kdebug : DT_INUCAS : called on IDXCAS =   209 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_HADRIN : particle IDXCAS =   209, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   216 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   217 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-           5  events output done
-        5 events sampled
-1****************** PYINIT: initialization of PYTHIA routines *****************
- ==== PYTHIA WILL USE LHAPDF ====
- Strong coupling at Mz for PDF is:  0.12978
-
- ==============================================================================
- I                                                                            I
- I      PYTHIA will be initialized for gamma/e- on n0 user configuration      I
- I                                                                            I
- I                  px (GeV/c)   py (GeV/c)   pz (GeV/c)      E (GeV)         I
- I        gamma/e-       0.000        0.000      -10.000       10.000         I
- I        n0             0.000        0.000      100.906      100.910         I
- I                                                                            I
- I           corresponding to     63.539 GeV center-of-mass energy            I
- I                                                                            I
- ==============================================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   91   Elastic scattering            I    3.9887D-03   I
-           I   92   Single diffractive (XB)       I    3.1057D-03   I
-           I   93   Single diffractive (AX)       I    2.5472D-03   I
-           I   94   Double  diffractive           I    2.3207D-03   I
-           I   95   Low-pT scattering             I    1.8804D-02   I
-           I   96   Semihard QCD 2 -> 2           I    1.7443D-01   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I  131   f + gamma*_T -> f + g         I    1.1830D-03   I
-           I  132   f + gamma*_L -> f + g         I    6.5596D-05   I
-           I  135   g + gamma*_T -> f + fbar      I    5.5299D-03   I
-           I  136   g + gamma*_L -> f + fbar      I    9.8579D-04   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   91   Elastic scattering            I    1.8088D-04   I
-           I   92   Single diffractive (XB)       I    1.4383D-04   I
-           I   93   Single diffractive (AX)       I    1.1469D-04   I
-           I   94   Double  diffractive           I    1.0668D-04   I
-           I   95   Low-pT scattering             I    9.1393D-04   I
-           I   96   Semihard QCD 2 -> 2           I    1.0385D-01   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   99   q + gamma* -> q               I    1.3169D-02   I
-           I                                      I                 I
-           ==========================================================
-
- ********************** PYINIT: initialization completed **********************
+@kdebug : DT_INUCAS : called on IDXCAS =   219 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   220 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   221, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   222, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   225, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   226, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   228, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   4, NOBAM =   0
+           4  events output done
+@kdebug : event     5
+        4 events sampled
+@kdebug : DT_INUCAS : called on IDXCAS =   206 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   207 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   208 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   209 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   209, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_HADRIN : particle IDXCAS =   208, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   210 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   210, IDPR =     1, IDTA =     1, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   211 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   212 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-           6  events output done
-        6 events sampled
-1****************** PYINIT: initialization of PYTHIA routines *****************
- ==== PYTHIA WILL USE LHAPDF ====
- Strong coupling at Mz for PDF is:  0.12978
-
- ==============================================================================
- I                                                                            I
- I      PYTHIA will be initialized for gamma/e- on p+ user configuration      I
- I                                                                            I
- I                  px (GeV/c)   py (GeV/c)   pz (GeV/c)      E (GeV)         I
- I        gamma/e-       0.000        0.000      -10.000       10.000         I
- I        p+             0.000        0.000      100.766      100.771         I
- I                                                                            I
- I           corresponding to     63.495 GeV center-of-mass energy            I
- I                                                                            I
- ==============================================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   91   Elastic scattering            I    3.9879D-03   I
-           I   92   Single diffractive (XB)       I    3.1053D-03   I
-           I   93   Single diffractive (AX)       I    2.5470D-03   I
-           I   94   Double  diffractive           I    2.3201D-03   I
-           I   95   Low-pT scattering             I    1.8803D-02   I
-           I   96   Semihard QCD 2 -> 2           I    1.7427D-01   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I  131   f + gamma*_T -> f + g         I    1.2314D-03   I
-           I  132   f + gamma*_L -> f + g         I    6.7594D-05   I
-           I  135   g + gamma*_T -> f + fbar      I    5.5286D-03   I
-           I  136   g + gamma*_L -> f + fbar      I    9.8553D-04   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   91   Elastic scattering            I    1.8084D-04   I
-           I   92   Single diffractive (XB)       I    1.4380D-04   I
-           I   93   Single diffractive (AX)       I    1.1467D-04   I
-           I   94   Double  diffractive           I    1.0664D-04   I
-           I   95   Low-pT scattering             I    9.1381D-04   I
-           I   96   Semihard QCD 2 -> 2           I    1.0373D-01   I
-           I                                      I                 I
-           ==========================================================
-
- ******** PYMAXI: summary of differential cross-section maximum search ********
-
-           ==========================================================
-           I                                      I                 I
-           I  ISUB  Subprocess name               I  Maximum value  I
-           I                                      I                 I
-           ==========================================================
-           I                                      I                 I
-           I   99   q + gamma* -> q               I    1.3247D-02   I
-           I                                      I                 I
-           ==========================================================
-
- ********************** PYINIT: initialization completed **********************
-@kdebug : DT_INUCAS : called on IDXCAS =   214 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   214, IDPR =     8, IDTA =     8, MODE =   1
-@kdebug : DT_INUCAS : called on IDXCAS =   215 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   215, IDPR =    23, IDTA =     8, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   217 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   212 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   212, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   213 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+           5  events output done
+@kdebug : event     6
+        5 events sampled
+@kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   219 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   229 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   229, IDPR =     8, IDTA =     8, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   2, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   230, IDPR =     8, IDTA =     8, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   231 which has NCAS =  -1, IDCH =   2, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   231, IDPR =     8, IDTA =     1, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   233 which has NCAS =  -1, IDCH =   3, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   233, IDPR =     8, IDTA =     8, MODE =   2
-           7  events output done
-        7 events sampled
-@kdebug : DT_INUCAS : called on IDXCAS =   214 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   215 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   234 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   235 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   236 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   236, IDPR =    23, IDTA =     1, MODE =   1
+@kdebug : DT_INUCAS : called on IDXCAS =   237 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   238 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   239 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   240 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   241 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   242 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   243 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   244 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   245 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   247 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   248 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   249 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   250 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   251 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   251, IDPR =    14, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   252 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   252, IDPR =    13, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   253 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   254 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   255 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   256 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   257 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   258 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+           6  events output done
+@kdebug : event     7
+        6 events sampled
 @kdebug : DT_INUCAS : called on IDXCAS =   216 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   216, IDPR =     1, IDTA =     1, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   217 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-           8  events output done
-        8 events sampled
-@kdebug : DT_INUCAS : called on IDXCAS =   214 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   216 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   217 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   219 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
@@ -1579,9 +1449,170 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
 @kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   229 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   231 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   230, IDPR =     1, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   231 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   231, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   233 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   234 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   234, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   235 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   235, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   236 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   236, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   237 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   238 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   238, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   239 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   239, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   240 which has NCAS =  -1, IDCH =   4, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   240, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   241 which has NCAS =  -1, IDCH =   4, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   241, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   242 which has NCAS =  -1, IDCH =   4, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   243 which has NCAS =  -1, IDCH =   4, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   243, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   244 which has NCAS =  -1, IDCH =   5, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   244, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   246 which has NCAS =  -1, IDCH =   5, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   246, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   247 which has NCAS =  -1, IDCH =   5, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   247, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   248 which has NCAS =  -1, IDCH =   6, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   248, IDPR =     8, IDTA =     1, MODE =   2
+           7  events output done
+@kdebug : event     8
+        7 events sampled
+1****************** PYINIT: initialization of PYTHIA routines *****************
+ ==== PYTHIA WILL USE LHAPDF ====
+ Strong coupling at Mz for PDF is:  0.12978
+
+ ==============================================================================
+ I                                                                            I
+ I      PYTHIA will be initialized for gamma/e- on n0 user configuration      I
+ I                                                                            I
+ I                  px (GeV/c)   py (GeV/c)   pz (GeV/c)      E (GeV)         I
+ I        gamma/e-       0.000        0.000      -10.000       10.000         I
+ I        n0             0.000        0.000      100.906      100.910         I
+ I                                                                            I
+ I           corresponding to     63.539 GeV center-of-mass energy            I
+ I                                                                            I
+ ==============================================================================
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I   91   Elastic scattering            I    3.9887D-03   I
+           I   92   Single diffractive (XB)       I    3.1057D-03   I
+           I   93   Single diffractive (AX)       I    2.5472D-03   I
+           I   94   Double  diffractive           I    2.3207D-03   I
+           I   95   Low-pT scattering             I    1.8804D-02   I
+           I   96   Semihard QCD 2 -> 2           I    1.7443D-01   I
+           I                                      I                 I
+           ==========================================================
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I  131   f + gamma*_T -> f + g         I    1.1830D-03   I
+           I  132   f + gamma*_L -> f + g         I    6.5596D-05   I
+           I  135   g + gamma*_T -> f + fbar      I    5.5299D-03   I
+           I  136   g + gamma*_L -> f + fbar      I    9.8579D-04   I
+           I                                      I                 I
+           ==========================================================
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I   91   Elastic scattering            I    1.8088D-04   I
+           I   92   Single diffractive (XB)       I    1.4383D-04   I
+           I   93   Single diffractive (AX)       I    1.1469D-04   I
+           I   94   Double  diffractive           I    1.0668D-04   I
+           I   95   Low-pT scattering             I    9.1393D-04   I
+           I   96   Semihard QCD 2 -> 2           I    1.0385D-01   I
+           I                                      I                 I
+           ==========================================================
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I   99   q + gamma* -> q               I    1.3169D-02   I
+           I                                      I                 I
+           ==========================================================
+
+ ********************** PYINIT: initialization completed **********************
+@kdebug : DT_INUCAS : called on IDXCAS =   213 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   214 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   217 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   220 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   220, IDPR =    14, IDTA =     8, MODE =   1
+@kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   221, IDPR =    13, IDTA =     8, MODE =   1
+@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   222, IDPR =    23, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   229 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   231 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   231, IDPR =    13, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   233 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   234 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   235 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   236 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   237 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   238 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   239 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   239, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   240 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   240, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   241 which has NCAS =  -1, IDCH =   3, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   241, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   242 which has NCAS =  -1, IDCH =   4, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   242, IDPR =     8, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   243 which has NCAS =  -1, IDCH =   4, NOBAM =   0
+           8  events output done
+@kdebug : event     9
+        8 events sampled
+@kdebug : DT_INUCAS : called on IDXCAS =   216 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   218 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   219 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   220 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   221 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
            9  events output done
+@kdebug : event    10
         9 events sampled
 1****************** PYINIT: initialization of PYTHIA routines *****************
  ==== PYTHIA WILL USE LHAPDF ====
@@ -1589,13 +1620,13 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
 
  ==============================================================================
  I                                                                            I
- I      PYTHIA will be initialized for gamma/e- on n0 user configuration      I
+ I      PYTHIA will be initialized for gamma/e- on p+ user configuration      I
  I                                                                            I
  I                  px (GeV/c)   py (GeV/c)   pz (GeV/c)      E (GeV)         I
  I        gamma/e-       0.000        0.000      -10.000       10.000         I
- I        n0             0.000        0.000      100.906      100.910         I
+ I        p+             0.000        0.000      100.766      100.771         I
  I                                                                            I
- I           corresponding to     63.539 GeV center-of-mass energy            I
+ I           corresponding to     63.495 GeV center-of-mass energy            I
  I                                                                            I
  ==============================================================================
 
@@ -1607,12 +1638,12 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
            I                                      I                 I
            ==========================================================
            I                                      I                 I
-           I   91   Elastic scattering            I    3.9887D-03   I
-           I   92   Single diffractive (XB)       I    3.1057D-03   I
-           I   93   Single diffractive (AX)       I    2.5472D-03   I
-           I   94   Double  diffractive           I    2.3207D-03   I
-           I   95   Low-pT scattering             I    1.8804D-02   I
-           I   96   Semihard QCD 2 -> 2           I    1.7443D-01   I
+           I   91   Elastic scattering            I    3.9879D-03   I
+           I   92   Single diffractive (XB)       I    3.1053D-03   I
+           I   93   Single diffractive (AX)       I    2.5470D-03   I
+           I   94   Double  diffractive           I    2.3201D-03   I
+           I   95   Low-pT scattering             I    1.8803D-02   I
+           I   96   Semihard QCD 2 -> 2           I    1.7427D-01   I
            I                                      I                 I
            ==========================================================
 
@@ -1624,10 +1655,10 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
            I                                      I                 I
            ==========================================================
            I                                      I                 I
-           I  131   f + gamma*_T -> f + g         I    1.1830D-03   I
-           I  132   f + gamma*_L -> f + g         I    6.5596D-05   I
-           I  135   g + gamma*_T -> f + fbar      I    5.5299D-03   I
-           I  136   g + gamma*_L -> f + fbar      I    9.8579D-04   I
+           I  131   f + gamma*_T -> f + g         I    1.2314D-03   I
+           I  132   f + gamma*_L -> f + g         I    6.7594D-05   I
+           I  135   g + gamma*_T -> f + fbar      I    5.5286D-03   I
+           I  136   g + gamma*_L -> f + fbar      I    9.8553D-04   I
            I                                      I                 I
            ==========================================================
 
@@ -1639,12 +1670,12 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
            I                                      I                 I
            ==========================================================
            I                                      I                 I
-           I   91   Elastic scattering            I    1.8088D-04   I
-           I   92   Single diffractive (XB)       I    1.4383D-04   I
-           I   93   Single diffractive (AX)       I    1.1469D-04   I
-           I   94   Double  diffractive           I    1.0668D-04   I
-           I   95   Low-pT scattering             I    9.1393D-04   I
-           I   96   Semihard QCD 2 -> 2           I    1.0385D-01   I
+           I   91   Elastic scattering            I    1.8084D-04   I
+           I   92   Single diffractive (XB)       I    1.4380D-04   I
+           I   93   Single diffractive (AX)       I    1.1467D-04   I
+           I   94   Double  diffractive           I    1.0664D-04   I
+           I   95   Low-pT scattering             I    9.1381D-04   I
+           I   96   Semihard QCD 2 -> 2           I    1.0373D-01   I
            I                                      I                 I
            ==========================================================
 
@@ -1656,18 +1687,17 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
            I                                      I                 I
            ==========================================================
            I                                      I                 I
-           I   99   q + gamma* -> q               I    1.3169D-02   I
+           I   99   q + gamma* -> q               I    1.3247D-02   I
            I                                      I                 I
            ==========================================================
 
  ********************** PYINIT: initialization completed **********************
-@kdebug : DT_INUCAS : called on IDXCAS =   217 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   219 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   219, IDPR =    14, IDTA =     1, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   222 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   223 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   214 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   215 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   224 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   224, IDPR =     1, IDTA =     8, MODE =   1
 @kdebug : DT_INUCAS : called on IDXCAS =   225 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   225, IDPR =    13, IDTA =     1, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   226 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   227 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   228 which has NCAS =  -1, IDCH =   0, NOBAM =   0
@@ -1675,41 +1705,35 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
 @kdebug : DT_INUCAS : called on IDXCAS =   230 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   231 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   232 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   232, IDPR =    23, IDTA =     1, MODE =   1
 @kdebug : DT_INUCAS : called on IDXCAS =   233 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   234 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   235 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   235, IDPR =     8, IDTA =     8, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   236 which has NCAS =  -1, IDCH =   0, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   236, IDPR =    23, IDTA =     1, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   237 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   237, IDPR =    14, IDTA =     1, MODE =   1
-@kdebug : DT_INUCAS : called on IDXCAS =   238 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   238, IDPR =     1, IDTA =     8, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   237 which has NCAS =  -1, IDCH =   0, NOBAM =   0
+@kdebug : DT_INUCAS : called on IDXCAS =   238 which has NCAS =  -1, IDCH =   0, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   239 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   239, IDPR =    13, IDTA =     8, MODE =   1
 @kdebug : DT_INUCAS : called on IDXCAS =   240 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   240, IDPR =     8, IDTA =     1, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   241 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   241, IDPR =     8, IDTA =     8, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   242 which has NCAS =  -1, IDCH =   1, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   242, IDPR =    13, IDTA =     1, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   243 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   243, IDPR =    23, IDTA =     8, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   244 which has NCAS =  -1, IDCH =   1, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   244, IDPR =     1, IDTA =     1, MODE =   2
+@kdebug : DT_HADRIN : particle IDXCAS =   243, IDPR =     1, IDTA =     8, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   245 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   245, IDPR =     1, IDTA =     8, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   246 which has NCAS =  -1, IDCH =   2, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   246, IDPR =    14, IDTA =     1, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   247 which has NCAS =  -1, IDCH =   2, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   248 which has NCAS =  -1, IDCH =   2, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   249 which has NCAS =  -1, IDCH =   2, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   249, IDPR =     8, IDTA =     8, MODE =   2
+@kdebug : DT_HADRIN : particle IDXCAS =   249, IDPR =     1, IDTA =     1, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   250 which has NCAS =  -1, IDCH =   2, NOBAM =   0
+@kdebug : DT_HADRIN : particle IDXCAS =   250, IDPR =     1, IDTA =     8, MODE =   2
 @kdebug : DT_INUCAS : called on IDXCAS =   251 which has NCAS =  -1, IDCH =   2, NOBAM =   0
 @kdebug : DT_HADRIN : particle IDXCAS =   251, IDPR =     8, IDTA =     1, MODE =   2
-@kdebug : DT_INUCAS : called on IDXCAS =   252 which has NCAS =  -1, IDCH =   2, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   253 which has NCAS =  -1, IDCH =   2, NOBAM =   0
-@kdebug : DT_HADRIN : particle IDXCAS =   253, IDPR =     1, IDTA =     1, MODE =   2
+@kdebug : DT_INUCAS : called on IDXCAS =   252 which has NCAS =  -1, IDCH =   3, NOBAM =   0
 @kdebug : DT_INUCAS : called on IDXCAS =   254 which has NCAS =  -1, IDCH =   3, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   256 which has NCAS =  -1, IDCH =   3, NOBAM =   0
-@kdebug : DT_INUCAS : called on IDXCAS =   257 which has NCAS =  -1, IDCH =   3, NOBAM =   0
           10  events output done
 1********* PYSTAT:  Statistics on Number of Events and Cross-sections *********
 
@@ -1723,30 +1747,30 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
  I                                  I                            I            I
  ==============================================================================
  I                                  I                            I            I
- I   0 All included subprocesses    I            1          2324 I  2.858D-05 I
+ I   0 All included subprocesses    I            1          4276 I  3.068D-05 I
  I  11 f + f' -> f + f' (QCD)       I            0             0 I  0.000D+00 I
  I  12 f + fbar -> f' + fbar'       I            0             0 I  0.000D+00 I
  I  13 f + fbar -> g + g            I            0             0 I  0.000D+00 I
  I  28 f + g -> f + g               I            0             0 I  0.000D+00 I
  I  53 g + g -> f + fbar            I            0             0 I  0.000D+00 I
  I  68 g + g -> g + g               I            0             0 I  0.000D+00 I
- I  91 Elastic scattering           I            0           169 I  0.000D+00 I
- I  92 Single diffractive (XB)      I            0            65 I  0.000D+00 I
- I  93 Single diffractive (AX)      I            0           121 I  0.000D+00 I
- I  94 Double  diffractive          I            0            56 I  0.000D+00 I
- I  95 Low-pT scattering            I            0            38 I  0.000D+00 I
- I  99 q + gamma* -> q              I            1           817 I  2.858D-05 I
- I 131 f + gamma*_T -> f + g        I            0            13 I  0.000D+00 I
+ I  91 Elastic scattering           I            0           389 I  0.000D+00 I
+ I  92 Single diffractive (XB)      I            0           304 I  0.000D+00 I
+ I  93 Single diffractive (AX)      I            0           184 I  0.000D+00 I
+ I  94 Double  diffractive          I            0           290 I  0.000D+00 I
+ I  95 Low-pT scattering            I            0            48 I  0.000D+00 I
+ I  99 q + gamma* -> q              I            1          1091 I  3.068D-05 I
+ I 131 f + gamma*_T -> f + g        I            0           120 I  0.000D+00 I
  I 132 f + gamma*_L -> f + g        I            0             0 I  0.000D+00 I
- I 135 g + gamma*_T -> f + fbar     I            0           221 I  0.000D+00 I
- I 136 g + gamma*_L -> f + fbar     I            0            16 I  0.000D+00 I
+ I 135 g + gamma*_T -> f + fbar     I            0           452 I  0.000D+00 I
+ I 136 g + gamma*_L -> f + fbar     I            0            97 I  0.000D+00 I
  I                                  I                            I            I
  ==============================================================================
  I                                  I                            I            I
- I   1 VMD * hadron                 I            0          1206 I  0.000D+00 I
- I   2 direct * hadron              I            0           250 I  0.000D+00 I
- I   3 anomalous * hadron           I            0            51 I  0.000D+00 I
- I   4 DIS * hadron                 I            1           817 I  2.858D-05 I
+ I   1 VMD * hadron                 I            0          2406 I  0.000D+00 I
+ I   2 direct * hadron              I            0           669 I  0.000D+00 I
+ I   3 anomalous * hadron           I            0           110 I  0.000D+00 I
+ I   4 DIS * hadron                 I            1          1091 I  3.068D-05 I
  I                                  I                            I            I
  ==============================================================================
 
@@ -1759,8 +1783,8 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
 
  ==============================================================================
  I                                                                            I
- I                 0.000D+00 <  m_hard (GeV/c^2)  <  3.083D+01                I
- I    0.000D+00 ( 1.000D+00) <  p_T_hard (GeV/c)  <  1.541D+01                I
+ I                 0.000D+00 <  m_hard (GeV/c^2)  <  1.425D+01                I
+ I    0.000D+00 ( 1.000D+00) <  p_T_hard (GeV/c)  <  7.124D+00                I
  I                             m_finite (GeV/c^2) =  1.000D+00                I
  I                -1.000D+01 <    y*_subsystem    <  1.000D+01                I
  I                -4.000D+01 <      y*_large      <  4.000D+01                I
@@ -1773,13 +1797,13 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
  I                 0.000D+00 <        x_2         <  1.000D+00                I
  I                -1.000D+00 <        x_F         <  1.000D+00                I
  I                -1.000D+00 <  cos(theta_hard)   <  1.000D+00                I
- I                 2.000D+00 < m'_hard (GeV/c^2)  <  3.083D+01                I
+ I                 2.000D+00 < m'_hard (GeV/c^2)  <  1.425D+01                I
  I                                                                            I
  ==============================================================================
  The charm mass used is:    1.5000000000000000     
  ===================================================
  FROM PYTHIA (just last few events due to PYINITs):
- Pythia total cross section normalisation:   2.8576525245074185E-002  microbarn
+ Pythia total cross section normalisation:   3.0678909088434177E-002  microbarn
  Total Number of generated events pythia           1
  ===================================================
  Actual totals from BeAGLE:
@@ -1791,7 +1815,7 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
 
  ====== STRUCTM statistics for nucleon/pion PDFs =====
 
-   total # of calls    6594.0000000000000     
+   total # of calls    4950.0000000000000     
    X  below PDF min    0.0000000000000000       or    0.0000000000000000       %
    X  above PDF max    0.0000000000000000       or    0.0000000000000000       %
    Q2 below PDF min    0.0000000000000000       or    0.0000000000000000       %
@@ -1809,16 +1833,16 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
                                   (events before evap.-step, evt1)    10
  no. of rejected events due to intranuclear cascade                    0
 
- no. of wounded nucl. in proj./ target (mean per evt)       0.00 /  1.80
+ no. of wounded nucl. in proj./ target (mean per evt)       0.00 /  5.10
  no. of particles unable to escape proj./ target (mean per evt)
-        baryons:  pos.   0.000 /  1.000   neg.   0.000 /  0.000
+        baryons:  pos.   0.000 /  3.200   neg.   0.000 /  0.000
         mesons:   pos.   0.000 /  0.000   neg.   0.000 /  0.000
  maximum no. of generations treated (maximum allowed:  25)
-                                           (mean per evt)       0.80
- no. of sec. interactions in proj./ target (mean per evt1)  0.000 /  1.800
-        out of which by inelastic interactions              0.000 /  0.500
-                     by elastic interactions                0.000 /  1.300
-                     by absorption (ap, K-, pi- only)       0.000 /  0.000
+                                           (mean per evt)       2.50
+ no. of sec. interactions in proj./ target (mean per evt1)  0.000 /  5.100
+        out of which by inelastic interactions              0.000 /  0.600
+                     by elastic interactions                0.000 /  4.400
+                     by absorption (ap, K-, pi- only)       0.000 /  0.100
 
 
  HISTAT:              statistics - residual nuclei, evaporation
@@ -1833,15 +1857,15 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
 
  residual nuclei:  (mean values per evt)            proj. / target
 
-        total number of particles                   0.000  195.200
-        out of which: protons                       0.000   77.900
-                      neutrons                      0.000  117.300
+        total number of particles                   0.000  194.100
+        out of which: protons                       0.000   78.100
+                      neutrons                      0.000  116.000
                       baryons                       0.000    0.000
                       pos. baryons                  0.000    0.000
-        total charge                                0.000   77.900
+        total charge                                0.000   78.100
 
-        excitation energy (bef. evap.-step)     0.000E+00  0.431E-01
-        excitation energy per nucleon           0.000E+00  0.222E-03
+        excitation energy (bef. evap.-step)     0.000E+00  0.906E-01
+        excitation energy per nucleon           0.000E+00  0.468E-03
 
 
                       2) after  evaporation-step:
@@ -1852,14 +1876,14 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
 
  evaporation/deexcitation:  (mean values per evt1)  proj. / target
 
-        total number of evap. particles             0.000    4.400
+        total number of evap. particles             0.000    8.400
         out of which: protons                       0.000    0.000
-                      neutrons                      0.000    4.400
+                      neutrons                      0.000    7.900
                       deuterons                     0.000    0.000
                       3-H                           0.000    0.000
                       3-He                          0.000    0.000
-                      4-He                          0.000    0.000
-        nucl. deexcit. gammas                       0.000    4.000
+                      4-He                          0.000    0.500
+        nucl. deexcit. gammas                       0.000    3.900
         heavy fragments                             0.000    1.000
 
 
@@ -1871,36 +1895,36 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
  particle    |            average multiplicity
              |     total         fast       grey     black    <pt>     f(1.7)
  ------------+---------------------------------------------------------------
- P          1|      1.100000     1.100000  0.00000  0.00000  0.63068  0.02706
- AP         2|      0.400000     0.400000  0.00000  0.00000  0.69091  0.00050
- E-         3|      1.000000     1.000000  0.00000  0.00000  4.70519  0.00093
+ P          1|      1.200000     1.100000  0.00000  0.10000  0.66799  0.27257
+ AP         2|      0.300000     0.300000  0.00000  0.00000  1.98703  0.00061
+ E-         3|      1.000000     1.000000  0.00000  0.00000  3.72347  0.01242
  E+         4|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  NUE        5|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  ANUE       6|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
- GAM        7|      6.100000     6.100000  0.00000  0.00000  0.13176  0.00108
- NEU        8|      6.000000     6.000000  0.00000  0.00000  0.10957  0.31026
+ GAM        7|      5.600000     5.600000  0.00000  0.00000  0.07776  0.00933
+ NEU        8|     11.000000    10.700000  0.20000  0.10000  0.09650  7.95439
  ANEU       9|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  MUE+      10|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  MUE-      11|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
- K0L       12|      0.400000     0.400000  0.00000  0.00000  1.03736  0.00017
- PI+       13|      2.800000     2.500000  0.30000  0.00000  0.48863  0.00400
- PI-       14|      2.500000     2.500000  0.00000  0.00000  0.67236  0.00262
- K+        15|      0.400000     0.400000  0.00000  0.00000  1.53373  0.00031
- K-        16|      0.200000     0.200000  0.00000  0.00000  0.31543  0.00001
+ K0L       12|      0.200000     0.200000  0.00000  0.00000  0.57198  0.01057
+ PI+       13|      2.800000     2.800000  0.00000  0.00000  0.47487  0.06640
+ PI-       14|      2.500000     2.400000  0.10000  0.00000  0.44695  0.04703
+ K+        15|      0.400000     0.400000  0.00000  0.00000  0.18204  0.00354
+ K-        16|      0.300000     0.300000  0.00000  0.00000  0.50823  0.00459
  LAM       17|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  ALAM      18|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
- K0S       19|      0.100000     0.100000  0.00000  0.00000  0.39617  0.00005
+ K0S       19|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  SIGM-     20|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  SIGM+     21|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  SIGM0     22|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  PI0       23|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  K0        24|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  AK0       25|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
- BLANK     26|      4.100000     4.100000  0.00000  0.00000  1.64038  0.00405
- BLANK     27|      8.400000     8.100000  0.30000  0.00000  1.11916  0.03543
+ BLANK     26|      4.100000     4.000000  0.10000  0.00000  1.36327  0.06464
+ BLANK     27|      8.500000     8.300000  0.10000  0.10000  0.91688  0.40715
  BLANK     28|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  BLANK     29|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
- BLANK     30|     26.100000    25.800000  0.30000  0.00000  0.47706  0.34804
+ BLANK     30|     30.600000    30.100000  0.30000  0.20000  0.35113  8.38499
  ETA550    31|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  RHO+77    32|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  RHO077    33|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
@@ -1989,5 +2013,5 @@ START       10.0      0.00      0.00      0.00      0.00      0.00
  DEUTERON 116|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  3-H      117|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
  3-HE     118|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
- 4-HE     119|      0.000000     0.000000  0.00000  0.00000  0.00000  0.00000
+ 4-HE     119|      0.500000     0.500000  0.00000  0.00000  0.34552  4.11776
 STOP        0.00      0.00      0.00      0.00      0.00      0.00            

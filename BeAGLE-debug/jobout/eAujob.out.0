@@ -1,5 +1,5 @@
 0
-start running in directory /home/condor/local/sdcc/execute/dir_129241/0000
+start running in directory /home/condor/local/sdcc/execute/dir_81202/0000
 Running Job Number 0
 Completed Simulation!!!
 
@@ -13,12 +13,12 @@ Processing ./eAu.txt
 Processed ./eAu.txt
 TFile**		./eAu.root	
  TFile*		./eAu.root	
-  OBJ: TTree	EICTree	my EIC tree : 0 at: 0x69b1a00
-  KEY: TProcessID	ProcessID0;1	98993bd8-0bb0-11ed-86ba-919dc782beef
+  OBJ: TTree	EICTree	my EIC tree : 0 at: 0x5deb840
+  KEY: TProcessID	ProcessID0;1	62c0abba-0bcc-11ed-bc16-899dc782beef
   KEY: TTree	EICTree;1	my EIC tree
-Began on Sun Jul 24 20:27:53 2022
-Ended on Sun Jul 24 20:27:53 2022
-Processed 10 events containing 2543 particles in 0.180704 seconds (0.0180704 sec/event)
+Began on Sun Jul 24 23:46:45 2022
+Ended on Sun Jul 24 23:46:45 2022
+Processed 10 events containing 2656 particles in 0.179463 seconds (0.0179463 sec/event)
 Done!!!
 
 Cleaning Up...
