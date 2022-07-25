@@ -9568,10 +9568,10 @@ C9990 CONTINUE
 
       IREJ = 0
 
-      WRITE(LOUT, '(a,I5,a,I3,a,I3,a,I3)')
-     &    "@kdebug : DT_INUCAS : called on IDXCAS = ", IDXCAS,
-     &    " which has NCAS = ", NCAS, ", IDCH = ", IDCH(IDXCAS),
-     &    ", NOBAM = ", NOBAM(IDXCAS)
+      WRITE(LOUT, '(a,I5,a,I5,a,I3,a,I3)')
+     &    "@kdebug : DT_INUCAS : called on particle IDXCAS = ", IDXCAS,
+     &    " with IDHKK = ", IDHKK(IDXCAS),
+     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS)
 
 * update counter
       IF (NINCEV(1).NE.NEVHKK) THEN
@@ -9716,6 +9716,13 @@ C     Exclude leptons - MDB
                PCAS1(K) = PCAS(ICAS,K)
     4       CONTINUE
 *   "absorb" negative particle in nucleus
+
+            WRITE(LOUT,'(a,I5,a,I5,a,I3,a,I3,a,I3)')
+     &        "@kdebug : DT_ABSORP 9726 : called on particle IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
+     &        ", NSPE = ", NSPE
+
             CALL DT_ABSORP(IDCAS,PCAS1,NCAS,NSPE,IDSPE,IDXSPE,0,IREJ1)
             IF (IREJ1.NE.0) GOTO 9999
             IF (NSPE.GE.1) LABSOR = .TRUE.
@@ -9971,6 +9978,13 @@ C              ENDIF
          IF (IPROC.EQ.3) THEN
 * 2-nucleon absorption of pion
             NSPE = 2
+
+            WRITE(LOUT,'(a,I5,a,I5,a,I3,a,I3,a,I3)')
+     &        "@kdebug : DT_ABSORP 9981 : called on particle IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
+     &        ", NSPE = ", NSPE
+
             CALL DT_ABSORP(IDCAS,PCAS1,NCAS,NSPE,IDSPE,IDXSPE,1,IREJ1)
             IF (IREJ1.NE.0) GOTO 9999
             IF (NSPE.GE.1) LABSOR = .TRUE.
@@ -9978,9 +9992,11 @@ C              ENDIF
 * sample secondary interaction
             IDNUC = IDBAM(IDXSPE(1))
 
-            WRITE(LOUT,'(a,I5,a,I5,a,I5,a,I3)')
-     &        "@kdebug : DT_HADRIN : particle IDXCAS = ", IDXCAS,
-     &        ", IDPR = ", IDCAS, ", IDTA = ", IDNUC, ", MODE = ", IPROC
+            WRITE(LOUT,'(a,I5,a,I5,a,I3,a,I3,a,I3)')
+     &        "@kdebug : DT_HADRIN : called on particle IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
+     &        ", MODE = ", IPROC
 
             CALL DT_HADRIN(IDCAS,PCAS1,IDNUC,PNUC,IPROC,IREJ1)
             IF (IREJ1.EQ.1) GOTO 9999
@@ -10230,6 +10246,11 @@ c                  IST    = 14+IDX
          IF (IPROC.EQ.1) NINCCO(ICAS,2) = NINCCO(ICAS,2)+1
          IF (IPROC.EQ.2) NINCCO(ICAS,3) = NINCCO(ICAS,3)+1
       ENDIF
+
+      WRITE(LOUT,'(a,I5,a,I5,a,I3,a,I3)')
+     &        "@kdebug : DT_INUCAS : returning on particle IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS)
 
       RETURN
 
