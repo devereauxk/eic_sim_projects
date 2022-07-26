@@ -2828,6 +2828,8 @@ C     ENDIF
       DIMENSION WHAT(6)
       DIMENSION P5TMP(5)
 
+      WRITE(LOUT, "(a)") "@kdebug : DT_KKINC"
+
       IREJ  = 0
       ILOOP = 0
   100 CONTINUE
@@ -9355,6 +9357,8 @@ C           QARJ(I) = PARJ(I)
       LFZC = .TRUE.
       IREJ = 0
 
+      WRITE(LOUT,"(a)") "@kdebug : DT_FOZOCA"
+
 * skip cascade if hadron-hadron interaction or if supressed by user
       IF (((IP.EQ.1).AND.(IT.EQ.1)).OR.(KTAUGE.LT.1)) GOTO 9999
 * skip cascade if not all possible chains systems are hadronized
@@ -9411,6 +9415,11 @@ C      DO 9 I=1,NPOINT(1)-1
       NEND   = NHKK
 
     7 CONTINUE
+
+      WRITE(LOUT, "(a,I5,a,I5)")
+     &    "@kdebug : DT_FOZOCA loop with NSTART = ",
+     &    NSTART, ", NEND = ", NEND
+
       DO 8 I=NSTART,NEND
 
          IF ((ABS(ISTHKK(I)).EQ.1).AND.(IDCH(I).LT.KTAUGE)) THEN
