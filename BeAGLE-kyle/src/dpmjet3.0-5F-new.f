@@ -10275,7 +10275,8 @@ c                  IST    = 14+IDX
       IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
      &          (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
       WRITE(LOUT, '(a,I5,a,I5,a,I3,a,I3,a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)')
-     &    "@kdebug : DT_INUCAS : returning on particle IDXCAS = ", IDXCAS,
+     &    "@kdebug : DT_INUCAS : returning on particle IDXCAS = ",
+     &    IDXCAS,
      &    " with IDHKK = ", IDHKK(IDXCAS),
      &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS), ", p=(",
      &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(2,IDXCAS),
