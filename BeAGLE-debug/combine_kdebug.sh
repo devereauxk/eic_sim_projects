@@ -1,4 +1,4 @@
-fin_dir=/eic/u/kdevereaux/eAu_10_100_qhat0_nlo/logs
+fin_dir=/eic/u/kdevereaux/BeAGLE-debug/eAu_10_100_qhat0_nlo/logs
 fout=kdebug_bin.txt
 rm $fout
 
