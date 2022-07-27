@@ -26,10 +26,6 @@ cd $DIR
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
 
 #Soft links to necessary files
-#ln -s /eic/data/baraks/BeAGLE/inputFiles/eAu.inp
-#ln -s /eic/data/baraks/BeAGLE/inputFiles/S3ALL003
-#ln -s /eic/data/baraks/BeAGLE/nuclear.bin
-#ln -s /eic/data/baraks/BeAGLE/make_tree.C
 ln -s /eic/u/kdevereaux/work/BeAGLE-debug/read_kdebug.sh
 ln -s ${WORKING_DIR}/logs/eAu_${INPUT}.log
 
@@ -51,5 +47,5 @@ echo ""
 
 #Move output files and cleanup
 echo "Cleaning Up..."
-mv -v kdebug_bin.txt ${WORKING_DIR}/outForPythiaMode/kdebug_bin_${INPUT}.txt
+mv -v kdebug_bin.txt ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
 echo "DONE!!!"
