@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_kdebug.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/kdebugjob.out.$(Process)
+Error          = jobout/kdebugjob.err.$(Process)
+Log            = jobout/kdebugjob.log.$(Process)
+Queue 1000
