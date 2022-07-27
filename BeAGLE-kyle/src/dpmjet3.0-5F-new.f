@@ -9588,7 +9588,7 @@ C9990 CONTINUE
      &    " with IDHKK = ", IDHKK(IDXCAS),
      &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
      &    ", p=(",
-     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(2,IDXCAS),
+     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(3,IDXCAS),
      &    ", ", PHKK(4,IDXCASS), ")"
       ENDIF
 
@@ -10278,8 +10278,10 @@ c                  IST    = 14+IDX
      &    "@kdebug : DT_INUCAS : returning on particle IDXCAS = ",
      &    IDXCAS,
      &    " with IDHKK = ", IDHKK(IDXCAS),
-     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS), ", p=(",
-     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(2,IDXCAS),
+     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
+     &    ", p=(",
+     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ",
+     &    PHKK(3,IDXCAS),
      &    ", ", PHKK(4,IDXCAS), ")"
       ENDIF
 
