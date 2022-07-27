@@ -1,0 +1,1 @@
+@kdebug : DT_INUCAS : called on particle IDXCAS = 229 with IDHKK = 4122, IDCH = 0, NOBAM = 0, p=(0.305, 0.321, 0.943, 0.000)
