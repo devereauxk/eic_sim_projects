@@ -9579,9 +9579,9 @@ C9990 CONTINUE
 
       IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
      &    (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
-        WRITE(LOUT, "(a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)")
-     &    "@kdebug: photon p=(", PGAMM(1), ",", PGAMM(2), ",",
-     &    PGAMM(3), ",", PGAMM(4), ")"
+*        WRITE(LOUT, "(a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)")
+*     &    "@kdebug: photon p=(", PGAMM(1), ",", PGAMM(2), ",",
+*     &    PGAMM(3), ",", PGAMM(4), ")"
         WRITE(LOUT,
      &       '(a,I5,a,I5,a,I3,a,I3,a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)')
      &    "@kdebug : DT_INUCAS : called on particle IDXCAS = ", IDXCAS,
