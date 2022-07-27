@@ -2828,7 +2828,7 @@ C     ENDIF
       DIMENSION WHAT(6)
       DIMENSION P5TMP(5)
 
-      WRITE(LOUT, "(a)") "@kdebug : DT_KKINC"
+*      WRITE(LOUT, "(a)") "@kdebug : DT_KKINC"
 
       IREJ  = 0
       ILOOP = 0
@@ -3715,7 +3715,7 @@ C MDB 2017-05-26 ITMODE=0 runs all en collisions first and then all ep.
 * generate events
       DO 2 IEVT=1,NEVTS
 
-         WRITE(LOUT, "(a,I5)") "@kdebug : event ", IEVT
+*         WRITE(LOUT, "(a,I5)") "@kdebug : event ", IEVT
 
          IF (IT.GT.1 .AND. ITMODE.EQ.0 .AND. IEVT.EQ.NNEUEVS+1) THEN
 C...Print the Pythia cross section so far (microbarns)
@@ -9357,7 +9357,7 @@ C           QARJ(I) = PARJ(I)
       LFZC = .TRUE.
       IREJ = 0
 
-      WRITE(LOUT,"(a)") "@kdebug : DT_FOZOCA"
+*      WRITE(LOUT,"(a)") "@kdebug : DT_FOZOCA"
 
 * skip cascade if hadron-hadron interaction or if supressed by user
       IF (((IP.EQ.1).AND.(IT.EQ.1)).OR.(KTAUGE.LT.1)) GOTO 9999
@@ -9416,9 +9416,9 @@ C      DO 9 I=1,NPOINT(1)-1
 
     7 CONTINUE
 
-      WRITE(LOUT, "(a,I5,a,I5)")
-     &    "@kdebug : DT_FOZOCA loop with NSTART = ",
-     &    NSTART, ", NEND = ", NEND
+*      WRITE(LOUT, "(a,I5,a,I5)")
+*     &    "@kdebug : DT_FOZOCA loop with NSTART = ",
+*     &    NSTART, ", NEND = ", NEND
 
       DO 8 I=NSTART,NEND
 
@@ -9577,10 +9577,17 @@ C9990 CONTINUE
 
       IREJ = 0
 
-      WRITE(LOUT, '(a,I5,a,I5,a,I3,a,I3)')
+      IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.(ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+        WRITE(LOUT, "(a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)")
+     &    "@kdebug: photon p=(", PGAMM(1), ",", PGAMM(2), ",",
+     &    PGAMM(3), ",", PGAMM(4), ")"
+        WRITE(LOUT, '(a,I5,a,I5,a,I3,a,I3,a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)')
      &    "@kdebug : DT_INUCAS : called on particle IDXCAS = ", IDXCAS,
      &    " with IDHKK = ", IDHKK(IDXCAS),
-     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS)
+     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS), ", p=(",
+     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(2,IDXCAS),
+     &    ", ", PHKK(4,IDXCASS), ")"
+      ENDIF
 
 * update counter
       IF (NINCEV(1).NE.NEVHKK) THEN
@@ -9726,11 +9733,13 @@ C     Exclude leptons - MDB
     4       CONTINUE
 *   "absorb" negative particle in nucleus
 
-            WRITE(LOUT,'(a,I5,a,I5,a,I3,a,I3,a,I3)')
+            IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
+     &         (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+            WRITE(LOUT,'(a,I5,a,I5,a,I3)')
      &        "@kdebug : DT_ABSORP 9726 : called on particle IDXCAS = ",
      &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
-     &        IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
-     &        ", NSPE = ", NSPE
+     &        IDCH(IDXCAS)
+            ENDIF
 
             CALL DT_ABSORP(IDCAS,PCAS1,NCAS,NSPE,IDSPE,IDXSPE,0,IREJ1)
             IF (IREJ1.NE.0) GOTO 9999
@@ -9988,11 +9997,13 @@ C              ENDIF
 * 2-nucleon absorption of pion
             NSPE = 2
 
-            WRITE(LOUT,'(a,I5,a,I5,a,I3,a,I3,a,I3)')
+            IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
+     &          (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+            WRITE(LOUT,'(a,I5,a,I5,a,I3)')
      &        "@kdebug : DT_ABSORP 9981 : called on particle IDXCAS = ",
      &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
-     &        IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
-     &        ", NSPE = ", NSPE
+     &        IDCH(IDXCAS)
+            ENDIF
 
             CALL DT_ABSORP(IDCAS,PCAS1,NCAS,NSPE,IDSPE,IDXSPE,1,IREJ1)
             IF (IREJ1.NE.0) GOTO 9999
@@ -10001,11 +10012,13 @@ C              ENDIF
 * sample secondary interaction
             IDNUC = IDBAM(IDXSPE(1))
 
-            WRITE(LOUT,'(a,I5,a,I5,a,I3,a,I3,a,I3)')
+            IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
+     &          (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+            WRITE(LOUT,'(a,I5,a,I5,a,I3)')
      &        "@kdebug : DT_HADRIN : called on particle IDXCAS = ",
-     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
-     &        IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
-     &        ", MODE = ", IPROC
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", MODE = ",
+     &        IPROC
+            ENDIF
 
             CALL DT_HADRIN(IDCAS,PCAS1,IDNUC,PNUC,IPROC,IREJ1)
             IF (IREJ1.EQ.1) GOTO 9999
@@ -10256,10 +10269,15 @@ c                  IST    = 14+IDX
          IF (IPROC.EQ.2) NINCCO(ICAS,3) = NINCCO(ICAS,3)+1
       ENDIF
 
-      WRITE(LOUT,'(a,I5,a,I5,a,I3,a,I3)')
-     &        "@kdebug : DT_INUCAS : returning on particle IDXCAS = ",
-     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
-     &        IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS)
+      IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
+     &          (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+      WRITE(LOUT, '(a,I5,a,I5,a,I3,a,I3,a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)')
+     &    "@kdebug : DT_INUCAS : returning on particle IDXCAS = ", IDXCAS,
+     &    " with IDHKK = ", IDHKK(IDXCAS),
+     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS), ", p=(",
+     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(2,IDXCAS),
+     &    ", ", PHKK(4,IDXCAS), ")"
+      ENDIF
 
       RETURN
 
