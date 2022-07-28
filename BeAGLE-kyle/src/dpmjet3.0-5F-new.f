@@ -2885,7 +2885,7 @@ C     ENDIF
 
          DO I=NPOINT(4),NHKK
            IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &    (ABS(IDHKK(I)).EQ.4122).OR.(ABS(IDHKK(I)).EQ.211)) THEN
+     &    (ABS(IDHKK(I)).EQ.4122)) THEN
              WRITE(LOUT,
      &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
      &     "@kdebug : after DT_KKEVNT : particle I = ", I,
@@ -2912,7 +2912,7 @@ C     ENDIF
 
          DO I=NPOINT(4),NHKK
            IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &    (ABS(IDHKK(I)).EQ.4122).OR.(ABS(IDHKK(I)).EQ.211)) THEN
+     &    (ABS(IDHKK(I)).EQ.4122)) THEN
              WRITE(LOUT,
      &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
      &     "@kdebug : after DT_FOZOCA : particle I = ", I,
@@ -2972,7 +2972,7 @@ C Use old DPMJET logic for GCF-QE
 
          DO I=NPOINT(4),NHKK
            IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &    (ABS(IDHKK(I)).EQ.4122).OR.(ABS(IDHKK(I)).EQ.211)) THEN
+     &    (ABS(IDHKK(I)).EQ.4122)) THEN
              WRITE(LOUT,
      &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
      &     "@kdebug : after DT_FICONF : particle I = ", I,
