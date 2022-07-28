@@ -2883,6 +2883,19 @@ C     ENDIF
             CALL EVTSUM(P5TMP,IZTMP,IATMP,.TRUE.,.TRUE.)
          endif
 
+         DO I=NPOINT(4),NHKK
+           IF ((ABS(IDHKK(I)).EQ.421).OR.
+     &    (ABS(IDHKK(I)).EQ.4122).OR.(ABS(IDHKK(I)).EQ.211)) THEN
+             WRITE(LOUT,
+     &        '(a,I5,a,I5,a,F6.5,a,F6.5,a,F6.5,a,F6.5,a)')
+     &     "@kdebug : after DT_KKEVNT : particle I = ", I,
+     &     " with IDHKK = ", IDHKK(I),
+     &     ", p=(",
+     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
+     &     ", ", PHKK(4,I), ")"
+           ENDIF
+         END DO
+
 * intranuclear cascade of final state particles for KTAUGE generations
 * of secondaries
          CALL DT_FOZOCA(LFZC,IREJ1)
@@ -9577,20 +9590,20 @@ C9990 CONTINUE
 
       IREJ = 0
 
-      IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
-     &    (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+*      IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
+*     &    (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
 *        WRITE(LOUT, "(a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)")
 *     &    "@kdebug: photon p=(", PGAMM(1), ",", PGAMM(2), ",",
 *     &    PGAMM(3), ",", PGAMM(4), ")"
-        WRITE(LOUT,
-     &       '(a,I5,a,I5,a,I3,a,I3,a,F5.3,a,F5.3,a,F5.3,a,F5.3,a)')
-     &    "@kdebug : DT_INUCAS : called on particle IDXCAS = ", IDXCAS,
-     &    " with IDHKK = ", IDHKK(IDXCAS),
-     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
-     &    ", p=(",
-     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(3,IDXCAS),
-     &    ", ", PHKK(4,IDXCASS), ")"
-      ENDIF
+*        WRITE(LOUT,
+*     &       '(a,I5,a,I5,a,I3,a,I3,a,F5.3,a,F5.3,a,F5.3,a,F5.3,a)')
+*     &    "@kdebug : DT_INUCAS : called on particle IDXCAS = ", IDXCAS,
+*     &    " with IDHKK = ", IDHKK(IDXCAS),
+*     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
+*     &    ", p=(",
+*     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(3,IDXCAS),
+*     &    ", ", PHKK(4,IDXCASS), ")"
+*      ENDIF
 
 * update counter
       IF (NINCEV(1).NE.NEVHKK) THEN
@@ -10272,18 +10285,18 @@ c                  IST    = 14+IDX
          IF (IPROC.EQ.2) NINCCO(ICAS,3) = NINCCO(ICAS,3)+1
       ENDIF
 
-      IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
-     &          (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
-      WRITE(LOUT, '(a,I5,a,I5,a,I3,a,I3,a,F5.3,a,F5.3,a,F5.3,a,F5.3,a)')
-     &    "@kdebug : DT_INUCAS : returning on particle IDXCAS = ",
-     &    IDXCAS,
-     &    " with IDHKK = ", IDHKK(IDXCAS),
-     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
-     &    ", p=(",
-     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ",
-     &    PHKK(3,IDXCAS),
-     &    ", ", PHKK(4,IDXCAS), ")"
-      ENDIF
+*      IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
+*     &          (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+*      WRITE(LOUT, '(a,I5,a,I5,a,I3,a,I3,a,F5.3,a,F5.3,a,F5.3,a,F5.3,a)')
+*     &    "@kdebug : DT_INUCAS : returning on particle IDXCAS = ",
+*     &    IDXCAS,
+*     &    " with IDHKK = ", IDHKK(IDXCAS),
+*     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
+*     &    ", p=(",
+*     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ",
+*     &    PHKK(3,IDXCAS),
+*     &    ", ", PHKK(4,IDXCAS), ")"
+*      ENDIF
 
       RETURN
 
