@@ -33,6 +33,7 @@ ln -s ${WORKING_DIR}/logs/eAu_${INPUT}.log
 echo "start running in directory $PWD"
 
 echo "Running Job Number $1"
+rm ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
 while read line; do
   # if line of file starts with "@kdebug " then prints whole line to $fout
   first_word=`echo $line | awk '{print $1;}'`
