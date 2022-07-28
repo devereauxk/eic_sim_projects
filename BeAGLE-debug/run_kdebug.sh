@@ -26,20 +26,19 @@ cd $DIR
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
 
 #Soft links to necessary files
-ln -s /eic/u/kdevereaux/work/BeAGLE-debug/read_kdebug.sh
+rm ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
 ln -s ${WORKING_DIR}/logs/eAu_${INPUT}.log
 
 
 echo "start running in directory $PWD"
 
 echo "Running Job Number $1"
-rm ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
 while read line; do
   # if line of file starts with "@kdebug " then prints whole line to $fout
   first_word=`echo $line | awk '{print $1;}'`
   if [[ $first_word == "@kdebug" ]]
   then
-    echo $line >> kdebug_bin.txt
+    printf $line >> kdebug_bin.txt
   fi
 done < eAu_${INPUT}.log
 echo "Completed!!!"
