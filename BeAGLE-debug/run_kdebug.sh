@@ -27,26 +27,21 @@ source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0
 
 #Soft links to necessary files
 rm ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
+touch ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
 ln -s ${WORKING_DIR}/logs/eAu_${INPUT}.log
 
 
 echo "start running in directory $PWD"
 
 echo "Running Job Number $1"
-touch kdebug_bin.txt
 while read line; do
   # if line of file starts with "@kdebug " then prints whole line to $fout
   first_word=`echo $line | awk '{print $1;}'`
   if [[ $first_word == "@kdebug" ]]
   then
-    echo $line > kdebug_bin.txt
+    echo $line > ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
   fi
 done < eAu_${INPUT}.log
 echo "Completed!!!"
 
 echo ""
-
-#Move output files and cleanup
-echo "Cleaning Up..."
-mv -v kdebug_bin.txt ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
-echo "DONE!!!"
