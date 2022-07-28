@@ -39,7 +39,7 @@ while read line; do
   first_word=`echo $line | awk '{print $1;}'`
   if [[ $first_word == "@kdebug" ]]
   then
-    echo $line > ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
+    echo $line >> ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
   fi
 done < eAu_${INPUT}.log
 echo "Completed!!!"
