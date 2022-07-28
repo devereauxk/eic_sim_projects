@@ -2887,7 +2887,7 @@ C     ENDIF
            IF ((ABS(IDHKK(I)).EQ.421).OR.
      &    (ABS(IDHKK(I)).EQ.4122).OR.(ABS(IDHKK(I)).EQ.211)) THEN
              WRITE(LOUT,
-     &        '(a,I5,a,I5,a,F6.5,a,F6.5,a,F6.5,a,F6.5,a)')
+     &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
      &     "@kdebug : after DT_KKEVNT : particle I = ", I,
      &     " with IDHKK = ", IDHKK(I),
      &     ", p=(",
@@ -2909,6 +2909,19 @@ C     ENDIF
             if (NEVHKK.LE.IOULEV(5)) CALL DT_PYOUTEP(4)
             CALL EVTSUM(P5TMP,IZTMP,IATMP,.TRUE.,.TRUE.)
          endif
+
+         DO I=NPOINT(4),NHKK
+           IF ((ABS(IDHKK(I)).EQ.421).OR.
+     &    (ABS(IDHKK(I)).EQ.4122).OR.(ABS(IDHKK(I)).EQ.211)) THEN
+             WRITE(LOUT,
+     &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
+     &     "@kdebug : after DT_FOZOCA : particle I = ", I,
+     &     " with IDHKK = ", IDHKK(I),
+     &     ", p=(",
+     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
+     &     ", ", PHKK(4,I), ")"
+           ENDIF
+         END DO
 
 * baryons unable to escape the nuclear potential are treated as
 * excited nucleons (ISTHKK=15,16)
@@ -2956,6 +2969,19 @@ C Use old DPMJET logic for GCF-QE
                ENDIF
             ENDIF
          ENDIF
+
+         DO I=NPOINT(4),NHKK
+           IF ((ABS(IDHKK(I)).EQ.421).OR.
+     &    (ABS(IDHKK(I)).EQ.4122).OR.(ABS(IDHKK(I)).EQ.211)) THEN
+             WRITE(LOUT,
+     &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
+     &     "@kdebug : after DT_FICONF : particle I = ", I,
+     &     " with IDHKK = ", IDHKK(I),
+     &     ", p=(",
+     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
+     &     ", ", PHKK(4,I), ")"
+           ENDIF
+         END DO
 
          if(IOULEV(4).GE.2 .AND. NEVHKK.LE.IOULEV(5)) then
             WRITE(*,*) 'After DT_FICONF:'
