@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
-WORKING_DIR=/eic/u/kdevereaux/work/BeAGLE-debug/eC_10_100_qhat0_nlo
+WORKING_DIR=/eic/u/kdevereaux/work/BeAGLE-debug/eAu_10_100_qhat0_nlo
 
 if [ -z "$1" ]
 then
@@ -26,8 +26,9 @@ cd $DIR
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
 
 #Soft links to necessary files
+rm ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
 touch ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
-ln -s ${WORKING_DIR}/logs/eC_${INPUT}.log
+ln -s ${WORKING_DIR}/logs/eAu_${INPUT}.log
 
 
 echo "start running in directory $PWD"
@@ -40,7 +41,7 @@ while read line; do
   then
     echo $line >> ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
   fi
-done < eC_${INPUT}.log
+done < eAu_${INPUT}.log
 echo "Completed!!!"
 
 echo ""
