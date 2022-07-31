@@ -26,7 +26,6 @@ cd $DIR
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
 
 #Soft links to necessary files
-rm ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
 touch ${WORKING_DIR}/logs/kdebug_bin_${INPUT}.txt
 ln -s ${WORKING_DIR}/logs/eAu_${INPUT}.log
 
