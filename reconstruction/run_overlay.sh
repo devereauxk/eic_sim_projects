@@ -1,14 +1,14 @@
 #const char* sys_name[sys_bins] = {"e+p", "e+Au", "e+Cu", "e+Ca", "e+C", "e+p (BeAGLE)", "e+D", "e+Au (pythia)", "e+Xe", "e+C (pythia)", "e+Pb"};
 #const char* sys_abbr[sys_bins] = {"ep", "eAu", "eCu", "eCa", "eC", "ep_BeAGLE", "eD", "eAu_pythia", "eXe", "eC_pythia", "ePb"};
 
-OUT_DIR=./overlay_taufor10
+OUT_DIR=./overlay_taufor05
 NORM=0
 
 FIG_DIR=$OUT_DIR/figs_norm_${NORM}
 mkdir $FIG_DIR
 
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/eC_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/eC_10_100_taufor05_qhat0_nlo
 
 mkdir figs
 mkdir $EA_DIR/figs_norm_${NORM}
@@ -19,7 +19,7 @@ cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_eC.root
 
 
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/eCu_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/eCu_10_100_taufor05_qhat0_nlo
 
 mkdir figs
 mkdir $EA_DIR/figs_norm_${NORM}
@@ -30,7 +30,7 @@ cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_eCu.root
 
 
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/eAu_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/eAu_10_100_taufor05_qhat0_nlo
 
 mkdir figs
 mkdir $EA_DIR/figs_norm_${NORM}
@@ -41,7 +41,7 @@ cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_eAu.root
 
 
 EP_DIR=./BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./BeAGLE_v102/ePb_10_100_qhat0_nlo
+EA_DIR=./BeAGLE_v102/ePb_10_100_taufor05_qhat0_nlo
 
 mkdir figs
 mkdir $EA_DIR/figs_norm_${NORM}
