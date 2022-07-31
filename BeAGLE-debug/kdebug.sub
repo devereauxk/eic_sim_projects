@@ -1,6 +1,6 @@
 Universe       = vanilla
 Notification   = Never
-Executable     = run_kdebug_eC.sh
+Executable     = run_kdebug_eAu.sh
 GetEnv         = True
 Input	       = /dev/null
 Arguments      = "$(Process)"
