@@ -50,7 +50,7 @@ mv figs/* $EA_DIR/figs_norm_${NORM}
 rm -r figs
 cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_ePb.root
 
-mkdir figs
-root -l -q "compare_chadron_gen_diff_sys.C(1)"
-mv figs/* $FIG_DIR
-rm -r figs
+mkdir $OUT_DIR/figs
+root -l -q "$OUT_DIR/compare_chadron_gen_diff_sys.C(1)"
+mv $OUT_DIR/figs/* $FIG_DIR
+rm -r $OUT_DIR/figs
