@@ -50,4 +50,7 @@ mv figs/* $EA_DIR/figs_norm_${NORM}
 rm -r figs
 cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_ePb.root
 
-root -l -q "compare_plot_inc_hadron_diff_sys.C(\"$OUT_DIR/\", 1, \"$FIG_DIR/\")"
+mkdir figs
+root -l -q "compare_chadron_gen_diff_sys.C(1)"
+mv figs/* $FIG_DIR
+rm -r figs
