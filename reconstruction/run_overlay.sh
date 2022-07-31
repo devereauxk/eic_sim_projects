@@ -12,7 +12,7 @@ EA_DIR=./BeAGLE_v102/eC_10_100_qhat0_nlo
 
 mkdir figs
 mkdir $EA_DIR/figs_norm_${NORM}
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 4, 1, \"$EA_DIR/figs_norm_${NORM}/hists_gen.root\", 1)"
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 4, 1, \"$EA_DIR/figs_norm_${NORM}/hists_gen.root\", $NORM)"
 mv figs/* $EA_DIR/figs_norm_${NORM}
 rm -r figs
 cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_eC.root
@@ -23,7 +23,7 @@ EA_DIR=./BeAGLE_v102/eCu_10_100_qhat0_nlo
 
 mkdir figs
 mkdir $EA_DIR/figs_norm_${NORM}
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 2, 1, \"$EA_DIR/figs_norm_${NORM}/hists_gen.root\", 1)"
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 2, 1, \"$EA_DIR/figs_norm_${NORM}/hists_gen.root\", $NORM)"
 mv figs/* $EA_DIR/figs_norm_${NORM}
 rm -r figs
 cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_eCu.root
@@ -34,7 +34,7 @@ EA_DIR=./BeAGLE_v102/eAu_10_100_qhat0_nlo
 
 mkdir figs
 mkdir $EA_DIR/figs_norm_${NORM}
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 1, 1, \"$EA_DIR/figs_norm_${NORM}/hists_gen.root\", 1)"
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 1, 1, \"$EA_DIR/figs_norm_${NORM}/hists_gen.root\", $NORM)"
 mv figs/* $EA_DIR/figs_norm_${NORM}
 rm -r figs
 cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_eAu.root
@@ -45,7 +45,7 @@ EA_DIR=./BeAGLE_v102/ePb_10_100_qhat0_nlo
 
 mkdir figs
 mkdir $EA_DIR/figs_norm_${NORM}
-root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 10, 1, \"$EA_DIR/figs_norm_${NORM}/hists_gen.root\", 1)"
+root -l -q "plot_chadron_gen.C(\"$EP_DIR/outfiles/ana_merged.root\", 0, 1, \"$EA_DIR/outForPythiaMode/ana_merged.root\", 10, 1, \"$EA_DIR/figs_norm_${NORM}/hists_gen.root\", $NORM)"
 mv figs/* $EA_DIR/figs_norm_${NORM}
 rm -r figs
 cp $EA_DIR/figs_norm_${NORM}/hists_gen.root $OUT_DIR/hists_gen_ePb.root
