@@ -2887,7 +2887,7 @@ C     ENDIF
            IF ((ABS(IDHKK(I)).EQ.421).OR.
      &    (ABS(IDHKK(I)).EQ.4122)) THEN
              WRITE(LOUT,
-     &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
+     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
      &     "@kdebug : after DT_KKEVNT : particle I = ", I,
      &     " with IDHKK = ", IDHKK(I),
      &     ", p=(",
@@ -2914,7 +2914,7 @@ C     ENDIF
            IF ((ABS(IDHKK(I)).EQ.421).OR.
      &    (ABS(IDHKK(I)).EQ.4122)) THEN
              WRITE(LOUT,
-     &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
+     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
      &     "@kdebug : after DT_FOZOCA : particle I = ", I,
      &     " with IDHKK = ", IDHKK(I),
      &     ", p=(",
@@ -2974,7 +2974,7 @@ C Use old DPMJET logic for GCF-QE
            IF ((ABS(IDHKK(I)).EQ.421).OR.
      &    (ABS(IDHKK(I)).EQ.4122)) THEN
              WRITE(LOUT,
-     &        '(a,I5,a,I5,a,E9.3,a,E9.3,a,E9.3,a,E9.3,a)')
+     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
      &     "@kdebug : after DT_FICONF : particle I = ", I,
      &     " with IDHKK = ", IDHKK(I),
      &     ", p=(",
@@ -9616,20 +9616,20 @@ C9990 CONTINUE
 
       IREJ = 0
 
-      IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
-     &    (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+*      IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
+*     &    (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
 *        WRITE(LOUT, "(a,F5.0,a,F5.0,a,F5.0,a,F5.0,a)")
 *     &    "@kdebug: photon p=(", PGAMM(1), ",", PGAMM(2), ",",
 *     &    PGAMM(3), ",", PGAMM(4), ")"
-        WRITE(LOUT,
-     &       '(a,I5,a,I5,a,I3,a,I3,a,F5.3,a,F5.3,a,F5.3,a,F5.3,a)')
-     &    "@kdebug : DT_INUCAS : called on particle IDXCAS = ", IDXCAS,
-     &    " with IDHKK = ", IDHKK(IDXCAS),
-     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
-     &    ", p=(",
-     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(3,IDXCAS),
-     &    ", ", PHKK(4,IDXCASS), ")"
-      ENDIF
+*        WRITE(LOUT,
+*     &       '(a,I5,a,I5,a,I3,a,I3,a,F5.3,a,F5.3,a,F5.3,a,F5.3,a)')
+*     &    "@kdebug : DT_INUCAS : called on particle IDXCAS = ", IDXCAS,
+*     &    " with IDHKK = ", IDHKK(IDXCAS),
+*     &    ", IDCH = ", IDCH(IDXCAS), ", NOBAM = ", NOBAM(IDXCAS),
+*     &    ", p=(",
+*     &    PHKK(1,IDXCAS), ", ", PHKK(2,IDXCAS), ", ", PHKK(3,IDXCAS),
+*     &    ", ", PHKK(4,IDXCASS), ")"
+*      ENDIF
 
 * update counter
       IF (NINCEV(1).NE.NEVHKK) THEN
