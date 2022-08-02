@@ -151,6 +151,7 @@ class hadron_gen
 
     void FillGenKin(erhic::EventPythia* py_evt)
     {
+      /*
       erhic::ParticleMC* proton = py_evt->GetTrack(1);
       if (proton!=NULL)
       {
@@ -158,6 +159,7 @@ class hadron_gen
         hadron_beam = proton->Get4Vector();
       }
       else return; // if incoming proton not found, skip the whole event
+      */
 
       for(int ipart = 0; ipart < py_evt->GetNTracks(); ipart++)
       {
@@ -169,7 +171,8 @@ class hadron_gen
         h1d_parent_id->Fill(abs(part->GetParentId()));
 
         TLorentzVector hadron_mom4_gen = part->Get4Vector();
-        double frag_z = hadron_beam.Dot(hadron_mom4_gen)/(nu_true*hadron_beam.M());
+        double frag_z = part->GetZ();
+        //double frag_z = hadron_beam.Dot(hadron_mom4_gen)/(nu_true*hadron_beam.M());
 
         // if (hadron_mom4_gen.Pt()<0.1) continue;
 
