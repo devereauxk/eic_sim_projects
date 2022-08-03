@@ -35,8 +35,8 @@ void plot_D0_mom_INC_diff()
     tree->SetBranchAddress("event",&event);
 
     // initialize histograms
-    D0_p[isys] = new TH1D(Form("D0_p_%d", isys), Form("D0_p_%d", isys), 100, 0, 60);
-    D0_pt[isys] = new TH1D(Form("D0_pt_%d", isys), Form("D0_pt_%d", isys), 100, 0, 60);
+    D0_p[isys] = new TH1D(Form("D0_p_%d", isys), Form("D0_p_%d", isys), 100, 0, 50);
+    D0_pt[isys] = new TH1D(Form("D0_pt_%d", isys), Form("D0_pt_%d", isys), 200, 0, 25);
 
     // fill histograms
     for(int ievt = 0; ievt < tree->GetEntries(); ievt++)
@@ -57,7 +57,7 @@ void plot_D0_mom_INC_diff()
     mcs(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 50;
+      float plot_xrange_hi = 40;
 
       float plot_yrange_lo = 0;
       float plot_yrange_hi = 140;
@@ -88,7 +88,7 @@ void plot_D0_mom_INC_diff()
     mcs(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 10;
+      float plot_xrange_hi = 20;
 
       float plot_yrange_lo = 0;
       float plot_yrange_hi = 140;
@@ -130,7 +130,7 @@ void plot_D0_mom_INC_diff()
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 50;
+    float plot_xrange_hi = 40;
 
     float plot_yrange_lo = 0;
     float plot_yrange_hi = 140;
@@ -164,7 +164,7 @@ void plot_D0_mom_INC_diff()
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 10;
+    float plot_xrange_hi = 20;
 
     float plot_yrange_lo = 0;
     float plot_yrange_hi = 140;
