@@ -27,6 +27,7 @@ class hadron_gen
     int ixbin;
     int inubin;
 
+    TH2D* h2d_hadron_p_vs_eta_gen_in_x[Q2bin][xbin];
     TH2D* h2d_hadron_pt_vs_eta_gen_in_x[Q2bin][xbin];
     TH2D* h2d_hadron_z_vs_eta_gen_in_x[Q2bin][xbin];
 
@@ -54,6 +55,9 @@ class hadron_gen
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
+          h2d_hadron_p_vs_eta_gen_in_x[iQ2][ix] = new TH2D(Form("h2d_hadron_%d_p_vs_eta_gen_in_x_%d_%d",hadron_id,iQ2,ix),"D0 p vs eta",100,0,60,40,-10,10);
+          h2d_hadron_p_vs_eta_gen_in_x[iQ2][ix]->Sumw2();
+
           h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix] = new TH2D(Form("h2d_hadron_%d_pt_vs_eta_gen_in_x_%d_%d",hadron_id,iQ2,ix),"D0 pt vs eta",100,0,10,40,-10,10);
           h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix]->Sumw2();
 
@@ -78,6 +82,7 @@ class hadron_gen
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
+          delete h2d_hadron_p_vs_eta_gen_in_x[iQ2][ix];
           delete h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix];
           delete h2d_hadron_z_vs_eta_gen_in_x[iQ2][ix];
         }
@@ -104,6 +109,7 @@ class hadron_gen
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
+          h2d_hadron_p_vs_eta_gen_in_x[iQ2][ix]->Reset("ICESM");
           h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix]->Reset("ICESM");
           h2d_hadron_z_vs_eta_gen_in_x[iQ2][ix]->Reset("ICESM");
         }
@@ -182,14 +188,20 @@ class hadron_gen
 
         if (iQ2bin>=0 && ixbin>=0)
         {
+          h2d_hadron_p_vs_eta_gen_in_x[iQ2bin][ixbin]->Fill(hadron_mom4_gen.P(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_pt_vs_eta_gen_in_x[iQ2bin][ixbin]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_z_vs_eta_gen_in_x[iQ2bin][ixbin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
 
           // Now fill the inclusive bin
+          h2d_hadron_p_vs_eta_gen_in_x[iQ2bin][xbin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_pt_vs_eta_gen_in_x[iQ2bin][xbin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_z_vs_eta_gen_in_x[iQ2bin][xbin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+
+          h2d_hadron_p_vs_eta_gen_in_x[Q2bin-1][ixbin]->Fill(hadron_mom4_gen.P(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_pt_vs_eta_gen_in_x[Q2bin-1][ixbin]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_z_vs_eta_gen_in_x[Q2bin-1][ixbin]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
+
+          h2d_hadron_p_vs_eta_gen_in_x[Q2bin-1][xbin-1]->Fill(hadron_mom4_gen.P(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_pt_vs_eta_gen_in_x[Q2bin-1][xbin-1]->Fill(hadron_mom4_gen.Pt(),hadron_mom4_gen.PseudoRapidity());
           h2d_hadron_z_vs_eta_gen_in_x[Q2bin-1][xbin-1]->Fill(frag_z,hadron_mom4_gen.PseudoRapidity());
         }
@@ -217,6 +229,7 @@ class hadron_gen
       {
         for (int ix = 0; ix < xbin; ++ix)
         {
+          h2d_hadron_p_vs_eta_gen_in_x[iQ2][ix]->Write();
           h2d_hadron_pt_vs_eta_gen_in_x[iQ2][ix]->Write();
           h2d_hadron_z_vs_eta_gen_in_x[iQ2][ix]->Write();
         }
