@@ -24,7 +24,7 @@ void standardLatex()
 
 void plot_D0_mom_INC_diff()
 {
-  mclogy(-1);
+  mclogx(-1);
 
   for (int isys = 0; isys < sys_bins; isys++)
   {
@@ -54,7 +54,7 @@ void plot_D0_mom_INC_diff()
     }
 
     // print histograms
-    mclogy(cno++);
+    mclogx(cno++);
     {
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 30;
@@ -85,7 +85,7 @@ void plot_D0_mom_INC_diff()
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p.pdf\")", cno-1, fin_dirs[isys]) );
     }
-    mclogy(cno++);
+    mclogx(cno++);
     {
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 6;
@@ -127,7 +127,7 @@ void plot_D0_mom_INC_diff()
   }
 
   // print compare histograms
-  mclogy(cno++);
+  mclogx(cno++);
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 30;
@@ -161,7 +161,7 @@ void plot_D0_mom_INC_diff()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff.pdf\")", cno-1) );
   }
-  mclogy(cno++);
+  mclogx(cno++);
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 6;
