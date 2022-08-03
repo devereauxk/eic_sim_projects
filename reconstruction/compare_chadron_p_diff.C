@@ -96,10 +96,10 @@ void compare_chadron_p_diff(const int energy_option = 1)
     {
       for (int ix = 0; ix < xbin; ++ix)
       {
-        h2d_D0_p_vs_eta_gen_in_x[isys][iQ2][ix] = (TH2D*)fin[isys]->Get( Form("h1d_hadron_421_p_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
+        h2d_D0_p_vs_eta_gen_in_x[isys][iQ2][ix] = (TH2D*)fin[isys]->Get( Form("h1d_hadron_421_p_vs_eta_gen_in_x_%d_%d",iQ2,ix) );
         h2d_D0_p_vs_eta_gen_in_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_p_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
 
-        h2d_D0_pt_vs_eta_gen_in_x[isys][iQ2][ix] = (TH2D*)fin[isys]->Get( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
+        h2d_D0_pt_vs_eta_gen_in_x[isys][iQ2][ix] = (TH2D*)fin[isys]->Get( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_%d_%d",iQ2,ix) );
         h2d_D0_pt_vs_eta_gen_in_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
       }
     }
