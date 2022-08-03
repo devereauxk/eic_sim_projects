@@ -40,10 +40,10 @@ void plot_comparison()
     mclogy(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 60;
+      float plot_xrange_hi = 10;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 24000;
+      float plot_yrange_hi = 16000;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -74,10 +74,10 @@ void plot_comparison()
     mclogy(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 60;
+      float plot_xrange_hi = 10;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 24000;
+      float plot_yrange_hi = 16000;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
