@@ -24,10 +24,7 @@ void make_histograms()
   {
     // initializing / projecting inclusive th2ds
     h1d_D0_p[isys] = h2d_D0_p_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionY("h1d_D0_p");
-    h1d_D0_p[isys]->Sumw2();
-
     h1d_D0_pt[isys] = h2d_D0_pt_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionY("h1d_D0_pt");
-    h1d_D0_pt[isys]->Sumw2();
 
     // if isys!=0, scalling histograms to same # entries of sys=0 histograms
     if(isys!=0)
@@ -64,7 +61,7 @@ void plot_comparison()
       {
         h1d_D0_p[isys]->SetMarkerColor(sys_color[isys]);
         h1d_D0_p[isys]->SetLineColor(sys_color[isys]);
-        h1d_D0_p[isys]->Draw("same");
+        h1d_D0_p[isys]->Draw("same b");
         leg.AddEntry(h1d_D0_p[isys],Form("%s",sys_name[isys]),"p");
       }
 
