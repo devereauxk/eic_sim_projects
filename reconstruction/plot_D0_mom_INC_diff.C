@@ -83,7 +83,7 @@ void plot_D0_mom_INC_diff()
 
       standardLatex();
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p.pdf\")", cno-1, fin_dirs[isys]) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p_eAu_logy.pdf\")", cno-1, fin_dirs[isys]) );
     }
     mclogy(cno++);
     {
@@ -114,7 +114,7 @@ void plot_D0_mom_INC_diff()
 
       standardLatex();
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_pt.pdf\")", cno-1, fin_dirs[isys]) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_pt_eAu_logy.pdf\")", cno-1, fin_dirs[isys]) );
     }
 
   }
@@ -159,7 +159,7 @@ void plot_D0_mom_INC_diff()
 
     standardLatex();
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff.pdf\")", cno-1) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff_eAu_logy.pdf\")", cno-1) );
   }
   mclogy(cno++);
   {
@@ -193,7 +193,7 @@ void plot_D0_mom_INC_diff()
 
     standardLatex();
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"D0_pt_diff.pdf\")", cno-1) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"D0_pt_diff_eAu_logy.pdf\")", cno-1) );
   }
 
 }
