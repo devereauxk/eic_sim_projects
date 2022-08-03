@@ -51,7 +51,7 @@ void plot_comparison()
       htemp.GetYaxis()->SetTitle("normalized counts");
       myhset(&htemp,1.2,1.6,0.05,0.05);
 
-      TLegend leg(0.55,0.71,0.84,0.87);
+      TLegend leg(0.55,0.77,0.84,0.87);
       leg.SetBorderSize(0);
       leg.SetTextSize(0.03);
       leg.SetFillStyle(0);
@@ -59,9 +59,11 @@ void plot_comparison()
 
       for (int isys = 0; isys < sys_bins; ++isys)
       {
+        h1d_D0_p[isys]->SetMarkerStyle(21);
+        h1d_D0_p[isys]->SetMarkerSize(0.7);
         h1d_D0_p[isys]->SetMarkerColor(sys_color[isys]);
         h1d_D0_p[isys]->SetLineColor(sys_color[isys]);
-        h1d_D0_p[isys]->Draw("same b");
+        h1d_D0_p[isys]->Draw("same colz");
         leg.AddEntry(h1d_D0_p[isys],Form("%s",sys_name[isys]),"p");
       }
 
