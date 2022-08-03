@@ -60,7 +60,7 @@ void plot_D0_mom_INC_diff()
       float plot_xrange_hi = 30;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 14000;
+      float plot_yrange_hi = 140;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -91,7 +91,7 @@ void plot_D0_mom_INC_diff()
       float plot_xrange_hi = 30;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 14000;
+      float plot_yrange_hi = 140;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -133,7 +133,7 @@ void plot_D0_mom_INC_diff()
     float plot_xrange_hi = 30;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 14000;
+    float plot_yrange_hi = 140;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -167,7 +167,7 @@ void plot_D0_mom_INC_diff()
     float plot_xrange_hi = 30;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 14000;
+    float plot_yrange_hi = 140;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
