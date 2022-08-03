@@ -47,7 +47,7 @@ void plot_D0_mom_INC_diff()
         erhic::ParticleMC* part = event->GetTrack(ipart);
         if (abs(part->Id()) == 421)
         {
-          D0_p[isys]->Fill(sqrt(pow(part->GetPx(),2) + pow(part->GetPy(),2) + pow(part->GetPz(),2)));
+          D0_p[isys]->Fill(part->GetP());
           D0_pt[isys]->Fill(part->GetPt());
         }
       }
@@ -64,7 +64,7 @@ void plot_D0_mom_INC_diff()
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
-      htemp.GetXaxis()->SetTitle("p^{D^{0}}");
+      htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
       htemp.GetYaxis()->SetTitle("normalized counts");
       myhset(&htemp,1.2,1.6,0.05,0.05);
 
@@ -95,7 +95,7 @@ void plot_D0_mom_INC_diff()
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
-      htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T}");
+      htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T} [GeV]");
       htemp.GetYaxis()->SetTitle("normalized counts");
       myhset(&htemp,1.2,1.6,0.05,0.05);
 
@@ -137,7 +137,7 @@ void plot_D0_mom_INC_diff()
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
-    htemp.GetXaxis()->SetTitle("p^{D^{0}}");
+    htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
     htemp.GetYaxis()->SetTitle("normalized counts");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
@@ -171,7 +171,7 @@ void plot_D0_mom_INC_diff()
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
-    htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T}");
+    htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T} [GeV]");
     htemp.GetYaxis()->SetTitle("normalized counts");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
