@@ -63,8 +63,8 @@ void plot_comparison()
         h1d_D0_p[isys]->SetMarkerSize(0.7);
         h1d_D0_p[isys]->SetMarkerColor(sys_color[isys]);
         h1d_D0_p[isys]->SetLineColor(sys_color[isys]);
-        h1d_D0_p[isys]->Draw("same");
-        leg.AddEntry(h1d_D0_p[isys],Form("%s",sys_name[isys]),"p");
+        h1d_D0_p[isys]->Draw("hsame");
+        leg.AddEntry(h1d_D0_p[isys],Form("%s",sys_name[isys]),"l");
       }
 
       leg.Draw("same");
