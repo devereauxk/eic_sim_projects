@@ -47,7 +47,7 @@ void plot_comparison()
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
-      htemp.GetXaxis()->SetTitle("p^{D^{0}}");
+      htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T}");
       htemp.GetYaxis()->SetTitle("normalized counts");
       myhset(&htemp,1.2,1.6,0.05,0.05);
 
@@ -57,13 +57,10 @@ void plot_comparison()
       leg.SetFillStyle(0);
       leg.SetMargin(0.1);
 
-      for (int isys = 0; isys < sys_bins; isys++)
-      {
-        h1d_D0_p[isys]->SetMarkerColor(sys_color[isys]);
-        h1d_D0_p[isys]->SetLineColor(sys_color[isys]);
-        h1d_D0_p[isys]->Draw("hsame");
-        leg.AddEntry(h1d_D0_p[isys],Form("%s",sys_name[isys]),"l");
-      }
+      h1d_D0_pt[0]->SetMarkerColor(sys_color[0]);
+      h1d_D0_pt[0]->SetLineColor(sys_color[0]);
+      h1d_D0_pt[0]->Draw("hsame");
+      leg.AddEntry(h1d_D0_p[0],Form("%s",sys_name[0]),"l");
 
       leg.Draw("same");
 
@@ -72,7 +69,41 @@ void plot_comparison()
       tl->SetTextSize(0.03);
       tl->DrawLatexNDC(0.19,0.17,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8, |#eta|<3.5");
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"figs/D0_p_compare.pdf\")", cno-1) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"figs/D0_pt_compare_0.pdf\")", cno-1) );
+    }
+    mclogy(cno++);
+    {
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 60;
+
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = 24000;
+
+      TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+      htemp.Draw();
+      htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T}");
+      htemp.GetYaxis()->SetTitle("normalized counts");
+      myhset(&htemp,1.2,1.6,0.05,0.05);
+
+      TLegend leg(0.55,0.77,0.84,0.87);
+      leg.SetBorderSize(0);
+      leg.SetTextSize(0.03);
+      leg.SetFillStyle(0);
+      leg.SetMargin(0.1);
+
+      h1d_D0_pt[1]->SetMarkerColor(sys_color[1]);
+      h1d_D0_pt[1]->SetLineColor(sys_color[1]);
+      h1d_D0_pt[1]->Draw("hsame");
+      leg.AddEntry(h1d_D0_p[1],Form("%s",sys_name[1]),"l");
+
+      leg.Draw("same");
+
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.03);
+      tl->DrawLatexNDC(0.19,0.17,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8, |#eta|<3.5");
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"figs/D0_pt_compare_1.pdf\")", cno-1) );
     }
 
 }
