@@ -28,7 +28,7 @@ void plot_D0_mom_INC_diff()
 
   for (int isys = 0; isys < sys_bins; isys++)
   {
-    TFile* f = new TFile(Form("%smerged.root", fin_dirs[isys]), "READ");
+    TFile* f = new TFile(Form("%seAu_0.root", fin_dirs[isys]), "READ");
 
     TTree *tree = (TTree*)f->Get("EICTree");
     erhic::EventBeagle *event(NULL);
