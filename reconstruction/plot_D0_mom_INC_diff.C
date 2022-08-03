@@ -24,7 +24,7 @@ void standardLatex()
 
 void plot_D0_mom_INC_diff()
 {
-  mcs(-1);
+  mclogy(-1);
 
   for (int isys = 0; isys < sys_bins; isys++)
   {
@@ -54,13 +54,13 @@ void plot_D0_mom_INC_diff()
     }
 
     // print histograms
-    mcs(cno++);
+    mclogy(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 40;
+      float plot_xrange_hi = 30;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 140;
+      float plot_yrange_hi = 14000;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -85,13 +85,13 @@ void plot_D0_mom_INC_diff()
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p.pdf\")", cno-1, fin_dirs[isys]) );
     }
-    mcs(cno++);
+    mclogy(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 20;
+      float plot_xrange_hi = 30;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 140;
+      float plot_yrange_hi = 14000;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -127,13 +127,13 @@ void plot_D0_mom_INC_diff()
   }
 
   // print compare histograms
-  mcs(cno++);
+  mclogy(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 40;
+    float plot_xrange_hi = 30;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 140;
+    float plot_yrange_hi = 14000;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -161,13 +161,13 @@ void plot_D0_mom_INC_diff()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff.pdf\")", cno-1) );
   }
-  mcs(cno++);
+  mclogy(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 20;
+    float plot_xrange_hi = 30;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 140;
+    float plot_yrange_hi = 14000;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
