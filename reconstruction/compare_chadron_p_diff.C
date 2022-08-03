@@ -7,7 +7,7 @@ unsigned int verbosity = 0;
 const int sys_bins = 2;
 const char* sys_name[sys_bins] = {"e+Au INC on", "e+Au INC off"};
 const char* sys_abbr[sys_bins] = {"eAuINCon", "eAuINCoff"};
-const char* sys_fin[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/ana_merged.root", "./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/ana_merged.root"}
+const char* sys_fin[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/ana_merged.root", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/ana_merged.root"}
 const int sys_color[sys_bins] = {kBlack, kRed};
 
 const int energy_bins = 5;
@@ -42,9 +42,9 @@ void make_histograms()
   }
 }
 
-void plot_comparison(const int energy_eA_option = 1)
+void plot_comparison(const int energy_option = 1)
 {
-    mcs(cno++);
+    mclogy(cno++);
     {
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 60;
@@ -56,7 +56,6 @@ void plot_comparison(const int energy_eA_option = 1)
       htemp.Draw();
       htemp.GetXaxis()->SetTitle("p^{D^{0}}");
       htemp.GetYaxis()->SetTitle("normalized counts");
-      htemp.SetLogy()
       myhset(&htemp,1.2,1.6,0.05,0.05);
 
       TLegend leg(0.55,0.71,0.84,0.87);
@@ -70,7 +69,7 @@ void plot_comparison(const int energy_eA_option = 1)
         h1d_D0_p[isys]->SetMarkerColor(sys_color[isys]);
         h1d_D0_p[isys]->SetLineColor(sys_color[isys]);
         h1d_D0_p[isys]->Draw("same");
-        leg.AddEntry(h1d_D0_p[isys],Form("%s @ %s",sys_name[isys],energy_name[energy_eA_option]),"p");
+        leg.AddEntry(h1d_D0_p[isys],Form("%s @ %s",sys_name[isys],energy_name[energy_option]),"p");
       }
 
       leg.Draw("same");
@@ -82,10 +81,10 @@ void plot_comparison(const int energy_eA_option = 1)
 
       gROOT->ProcessLine( Form("cc%d->Print(\"figs/D0_p_compare.pdf\")", cno-1) );
     }
-    
+
 }
 
-void compare_chadron_gen_diff_sys(const int energy_eA_option = 1)
+void compare_chadron_gen_diff_sys(const int energy_option = 1)
 {
   mcs(-1);
 
@@ -97,14 +96,11 @@ void compare_chadron_gen_diff_sys(const int energy_eA_option = 1)
     {
       for (int ix = 0; ix < xbin; ++ix)
       {
-        for (int ieta = 0; ieta < etabin; ++ieta)
-        {
-          h1d_D0_p_in_eta_x[isys][iQ2][ix] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_p_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
-          h1d_D0_p_in_eta_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_p_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
+        h1d_D0_p_in_eta_x[isys][iQ2][ix] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_p_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
+        h1d_D0_p_in_eta_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_p_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
 
-          h1d_D0_pt_in_eta_x[isys][iQ2][ix] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
-          h1d_D0_pt_in_eta_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
-        }
+        h1d_D0_pt_in_eta_x[isys][iQ2][ix] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
+        h1d_D0_pt_in_eta_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
       }
     }
 

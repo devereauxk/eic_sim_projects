@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
-WORKING_DIR=/eic/u/kdevereaux/work/BeAGLE-debug/eAu_10_100_qhat0_nlo
+WORKING_DIR=/eic/u/kdevereaux/work/BeAGLE-debug/eAu_10_100_tauforOff_qhat0_nlo
 
 if [ -z "$1" ]
 then
@@ -30,10 +30,6 @@ export LD_LIBRARY_PATH="${LHAPDF5}:$LD_LIBRARY_PATH"
 source /cvmfs/sphenix.opensciencegrid.org/gcc-8.3/opt/sphenix/core/gcc/8.3.0.1-0a5ad/x86_64-centos7/setup.sh
 
 #Soft links to necessary files
-#ln -s /eic/data/baraks/BeAGLE/inputFiles/eAu.inp
-#ln -s /eic/data/baraks/BeAGLE/inputFiles/S3ALL003
-#ln -s /eic/data/baraks/BeAGLE/nuclear.bin
-#ln -s /eic/data/baraks/BeAGLE/make_tree.C
 ln -s ${WORKING_DIR}/inputFiles/eAu.inp
 ln -s ${WORKING_DIR}/inputFiles/S1ALL003
 ln -s ${WORKING_DIR}/nuclear.bin
