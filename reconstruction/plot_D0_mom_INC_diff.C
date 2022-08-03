@@ -5,7 +5,7 @@ R__LOAD_LIBRARY(libeicsmear);
 using namespace std;
 
 const int sys_bins = 2;
-const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/"};
+const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/"};
 const char* sys_name[sys_bins] = {"e+Au INC on", "e+Au INC off"};
 const int sys_color[sys_bins] = {kBlack, kRed};
 
@@ -28,7 +28,7 @@ void plot_D0_mom_INC_diff()
 
   for (int isys = 0; isys < sys_bins; isys++)
   {
-    TFile* f = new TFile(Form("%smerged.root", fin_dirs[isys]), "READ");
+    TFile* f = new TFile(Form("%seAu_0.root", fin_dirs[isys]), "READ");
 
     TTree *tree = (TTree*)f->Get("EICTree");
     erhic::EventBeagle *event(NULL);
@@ -41,6 +41,7 @@ void plot_D0_mom_INC_diff()
     // fill histograms
     for(int ievt = 0; ievt < tree->GetEntries(); ievt++)
     {
+      tree->GetEntry(ievt);
       for(int ipart = 0; ipart < event->GetNTracks(); ipart++)
       {
         erhic::ParticleMC* part = event->GetTrack(ipart);
