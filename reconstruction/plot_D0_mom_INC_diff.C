@@ -88,6 +88,13 @@ void plot_D0_mom_INC_diff()
 
   }
 
+  // normalize histograms to have same integral as isys ones
+  for(int isys = 1; isys < sys_bins; isys++)
+  {
+    D0_p[isys]->Scale(D0_p[0]->Integral() / D0_p[isys]->Integral());
+    D0_pt[isys]->Scale(D0_pt[0]->Integral() / D0_pt[isys]->Integral());
+  }
+
   // print compare histograms
   mcs(cno++);
   {
@@ -95,7 +102,7 @@ void plot_D0_mom_INC_diff()
     float plot_xrange_hi = 60;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 100;
+    float plot_yrange_hi = 140;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
