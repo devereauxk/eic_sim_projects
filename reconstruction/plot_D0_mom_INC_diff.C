@@ -189,7 +189,7 @@ void plot_D0_mom_INC_diff()
       leg.AddEntry(D0_p[isys],Form("%s", sys_name[isys]), "l");
     }
 
-    c->SetLogy();
+    mpad->SetLogy();
 
     leg.Draw("hsame");
 
