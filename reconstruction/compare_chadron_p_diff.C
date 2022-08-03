@@ -82,12 +82,12 @@ void compare_chadron_p_diff()
   mcs(-1);
 
   TFile* fin[sys_bins] = {0};
-  for (int isys = 0; isys < sys_bins; ++isys)
+  for (int isys = 0; isys < sys_bins; isys++)
   { // skipping e+p system
     fin[isys] = new TFile(sys_fin[isys],"READ");
-    for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
+    for (int iQ2 = 0; iQ2 < Q2bin; iQ2++)
     {
-      for (int ix = 0; ix < xbin; ++ix)
+      for (int ix = 0; ix < xbin; ix++)
       {
         h2d_D0_p_vs_eta_gen_in_x[isys][iQ2][ix] = (TH2D*)fin[isys]->Get( Form("h2d_hadron_421_p_vs_eta_gen_in_x_%d_%d",iQ2,ix) );
         h2d_D0_p_vs_eta_gen_in_x[isys][iQ2][ix]->SetName( Form("h2d_hadron_421_p_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
