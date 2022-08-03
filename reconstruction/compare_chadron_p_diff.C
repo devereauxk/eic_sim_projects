@@ -10,10 +10,6 @@ const char* sys_abbr[sys_bins] = {"eAuINCon", "eAuINCoff"};
 const char* sys_fin[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/ana_merged.root", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/ana_merged.root"};
 const int sys_color[sys_bins] = {kBlack, kRed};
 
-const int energy_bins = 5;
-const char* energy_name[energy_bins] = {"5x41 GeV", "10x100 GeV", "10x110 GeV", "18x110 GeV", "18x275 GeV"};
-const char* energy_abbr[energy_bins] = {"5_41", "10_100", "10_110", "18_110", "18_275"};
-
 TH2D* h2d_D0_p_vs_eta_gen_in_x[sys_bins][Q2bin][xbin];
 TH2D* h2d_D0_pt_vs_eta_gen_in_x[sys_bins][Q2bin][xbin];
 
@@ -27,10 +23,10 @@ void make_histograms()
   for(int isys = 0; isys < sys_bins; isys++)
   {
     // initializing / projecting inclusive th2ds
-    h1d_D0_p[isys] = h2d_D0_p_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionX("h1d_D0_p");
+    h1d_D0_p[isys] = h2d_D0_p_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionY("h1d_D0_p");
     h1d_D0_p[isys]->Sumw2();
 
-    h1d_D0_pt[isys] = h2d_D0_pt_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionX("h1d_D0_pt");
+    h1d_D0_pt[isys] = h2d_D0_pt_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionY("h1d_D0_pt");
     h1d_D0_pt[isys]->Sumw2();
 
     // if isys!=0, scalling histograms to same # entries of sys=0 histograms
@@ -42,7 +38,7 @@ void make_histograms()
   }
 }
 
-void plot_comparison(const int energy_option = 1)
+void plot_comparison()
 {
     mclogy(cno++);
     {
@@ -50,7 +46,7 @@ void plot_comparison(const int energy_option = 1)
       float plot_xrange_hi = 60;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 16000;
+      float plot_yrange_hi = 24000;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -69,7 +65,7 @@ void plot_comparison(const int energy_option = 1)
         h1d_D0_p[isys]->SetMarkerColor(sys_color[isys]);
         h1d_D0_p[isys]->SetLineColor(sys_color[isys]);
         h1d_D0_p[isys]->Draw("same");
-        leg.AddEntry(h1d_D0_p[isys],Form("%s @ %s",sys_name[isys],energy_name[energy_option]),"p");
+        leg.AddEntry(h1d_D0_p[isys],Form("%s",sys_name[isys]),"p");
       }
 
       leg.Draw("same");
@@ -84,7 +80,7 @@ void plot_comparison(const int energy_option = 1)
 
 }
 
-void compare_chadron_p_diff(const int energy_option = 1)
+void compare_chadron_p_diff()
 {
   mcs(-1);
 
@@ -109,5 +105,5 @@ void compare_chadron_p_diff(const int energy_option = 1)
 
   make_histograms();
 
-  plot_comparison(energy_option);
+  plot_comparison();
 }
