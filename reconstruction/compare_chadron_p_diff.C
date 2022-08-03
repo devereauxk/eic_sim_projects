@@ -7,18 +7,18 @@ unsigned int verbosity = 0;
 const int sys_bins = 2;
 const char* sys_name[sys_bins] = {"e+Au INC on", "e+Au INC off"};
 const char* sys_abbr[sys_bins] = {"eAuINCon", "eAuINCoff"};
-const char* sys_fin[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/ana_merged.root", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/ana_merged.root"}
+const char* sys_fin[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/ana_merged.root", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/ana_merged.root"};
 const int sys_color[sys_bins] = {kBlack, kRed};
 
 const int energy_bins = 5;
 const char* energy_name[energy_bins] = {"5x41 GeV", "10x100 GeV", "10x110 GeV", "18x110 GeV", "18x275 GeV"};
 const char* energy_abbr[energy_bins] = {"5_41", "10_100", "10_110", "18_110", "18_275"};
 
-TH2D* h2d_hadron_p_vs_eta_gen_in_x[isys][Q2bin][xbin];
-TH2D* h2d_hadron_pt_vs_eta_gen_in_x[isys][Q2bin][xbin];
+TH2D* h2d_D0_p_vs_eta_gen_in_x[sys_bins][Q2bin][xbin];
+TH2D* h2d_D0_pt_vs_eta_gen_in_x[sys_bins][Q2bin][xbin];
 
-TH1D* h1d_D0_p[isys] = {0};
-TH1D* h1d_D0_pt[isys] = {0};
+TH1D* h1d_D0_p[sys_bins] = {0};
+TH1D* h1d_D0_pt[sys_bins] = {0};
 
 static int cno = 0;
 
@@ -27,10 +27,10 @@ void make_histograms()
   for(int isys = 0; isys < sys_bins; isys++)
   {
     // initializing / projecting inclusive th2ds
-    h1d_D0_p[isys] = h2d_hadron_p_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionX("h1d_D0_p");
+    h1d_D0_p[isys] = h2d_D0_p_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionX("h1d_D0_p");
     h1d_D0_p[isys]->Sumw2();
 
-    h1d_D0_pt[isys] = h2d_hadron_pt_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionX("h1d_D0_pt");
+    h1d_D0_pt[isys] = h2d_D0_pt_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionX("h1d_D0_pt");
     h1d_D0_pt[isys]->Sumw2();
 
     // if isys!=0, scalling histograms to same # entries of sys=0 histograms
@@ -96,11 +96,11 @@ void compare_chadron_p_diff(const int energy_option = 1)
     {
       for (int ix = 0; ix < xbin; ++ix)
       {
-        h1d_D0_p_in_eta_x[isys][iQ2][ix] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_p_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
-        h1d_D0_p_in_eta_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_p_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
+        h2d_D0_p_vs_eta_gen_in_x[isys][iQ2][ix] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_p_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
+        h2d_D0_p_vs_eta_gen_in_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_p_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
 
-        h1d_D0_pt_in_eta_x[isys][iQ2][ix] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
-        h1d_D0_pt_in_eta_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
+        h2d_D0_pt_vs_eta_gen_in_x[isys][iQ2][ix] = (TH1D*)fin[isys]->Get( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_Q2%d_x%d",iQ2,ix) );
+        h2d_D0_pt_vs_eta_gen_in_x[isys][iQ2][ix]->SetName( Form("h1d_hadron_421_pt_vs_eta_gen_in_x_%s_Q2%d_x%d",sys_abbr[isys],iQ2,ix) );
       }
     }
 
