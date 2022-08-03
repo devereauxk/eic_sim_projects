@@ -105,10 +105,10 @@ void plot_D0_mom_INC_diff()
       leg.SetFillStyle(0);
       leg.SetMargin(0.1);
 
-      D0_p[isys]->SetMarkerColor(sys_color[isys]);
-      D0_p[isys]->SetLineColor(sys_color[isys]);
-      D0_p[isys]->Draw("hsame");
-      leg.AddEntry(D0_p[isys],Form("%s", sys_name[isys]), "l");
+      D0_pt[isys]->SetMarkerColor(sys_color[isys]);
+      D0_pt[isys]->SetLineColor(sys_color[isys]);
+      D0_pt[isys]->Draw("hsame");
+      leg.AddEntry(D0_pt[isys],Form("%s", sys_name[isys]), "l");
 
       leg.Draw("hsame");
 
@@ -183,10 +183,10 @@ void plot_D0_mom_INC_diff()
 
     for (int isys = 0; isys < sys_bins; isys++)
     {
-      D0_p[isys]->SetMarkerColor(sys_color[isys]);
-      D0_p[isys]->SetLineColor(sys_color[isys]);
-      D0_p[isys]->Draw("hsame");
-      leg.AddEntry(D0_p[isys],Form("%s", sys_name[isys]), "l");
+      D0_pt[isys]->SetMarkerColor(sys_color[isys]);
+      D0_pt[isys]->SetLineColor(sys_color[isys]);
+      D0_pt[isys]->Draw("hsame");
+      leg.AddEntry(D0_pt[isys],Form("%s", sys_name[isys]), "l");
     }
 
     leg.Draw("hsame");
