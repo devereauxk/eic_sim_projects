@@ -84,7 +84,7 @@ void plot_comparison(const int energy_option = 1)
 
 }
 
-void compare_chadron_gen_diff_sys(const int energy_option = 1)
+void compare_chadron_p_diff(const int energy_option = 1)
 {
   mcs(-1);
 
