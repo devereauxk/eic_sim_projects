@@ -24,7 +24,7 @@ void standardLatex()
 
 void plot_D0_mom_INC_diff()
 {
-  mcs(-1);
+  mclogy(-1);
 
   for (int isys = 0; isys < sys_bins; isys++)
   {
@@ -36,7 +36,7 @@ void plot_D0_mom_INC_diff()
 
     // initialize histograms
     D0_p[isys] = new TH1D(Form("D0_p_%d", isys), Form("D0_p_%d", isys), 100, 0, 50);
-    D0_pt[isys] = new TH1D(Form("D0_pt_%d", isys), Form("D0_pt_%d", isys), 200, 0, 25);
+    D0_pt[isys] = new TH1D(Form("D0_pt_%d", isys), Form("D0_pt_%d", isys), 100, 0, 10);
 
     // fill histograms
     for(int ievt = 0; ievt < tree->GetEntries(); ievt++)
@@ -54,7 +54,7 @@ void plot_D0_mom_INC_diff()
     }
 
     // print histograms
-    mcs(cno++);
+    mclogy(cno++);
     {
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 30;
@@ -85,10 +85,10 @@ void plot_D0_mom_INC_diff()
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p.pdf\")", cno-1, fin_dirs[isys]) );
     }
-    mcs(cno++);
+    mclogy(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 30;
+      float plot_xrange_hi = 6;
 
       float plot_yrange_lo = 0;
       float plot_yrange_hi = 140;
@@ -127,7 +127,7 @@ void plot_D0_mom_INC_diff()
   }
 
   // print compare histograms
-  mcs(cno++);
+  mclogy(cno++);
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 30;
@@ -161,10 +161,10 @@ void plot_D0_mom_INC_diff()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff.pdf\")", cno-1) );
   }
-  mcs(cno++);
+  mclogy(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 30;
+    float plot_xrange_hi = 6;
 
     float plot_yrange_lo = 0;
     float plot_yrange_hi = 140;
