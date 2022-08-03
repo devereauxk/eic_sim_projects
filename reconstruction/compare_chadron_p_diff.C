@@ -27,11 +27,11 @@ void make_histograms()
     h1d_D0_pt[isys] = h2d_D0_pt_vs_eta_gen_in_x[isys][Q2bin-1][xbin-1]->ProjectionX("h1d_D0_pt");
 
     // if isys!=0, scalling histograms to same # entries of sys=0 histograms
-    if(isys!=0)
-    {
-      h1d_D0_p[isys]->Scale(h1d_D0_p[0]->Integral() / h1d_D0_p[isys]->Integral());
-      h1d_D0_pt[isys]->Scale(h1d_D0_pt[0]->Integral() / h1d_D0_pt[isys]->Integral());
-    }
+    //if(isys!=0)
+    //{
+    //  h1d_D0_p[isys]->Scale(h1d_D0_p[0]->Integral() / h1d_D0_p[isys]->Integral());
+    //  h1d_D0_pt[isys]->Scale(h1d_D0_pt[0]->Integral() / h1d_D0_pt[isys]->Integral());
+    //}
   }
 }
 
