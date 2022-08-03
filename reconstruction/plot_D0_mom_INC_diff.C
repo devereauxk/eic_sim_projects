@@ -43,7 +43,7 @@ void plot_D0_mom_INC_diff()
     {
       for(int ipart = 0; ipart < event->GetNTracks(); ipart++)
       {
-        erhic::ParticleMC* part = py_evt->GetTrack(ipart);
+        erhic::ParticleMC* part = event->GetTrack(ipart);
         if (abs(part->Id()) == 421)
         {
           D0_p[isys]->Fill(sqrt(pow(part->GetPx(),2) + pow(part->GetPy(),2) + pow(part->GetPz(),2)));
