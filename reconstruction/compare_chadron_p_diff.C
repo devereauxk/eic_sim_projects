@@ -57,10 +57,8 @@ void plot_comparison()
       leg.SetFillStyle(0);
       leg.SetMargin(0.1);
 
-      for (int isys = 0; isys < sys_bins; isys++)
+      for (int isys = 0; isys < 1; isys++)
       {
-        h1d_D0_p[isys]->SetMarkerStyle(21);
-        h1d_D0_p[isys]->SetMarkerSize(0.7);
         h1d_D0_p[isys]->SetMarkerColor(sys_color[isys]);
         h1d_D0_p[isys]->SetLineColor(sys_color[isys]);
         h1d_D0_p[isys]->Draw("hsame");
