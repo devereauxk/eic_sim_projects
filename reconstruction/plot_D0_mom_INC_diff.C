@@ -85,7 +85,7 @@ void plot_D0_mom_INC_diff()
 
       standardLatex();
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%stemp.pdf\")", cno-1, outDir) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%stemp.pdf\")", cno-1, fin_dirs[isys]) );
     }
 
   }
