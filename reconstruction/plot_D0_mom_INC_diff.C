@@ -28,7 +28,7 @@ void plot_D0_mom_INC_diff()
 
   for (int isys = 0; isys < sys_bins; isys++)
   {
-    TFile* f = new TFile(Form("%smerged.root", fin_dirs[isys]), "READ");
+    TFile* f = new TFile(Form("%seAu_0.root", fin_dirs[isys]), "READ");
 
     TTree *tree = (TTree*)f->Get("EICTree");
     erhic::EventBeagle *event(NULL);
@@ -36,7 +36,7 @@ void plot_D0_mom_INC_diff()
 
     // initialize histograms
     D0_p[isys] = new TH1D(Form("D0_p_%d", isys), Form("D0_p_%d", isys), 100, 0, 60);
-    D0_pt[isys] = new TH1D(Form("D0_pt_%d", isys), Form("D0_pt_%d", isys), 100, 0, 10);
+    D0_pt[isys] = new TH1D(Form("D0_pt_%d", isys), Form("D0_pt_%d", isys), 100, 0, 60);
 
     // fill histograms
     for(int ievt = 0; ievt < tree->GetEntries(); ievt++)
@@ -60,7 +60,7 @@ void plot_D0_mom_INC_diff()
       float plot_xrange_hi = 50;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 24000;
+      float plot_yrange_hi = 140;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -88,10 +88,10 @@ void plot_D0_mom_INC_diff()
     mcs(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 6;
+      float plot_xrange_hi = 10;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 16000;
+      float plot_yrange_hi = 140;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -133,7 +133,7 @@ void plot_D0_mom_INC_diff()
     float plot_xrange_hi = 50;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 24000;
+    float plot_yrange_hi = 140;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -164,10 +164,10 @@ void plot_D0_mom_INC_diff()
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 6;
+    float plot_xrange_hi = 10;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 16000;
+    float plot_yrange_hi = 140;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
