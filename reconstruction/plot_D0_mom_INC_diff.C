@@ -5,8 +5,8 @@ R__LOAD_LIBRARY(libeicsmear);
 using namespace std;
 
 const int sys_bins = 2;
-const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eC_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eC_10_100_tauforOff_qhat0_nlo/outForPythiaMode/"};
-const char* sys_name[sys_bins] = {"e+C INC on", "e+C INC off"};
+const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/"};
+const char* sys_name[sys_bins] = {"e+Au INC on", "e+Au INC off"};
 const int sys_color[sys_bins] = {kBlack, kRed};
 
 TH1D* D0_p[sys_bins] = {0};
@@ -83,7 +83,7 @@ void plot_D0_mom_INC_diff()
 
       standardLatex();
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p_eC_logy.pdf\")", cno-1, fin_dirs[isys]) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p_Au_logy_noscale.pdf\")", cno-1, fin_dirs[isys]) );
     }
     mclogy(cno++);
     {
@@ -114,17 +114,17 @@ void plot_D0_mom_INC_diff()
 
       standardLatex();
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_pt_eC_logy.pdf\")", cno-1, fin_dirs[isys]) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_pt_Au_logy_noscale.pdf\")", cno-1, fin_dirs[isys]) );
     }
 
   }
 
   // normalize histograms to have same integral as isys ones
-  for(int isys = 1; isys < sys_bins; isys++)
-  {
-    D0_p[isys]->Scale(D0_p[0]->Integral() / D0_p[isys]->Integral());
-    D0_pt[isys]->Scale(D0_pt[0]->Integral() / D0_pt[isys]->Integral());
-  }
+  //for(int isys = 1; isys < sys_bins; isys++)
+  //{
+  //  D0_p[isys]->Scale(D0_p[0]->Integral() / D0_p[isys]->Integral());
+  //  D0_pt[isys]->Scale(D0_pt[0]->Integral() / D0_pt[isys]->Integral());
+  //}
 
   // print compare histograms
   mclogy(cno++);
@@ -159,7 +159,7 @@ void plot_D0_mom_INC_diff()
 
     standardLatex();
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff_eC_logy.pdf\")", cno-1) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff_Au_logy_noscale.pdf\")", cno-1) );
   }
   mclogy(cno++);
   {
@@ -193,7 +193,7 @@ void plot_D0_mom_INC_diff()
 
     standardLatex();
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"D0_pt_diff_eC_logy.pdf\")", cno-1) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"D0_pt_diff_Au_logy_noscale.pdf\")", cno-1) );
   }
 
 }
