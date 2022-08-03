@@ -6,6 +6,8 @@ using namespace std;
 
 const int sys_bins = 2;
 const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/"};
+const char* sys_name[sys_bins] = {"e+Au INC on", "e+Au INC off"};
+const int sys_color[sys_bins] = {kBlack, kRed};
 
 TH1D* D0_p[sys_bins] = {0};
 TH1D* D0_pt[sys_bins] = {0};
@@ -24,10 +26,9 @@ void plot_D0_mom_INC_diff()
 {
   mcs(-1);
 
-  TFile* fins[sys_bins] = {0};
   for (int isys = 0; isys < sys_bins; isys++)
   {
-    fins[isys] = new TFile(Form("%smerged.root", fin_dirs[isys]), "READ");
+    TFile* f = new TFile(Form("%smerged.root", fin_dirs[isys]), "READ");
 
     TTree *tree = (TTree*)f->Get("EICTree");
     erhic::EventBeagle *event(NULL);
