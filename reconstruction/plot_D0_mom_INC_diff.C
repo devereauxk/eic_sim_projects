@@ -28,7 +28,7 @@ void plot_D0_mom_INC_diff()
 
   for (int isys = 0; isys < sys_bins; isys++)
   {
-    TFile* f = new TFile(Form("%seAu_0.root", fin_dirs[isys]), "READ");
+    TFile* f = new TFile(Form("%smerged.root", fin_dirs[isys]), "READ");
 
     TTree *tree = (TTree*)f->Get("EICTree");
     erhic::EventBeagle *event(NULL);
@@ -57,10 +57,10 @@ void plot_D0_mom_INC_diff()
     mcs(cno++);
     {
       float plot_xrange_lo = 0;
-      float plot_xrange_hi = 60;
+      float plot_xrange_hi = 50;
 
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = 100;
+      float plot_yrange_hi = 24000;
 
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
@@ -83,7 +83,38 @@ void plot_D0_mom_INC_diff()
 
       standardLatex();
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%stemp.pdf\")", cno-1, fin_dirs[isys]) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p.pdf\")", cno-1, fin_dirs[isys]) );
+    }
+    mcs(cno++);
+    {
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 6;
+
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = 16000;
+
+      TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+      htemp.Draw();
+      htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T}");
+      htemp.GetYaxis()->SetTitle("normalized counts");
+      myhset(&htemp,1.2,1.6,0.05,0.05);
+
+      TLegend leg(0.55,0.66,0.84,0.82);
+      leg.SetBorderSize(0);
+      leg.SetTextSize(0.03);
+      leg.SetFillStyle(0);
+      leg.SetMargin(0.1);
+
+      D0_p[isys]->SetMarkerColor(sys_color[isys]);
+      D0_p[isys]->SetLineColor(sys_color[isys]);
+      D0_p[isys]->Draw("hsame");
+      leg.AddEntry(D0_p[isys],Form("%s", sys_name[isys]), "l");
+
+      leg.Draw("hsame");
+
+      standardLatex();
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_pt.pdf\")", cno-1, fin_dirs[isys]) );
     }
 
   }
@@ -99,10 +130,10 @@ void plot_D0_mom_INC_diff()
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 60;
+    float plot_xrange_hi = 50;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 140;
+    float plot_yrange_hi = 24000;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
@@ -128,7 +159,41 @@ void plot_D0_mom_INC_diff()
 
     standardLatex();
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"temp.pdf\")", cno-1) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff.pdf\")", cno-1) );
+  }
+  mcs(cno++);
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 6;
+
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 16000;
+
+    TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp.Draw();
+    htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T}");
+    htemp.GetYaxis()->SetTitle("normalized counts");
+    myhset(&htemp,1.2,1.6,0.05,0.05);
+
+    TLegend leg(0.55,0.66,0.84,0.82);
+    leg.SetBorderSize(0);
+    leg.SetTextSize(0.03);
+    leg.SetFillStyle(0);
+    leg.SetMargin(0.1);
+
+    for (int isys = 0; isys < sys_bins; isys++)
+    {
+      D0_p[isys]->SetMarkerColor(sys_color[isys]);
+      D0_p[isys]->SetLineColor(sys_color[isys]);
+      D0_p[isys]->Draw("hsame");
+      leg.AddEntry(D0_p[isys],Form("%s", sys_name[isys]), "l");
+    }
+
+    leg.Draw("hsame");
+
+    standardLatex();
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"D0_pt_diff.pdf\")", cno-1) );
   }
 
 }
