@@ -270,9 +270,9 @@ void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.root", const c
 
   //generate diff and ratio hists
   // p
-  TH1D* D0_p_diff = (TH1D*) D0_p[0]->Clone("D0_p_diff");
+  D0_p_diff = (TH1D*) D0_p[0]->Clone("D0_p_diff");
   D0_p_diff->Add(D0_p[1], -1);
-  TH1D* D0_p_ratio = (TH1D*) D0_p[0]->Clone("D0_p_ratio");
+  D0_p_ratio = (TH1D*) D0_p[0]->Clone("D0_p_ratio");
   D0_p_ratio->Divide(D0_p[1]);
 
   //pt TODO
