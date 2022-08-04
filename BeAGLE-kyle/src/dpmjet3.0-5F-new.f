@@ -2927,6 +2927,19 @@ C     ENDIF
 * excited nucleons (ISTHKK=15,16)
          CALL DT_SCN4BA
 
+         DO I=NPOINT(4),NHKK
+           IF ((ABS(IDHKK(I)).EQ.421).OR.
+     &    (ABS(IDHKK(I)).EQ.4122)) THEN
+             WRITE(LOUT,
+     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
+     &     "@kdebug : after DT_SCN4BA : particle I = ", I,
+     &     " with IDHKK = ", IDHKK(I),
+     &     ", p=(",
+     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
+     &     ", ", PHKK(4,I), ")"
+           ENDIF
+         END DO
+
   101    CONTINUE
          if(IOULEV(4).GE.2 .AND. NEVHKK.LE.IOULEV(5)) then
             WRITE(*,*) 'Before DT_RESNCL:'
@@ -2935,6 +2948,20 @@ C     ENDIF
          endif
 * treatment of residual nuclei
          CALL DT_RESNCL(EPN,NLOOP,2)
+
+         DO I=NPOINT(4),NHKK
+           IF ((ABS(IDHKK(I)).EQ.421).OR.
+     &    (ABS(IDHKK(I)).EQ.4122)) THEN
+             WRITE(LOUT,
+     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
+     &     "@kdebug : after DT_RESNCL : particle I = ", I,
+     &     " with IDHKK = ", IDHKK(I),
+     &     ", p=(",
+     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
+     &     ", ", PHKK(4,I), ")"
+           ENDIF
+         END DO
+
          IF (IOULEV(1).GT.0 .AND. NEVHKK.LE.IOULEV(5))
      &        WRITE(*,*) 'NLOOP 2nd~ ', NLOOP
 
@@ -2951,6 +2978,19 @@ C     ENDIF
      &           WRITE(*,*) 'NLOOP BEFORE DT_FICONF ~ ', NLOOP
             CALL DT_FICONF(IJPROJ,IP,IPZ,IT,ITZ,NHYPER,IDHYP,NLOOP,
      &           IREJ1)
+
+            DO I=NPOINT(4),NHKK
+              IF ((ABS(IDHKK(I)).EQ.421).OR.
+     &        (ABS(IDHKK(I)).EQ.4122)) THEN
+                WRITE(LOUT,
+     &            '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
+     &            "@kdebug : after DT_F1CONF1 : particle I = ", I,
+     &            " with IDHKK = ", IDHKK(I),
+     &            ", p=(",
+     &            PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
+     &            ", ", PHKK(4,I), ")"
+              ENDIF
+            END DO
 
             !pythia model produces the event out this subroutine
             !if failed jump out directly, added by liang
