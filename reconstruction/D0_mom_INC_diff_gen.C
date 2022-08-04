@@ -41,7 +41,7 @@ void D0_mom_INC_diff_gen(const char* fout_name = "D0_mom_INC_diff.root")
         }
       }
     }
-    cout<<sys_name<<" hists filled"<<endl;
+    cout<<sys_name[isys]<<" hists filled"<<endl;
   }
 
   // save histograms

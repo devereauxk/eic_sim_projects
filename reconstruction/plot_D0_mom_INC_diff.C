@@ -180,17 +180,26 @@ void overlay_hists(const char* out_dir = "./")
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
     htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
-    htemp.GetYaxis()->SetTitle("N^{D^0}_{INC on} - N^{D^0}_{INC off}");
+    htemp.GetYaxis()->SetTitle("N^{D^0}");
     myhset(&htemp,1.2,1.6,0.05,0.05);
+
+    TLegend leg(0.55,0.66,0.84,0.82);
+    leg.SetBorderSize(0);
+    leg.SetTextSize(0.03);
+    leg.SetFillStyle(0);
+    leg.SetMargin(0.1);
 
     D0_p_diff->SetMarkerColor(kRed);
     D0_p_diff->SetLineColor(kRed);
     D0_p_diff->Draw("hsame");
+    leg.AddEntry(D0_p_diff,Form("(%s) - (%s)", sys_name[0], sys_name[1]), "l");
 
     TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
     l1.SetLineStyle(7);
     l1.SetLineColor(kGray+2);
-    l1.Draw("same");
+    l1.Draw("hsame");
+
+    leg.Draw("hsame");
 
     standardLatex();
 
@@ -209,17 +218,26 @@ void overlay_hists(const char* out_dir = "./")
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
     htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
-    htemp.GetYaxis()->SetTitle("N^{D^0}_{INC on} / N^{D^0}_{INC off}");
+    htemp.GetYaxis()->SetTitle("N^{D^0} / N^{D^0}");
     myhset(&htemp,1.2,1.6,0.05,0.05);
+
+    TLegend leg(0.55,0.66,0.84,0.82);
+    leg.SetBorderSize(0);
+    leg.SetTextSize(0.03);
+    leg.SetFillStyle(0);
+    leg.SetMargin(0.1);
 
     D0_p_ratio->SetMarkerColor(kRed);
     D0_p_ratio->SetLineColor(kRed);
     D0_p_ratio->Draw("hsame");
+    leg.AddEntry(D0_p_diff,Form("(%s) / (%s)", sys_name[0], sys_name[1]), "l");
 
     TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
     l1.SetLineStyle(7);
     l1.SetLineColor(kGray+2);
-    l1.Draw("same");
+    l1.Draw("hsame");
+
+    leg.Draw("hsame");
 
     standardLatex();
 
