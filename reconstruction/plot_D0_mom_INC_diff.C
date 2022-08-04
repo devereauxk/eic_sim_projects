@@ -7,10 +7,16 @@ using namespace std;
 const int sys_bins = 2;
 const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/"};
 const char* sys_name[sys_bins] = {"e+Au INC on", "e+Au INC off"};
+const char* sys_abbr[sys_bins] = {"eAuINCon", "eAuINCff"};
 const int sys_color[sys_bins] = {kBlack, kRed};
 
 TH1D* D0_p[sys_bins] = {0};
 TH1D* D0_pt[sys_bins] = {0};
+
+TH1D* D0_p_diff;
+TH1D* D0_pt_diff;
+TH1D* D0_p_ratio;
+TH1D* D0_pt_ratio;
 
 static int cno = 0;
 
@@ -22,39 +28,11 @@ void standardLatex()
   tl->DrawLatexNDC(0.50,0.84,"Q^{2} > 10GeV^{2}, 0.05 < y < 0.8");
 }
 
-void plot_D0_mom_INC_diff()
+void individual_hists()
 {
-  mclogy(-1);
-
-  for (int isys = 0; isys < sys_bins; isys++)
+  for(int isys = 0; isys < sys_bins; isys++)
   {
-    TFile* f = new TFile(Form("%smerged.root", fin_dirs[isys]), "READ");
-
-    TTree *tree = (TTree*)f->Get("EICTree");
-    erhic::EventBeagle *event(NULL);
-    tree->SetBranchAddress("event",&event);
-
-    // initialize histograms
-    D0_p[isys] = new TH1D(Form("D0_p_%d", isys), Form("D0_p_%d", isys), 100, 0, 50);
-    D0_pt[isys] = new TH1D(Form("D0_pt_%d", isys), Form("D0_pt_%d", isys), 100, 0, 10);
-
-    // fill histograms
-    for(int ievt = 0; ievt < tree->GetEntries(); ievt++)
-    {
-      tree->GetEntry(ievt);
-      for(int ipart = 0; ipart < event->GetNTracks(); ipart++)
-      {
-        erhic::ParticleMC* part = event->GetTrack(ipart);
-        if (abs(part->Id()) == 421)
-        {
-          D0_p[isys]->Fill(part->GetP());
-          D0_pt[isys]->Fill(part->GetPt());
-        }
-      }
-    }
-
-    // print histograms
-    mclogy(cno++);
+    mclogy(cno++); // p
     {
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 30;
@@ -65,7 +43,7 @@ void plot_D0_mom_INC_diff()
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
       htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
-      htemp.GetYaxis()->SetTitle("normalized counts");
+      htemp.GetYaxis()->SetTitle("counts");
       myhset(&htemp,1.2,1.6,0.05,0.05);
 
       TLegend leg(0.55,0.66,0.84,0.82);
@@ -83,9 +61,9 @@ void plot_D0_mom_INC_diff()
 
       standardLatex();
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p_Au_logy_noscale.pdf\")", cno-1, fin_dirs[isys]) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p_logy.pdf\")", cno-1, fin_dirs[isys]) );
     }
-    mclogy(cno++);
+    mclogy(cno++); // pt
     {
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 6;
@@ -96,7 +74,7 @@ void plot_D0_mom_INC_diff()
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
       htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T} [GeV]");
-      htemp.GetYaxis()->SetTitle("normalized counts");
+      htemp.GetYaxis()->SetTitle("counts");
       myhset(&htemp,1.2,1.6,0.05,0.05);
 
       TLegend leg(0.55,0.66,0.84,0.82);
@@ -114,20 +92,14 @@ void plot_D0_mom_INC_diff()
 
       standardLatex();
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_pt_Au_logy_noscale.pdf\")", cno-1, fin_dirs[isys]) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_pt_logy.pdf\")", cno-1, fin_dirs[isys]) );
     }
-
   }
+}
 
-  // normalize histograms to have same integral as isys ones
-  //for(int isys = 1; isys < sys_bins; isys++)
-  //{
-  //  D0_p[isys]->Scale(D0_p[0]->Integral() / D0_p[isys]->Integral());
-  //  D0_pt[isys]->Scale(D0_pt[0]->Integral() / D0_pt[isys]->Integral());
-  //}
-
-  // print compare histograms
-  mclogy(cno++);
+void overlay_hists(const char* out_dir = "./")
+{
+  mclogy(cno++); // p
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 30;
@@ -159,9 +131,9 @@ void plot_D0_mom_INC_diff()
 
     standardLatex();
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"D0_p_diff_Au_logy_noscale.pdf\")", cno-1) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p_diff_logy_noscale.pdf\")", cno-1, out_dir) );
   }
-  mclogy(cno++);
+  mclogy(cno++); // pt
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 6;
@@ -193,7 +165,114 @@ void plot_D0_mom_INC_diff()
 
     standardLatex();
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"D0_pt_diff_Au_logy_noscale.pdf\")", cno-1) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_pt_diff_logy_noscale.pdf\")", cno-1, out_dir) );
   }
+
+  // difference hists
+  mcs(cno++); // p
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 30;
+
+    float plot_yrange_lo = -3000;
+    float plot_yrange_hi = 3000;
+
+    TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp.Draw();
+    htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
+    htemp.GetYaxis()->SetTitle("N^{D^0}_{INC on} - N^{D^0}_{INC off}");
+    myhset(&htemp,1.2,1.6,0.05,0.05);
+
+    D0_p_diff->SetMarkerColor(kRed);
+    D0_p_diff->SetLineColor(kRed);
+    D0_p_diff->Draw("hsame");
+
+    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
+
+    standardLatex();
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p_diff.pdf\")", cno-1, out_dir) );
+  }
+
+  // ratio hists
+  mcs(cno++); // p
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 30;
+
+    float plot_yrange_lo = 0.5;
+    float plot_yrange_hi = 1.5;
+
+    TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp.Draw();
+    htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
+    htemp.GetYaxis()->SetTitle("N^{D^0}_{INC on} / N^{D^0}_{INC off}");
+    myhset(&htemp,1.2,1.6,0.05,0.05);
+
+    D0_p_ratio->SetMarkerColor(kRed);
+    D0_p_ratio->SetLineColor(kRed);
+    D0_p_ratio->Draw("hsame");
+
+    TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
+
+    standardLatex();
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sD0_p_ratio.pdf\")", cno-1, out_dir) );
+  }
+
+}
+
+void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.C", const char* overlay_out_dir = "./")
+{
+  mclogy(-1);
+
+  // load histograms
+  TFile* fin = new TFile(fin_name, "READ");
+
+  for(int isys = 0; isys < sys_bins; isys++)
+  {
+    D0_p[isys] = (TH1D*) fin->Get(Form("h1d_D0_p_%s", sys_abbr[isys]));
+    D0_p[isys]->SetName(Form("h1d_D0_p_%s", sys_abbr[isys]));
+
+    D0_pt[isys] = (TH1D*) fin->Get(Form("h1d_D0_pt_%s", sys_abbr[isys]));
+    D0_pt[isys]->SetName(Form("h1d_D0_pt_%s", sys_abbr[isys]));
+  }
+
+  // print histograms for individual systems
+  individual_hists();
+
+  //normalize histograms
+  // TODO
+
+  //generate diff and ratio hists
+  // p
+  TH1D* D0_p_INCOn_clone1 = D0_p[0]->Clone("D0_p_INCOn_clone1");
+  TH1D* D0_p_INCOn_clone2 = D0_p[0]->Clone("D0_p_INCOn_clone2");
+  D0_p_diff = (TH1D*) D0_p_INCOn_clone1->Add(D0_p[1], -1);
+  D0_p_diff->SetName("D0_p_diff");
+  D0_p_ratio = (TH1D*) D0_p_INCOn_clone2->Divide(D0_p[1]);
+  D0_p_ratio->SetName("D0_p_ratio");
+
+  //pt TODO
+
+  // normalize histograms to have same integral as isys ones
+  /*
+  for(int isys = 1; isys < sys_bins; isys++)
+  {
+    D0_p[isys]->Scale(D0_p[0]->Integral() / D0_p[isys]->Integral());
+    D0_pt[isys]->Scale(D0_pt[0]->Integral() / D0_pt[isys]->Integral());
+  }
+  */
+
+
+  // print overlayed histograms for all systems
+  overlay_hists(overlay_out_dir);
+
 
 }
