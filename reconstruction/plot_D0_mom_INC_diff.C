@@ -246,7 +246,7 @@ void overlay_hists(const char* out_dir = "./")
 
 }
 
-void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.C", const char* overlay_out_dir = "./")
+void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.root", const char* overlay_out_dir = "./")
 {
   mclogy(-1);
 
@@ -270,12 +270,10 @@ void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.C", const char
 
   //generate diff and ratio hists
   // p
-  TH1D* D0_p_INCOn_clone1 = (TH1D*) D0_p[0]->Clone("D0_p_INCOn_clone1");
-  TH1D* D0_p_INCOn_clone2 = (TH1D*) D0_p[0]->Clone("D0_p_INCOn_clone2");
-  D0_p_diff = (TH1D*) D0_p_INCOn_clone1->Add(D0_p[1], -1);
-  D0_p_diff->SetName("D0_p_diff");
-  D0_p_ratio = (TH1D*) D0_p_INCOn_clone2->Divide(D0_p[1]);
-  D0_p_ratio->SetName("D0_p_ratio");
+  TH1D* D0_p_diff = (TH1D*) D0_p[0]->Clone("D0_p_diff");
+  D0_p_diff->Add(D0_p[1], -1);
+  TH1D* D0_p_ratio = (TH1D*) D0_p[0]->Clone("D0_p_ratio");
+  D0_p_ratio->Divide(D0_p[1]);
 
   //pt TODO
 
