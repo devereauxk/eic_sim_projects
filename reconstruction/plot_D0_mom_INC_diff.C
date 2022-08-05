@@ -348,7 +348,7 @@ void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.root", const c
   D0_p_ratio->Divide(D0_p[1]);
 
   // pt
-  D0_p_diff = (TH1D*) D0_pt[0]->Clone("D0_pt_diff");
+  D0_pt_diff = (TH1D*) D0_pt[0]->Clone("D0_pt_diff");
   D0_pt_diff->Add(D0_pt[1], -1);
   D0_pt_ratio = (TH1D*) D0_pt[0]->Clone("D0_pt_ratio");
   D0_pt_ratio->Divide(D0_pt[1]);
