@@ -2884,8 +2884,7 @@ C     ENDIF
          endif
 
          DO I=NPOINT(4),NHKK
-           IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &    (ABS(IDHKK(I)).EQ.4122)) THEN
+           IF (ABS(IDHKK(I)).EQ.421) THEN
              WRITE(LOUT,
      &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
      &     "@kdebug : after DT_KKEVNT : particle I = ", I,
@@ -2911,8 +2910,7 @@ C     ENDIF
          endif
 
          DO I=NPOINT(4),NHKK
-           IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &    (ABS(IDHKK(I)).EQ.4122)) THEN
+           IF (ABS(IDHKK(I)).EQ.421) THEN
              WRITE(LOUT,
      &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
      &     "@kdebug : after DT_FOZOCA : particle I = ", I,
@@ -2980,8 +2978,7 @@ C     ENDIF
      &           IREJ1)
 
             DO I=NPOINT(4),NHKK
-              IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &        (ABS(IDHKK(I)).EQ.4122)) THEN
+              IF (ABS(IDHKK(I)).EQ.421) THEN
                 WRITE(LOUT,
      &            '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
      &            "@kdebug : after DT_F1CONF1 : particle I = ", I,
@@ -3011,8 +3008,7 @@ C Use old DPMJET logic for GCF-QE
          ENDIF
 
          DO I=NPOINT(4),NHKK
-           IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &    (ABS(IDHKK(I)).EQ.4122)) THEN
+           IF (ABS(IDHKK(I)).EQ.421) THEN
              WRITE(LOUT,
      &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
      &     "@kdebug : after DT_FICONF : particle I = ", I,
@@ -9815,8 +9811,7 @@ C     Exclude leptons - MDB
     4       CONTINUE
 *   "absorb" negative particle in nucleus
 
-            IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
-     &         (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+            IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
             WRITE(LOUT,'(a,I5,a,I5,a,I3)')
      &        "@kdebug : DT_ABSORP 9726 : called on particle IDXCAS = ",
      &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
@@ -10079,8 +10074,7 @@ C              ENDIF
 * 2-nucleon absorption of pion
             NSPE = 2
 
-            IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
-     &          (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+            IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
             WRITE(LOUT,'(a,I5,a,I5,a,I3)')
      &        "@kdebug : DT_ABSORP 9981 : called on particle IDXCAS = ",
      &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
@@ -10094,8 +10088,7 @@ C              ENDIF
 * sample secondary interaction
             IDNUC = IDBAM(IDXSPE(1))
 
-            IF ((ABS(IDHKK(IDXCAS)).EQ.421).OR.
-     &          (ABS(IDHKK(IDXCAS)).EQ.4122)) THEN
+            IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
             WRITE(LOUT,'(a,I5,a,I5,a,I3)')
      &        "@kdebug : DT_HADRIN : called on particle IDXCAS = ",
      &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", MODE = ",
@@ -12204,6 +12197,15 @@ C Local variable for High E* protection & LT storage
       LRCLPR = .FALSE.
       LRCLTA = .FALSE.
 
+C    @kdebug ... flags CFLAG-> >0 if there exists a D0 in the event
+C             note that this happens before it's killed important!!!
+      CFLAG = 0
+      DO I=NPOINT(4),NHKK
+        IF (ABS(IDHKK(I)).EQ.421) THEN
+          CFLAG = CFLAG+1
+        ENDIF
+      END DO
+
 * skip residual nucleus treatment if not requested or in case
 * of central collisions
       IF ((.NOT.LEVPRT).OR.(ICENTR.GT.0).OR.(ICENTR.EQ.-1)) RETURN
@@ -12371,11 +12373,25 @@ C              Boost back to naive HCMS
                IF (NLOOP.LE.500) THEN
                   IF (IOULEV(1).GT.0)
      &               WRITE(*,*) 'REJECTION FLAG ~1st GOTO 9998 ~ ',IREJ
+
+                  IF (CFLAG.GE.1) THEN
+                   WRITE(LOUT, '(a,I5,a,I5)')
+     &                 "@kdebug : in DT_FICONF : FLAG 1 : IREJ1 = ",
+     &                 IREJ1, ", IREJ = ", IREJ
+                  ENDIF
+
                   GOTO 9998
                ELSE
                   IREXCI(2) = IREXCI(2)+1
                   IF (IOULEV(1).GT.0)
      &               WRITE(*,*) 'REJECTION FLAG ~2nd GOTO 9999 ~ ',IREJ
+
+                  IF (CFLAG.GE.1) THEN
+                    WRITE(LOUT, '(a,I5,a,I5)')
+     &                 "@kdebug : in DT_FICONF : FLAG 2 : IREJ1 = ",
+     &                 IREJ1, ", IREJ = ", IREJ
+                  ENDIF
+
                   GOTO 9999
                ENDIF
 *
@@ -12445,11 +12461,25 @@ C              Boost back to naive HCMS
                IF (NLOOP.LE.500) THEN
                   IF (IOULEV(1).GT.0)
      &               WRITE(*,*) 'REJECTION FLAG ~2nd GOTO 9998 ~ ',IREJ
+
+                  IF (CFLAG.GE.1) THEN
+                     WRITE(LOUT, '(a,I5,a,I5)')
+     &                 "@kdebug : in DT_FICONF : FLAG 3 : IREJ1 = ",
+     &                 IREJ1, ", IREJ = ", IREJ
+                  ENDIF
+
                   GOTO 9998
                ELSE
                   IREXCI(2) = IREXCI(2)+1
                   IF (IOULEV(1).GT.0)
      &               WRITE(*,*) 'REJECTION FLAG ~3rd GOTO 9999 ~ ',IREJ
+
+                  IF (CFLAG.GE.1) THEN
+                     WRITE(LOUT, '(a,I5,a,I5)')
+     &                 "@kdebug : in DT_FICONF : FLAG 4 : IREJ1 = ",
+     &                 IREJ1, ", IREJ = ", IREJ
+                  ENDIF
+
                   GOTO 9999
                ENDIF
 *
@@ -12554,17 +12584,10 @@ C                     REDORI = ONE / ( FRMRDC )**(2.D+00/3.D+00)
             XM2 = AMRCL(2)
             CALL DT_MASHEL(P1IN,P2IN,XM1,XM2,P1OUT,P2OUT,IREJ1)
 
-            CFLAG = 0
-            DO I=NPOINT(4),NHKK
-              IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &           (ABS(IDHKK(I)).EQ.4122)) THEN
-                CFLAG = CFLAG+1
-              ENDIF
-            END DO
             IF (CFLAG.GE.1) THEN
               WRITE(LOUT, '(a,I5,a,I5)')
-     &        "@kdebug : after DT_MASHEL : IREJ1 = ", IREJ1,
-     &        ", IREJ = ", IREJ
+     &        "@kdebug : in DT_FICONF : FLAG 5 : IREJ1 = ",
+     &        IREJ1, ", IREJ = ", IREJ
             ENDIF
 
             IF (IREJ1.GT.0) THEN
@@ -12593,6 +12616,13 @@ C                     REDORI = ONE / ( FRMRDC )**(2.D+00/3.D+00)
             IF (NLOOP.LE.500) THEN
                IF (IOULEV(1).GT.0)
      &              WRITE(*,*) 'REJECTION FLAG ~3rd GOTO 9998 ~ ',IREJ
+
+               IF (CFLAG.GE.1) THEN
+                 WRITE(LOUT, '(a,I5,a,I5)')
+     &              "@kdebug : in DT_FICONF : FLAG 6 : IREJ1 = ",
+     &              IREJ1, ", IREJ = ", IREJ
+               ENDIF
+
                GOTO 9998
             ELSE
                IREXCI(1) = IREXCI(1)+1
@@ -12713,17 +12743,10 @@ C                  PZRES = PZRES*PTRES/PTOLD
                   MO = NHKK
                   CALL DT_EVA2HE(MO,EXCITF,I,IREJ1)
 
-                  CFLAG = 0
-                  DO IC=NPOINT(4),NHKK
-                    IF ((ABS(IDHKK(IC)).EQ.421).OR.
-     &                  (ABS(IDHKK(IC)).EQ.4122)) THEN
-                      CFLAG = CFLAG+1
-                    ENDIF
-                  END DO
                   IF (CFLAG.GE.1) THEN
                     WRITE(LOUT, '(a,I5,a,I5)')
-     &            "@kdebug : after DT_EVA2HE : IREJ1 = ", IREJ1,
-     &            ", IREJ = ", IREJ
+     &            "@kdebug : in DT_FICONF : FLAG 7 : IREJ1 = ",
+     &            IREJ1, ", IREJ = ", IREJ
                   ENDIF
 
                ENDIF
@@ -12739,11 +12762,24 @@ C9998 IREXCI(1) = IREXCI(1)+1
  9998 IREJ   = IREJ+1
       IF (IOULEV(1).GT.0) WRITE(*,*) 'REJECTION FLAG 1 ~ ',IREJ
 
+      IF (CFLAG.GE.1) THEN
+        WRITE(LOUT, '(a,I5,a,I5)')
+     &     "@kdebug : in DT_FICONF : FLAG 8 : IREJ1 = ",
+     &     IREJ1, ", IREJ = ", IREJ
+      ENDIF
+
  9999 CONTINUE
       LRCLPR = .TRUE.
       LRCLTA = .TRUE.
       IREJ   = IREJ+1
       IF (IOULEV(1).GT.0) WRITE(*,*) 'REJECTION FLAG 2 ~ ',IREJ
+
+      IF (CFLAG.GE.1) THEN
+        WRITE(LOUT, '(a,I5,a,I5)')
+     &     "@kdebug : in DT_FICONF : FLAG 9 : IREJ1 = ",
+     &     IREJ1, ", IREJ = ", IREJ
+      ENDIF
+
       RETURN
       END
 
