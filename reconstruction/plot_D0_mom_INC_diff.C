@@ -174,8 +174,8 @@ void overlay_hists(const char* out_dir = "./", const char* label = "e+Au, 1E4 ev
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 30;
 
-    float plot_yrange_lo = -2000;
-    float plot_yrange_hi = 4000;
+    float plot_yrange_lo = -4000;
+    float plot_yrange_hi = 2000;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
