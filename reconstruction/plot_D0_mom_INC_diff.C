@@ -284,12 +284,12 @@ void overlay_hists(const char* out_dir = "./", const char* label = "e+Au, 1E4 ev
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 6;
 
-    float plot_yrange_lo = 0.5;
-    float plot_yrange_hi = 1.5;
+    float plot_yrange_lo = 0.25;
+    float plot_yrange_hi = 1.25;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
-    htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
+    htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T} [GeV]");
     htemp.GetYaxis()->SetTitle("N^{D^{0}}_{INC on} / N^{D^{0}}_{INC off}");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
