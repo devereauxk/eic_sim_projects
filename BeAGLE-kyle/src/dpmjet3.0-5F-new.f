@@ -2927,18 +2927,18 @@ C     ENDIF
 * excited nucleons (ISTHKK=15,16)
          CALL DT_SCN4BA
 
-         DO I=NPOINT(4),NHKK
-           IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &    (ABS(IDHKK(I)).EQ.4122)) THEN
-             WRITE(LOUT,
-     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
-     &     "@kdebug : after DT_SCN4BA : particle I = ", I,
-     &     " with IDHKK = ", IDHKK(I),
-     &     ", p=(",
-     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
-     &     ", ", PHKK(4,I), ")"
-           ENDIF
-         END DO
+*         DO I=NPOINT(4),NHKK
+*           IF ((ABS(IDHKK(I)).EQ.421).OR.
+*     &    (ABS(IDHKK(I)).EQ.4122)) THEN
+*             WRITE(LOUT,
+*     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
+*     &     "@kdebug : after DT_SCN4BA : particle I = ", I,
+*     &     " with IDHKK = ", IDHKK(I),
+*     &     ", p=(",
+*     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
+*     &     ", ", PHKK(4,I), ")"
+*           ENDIF
+*         END DO
 
   101    CONTINUE
          if(IOULEV(4).GE.2 .AND. NEVHKK.LE.IOULEV(5)) then
@@ -2949,18 +2949,18 @@ C     ENDIF
 * treatment of residual nuclei
          CALL DT_RESNCL(EPN,NLOOP,2)
 
-         DO I=NPOINT(4),NHKK
-           IF ((ABS(IDHKK(I)).EQ.421).OR.
-     &    (ABS(IDHKK(I)).EQ.4122)) THEN
-             WRITE(LOUT,
-     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
-     &     "@kdebug : after DT_RESNCL : particle I = ", I,
-     &     " with IDHKK = ", IDHKK(I),
-     &     ", p=(",
-     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
-     &     ", ", PHKK(4,I), ")"
-           ENDIF
-         END DO
+*         DO I=NPOINT(4),NHKK
+*           IF ((ABS(IDHKK(I)).EQ.421).OR.
+*     &    (ABS(IDHKK(I)).EQ.4122)) THEN
+*             WRITE(LOUT,
+*     &        '(a,I5,a,I5,a,E12.6,a,E12.6,a,E12.6,a,E12.6,a)')
+*     &     "@kdebug : after DT_RESNCL : particle I = ", I,
+*     &     " with IDHKK = ", IDHKK(I),
+*     &     ", p=(",
+*     &     PHKK(1,I), ", ", PHKK(2,I), ", ", PHKK(3,I),
+*     &     ", ", PHKK(4,I), ")"
+*           ENDIF
+*         END DO
 
          IF (IOULEV(1).GT.0 .AND. NEVHKK.LE.IOULEV(5))
      &        WRITE(*,*) 'NLOOP 2nd~ ', NLOOP
@@ -12553,6 +12553,20 @@ C                     REDORI = ONE / ( FRMRDC )**(2.D+00/3.D+00)
             XM1 = AMRCL(1)
             XM2 = AMRCL(2)
             CALL DT_MASHEL(P1IN,P2IN,XM1,XM2,P1OUT,P2OUT,IREJ1)
+
+            CFLAG = 0
+            DO I=NPOINT(4),NHKK
+              IF ((ABS(IDHKK(I)).EQ.421).OR.
+     &           (ABS(IDHKK(I)).EQ.4122)) THEN
+                CFLAG = CFLAG+1
+              ENDIF
+            END DO
+            IF (CFLAG.GE.1) THEN
+              WRITE(LOUT, '(a,I5,a,I5)')
+     &        "@kdebug : after DT_MASHEL : IREJ1 = ", IREJ1,
+     &        ", IREJ = ", IREJ
+            ENDIF
+
             IF (IREJ1.GT.0) THEN
                WRITE(LOUT,*) 'ficonf-mashel rejection'
                WRITE(*,*) 'REJECTION FLAG ~5th GOTO 9999 ~ ',IREJ
@@ -12698,6 +12712,20 @@ C                  PZRES = PZRES*PTRES/PTOLD
 * put evaporated particles and residual nuclei to DTEVT1
                   MO = NHKK
                   CALL DT_EVA2HE(MO,EXCITF,I,IREJ1)
+
+                  CFLAG = 0
+                  DO IC=NPOINT(4),NHKK
+                    IF ((ABS(IDHKK(IC)).EQ.421).OR.
+     &                  (ABS(IDHKK(IC)).EQ.4122)) THEN
+                      CFLAG = CFLAG+1
+                    ENDIF
+                  END DO
+                  IF (CFLAG.GE.1) THEN
+                    WRITE(LOUT, '(a,I5,a,I5)')
+     &            "@kdebug : after DT_EVA2HE : IREJ1 = ", IREJ1,
+     &            ", IREJ = ", IREJ
+                  ENDIF
+
                ENDIF
                EEXCFI(I) = EXCITF
                EXCEVA(I) = EXCEVA(I)+EXCITF
