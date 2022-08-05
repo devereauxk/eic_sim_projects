@@ -97,7 +97,7 @@ void individual_hists()
   }
 }
 
-void overlay_hists(const char* out_dir = "./", const char* label)
+void overlay_hists(const char* out_dir = "./", const char* label = "e+Au, 1E4 events")
 {
   mclogy(cno++); // p
   {
