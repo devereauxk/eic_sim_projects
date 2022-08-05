@@ -97,7 +97,7 @@ void individual_hists()
   }
 }
 
-void overlay_hists(const char* out_dir = "./")
+void overlay_hists(const char* out_dir = "./", const char* label)
 {
   mclogy(cno++); // p
   {
@@ -110,7 +110,7 @@ void overlay_hists(const char* out_dir = "./")
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
     htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
-    htemp.GetYaxis()->SetTitle("normalized counts");
+    htemp.GetYaxis()->SetTitle("N^{D^{0}}");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
     TLegend leg(0.55,0.66,0.84,0.82);
@@ -144,7 +144,7 @@ void overlay_hists(const char* out_dir = "./")
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
     htemp.GetXaxis()->SetTitle("p^{D^{0}}_{T} [GeV]");
-    htemp.GetYaxis()->SetTitle("normalized counts");
+    htemp.GetYaxis()->SetTitle("N^{D^{0}}");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
     TLegend leg(0.55,0.66,0.84,0.82);
@@ -180,7 +180,7 @@ void overlay_hists(const char* out_dir = "./")
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
     htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
-    htemp.GetYaxis()->SetTitle("N^{D^0}");
+    htemp.GetYaxis()->SetTitle("N^{D^{0}}_{INC on} - N^{D^{0}}_{INC off}");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
     TLegend leg(0.55,0.66,0.84,0.82);
@@ -192,7 +192,7 @@ void overlay_hists(const char* out_dir = "./")
     D0_p_diff->SetMarkerColor(kRed);
     D0_p_diff->SetLineColor(kRed);
     D0_p_diff->Draw("hsame");
-    leg.AddEntry(D0_p_diff,Form("(%s) - (%s)", sys_name[0], sys_name[1]), "l");
+    leg.AddEntry(D0_p_diff, label, "l");
 
     TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
     l1.SetLineStyle(7);
@@ -218,7 +218,7 @@ void overlay_hists(const char* out_dir = "./")
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw();
     htemp.GetXaxis()->SetTitle("p^{D^{0}} [GeV]");
-    htemp.GetYaxis()->SetTitle("N^{D^0} / N^{D^0}");
+    htemp.GetYaxis()->SetTitle("N^{D^{0}}_{INC on} / N^{D^{0}}_{INC off}");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
     TLegend leg(0.55,0.66,0.84,0.82);
@@ -230,7 +230,7 @@ void overlay_hists(const char* out_dir = "./")
     D0_p_ratio->SetMarkerColor(kRed);
     D0_p_ratio->SetLineColor(kRed);
     D0_p_ratio->Draw("hsame");
-    leg.AddEntry(D0_p_diff,Form("(%s) / (%s)", sys_name[0], sys_name[1]), "l");
+    leg.AddEntry(D0_p_diff, label, "l");
 
     TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
     l1.SetLineStyle(7);
@@ -246,7 +246,7 @@ void overlay_hists(const char* out_dir = "./")
 
 }
 
-void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.root", const char* overlay_out_dir = "./")
+void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.root", const char* overlay_out_dir = "./", const char* label = "e+Au, 1E4 events")
 {
   mclogy(-1);
 
@@ -288,7 +288,7 @@ void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.root", const c
 
 
   // print overlayed histograms for all systems
-  overlay_hists(overlay_out_dir);
+  overlay_hists(overlay_out_dir, label);
 
 
 }
