@@ -7,7 +7,7 @@ using namespace std;
 const int sys_bins = 4;
 const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eC_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eC_10_100_tauforOff_qhat0_nlo/outForPythiaMode/"};
 const char* sys_name[sys_bins] = {"e+Au INC on", "e+Au INC off", "e+C INC on", "e+C INC off"};
-const char* sys_abbr[sys_bins] = {"eAuINCon", "eAuINCff", "eCINCon", "eCINCoff"};
+const char* sys_abbr[sys_bins] = {"eAuINCon", "eAuINCoff", "eCINCon", "eCINCoff"};
 
 TH1D* D0_p[sys_bins] = {0};
 TH1D* D0_pt[sys_bins] = {0};
