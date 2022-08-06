@@ -11304,7 +11304,7 @@ C         PINITA(5) = AIT*AMUC12+EMVGEV*EXMSAZ(AIT,AITZ,.TRUE.,IZDUM)
 
 *------- treatment of final state
     2 CONTINUE
-
+*     @kdebug
       NLOOP = NLOOP+1
       IF (NLOOP.GT.1) SCPOT = 0.10D0
 C     WRITE(LOUT,*) 'event ',NEVHKK,NLOOP,SCPOT
@@ -12206,9 +12206,21 @@ C             note that this happens before it's killed important!!!
         ENDIF
       END DO
 
+      IF (CFLAG.GE.1) THEN
+        WRITE(LOUT, "(a,I5)")
+     &      "@kdebug : in DT_FICONF : NLOOP = ", NLOOP
+      ENDIF
+
 * skip residual nucleus treatment if not requested or in case
 * of central collisions
-      IF ((.NOT.LEVPRT).OR.(ICENTR.GT.0).OR.(ICENTR.EQ.-1)) RETURN
+      IF ((.NOT.LEVPRT).OR.(ICENTR.GT.0).OR.(ICENTR.EQ.-1)) THEN
+        IF (CFLAG.GE.1) THEN
+          WRITE(LOUT, '(a,I5,a,I5)')
+     &     "@kdebug : in DT_FICONF : FLAG 0 : IREJ1 = ",
+     &     IREJ1, ", IREJ = ", IREJ
+        ENDIF
+        RETURN
+      ENDIF
 
       DO 1 K=1,2
          IDPAR(K) = 0
@@ -12298,6 +12310,13 @@ C   MDB the meson needs to be in the naive HCMS - not the IRF!
       IF ((IP.EQ.1).AND.(NFSP.EQ.1).AND.(IDFSP.EQ.IJPROJ)) THEN
          IREXCI(3) = IREXCI(3)+1
          WRITE(*,*) 'REJECTION FLAG ~1st GOTO 9999 ~ ', IREJ
+
+         IF (CFLAG.GE.1) THEN
+           WRITE(LOUT, '(a,I5,a,I5)')
+     &         "@kdebug : in DT_FICONF : FLAG 01 : IREJ1 = ",
+     &         IREJ1, ", IREJ = ", IREJ
+         ENDIF
+
          GOTO 9999
 C        RETURN
       ENDIF
@@ -12560,6 +12579,13 @@ C                     REDORI = ONE / ( FRMRDC )**(2.D+00/3.D+00)
             WRITE(LOUT,1003) I
  1003       FORMAT(1X,'FICONF:   warning! NTOT(I)=1? (I=',I3,')')
             WRITE(*,*) 'REJECTION FLAG ~4th GOTO 9999 ~ ',IREJ
+
+            IF (CFLAG.GE.1) THEN
+              WRITE(LOUT, '(a,I5,a,I5)')
+     &         "@kdebug : in DT_FICONF : FLAG 45 : IREJ1 = ",
+     &         IREJ1, ", IREJ = ", IREJ
+            ENDIF
+
             GOTO 9999
          ELSE
             AMRCL0(I) = ZERO
@@ -12775,9 +12801,11 @@ C9998 IREXCI(1) = IREXCI(1)+1
       IF (IOULEV(1).GT.0) WRITE(*,*) 'REJECTION FLAG 2 ~ ',IREJ
 
       IF (CFLAG.GE.1) THEN
-        WRITE(LOUT, '(a,I5,a,I5)')
+        WRITE(LOUT, '(a,I5,a,I5,a,I5,a,I5,a,I5)')
      &     "@kdebug : in DT_FICONF : FLAG 9 : IREJ1 = ",
-     &     IREJ1, ", IREJ = ", IREJ
+     &     IREJ1, ", IREJ = ", IREJ,
+     &     ", ICOR = ", ICOR, ", INORCL = ", INORCL,
+     &     ", NLOOP = ", NLOOP
       ENDIF
 
       RETURN
