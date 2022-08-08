@@ -12629,30 +12629,30 @@ C                     REDORI = ONE / ( FRMRDC )**(2.D+00/3.D+00)
    10       CONTINUE
             PRCLPR(5) = AMRCL(1)
             PRCLTA(5) = AMRCL(2)
-         ELSE
-            IF (IOULEV(3).GT.0)
-     &      WRITE(LOUT,1001) NEVHKK,INT(AIF(1)),INT(AIZF(1)),
-     &                       INT(AIF(2)),INT(AIZF(2)),AMRCL0(1),
-     &                       AMRCL(1),AMRCL(1)-AMRCL0(1),AMRCL0(2),
-     &                       AMRCL(2),AMRCL(2)-AMRCL0(2)
- 1001       FORMAT(1X,'FICONF:   warning! no residual nucleus for',
-     &             ' correction',/,11X,'at event',I8,
-     &             ',  nucleon config. 1:',2I4,' 2:',2I4,
-     &             2(/,11X,3E12.3))
-            IF (NLOOP.LE.500) THEN
-               IF (IOULEV(1).GT.0)
-     &              WRITE(*,*) 'REJECTION FLAG ~3rd GOTO 9998 ~ ',IREJ
-
-               IF (CFLAG.GE.1) THEN
-                 WRITE(LOUT, '(a,I5,a,I5)')
-     &              "@kdebug : in DT_FICONF : FLAG 6 : IREJ1 = ",
-     &              IREJ1, ", IREJ = ", IREJ
-               ENDIF
-
-               GOTO 9998
-            ELSE
-               IREXCI(1) = IREXCI(1)+1
-            ENDIF
+*         ELSE
+*            IF (IOULEV(3).GT.0)
+*     &      WRITE(LOUT,1001) NEVHKK,INT(AIF(1)),INT(AIZF(1)),
+*     &                       INT(AIF(2)),INT(AIZF(2)),AMRCL0(1),
+*     &                       AMRCL(1),AMRCL(1)-AMRCL0(1),AMRCL0(2),
+*     &                       AMRCL(2),AMRCL(2)-AMRCL0(2)
+* 1001       FORMAT(1X,'FICONF:   warning! no residual nucleus for',
+*     &             ' correction',/,11X,'at event',I8,
+*     &             ',  nucleon config. 1:',2I4,' 2:',2I4,
+*     &             2(/,11X,3E12.3))
+*            IF (NLOOP.LE.500) THEN
+*               IF (IOULEV(1).GT.0)
+*     &              WRITE(*,*) 'REJECTION FLAG ~3rd GOTO 9998 ~ ',IREJ
+*
+*               IF (CFLAG.GE.1) THEN
+*                 WRITE(LOUT, '(a,I5,a,I5)')
+*     &              "@kdebug : in DT_FICONF : FLAG 6 : IREJ1 = ",
+*     &              IREJ1, ", IREJ = ", IREJ
+*               ENDIF
+*
+*               GOTO 9998
+*            ELSE
+*               IREXCI(1) = IREXCI(1)+1
+*            ENDIF
          ENDIF
       ENDIF
 
