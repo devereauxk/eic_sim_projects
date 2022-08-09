@@ -12223,7 +12223,7 @@ C             note that this happens before it's killed important!!!
       ENDIF
 
 *     @kdebug
-      DIMENSION NM(2)
+      INTEGER, DIMENSION(2) :: NM
 
       DO 1 K=1,2
          IDPAR(K) = 0
