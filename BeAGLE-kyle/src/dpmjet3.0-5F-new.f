@@ -12141,6 +12141,9 @@ C     IF (AFERT.GT.0.85D0) AFERT = 0.85D0
      &                NTOT(2),NPRO(2),NN(2),NH(2),NHPOS(2),NQ(2),
      &                NTOTFI(2),NPROFI(2)
 
+*     @kdebug
+      INTEGER, DIMENSION(2) :: NM
+
 * statistics: residual nuclei
       COMMON /DTSTA2/ EXCDPM(4),EXCEVA(2),
      &                NINCGE,NINCCO(2,3),NINCHR(2,2),NINCWO(2),
@@ -12221,9 +12224,6 @@ C             note that this happens before it's killed important!!!
         ENDIF
         RETURN
       ENDIF
-
-*     @kdebug
-      INTEGER, DIMENSION(2) :: NM
 
       DO 1 K=1,2
          IDPAR(K) = 0
