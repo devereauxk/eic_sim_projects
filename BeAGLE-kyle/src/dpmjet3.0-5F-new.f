@@ -12669,11 +12669,13 @@ C                     REDORI = ONE / ( FRMRDC )**(2.D+00/3.D+00)
      &              IREJ1, ", IREJ = ", IREJ
                ENDIF
                IF (CFLAG.GE.1) THEN
+                 DO I=1,2
                  WRITE(LOUT, "(a,I5,a,I5,a,I5,a,I5,a,I5,a,I5,a,I5)")
      &        "@kdebug : in DT_FICONF : nucleus I = ", I,
      &        " info : NTOT = ", NTOT(I), ", NQ = ", NQ(I),
      &        ", NPRO = ", NPRO(I), ", NN = ", NN(I),
      &        ", NH = ", NH(I), ", NM = ", NM(I)
+                 ENDDO
                ENDIF
 
                GOTO 9998
