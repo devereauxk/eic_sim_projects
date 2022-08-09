@@ -12356,13 +12356,13 @@ C     ENDIF
             IF (I.EQ.2) PRCL(2,K) = PRCLTA(K)
     8    CONTINUE
 
-         IF (CFLAG.GE.1) THEN
-           WRITE(LOUT, "(a,I5,a,I5,a,I5,a,I5,a,I5,a,I5,a,I5)")
-     &        "@kdebug : in DT_FICONF : nucleus I = ", I,
-     &        " info : NTOT = ", NTOT(I), ", NQ = ", NQ(I),
-     &        ", NPRO = ", NPRO(I), ", NN = ", NN(I),
-     &        ", NH = ", NH(I), ", NM = ", NM(I)
-         ENDIF
+*         IF (CFLAG.GE.1) THEN
+*           WRITE(LOUT, "(a,I5,a,I5,a,I5,a,I5,a,I5,a,I5,a,I5)")
+*     &        "@kdebug : in DT_FICONF : nucleus I = ", I,
+*     &        " info : NTOT = ", NTOT(I), ", NQ = ", NQ(I),
+*     &        ", NPRO = ", NPRO(I), ", NN = ", NN(I),
+*     &        ", NH = ", NH(I), ", NM = ", NM(I)
+*         ENDIF
 
 * mass number and charge of residual nuclei
          AIF(I)  = DBLE(NTOT(I))
@@ -12667,6 +12667,13 @@ C                     REDORI = ONE / ( FRMRDC )**(2.D+00/3.D+00)
                  WRITE(LOUT, '(a,I5,a,I5)')
      &              "@kdebug : in DT_FICONF : FLAG 6 : IREJ1 = ",
      &              IREJ1, ", IREJ = ", IREJ
+               ENDIF
+               IF (CFLAG.GE.1) THEN
+                 WRITE(LOUT, "(a,I5,a,I5,a,I5,a,I5,a,I5,a,I5,a,I5)")
+     &        "@kdebug : in DT_FICONF : nucleus I = ", I,
+     &        " info : NTOT = ", NTOT(I), ", NQ = ", NQ(I),
+     &        ", NPRO = ", NPRO(I), ", NN = ", NN(I),
+     &        ", NH = ", NH(I), ", NM = ", NM(I)
                ENDIF
 
                GOTO 9998
