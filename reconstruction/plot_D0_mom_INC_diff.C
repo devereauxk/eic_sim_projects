@@ -5,14 +5,14 @@ R__LOAD_LIBRARY(libeicsmear);
 using namespace std;
 
 const int sys_bins = 2;
-const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eC_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eC_10_100_tauforOff_qhat0_nlo/outForPythiaMode/"};
-const char* sys_name[sys_bins] = {"e+C INC on", "e+C INC off"};
-const char* sys_abbr[sys_bins] = {"eCINCon", "eCINCoff"};
+const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eAu_10_100_qhat0_nlo/outForPythiaMode/", "./BeAGLE_v102/eAu_10_100_tauforOff_qhat0_nlo/outForPythiaMode/"};
+const char* sys_name[sys_bins] = {"e+Au INC on", "e+Au INC off"};
+const char* sys_abbr[sys_bins] = {"eAuINCon", "eAuINCof"};
 const int sys_color[sys_bins] = {kBlack, kRed};
 // e+Au
-//const double sys_cross_section[sys_bins] = {3.7930063E-02, 3.5348639E-02};
+const double sys_cross_section[sys_bins] = {3.7930063E-02, 3.5348639E-02};
 // e+C
-const double sys_cross_section[sys_bins] = {3.4899661E-02, 3.7974608E-02};
+//const double sys_cross_section[sys_bins] = {3.4899661E-02, 3.7974608E-02};
 
 TH1D* D0_p[sys_bins] = {0};
 TH1D* D0_pt[sys_bins] = {0};
