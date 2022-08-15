@@ -9,6 +9,10 @@ const char* fin_dirs[sys_bins] = {"./BeAGLE_v102/eC_10_100_qhat0_nlo/outForPythi
 const char* sys_name[sys_bins] = {"e+C INC on", "e+C INC off"};
 const char* sys_abbr[sys_bins] = {"eCINCon", "eCINCoff"};
 const int sys_color[sys_bins] = {kBlack, kRed};
+// e+Au
+//const int sys_cross_section[sys_bins] = {3.7930063E-02, 3.5348639E-02};
+// e+C
+const int sys_cross_section[sys_bins] = {3.4899661E-02, 3.7974608E-02};
 
 TH1D* D0_p[sys_bins] = {0};
 TH1D* D0_pt[sys_bins] = {0};
@@ -337,8 +341,17 @@ void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.root", const c
   // print histograms for individual systems
   individual_hists();
 
-  //normalize histograms
-  // TODO
+
+  // normalize histograms st [1] has same integral as [0]
+  /*
+    D0_p[1]->Scale(D0_p[0]->Integral() / D0_p[1]->Integral());
+    D0_pt[1]->Scale(D0_pt[0]->Integral() / D0_pt[1]->Integral());
+  */
+
+  // normalize histograms st [1] is scaled to have the same cross section as [0]
+  D0_p[1]->Scale(sys_cross_section[0] / sys_cross_section[1]);
+  D0_pt[1]->Scale(sys_cross_section[0] / sys_cross_section[1]);
+
 
   //generate diff and ratio hists
   // p
@@ -352,15 +365,6 @@ void plot_D0_mom_INC_diff(const char* fin_name = "D0_mom_INC_diff.root", const c
   D0_pt_diff->Add(D0_pt[1], -1);
   D0_pt_ratio = (TH1D*) D0_pt[0]->Clone("D0_pt_ratio");
   D0_pt_ratio->Divide(D0_pt[1]);
-
-  // normalize histograms to have same integral as isys ones
-  /*
-  for(int isys = 1; isys < sys_bins; isys++)
-  {
-    D0_p[isys]->Scale(D0_p[0]->Integral() / D0_p[isys]->Integral());
-    D0_pt[isys]->Scale(D0_pt[0]->Integral() / D0_pt[isys]->Integral());
-  }
-  */
 
 
   // print overlayed histograms for all systems
