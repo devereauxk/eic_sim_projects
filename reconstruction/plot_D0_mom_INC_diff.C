@@ -10,9 +10,9 @@ const char* sys_name[sys_bins] = {"e+C INC on", "e+C INC off"};
 const char* sys_abbr[sys_bins] = {"eCINCon", "eCINCoff"};
 const int sys_color[sys_bins] = {kBlack, kRed};
 // e+Au
-//const int sys_cross_section[sys_bins] = {3.7930063E-02, 3.5348639E-02};
+//const double sys_cross_section[sys_bins] = {3.7930063E-02, 3.5348639E-02};
 // e+C
-const int sys_cross_section[sys_bins] = {3.4899661E-02, 3.7974608E-02};
+const double sys_cross_section[sys_bins] = {3.4899661E-02, 3.7974608E-02};
 
 TH1D* D0_p[sys_bins] = {0};
 TH1D* D0_pt[sys_bins] = {0};
