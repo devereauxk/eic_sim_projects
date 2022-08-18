@@ -9890,7 +9890,7 @@ C           RNCLTA = (RTARG)*FM2MM
 
                 IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
                 WRITE(LOUT,'(a,I5,a,I5,a,I3)')
-     &        "@kdebug : DT_INUCAS : FLAG 1 : called on particle IDXCAS = ",
+     &        "@kdebug : DT_INUCAS : FLAG 1 : IDXCAS = ",
      &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
      &        IDCH(IDXCAS)
                 ENDIF
@@ -9917,7 +9917,7 @@ C    &             E12.4,', above or below HADRIN-thresholds',I6)
 
             IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
             WRITE(LOUT,'(a,I5,a,I5,a,I3)')
-     &        "@kdebug : DT_INUCAS : FLAG 2 : called on particle IDXCAS = ",
+     &        "@kdebug : DT_INUCAS : FLAG 2 : IDXCAS = ",
      &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
      &        IDCH(IDXCAS)
             ENDIF
