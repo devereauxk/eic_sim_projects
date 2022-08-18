@@ -9828,6 +9828,13 @@ C     Exclude leptons - MDB
 * "normal" cascade
       IF (.NOT.LABSOR) THEN
 
+        IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
+        WRITE(LOUT,'(a,I5,a,I5,a,I3)')
+     &        "@kdebug : DT_INUCAS : FLAG 0 : IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS)
+        ENDIF
+
 *   calculate coordinates of hadron at the end of the formation zone
 *   transport-time and -step in the rest system where this step is
 *   treated
@@ -10030,7 +10037,15 @@ C                       ENDIF
     7    CONTINUE
 
 * there is no nucleon for a secondary interaction
-         IF (NSPE.EQ.0) GOTO 9997
+         IF (NSPE.EQ.0) THEN
+           IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
+           WRITE(LOUT,'(a,I5,a,I5,a,I3)')
+     &        "@kdebug : DT_INUCAS : FLAG 3 : IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS)
+           ENDIF
+           GOTO 9997
+         ENDIF
 
 C        IF ((IDCAS.EQ.13).AND.((PCAS(ICAS,4)-PCAS(ICAS,5)).LT.0.1D0))
 C    &      WRITE(LOUT,*) STOT,SELA,SABS,IDXSPE
