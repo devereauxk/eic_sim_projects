@@ -9675,10 +9675,30 @@ C9990 CONTINUE
 
 * "BAMJET-index" of this hadron
       IDCAS = IDBAM(IDXCAS)
-      IF (IDT_MCHAD(IDCAS).EQ.-1) RETURN
+      IF (IDT_MCHAD(IDCAS).EQ.-1) THEN
+
+        IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
+        WRITE(LOUT,'(a,I5,a,I5,a,I3)')
+     &        "@kdebug : DT_INUCAS : FLAG -3 : IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS)
+        ENDIF
+
+        RETURN
+      ENDIF
 
 * skip gammas, electrons, etc..
-      IF (AAM(IDCAS).LT.TINY2) RETURN
+      IF (AAM(IDCAS).LT.TINY2) THEN
+
+        IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
+        WRITE(LOUT,'(a,I5,a,I5,a,I3)')
+     &        "@kdebug : DT_INUCAS : FLAG -2 : IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS)
+        ENDIF
+
+        RETURN
+      ENDIF
 
 * Lorentz-trsf. into projectile rest system
       IF (IP.GT.1) THEN
@@ -9766,6 +9786,12 @@ C9990 CONTINUE
          WRITE(LOUT,1000) PTOCAS
  1000    FORMAT(1X,'INUCAS:   warning! zero momentum of initial',
      &          '  hadron ',/,20X,2E12.4)
+         IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
+         WRITE(LOUT,'(a,I5,a,I5,a,I3)')
+     &        "@kdebug : DT_INUCAS : FLAG -1 : IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS)
+         ENDIF
          GOTO 9999
       ENDIF
 
