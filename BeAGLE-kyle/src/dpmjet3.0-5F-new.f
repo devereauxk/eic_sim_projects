@@ -9885,8 +9885,16 @@ C           RNCLTA = (RTARG)*FM2MM
 *   with zero for hadronization products
 *   flag particles of generation 0 being outside the nuclei after
 *   formation time (to be used for excitation energy calculation)
-            IF ((IDCH(IDXCAS).EQ.0).AND.(NOBAM(IDXCAS).LT.3))
-     &         NOBAM(IDXCAS) = NOBAM(IDXCAS)+ICAS
+            IF ((IDCH(IDXCAS).EQ.0).AND.(NOBAM(IDXCAS).LT.3)) THEN
+                NOBAM(IDXCAS) = NOBAM(IDXCAS)+ICAS
+
+                IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
+                WRITE(LOUT,'(a,I5,a,I5,a,I3)')
+     &        "@kdebug : DT_INUCAS : FLAG 1 : called on particle IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS)
+                ENDIF
+
             GOTO 9997
          ENDIF
          DIST   = DLARGE
@@ -9905,6 +9913,14 @@ C1002       FORMAT(1X,'INUCAS:   warning! momentum of particle with ',
 C    &             'index ',I5,' (id: ',I3,') ',I3,/,11X,'p_tot = ',
 C    &             E12.4,', above or below HADRIN-thresholds',I6)
             NSPE = 0
+
+            IF (ABS(IDHKK(IDXCAS)).EQ.421) THEN
+            WRITE(LOUT,'(a,I5,a,I5,a,I3)')
+     &        "@kdebug : DT_INUCAS : FLAG 2 : called on particle IDXCAS = ",
+     &        IDXCAS, " with IDHKK = ", IDHKK(IDXCAS), ", IDCH = ",
+     &        IDCH(IDXCAS)
+            ENDIF
+
             GOTO 9997
          ENDIF
 

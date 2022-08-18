@@ -1,5 +1,5 @@
 EP_DIR=../reconstruction/BeAGLE_v101/ep_10_100_baseline_parp2
-EA_DIR=./eAu_10_100_qhat0_nlo_run5
+EA_DIR=./eAu_10_100_qhat0_nlo_run6
 
 
 echo "merging root eA root files..."
