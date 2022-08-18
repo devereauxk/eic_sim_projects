@@ -9895,7 +9895,8 @@ C           RNCLTA = (RTARG)*FM2MM
      &        IDCH(IDXCAS)
                 ENDIF
 
-            GOTO 9997
+                GOTO 9997
+           ENDIF
          ENDIF
          DIST   = DLARGE
          DISTP  = DLARGE
