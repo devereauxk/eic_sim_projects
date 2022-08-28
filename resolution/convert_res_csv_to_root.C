@@ -1,8 +1,8 @@
 R__LOAD_LIBRARY(libeicsmear);
 using namespace std;
 
-const double ETA_LO = -3.5;
-const double ETA_HI = 3.5;
+const double ETA_LO = -3.525;
+const double ETA_HI = 3.425;
 const int N_BINS = 141;
 
 // TH1D is inclusive on lower bin edge and exclusive on upper
@@ -35,12 +35,15 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
     gmom_res[ibin] = new TGraph(n, tree->GetV1(), tree->GetV2());
     gmom_res[ibin]->SetName(Form("gmom_res_%i", ibin));
 
-    /*
-    gdca_rphi_res[ibin] = TGraph();
+    // gdca_rphi_res
+    n = tree->Draw("Momentum:DCArPhi", Form("Eta >= %f && Eta < %f", bin_lo, bin_hi), "goff");
+    gdca_rphi_res[ibin] = new TGraph(n, tree->GetV1(), tree->GetV2());
     gdca_rphi_res[ibin]->SetName(Form("gdca_rphi_res_%i", ibin));
-    gdca_z_res[ibin] = TGraph();
+
+    //gdca_z_res
+    n = tree->Draw("Momentum:DCAz", Form("Eta >= %f && Eta < %f", bin_lo, bin_hi), "goff");
+    gdca_z_res[ibin] = new TGraph(n, tree->GetV1(), tree->GetV2());
     gdca_z_res[ibin]->SetName(Form("gdca_z_res_%i", ibin));
-    */
   }
 
 
@@ -51,6 +54,8 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   for(int ibin = 0; ibin < Res_Handler->GetNbinsX(); ibin++)
   {
     gmom_res[ibin]->Write();
+    gdca_rphi_res[ibin]->Write();
+    gdca_z_res[ibin]->Write();
   }
 
   fout->Write();
