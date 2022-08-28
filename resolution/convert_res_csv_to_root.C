@@ -2,10 +2,13 @@ R__LOAD_LIBRARY(libeicsmear);
 using namespace std;
 
 const double ETA_LO = -3.525;
-const double ETA_HI = 3.425;
+const double ETA_HI = 3.525;
 const int N_BINS = 141;
 
-// TH1D is inclusive on lower bin edge and exclusive on upper
+// using exact same setup for Res_Handler as ATHENA_resolutions_r.root. However,
+// However, for_Wenqing.csv has data only for -3 < eta < 3 instead of
+// -3.5 < eta < 3.5 as is the case with ATHEA_resolutions_r.root
+// Note: TH1D is inclusive on lower bin edge and exclusive on upper
 
 TH1F* Res_Handler = NULL;
 TGraph *gmom_res[N_BINS];
