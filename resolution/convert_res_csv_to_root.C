@@ -19,7 +19,7 @@ void convert_res_csv_to_root(const char* inFile = "for_wenqing.csv", const char*
   Res_Handler = new TH1F("Res_Handler", "Res_Handler", N_BINS, ETA_LO, ETA_HI);
 
   //setup and fill TGraphs
-  TTree* tree = TTree("tree from csv", "tree from csv");
+  TTree* tree = new TTree("tree from csv", "tree from csv");
   tree->ReadFile(inFile, "Momentum\D:Theta:Eta:Deltap-p:DCA-rPhi:DCA-z");
 
   int n;
@@ -28,7 +28,7 @@ void convert_res_csv_to_root(const char* inFile = "for_wenqing.csv", const char*
   for(int ibin = 0; ibin < Res_Handler->GetNbinsX(); ibin++)
   {
     bin_lo = Res_Handler->GetBinLowEdge(ibin);
-    bin_hi = Res_Handler->GetBinUpEdge(ibin);
+    bin_hi = bin_lo + Res_Handler->GetBinWidth(ibin);
 
     // gmom_res
     n = tree->Draw("Momentum:Deltap-p", "Eta >= bin_lo && Eta < bin_hi ", "goff");
