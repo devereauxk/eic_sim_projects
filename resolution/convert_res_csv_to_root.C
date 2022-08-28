@@ -15,7 +15,7 @@ TGraph *gmom_res[N_BINS];
 TGraph *gdca_rphi_res[N_BINS];
 TGraph *gdca_z_res[N_BINS];
 
-void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char* outFile = "resolutions.root")
+void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char* outFile = "ePIC_resolutions.root")
 {
 
   // setup Res_Handler
