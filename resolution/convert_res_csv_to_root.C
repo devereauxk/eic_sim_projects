@@ -31,7 +31,7 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
     bin_hi = bin_lo + Res_Handler->GetBinWidth(ibin);
 
     // gmom_res
-    n = tree->Draw("Momentum:Deltap-p", Form("Eta >= %d && Eta < %d", bin_lo, bin_hi), "goff"));
+    n = tree->Draw("Momentum:Deltap-p", Form("Eta >= %f && Eta < %f", bin_lo, bin_hi), "goff");
     gmom_res[ibin] = new TGraph(n, tree->GetV1(), tree->GetV2());
     gmom_res[ibin]->SetName(Form("gmom_res_%i", ibin));
 
