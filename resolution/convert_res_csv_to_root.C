@@ -12,7 +12,7 @@ TGraph *gmom_res[N_BINS];
 TGraph *gdca_rphi_res[N_BINS];
 TGraph *gdca_z_res[N_BINS];
 
-void convert_res_csv_to_root(const char* inFile = "for_wenqing.csv", const char* outFile = "resolutions.root")
+void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char* outFile = "resolutions.root")
 {
 
   // setup Res_Handler
@@ -20,7 +20,7 @@ void convert_res_csv_to_root(const char* inFile = "for_wenqing.csv", const char*
 
   //setup and fill TGraphs
   TTree* tree = new TTree("tree from csv", "tree from csv");
-  tree->ReadFile(inFile, "Momentum\D:Theta:Eta:Deltap-p:DCA-rPhi:DCA-z");
+  tree->ReadFile(inFile, "Momentum/D:Theta:Eta:Deltap-p:DCA-rPhi:DCA-z");
 
   int n;
   double bin_lo;
