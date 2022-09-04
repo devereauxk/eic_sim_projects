@@ -191,8 +191,8 @@ void plot_graph(const char* outDir)
       plot_Pythia6_ep->g_cs_vs_x_c[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_Pythia6_ep->g_cs_vs_x_c[iQ2],Form("%s, #tilde{#sigma}_{c#bar{c}}",plot_Pythia6_ep->sys_latex),"p");
 
-      plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->SetLineColor(kblue);
-      plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->SetMarkerColor(kblue);
+      plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->SetLineColor(kBlue);
+      plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->SetMarkerColor(kBlue);
       plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_Pythia6_ep->g_cs_vs_x_s[iQ2],Form("%s, #tilde{#sigma}_{s#bar{s}}",plot_Pythia6_ep->sys_latex),"p");
 
