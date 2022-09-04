@@ -167,7 +167,7 @@ void set_Q2_binning()
   }
 }
 
-void plot_graph()
+void plot_graph(const char* outDir)
 {
   mclogx(cno++);
   {
@@ -263,7 +263,7 @@ void plot_graph()
       tl->DrawLatexNDC(0.20,0.85,Form("Q^{2} = %.0f GeV^{2}",Q2_mid[iQ2]));
       // tl->DrawLatexNDC(0.20,0.80,"0.1 < y < 0.9");
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"EventCounts_charm_%d.pdf\")", cno-1, iQ2) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sEventCounts_charm_%d.pdf\")", cno-1, outDir, iQ2) );
     }
   }
 
@@ -326,7 +326,7 @@ void plot_graph()
 
 }
 
-void plot_events()
+void plot_events(const char* inFile = "hists_eventcounts_ep.root", const char* outDir = "./")
 {
   //set_charm_H1();
 
@@ -335,7 +335,7 @@ void plot_events()
   mcs(-1);
 
   // Pythia 6 e+p input
-  TFile* fin1 = new TFile("hists_eventcounts_ep.root","read");
+  TFile* fin1 = new TFile(inFile, "read");
   plot_Pythia6_ep = new PlotXsec(1);
   plot_Pythia6_ep->ReadEvtHists(fin1);
   plot_Pythia6_ep->CalculateReducedXsec();
@@ -378,5 +378,5 @@ void plot_events()
   // plot_BeAGLE_eAu->ReadEvtHists(fin4);
   // plot_BeAGLE_eAu->CalculateReducedXsec();
 
-  plot_graph();
+  plot_graph(outDir);
 }
