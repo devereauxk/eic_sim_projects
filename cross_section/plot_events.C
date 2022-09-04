@@ -1,15 +1,16 @@
-#include "charm_H1.h"
+//#include "charm_H1.h"
 #include "plot_events.h"
 using namespace std;
 unsigned int verbosity = 0;
 
 PlotXsec* plot_Pythia6_ep = NULL;
-PlotXsec* plot_Pythia6_eAu = NULL;
-PlotXsec* plot_BeAGLE_ep = NULL;
-PlotXsec* plot_BeAGLE_eAu = NULL;
+//PlotXsec* plot_Pythia6_eAu = NULL;
+//PlotXsec* plot_BeAGLE_ep = NULL;
+//PlotXsec* plot_BeAGLE_eAu = NULL;
 
 static int cno = 0;
 
+/*
 void set_charm_H1()
 {
   double display_x_err[5] = {0}; // no more than 4 x bins, so 5 should be enough
@@ -154,6 +155,7 @@ void set_charm_H1()
   g_rcs_sys_vs_x_H1_300->SetLineColor(2);
   g_rcs_sys_vs_x_H1_300->SetFillColorAlpha(2,0.3);
 }
+*/
 
 void set_Q2_binning()
 {
@@ -178,7 +180,7 @@ void plot_graph()
       TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
       htemp.Draw();
       htemp.GetXaxis()->SetTitle("x");
-      htemp.GetYaxis()->SetTitle("#tilde{#sigma}_{c#bar{c}}");
+      htemp.GetYaxis()->SetTitle("#tilde{#sigma}");
       myhset(&htemp,1.2,1.6,0.05,0.045);
 
       TLegend leg(0.48,0.65,0.9,0.87);
@@ -186,25 +188,31 @@ void plot_graph()
       leg.SetTextSize(0.035);
       leg.SetFillStyle(0);
 
-      plot_Pythia6_ep->g_cs_vs_x_c[iQ2]->Draw("cpsame"); 
-      leg.AddEntry(plot_Pythia6_ep->g_cs_vs_x_c[iQ2],plot_Pythia6_ep->sys_latex,"p");
+      plot_Pythia6_ep->g_cs_vs_x_c[iQ2]->Draw("cpsame");
+      leg.AddEntry(plot_Pythia6_ep->g_cs_vs_x_c[iQ2],Form("%s, #tilde{#sigma}_{c#bar{c}}",plot_Pythia6_ep->sys_latex),"p");
 
-      plot_Pythia6_eAu->g_cs_vs_x_c[iQ2]->SetMarkerStyle(24); 
-      plot_Pythia6_eAu->g_cs_vs_x_c[iQ2]->Draw("cpsame"); 
-      leg.AddEntry(plot_Pythia6_eAu->g_cs_vs_x_c[iQ2],plot_Pythia6_eAu->sys_latex,"p");     
+      plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->Draw("cpsame");
+      leg.AddEntry(plot_Pythia6_ep->g_cs_vs_x_s[iQ2],Form("%s, #tilde{#sigma}_{s#bar{s}}",plot_Pythia6_ep->sys_latex),"p");
 
-      plot_BeAGLE_ep->g_cs_vs_x_c[iQ2]->SetLineColor(kBlue); 
-      plot_BeAGLE_ep->g_cs_vs_x_c[iQ2]->SetMarkerColor(kBlue); 
-      plot_BeAGLE_ep->g_cs_vs_x_c[iQ2]->SetMarkerStyle(21); 
-      plot_BeAGLE_ep->g_cs_vs_x_c[iQ2]->Draw("cpsame"); 
+      /*
+      plot_Pythia6_eAu->g_cs_vs_x_c[iQ2]->SetMarkerStyle(24);
+      plot_Pythia6_eAu->g_cs_vs_x_c[iQ2]->Draw("cpsame");
+      leg.AddEntry(plot_Pythia6_eAu->g_cs_vs_x_c[iQ2],plot_Pythia6_eAu->sys_latex,"p");
+
+      plot_BeAGLE_ep->g_cs_vs_x_c[iQ2]->SetLineColor(kBlue);
+      plot_BeAGLE_ep->g_cs_vs_x_c[iQ2]->SetMarkerColor(kBlue);
+      plot_BeAGLE_ep->g_cs_vs_x_c[iQ2]->SetMarkerStyle(21);
+      plot_BeAGLE_ep->g_cs_vs_x_c[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_BeAGLE_ep->g_cs_vs_x_c[iQ2],plot_BeAGLE_ep->sys_latex,"p");
 
-      plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2]->SetLineColor(kBlue); 
-      plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2]->SetMarkerColor(kBlue); 
-      plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2]->SetMarkerStyle(25); 
-      plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2]->Draw("cpsame"); 
+      plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2]->SetLineColor(kBlue);
+      plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2]->SetMarkerColor(kBlue);
+      plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2]->SetMarkerStyle(25);
+      plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2],plot_BeAGLE_eAu->sys_latex,"p");
+      */
 
+      /*
       if (iQ2==0)
       {
         g_rcs_sys_vs_x_H1_12->Draw("samee2");
@@ -242,6 +250,7 @@ void plot_graph()
       }
 
       leg.AddEntry(g_rcs_stat_vs_x_H1_12,"H1","p");
+      */
 
       leg.Draw("same");
 
@@ -258,6 +267,7 @@ void plot_graph()
     }
   }
 
+  /*
   mclogx(cno++);
   {
     float plot_xrange_lo = 1E-3;
@@ -277,23 +287,23 @@ void plot_graph()
       leg.SetTextSize(0.035);
       leg.SetFillStyle(0);
 
-      plot_Pythia6_ep->g_cs_vs_x_e[iQ2]->Draw("cpsame"); 
+      plot_Pythia6_ep->g_cs_vs_x_e[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_Pythia6_ep->g_cs_vs_x_e[iQ2],plot_Pythia6_ep->sys_latex,"p");
 
-      plot_Pythia6_eAu->g_cs_vs_x_e[iQ2]->SetMarkerStyle(24); 
-      plot_Pythia6_eAu->g_cs_vs_x_e[iQ2]->Draw("cpsame"); 
-      leg.AddEntry(plot_Pythia6_eAu->g_cs_vs_x_e[iQ2],plot_Pythia6_eAu->sys_latex,"p");     
+      plot_Pythia6_eAu->g_cs_vs_x_e[iQ2]->SetMarkerStyle(24);
+      plot_Pythia6_eAu->g_cs_vs_x_e[iQ2]->Draw("cpsame");
+      leg.AddEntry(plot_Pythia6_eAu->g_cs_vs_x_e[iQ2],plot_Pythia6_eAu->sys_latex,"p");
 
-      plot_BeAGLE_ep->g_cs_vs_x_e[iQ2]->SetLineColor(kBlue); 
-      plot_BeAGLE_ep->g_cs_vs_x_e[iQ2]->SetMarkerColor(kBlue); 
-      plot_BeAGLE_ep->g_cs_vs_x_e[iQ2]->SetMarkerStyle(21); 
-      plot_BeAGLE_ep->g_cs_vs_x_e[iQ2]->Draw("cpsame"); 
+      plot_BeAGLE_ep->g_cs_vs_x_e[iQ2]->SetLineColor(kBlue);
+      plot_BeAGLE_ep->g_cs_vs_x_e[iQ2]->SetMarkerColor(kBlue);
+      plot_BeAGLE_ep->g_cs_vs_x_e[iQ2]->SetMarkerStyle(21);
+      plot_BeAGLE_ep->g_cs_vs_x_e[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_BeAGLE_ep->g_cs_vs_x_e[iQ2],plot_BeAGLE_ep->sys_latex,"p");
 
-      plot_BeAGLE_eAu->g_cs_vs_x_e[iQ2]->SetLineColor(kBlue); 
-      plot_BeAGLE_eAu->g_cs_vs_x_e[iQ2]->SetMarkerColor(kBlue); 
-      plot_BeAGLE_eAu->g_cs_vs_x_e[iQ2]->SetMarkerStyle(25); 
-      plot_BeAGLE_eAu->g_cs_vs_x_e[iQ2]->Draw("cpsame"); 
+      plot_BeAGLE_eAu->g_cs_vs_x_e[iQ2]->SetLineColor(kBlue);
+      plot_BeAGLE_eAu->g_cs_vs_x_e[iQ2]->SetMarkerColor(kBlue);
+      plot_BeAGLE_eAu->g_cs_vs_x_e[iQ2]->SetMarkerStyle(25);
+      plot_BeAGLE_eAu->g_cs_vs_x_e[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_BeAGLE_eAu->g_cs_vs_x_c[iQ2],plot_BeAGLE_eAu->sys_latex,"p");
 
 
@@ -311,27 +321,30 @@ void plot_graph()
       gROOT->ProcessLine( Form("cc%d->Print(\"EventCounts_incl_%d.pdf\")", cno-1, iQ2) );
     }
   }
+  */
+
+
 }
- 
+
 void plot_events()
 {
-  set_charm_H1();
+  //set_charm_H1();
 
   set_Q2_binning();
 
   mcs(-1);
 
-  // Pythia 6 e+p input 
-  TFile* fin1 = new TFile("hists_nevt_Pythia6_ep.root","read");
+  // Pythia 6 e+p input
+  TFile* fin1 = new TFile("hists_eventcounts_ep.root","read");
   plot_Pythia6_ep = new PlotXsec(1);
   plot_Pythia6_ep->ReadEvtHists(fin1);
   plot_Pythia6_ep->CalculateReducedXsec();
 
-  // Pythia 6 e+Au input 
-  TFile* fin2 = new TFile("hists_nevt_Pythia6_eAu.root","read");
-  plot_Pythia6_eAu = new PlotXsec(2);
-  plot_Pythia6_eAu->ReadEvtHists(fin2);
-  plot_Pythia6_eAu->CalculateReducedXsec();
+  // Pythia 6 e+Au input
+  // TFile* fin2 = new TFile("hists_nevt_Pythia6_eAu.root","read");
+  // plot_Pythia6_eAu = new PlotXsec(2);
+  // plot_Pythia6_eAu->ReadEvtHists(fin2);
+  // plot_Pythia6_eAu->CalculateReducedXsec();
 
   // TFile* fin2 = new TFile("hists_nevt_Pythia6_eAu_10042.root","read");
   // plot_Pythia6_eAu = new PlotXsec(5);
@@ -342,12 +355,12 @@ void plot_events()
   // plot_Pythia6_eAu = new PlotXsec(7);
   // plot_Pythia6_eAu->ReadEvtHists(fin2);
   // plot_Pythia6_eAu->CalculateReducedXsec();
- 
+
   // BeAGLE e+p input
-  TFile* fin3 = new TFile("hists_nevt_BeAGLE_ep.root","read");
-  plot_BeAGLE_ep = new PlotXsec(3);
-  plot_BeAGLE_ep->ReadEvtHists(fin3);
-  plot_BeAGLE_ep->CalculateReducedXsec();
+  // TFile* fin3 = new TFile("hists_nevt_BeAGLE_ep.root","read");
+  // plot_BeAGLE_ep = new PlotXsec(3);
+  // plot_BeAGLE_ep->ReadEvtHists(fin3);
+  // plot_BeAGLE_ep->CalculateReducedXsec();
 
   // BeAGLE e+Au input
   // TFile* fin4 = new TFile("hists_nevt_BeAGLE_INCoff_NLO_eAu.root","read");
@@ -360,10 +373,10 @@ void plot_events()
   // plot_BeAGLE_eAu->ReadEvtHists(fin4);
   // plot_BeAGLE_eAu->CalculateReducedXsec();
 
-  TFile* fin4 = new TFile("hists_nevt_BeAGLE_eAu.root","read");
-  plot_BeAGLE_eAu = new PlotXsec(4);
-  plot_BeAGLE_eAu->ReadEvtHists(fin4);
-  plot_BeAGLE_eAu->CalculateReducedXsec();
+  // TFile* fin4 = new TFile("hists_nevt_BeAGLE_eAu.root","read");
+  // plot_BeAGLE_eAu = new PlotXsec(4);
+  // plot_BeAGLE_eAu->ReadEvtHists(fin4);
+  // plot_BeAGLE_eAu->CalculateReducedXsec();
 
   plot_graph();
 }

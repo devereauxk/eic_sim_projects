@@ -19,6 +19,7 @@ double edgesx[xbin+1] = {0};
 
 TH1D* h1d_x_e[Q2bin] = {0}; // inclusive events
 TH1D* h1d_x_c[Q2bin] = {0}; // events with charm
+TH1D* h1d_x_s[Q2bin] = {0}; // events with strange
 
 const int verbosity = 0;
 
@@ -36,7 +37,7 @@ void set_x_binning()
 {
   double log_bw = (log10(x_max) - log10(x_min))/xbin;
   double log_lo,log_hi;
-  
+
   for(int ibin = 0; ibin < xbin; ibin++)
   {
     log_lo = log10(x_min) + (ibin*log_bw);
@@ -87,9 +88,47 @@ bool event_w_charm(erhic::EventPythia* event, int gen_type)
   return false;
 }
 
-void EventCounts_EIC(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, int gen_type = 0)
+bool event_w_strange(erhic::EventPythia* event, int gen_type)
 {
-  cout << "Generator Type: "; 
+  if (gen_type==0)
+  { // Pythia 6
+    bool flag_search_group = false; // flag if the group of particles has been searched
+    for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
+    {
+      erhic::ParticleMC* part = event->GetTrack(ipart);
+
+      if ( part->GetStatus()!=21 && !flag_search_group ) continue;
+      if ( part->GetStatus()==21 )
+      { // entering into the group of particles with KS=21
+        flag_search_group = true;
+        if ( part->Id()==3 || part->Id()==-3 ) return true;
+      }
+      if ( part->GetStatus()!=21 && flag_search_group ) break;
+    }
+  }
+  else
+  { // BeAGLE
+    bool flag_search_group = false; // flag if the group of particles has been searched
+    for (int ipart = event->GetNTracks()-1; ipart >=0; ipart--)
+    { // faster looping backwards
+      erhic::ParticleMC* part = event->GetTrack(ipart);
+
+      if ( part->GetStatus()!=3 && !flag_search_group ) continue;
+      if ( part->GetStatus()==3 )
+      { // entering into the group of particles with KS=3
+        flag_search_group = true;
+        if ( part->Id()==3 || part->Id()==-3 ) return true;
+      }
+      if ( part->GetStatus()!=3 && flag_search_group ) break;
+    }
+  }
+
+  return false;
+}
+
+void EventCounts_EIC(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hists_eventcounts_ep.root", int nevt = 0, int gen_type = 0)
+{
+  cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
   else cout << "BeAGLE" << endl;
 
@@ -111,6 +150,9 @@ void EventCounts_EIC(const char* inFile = "ep_allQ2.20x100.small.root", const ch
 
     h1d_x_c[iQ2] = new TH1D(Form("h1d_x_c_Q2_%d",iQ2),"N^{charm}_{evt} vs x_{true}",xbin,edgesx);
     h1d_x_c[iQ2]->Sumw2();
+
+    h1d_x_s[iQ2] = new TH1D(Form("h1d_x_s_Q2_%d",iQ2),"N^{strange}_{evt} vs x_{true}",xbin,edgesx);
+    h1d_x_s[iQ2]->Sumw2();
   }
 
   //Get EICTree Tree
@@ -126,10 +168,10 @@ void EventCounts_EIC(const char* inFile = "ep_allQ2.20x100.small.root", const ch
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
   for(Int_t ievt = 0; ievt < nevt; ievt++)
-  {    
+  {
     h1d_nevt->Fill(1);
 
-    tree->GetEntry(ievt); 
+    tree->GetEntry(ievt);
 
     if (ievt%1000==0) cout<<"Processing event = "<<ievt<<"/"<<nevt<<endl;
 
@@ -150,12 +192,16 @@ void EventCounts_EIC(const char* inFile = "ep_allQ2.20x100.small.root", const ch
     if (event->GetProcess()==131 || event->GetProcess()==132) flag_direct = true;
     if (event->GetProcess()==135 || event->GetProcess()==136) flag_direct = true;
 
-    if (!flag_direct) continue; // only process direct processes   
+    if (!flag_direct) continue; // only process direct processes
 
     h1d_x_e[iQ2bin]->Fill( event->GetX() );
     if ( event_w_charm(event,gen_type) )
     {
       h1d_x_c[iQ2bin]->Fill( event->GetX() );
+    }
+    if ( event_w_strange(event,gen_type) )
+    {
+      h1d_x_s[iQ2bin]->Fill( event->GetX() );
     }
   }
 
@@ -166,5 +212,6 @@ void EventCounts_EIC(const char* inFile = "ep_allQ2.20x100.small.root", const ch
   {
     h1d_x_e[iQ2]->Write();
     h1d_x_c[iQ2]->Write();
+    h1d_x_s[iQ2]->Write();
   }
 }

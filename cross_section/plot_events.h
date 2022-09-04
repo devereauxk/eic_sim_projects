@@ -41,9 +41,11 @@ class PlotXsec
     TH1D* h1d_nevt;
     TH1D* h1d_x_c[Q2bin];
     TH1D* h1d_x_e[Q2bin];
+    TH1D* h1d_x_s[Q2bin];
 
     TGraphErrors* g_cs_vs_x_e[Q2bin];
     TGraphErrors* g_cs_vs_x_c[Q2bin];
+    TGraphErrors* g_cs_vs_x_s[Q2bin];
 
     PlotXsec(int _sys_option)
     {
@@ -126,12 +128,13 @@ class PlotXsec
     {
       h1d_nevt = (TH1D*)fin->Get("h1d_nevt");
 
-      L_gen = h1d_nevt->GetEntries()/Xsec_gen; 
-      
+      L_gen = h1d_nevt->GetEntries()/Xsec_gen;
+
       for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
       {
         h1d_x_e[iQ2] = (TH1D*)fin->Get(Form("h1d_x_e_Q2_%d",iQ2));
         h1d_x_c[iQ2] = (TH1D*)fin->Get(Form("h1d_x_c_Q2_%d",iQ2));
+        h1d_x_s[iQ2] = (TH1D*)fin->Get(Form("h1d_x_s_Q2_%d",iQ2));
       }
     }
 
@@ -179,7 +182,7 @@ class PlotXsec
           if (temp_y<0.001 || temp_y>0.90) g_cs_vs_x_e[iQ2]->RemovePoint(ix);
         }
       }
-      
+
       //============================
       //    charm reduced Xsection
       //============================
@@ -222,6 +225,49 @@ class PlotXsec
           if (temp_y<0.001 || temp_y>0.90) g_cs_vs_x_c[iQ2]->RemovePoint(ix);
         }
       }
+
+      //============================
+      //    strange reduced Xsection
+      //============================
+      for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
+      {
+        double rcs[xbin] = {0};
+        double rcs_err[xbin] = {0};
+
+        for (int ibin = 1; ibin < h1d_x_s[iQ2]->GetNbinsX()+1; ++ibin)
+        { // ibin = 0 is underflow bin, skip it
+          double raw_count = h1d_x_s[iQ2]->GetBinContent(ibin);
+          double raw_count_err = h1d_x_s[iQ2]->GetBinError(ibin);
+
+          double Q2_bw = Q2_hi[iQ2]-Q2_lo[iQ2];
+          raw_count /= h1d_x_s[iQ2]->GetBinWidth(ibin)*Q2_bw; // dN/dxdQ2
+          raw_count_err /= h1d_x_s[iQ2]->GetBinWidth(ibin)*Q2_bw; // dN/dxdQ2
+
+          // calculate cross section (convert to GeV-2 unit)
+          double cs = raw_count/L_gen*microbgev;
+          double cs_err = raw_count_err/L_gen*microbgev;
+
+          // phase space factor
+          x_mid[ibin-1] = h1d_x_s[iQ2]->GetBinCenter(ibin);
+          x_lo[ibin-1] = h1d_x_s[iQ2]->GetBinLowEdge(ibin);
+          x_hi[ibin-1] = h1d_x_s[iQ2]->GetBinLowEdge(ibin+1);
+          double y = Q2_mid[iQ2]/(x_mid[ibin-1]*s_cm);
+          double ps_factor = x_mid[ibin-1]*pow(Q2_mid[iQ2],2)/(2*TMath::Pi()*pow(alpha,2)*(1+pow(1-y,2)));
+
+          rcs[ibin-1] = cs*ps_factor;
+          rcs_err[ibin-1] = cs_err*ps_factor;
+        }
+
+        g_cs_vs_x_s[iQ2] = new TGraphErrors(xbin,x_mid,rcs,0,rcs_err);
+        g_cs_vs_x_s[iQ2]->SetMarkerStyle(20);
+        g_cs_vs_x_s[iQ2]->SetMarkerSize(0.7);
+
+        for (int ix = xbin-1; ix >= 0; --ix)
+        {
+          double temp_y = Q2_mid[iQ2]/(x_mid[ix]*s_cm);
+          if (temp_y<0.001 || temp_y>0.90) g_cs_vs_x_s[iQ2]->RemovePoint(ix);
+        }
+      }
     }
 
     void WriteHadronHists(TFile* fout)
@@ -230,6 +276,7 @@ class PlotXsec
       {
         g_cs_vs_x_e[iQ2]->Write(Form("g_cs_vs_x_e_%s_Q2_%d",sys_abbr,iQ2));
         g_cs_vs_x_c[iQ2]->Write(Form("g_cs_vs_x_c_%s_Q2_%d",sys_abbr,iQ2));
+        g_cs_vs_x_s[iQ2]->Write(Form("g_cs_vs_x_s_%s_Q2_%d",sys_abbr,iQ2));
       }
     }
 };
