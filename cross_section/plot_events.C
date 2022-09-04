@@ -191,6 +191,8 @@ void plot_graph(const char* outDir)
       plot_Pythia6_ep->g_cs_vs_x_c[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_Pythia6_ep->g_cs_vs_x_c[iQ2],Form("%s, #tilde{#sigma}_{c#bar{c}}",plot_Pythia6_ep->sys_latex),"p");
 
+      plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->SetLineColor(kblue);
+      plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->SetMarkerColor(kblue);
       plot_Pythia6_ep->g_cs_vs_x_s[iQ2]->Draw("cpsame");
       leg.AddEntry(plot_Pythia6_ep->g_cs_vs_x_s[iQ2],Form("%s, #tilde{#sigma}_{s#bar{s}}",plot_Pythia6_ep->sys_latex),"p");
 
@@ -263,7 +265,7 @@ void plot_graph(const char* outDir)
       tl->DrawLatexNDC(0.20,0.85,Form("Q^{2} = %.0f GeV^{2}",Q2_mid[iQ2]));
       // tl->DrawLatexNDC(0.20,0.80,"0.1 < y < 0.9");
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sEventCounts_charm_%d.pdf\")", cno-1, outDir, iQ2) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sEventCounts_strange_charm_%d.pdf\")", cno-1, outDir, iQ2) );
     }
   }
 
