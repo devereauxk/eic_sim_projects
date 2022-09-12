@@ -458,6 +458,7 @@ class D0_reco
 
     void SetProcessID(const int id)
     {
+      cout<<"process id = "<<id<<endl;
       if (id == 99)
       {
         PROCESS_INDEX = 0;
