@@ -30,6 +30,6 @@ ln -s $WORKING_DIR/D0_tree_patch.C .
 ln -s $FOLDER/ep_{$1}.root
 hname=`echo hists-$1.root`
 
-root -b -q 'D0_tree_patch.C("ep_'$1'.root","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT')'
+root -b -q 'D0_tree_patch_zmod.C("ep_'$1'.root","'$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT')'
 
 mv $hname $FOLDER/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}

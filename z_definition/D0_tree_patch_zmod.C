@@ -14,7 +14,7 @@
 R__LOAD_LIBRARY(libeicsmear);
 
 #include "fast_sim.h"
-#include "bins.h"
+#include "bins_fine.h"
 
 TDatabasePDG* pdg = NULL;
 
