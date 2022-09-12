@@ -821,6 +821,7 @@ class D0_reco
           h2d_D0_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
         }
 
+        cout<<"PROCESS_INDEX = "<<PROCESS_INDEX<<endl;
         if (iQ2bin>=0)
         {
           h2d_ztheo_vs_zjet[Q2bin-1][ietabin-1][processbin-1]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
