@@ -762,25 +762,27 @@ class D0_reco
       for (int ieta = 0; ieta < etabin; ++ieta)
       {
         if (pair.PseudoRapidity()>=eta_lo[ieta] && pair.PseudoRapidity()<eta_hi[ieta]) ietabin = ieta;
+        break; // fixes bug with inclusive bin only being only binned filled
       }
       if (ietabin<0) return;
 
       double frag_z = hadron_beam.Dot(pair)/(nu_true*hadron_beam.M());  // z= Pp/Pq where Pq=nuM
 
-      cout<<"D0 pt "<<pair.Pt()<<" eta "<<pair.PseudoRapidity()<<endl;
+      cout<<"candidate D0 pt "<<pair.Pt()<<" eta "<<pair.PseudoRapidity()<<endl;
 
+      // foreground is inclusive for both signal and not signal
       fg2d_Kpimass_vs_p[charge_type][ietabin]->Fill(pair.M(),pair.Pt());
       fg2d_Kpimass_vs_p[2][ietabin]->Fill(pair.M(),pair.Pt());
       fg2d_Kpimass_vs_z[charge_type][ietabin]->Fill(pair.M(),frag_z);
       fg2d_Kpimass_vs_z[2][ietabin]->Fill(pair.M(),frag_z);
-      if (!is_SG)
+      if (!is_SG) // is not signal
       {
         bg2d_Kpimass_vs_p[charge_type][ietabin]->Fill(pair.M(),pair.Pt());
         bg2d_Kpimass_vs_p[2][ietabin]->Fill(pair.M(),pair.Pt());
         bg2d_Kpimass_vs_z[charge_type][ietabin]->Fill(pair.M(),frag_z);
         bg2d_Kpimass_vs_z[2][ietabin]->Fill(pair.M(),frag_z);
       }
-      else
+      else // is signal
       {
         // cout<<"D0 pt = "<<pair.Pt()<<" eta = "<<pair.PseudoRapidity()<<" z = "<<frag_z<<endl;
         // if (struck_quark.E()>0.001)
@@ -967,6 +969,7 @@ class D0_reco
         {
           for (int iprocess = 0; iprocess < processbin; ++iprocess)
           {
+            cout<<"h2d_ztheo_vs_zjet["<<iQ2<<"]["<<ieta<<"]["<<iprocess<<"] has entries "<<h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->GetEntries()<<endl;
             h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Write();
           }
         }
