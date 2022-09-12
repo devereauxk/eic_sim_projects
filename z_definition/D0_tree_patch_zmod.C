@@ -761,8 +761,11 @@ class D0_reco
       int ietabin = -9999;
       for (int ieta = 0; ieta < etabin; ++ieta)
       {
-        if (pair.PseudoRapidity()>=eta_lo[ieta] && pair.PseudoRapidity()<eta_hi[ieta]) ietabin = ieta;
-        break; // fixes bug with inclusive bin only being only binned filled
+        if (pair.PseudoRapidity()>=eta_lo[ieta] && pair.PseudoRapidity()<eta_hi[ieta])
+        {
+          ietabin = ieta;
+          break; // fixes bug with inclusive bin only being only binned filled
+        }
       }
       if (ietabin<0) return;
 
