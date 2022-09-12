@@ -14,6 +14,8 @@ const double cs_Pythia6_ep = 4.08586E-2; // 10050 setup
 const double cs_BeAGLE_ep = 4.06891E-2;
 const double cs_Pythia6_eAu_10042 = 3.6427976319158305E-002;
 const double cs_Pythia6_eAu_10042_EPSLO = 3.6255883519827781E-002;
+// WHEN RUNNING ON NEW DATA, REMEMBER TO UPDATE THESE!!!!!!!!!!!!!!!
+const double cs_Pythia6_ep_EIC = 4.08582915E-02;
 
 // Cross Section Bins
 const int Q2bin = 7;
@@ -55,7 +57,7 @@ class PlotXsec
         sys_latex = "Pythia e+p";
         sys_abbr = "Pythia_ep";
 
-        Xsec_gen = cs_Pythia6_ep;
+        Xsec_gen = cs_Pythia6_ep_EIC;
       }
       else if (_sys_option==2)
       {
