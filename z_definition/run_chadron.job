@@ -1,0 +1,13 @@
+Universe       = vanilla
+Notification   = Error
+GetEnv         = True
+Initialdir     = $ENV(PWD)
+Executable     = /bin/sh
+Priority       = +20
+Log	           = jobout/log$(Process).log
+Output         = jobout/out$(Process).out
+Error          = jobout/err$(Process).err
+Requirements   = (CPU_Speed >= 1)
+
+Arguments      = run_chadron.sh $(Process) 0 0 0 0
+Queue 100

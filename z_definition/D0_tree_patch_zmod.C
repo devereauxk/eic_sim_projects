@@ -5,6 +5,12 @@
 // change all cut to transverse cuts
 // remove single track DCA cut and D0 DCA cut
 
+// modded D0_tree_patch to support h2d_ztheo_vs_zjet bins and cuts on event types
+// of the [processid] bin of this histogram,
+// first bin is process=99, second bin is process=135 or 136, third bin is inclusive
+// only for D0reco
+// index of the bin is encodded in PROCESS_INDEX
+
 R__LOAD_LIBRARY(libeicsmear);
 
 #include "fast_sim.h"
@@ -249,7 +255,8 @@ class D0_reco
     TH2D* h2d_D0_pt_vs_eta_gen[Q2bin][xbin];
     TH2D* h2d_D0_z_vs_eta_gen[Q2bin][xbin];
 
-    TH2D* h2d_ztheo_vs_zjet;
+    int PROCESS_INDEX;
+    TH2D* h2d_ztheo_vs_zjet[Q2bin][etabin][processbin];
 
   public:
     D0_reco()
@@ -268,6 +275,8 @@ class D0_reco
       DECAY_L = -9999;
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
+
+      PROCESS_INDEX = -9999;
 
       do_correct_vertex = 0; // corrects D0 verticies
 
@@ -319,8 +328,18 @@ class D0_reco
         }
       }
 
-      h2d_ztheo_vs_zjet = new TH2D("h2d_z_frag","z_{theo} vs z_{jet}",100,0,1,100,0,1);
-      h2d_ztheo_vs_zjet->Sumw2();
+      for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
+      {
+        for (int ieta = 0; ieta < etabin; ++ieta)
+        {
+          for (int iprocess = 0; iprocess < processbin; ++iprocess)
+          {
+            h2d_ztheo_vs_zjet[iQ2][ieta][iprocess] = new TH2D(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess),"z_{theo} vs z_{jet}",100,0,1,100,0,1);
+            h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Sumw2();
+          }
+        }
+      }
+
     }
     virtual ~D0_reco()
     {
@@ -357,7 +376,17 @@ class D0_reco
         }
       }
 
-      delete h2d_ztheo_vs_zjet;
+      for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
+      {
+        for (int ieta = 0; ieta < etabin; ++ieta)
+        {
+          for (int iprocess = 0; iprocess < processbin; ++iprocess)
+          {
+            delete h2d_ztheo_vs_zjet[iQ2][ieta][iprocess];
+          }
+        }
+      }
+
     };
 
     void Reset()
@@ -376,6 +405,8 @@ class D0_reco
       DECAY_L = -9999;
       D0_DCA = -9999;
       D0_COSTHETA = -9999;
+
+      PROCESS_INDEX = -9999;
 
       do_correct_vertex = 0;
 
@@ -412,7 +443,31 @@ class D0_reco
         }
       }
 
-      h2d_ztheo_vs_zjet->Reset("ICESM");
+      for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
+      {
+        for (int ieta = 0; ieta < etabin; ++ieta)
+        {
+          for (int iprocess = 0; iprocess < processbin; ++iprocess)
+          {
+            h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Reset("ICESM");
+          }
+        }
+      }
+
+    }
+
+    void SetProcessID(const int id)
+    {
+      if (id == 99)
+      {
+        PROCESS_INDEX = 0;
+      } else if (id == 135 || id == 136)
+      {
+        PROCESS_INDEX = 1;
+      } else
+      {
+        PROCESS_INDEX = -9999;
+      }
     }
 
     void SetLowP(const float mom_thr) { TRK_P_LO = mom_thr; }
@@ -765,7 +820,16 @@ class D0_reco
           h2d_D0_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
         }
 
-        h2d_ztheo_vs_zjet->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
+        if (iQ2bin>=0)
+        {
+          h2d_ztheo_vs_zjet[Q2bin-1][ietabin-1][processbin-1]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
+
+          if (PROCESS_INDEX >= 0)
+          {
+            h2d_ztheo_vs_zjet[iQ2bin][ietabin][PROCESS_INDEX]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
+          }
+        }
+
       }
     }
 
@@ -896,7 +960,14 @@ class D0_reco
         }
       }
 
-      h2d_ztheo_vs_zjet->Write();
+      for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
+      {
+        for (int ieta = 0; ieta < etabin; ++ieta)
+        {
+          h2d_ztheo_vs_zjet[iQ2][ieta]->Write();
+        }
+      }
+
     }
 };
 
@@ -1784,9 +1855,9 @@ class Lc_reco
         }
       }
     }
-};
+}
 
-void D0_tree_patch(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0)
+void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const char* outFile = "hist.root", int nevt = 0, const int smear_option = 0, const int Bfield_type = 0, const int PID_option = 0)
 { // smear_2nd_vtx & momentum: 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smearing, 4--ATHENA smearing
   // Bfield_type: 0--Barbar, 1--Beast
   // 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
@@ -1887,6 +1958,9 @@ void D0_tree_patch(const char* inFile = "ep_allQ2.20x100.small.root", const char
       // cout << evt_vtx_reco.X() << ", " << evt_vtx_reco.Y() << ", " << evt_vtx_reco.Z() << " mm" << endl;
       continue; // No valid PV smearing in transverse direction, jump to next event
     }
+
+    // used for z defintion study, cutting on process id
+    ana_D0.SetProcessID(event->GetProcess());
 
     ana_D0.SetVectTrue(evt_vtx_true);
     ana_D0.SetVectReco(evt_vtx_reco); // NB: no smear on primary vertex yet

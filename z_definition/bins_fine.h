@@ -1,9 +1,12 @@
 const int chargebin = 3; // 0: -, 1: +, 2:+/-
 
-const int etabin = 4;
-static double eta_lo[etabin] = {-3.5,-1.5,1.5,-3.5};
-static double eta_hi[etabin] = {-1.5,1.5,3.5,3.5};
-const int eta_color[etabin] = {kGreen+1, kBlue, kOrange+1, kRed};
+//const int etabin = 4;
+//static double eta_lo[etabin] = {-3.5,-1.5,1.5,-3.5};
+//static double eta_hi[etabin] = {-1.5,1.5,3.5,3.5};
+const int etabin = 7;
+static double eta_lo[etabin] = {-3.5,-2.5,-0.5,0.5,1.5,2.5,-3.5};
+static double eta_hi[etabin] = {-2.5,-1.5,0.5,1.5,2.5,3.5,3.5};
+const int eta_color[etabin] = {kGreen+1, kBlue, kOrange+1, kRed, kYellow+1, kMagenta+1, kCyan+1};
 
 // parent pt bin
 const int pptbin = 5;
@@ -38,3 +41,6 @@ const int nubin = 5; // last bin inclusive
 static double nu_lo[nubin] = {0, 250, 500, 1000, 0};
 static double nu_hi[nubin] = {250, 500, 1000, 2500, 2500};
 const int nu_color[nubin] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed};
+
+const int processbin = 3;
+//first bin is process=99, second bin is process=135 or 136, third bin is inclusive
