@@ -964,7 +964,10 @@ class D0_reco
       {
         for (int ieta = 0; ieta < etabin; ++ieta)
         {
-          h2d_ztheo_vs_zjet[iQ2][ieta]->Write();
+          for (int iprocess = 0; iprocess < processbin; ++iprocess)
+          {
+            h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Write();
+          }
         }
       }
 
