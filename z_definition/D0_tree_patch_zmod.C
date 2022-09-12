@@ -458,7 +458,6 @@ class D0_reco
 
     void SetProcessID(const int id)
     {
-      cout<<"process id = "<<id<<endl;
       if (id == 99)
       {
         PROCESS_INDEX = 0;
@@ -821,7 +820,7 @@ class D0_reco
           h2d_D0_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
         }
 
-        cout<<"PROCESS_INDEX = "<<PROCESS_INDEX<<endl;
+        cout<<"PROCESS_INDEX = "<<PROCESS_INDEX<<", Q2 = "<<iQ2bin<<", eta = "<<endl;
         if (iQ2bin>=0)
         {
           h2d_ztheo_vs_zjet[Q2bin-1][ietabin-1][processbin-1]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
