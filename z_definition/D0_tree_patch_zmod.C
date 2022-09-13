@@ -1998,6 +1998,8 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
   ana_Lc.SetBFieldType(Bfield_type);
   // ana_Lc.SetDoCorrectVertex(do_correct_vertex);
 
+  int D0_count = 0;
+
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
   for(Int_t ievt = 0; ievt < nevt; ievt++)
@@ -2029,6 +2031,7 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
         if (abs(particle->Id())!=2212 && abs(particle->Id())!=211 && abs(particle->Id())!=321) continue; // proton, pion, kaon
         if(fabs(particle->GetEta())<3.5 && particle->GetP()>0.5) multi_charged_hadron_35++;
         if(fabs(particle->GetEta())<1.0 && particle->GetP()>0.5) multi_charged_hadron_10++;
+        if(abs(particle->Id())==421) D0_count++;
       }
       evt_vtx_reco = smearPVTATHENA(evt_vtx_true, multi_charged_hadron_35); // smear transverse direction
       // comment out the longgitunal smearing for now
@@ -2069,6 +2072,8 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
     ana_Lc.FillSingleTracks(event);
     ana_Lc.FillLcTriplets();
   }
+
+  cout<<"D0 count = "<<D0_count<<endl;
 
   TFile* fout = new TFile(outFile,"recreate");
 
