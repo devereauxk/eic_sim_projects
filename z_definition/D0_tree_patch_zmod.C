@@ -834,7 +834,7 @@ class D0_reco
         h2d_K_D0_p_vs_eta[ietabin][pptbin-1]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
         h2d_K_D0_p_vs_eta[etabin-1][pptbin-1]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
 
-        h2d_pi_D0_p_vs_eta[ietabin][ipt]->Fill(pion_p.P(),pion_p.PseudoRapidity());
+        h2d_pi_D0_p_vs_eta[ietabin][iptbin]->Fill(pion_p.P(),pion_p.PseudoRapidity());
         h2d_pi_D0_p_vs_eta[etabin-1][iptbin]->Fill(pion_p.P(),pion_p.PseudoRapidity());
         h2d_pi_D0_p_vs_eta[ietabin][pptbin]->Fill(pion_p.P(),pion_p.PseudoRapidity());
         h2d_pi_D0_p_vs_eta[etabin-1][pptbin-1]->Fill(pion_p.P(),pion_p.PseudoRapidity());
