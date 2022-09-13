@@ -859,7 +859,7 @@ class D0_reco
         // kdebug
         cout<<"PROCESS_INDEX = "<<PROCESS_INDEX<<", Q2 = "<<iQ2bin<<", eta = "<<ietabin<<endl;
         D0_filled++;
-        
+
         double theo_z = ((pair.Vect()).Dot(quark_p.Vect()))/((quark_p.Vect()).Dot(quark_p.Vect()));
         h2d_ztheo_vs_zjet[iQ2bin][etabin-1][processbin-1]->Fill(theo_z,frag_z);
         h2d_ztheo_vs_zjet[Q2bin-1][ietabin][processbin-1]->Fill(theo_z,frag_z);
@@ -2088,7 +2088,7 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
   }
 
   // kdebug
-  cout<<"D0 true = "<<D0_count<<endl;
+  cout<<"D0 true = "<<D0_true<<endl;
   cout<<"D0 candidates = "<<D0_candidates<<endl;
   cout<<"D0 filled = "<<D0_filled<<endl;
 
