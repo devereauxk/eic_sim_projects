@@ -29,6 +29,11 @@ const double LIGHT_SPEED = 299792458; // unit m/s
 const double D0_MEAN_LIFE = 410.1E-15; // \pm 1.5 10^{-15} (seconds)
 const double LC_MEAN_LIFE = 202.4E-15; // \pm 3.1 10^{-15} (seconds)
 
+// kdebug
+int D0_candidates = 0;
+int D0_filled = 0;
+int D0_true = 0;
+
 using namespace std;
 
 double dcaSigned(TVector3 const& p, TVector3 const& pos, TVector3 const& vertex)
@@ -801,7 +806,9 @@ class D0_reco
 
       double frag_z = hadron_beam.Dot(pair)/(nu_true*hadron_beam.M());  // z= Pp/Pq where Pq=nuM
 
+      // kdebug
       cout<<"candidate D0 pt "<<pair.Pt()<<" eta "<<pair.PseudoRapidity()<<endl;
+      D0_candidates++;
 
       // foreground is inclusive for both signal and not signal
       fg2d_Kpimass_vs_p[charge_type][ietabin]->Fill(pair.M(),pair.Pt());
@@ -849,7 +856,10 @@ class D0_reco
         h2d_D0_z_vs_eta[iQ2bin][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
         h2d_D0_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
 
+        // kdebug
         cout<<"PROCESS_INDEX = "<<PROCESS_INDEX<<", Q2 = "<<iQ2bin<<", eta = "<<ietabin<<endl;
+        D0_filled++;
+        
         double theo_z = ((pair.Vect()).Dot(quark_p.Vect()))/((quark_p.Vect()).Dot(quark_p.Vect()));
         h2d_ztheo_vs_zjet[iQ2bin][etabin-1][processbin-1]->Fill(theo_z,frag_z);
         h2d_ztheo_vs_zjet[Q2bin-1][ietabin][processbin-1]->Fill(theo_z,frag_z);
@@ -862,6 +872,7 @@ class D0_reco
           h2d_ztheo_vs_zjet[iQ2bin][etabin-1][PROCESS_INDEX]->Fill(theo_z,frag_z);
           h2d_ztheo_vs_zjet[Q2bin-1][ietabin][PROCESS_INDEX]->Fill(theo_z,frag_z);
         }
+
 
       }
     }
@@ -1998,8 +2009,6 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
   ana_Lc.SetBFieldType(Bfield_type);
   // ana_Lc.SetDoCorrectVertex(do_correct_vertex);
 
-  int D0_count = 0;
-
   //Loop Over Events
   if (nevt == 0) nevt = nEntries;
   for(Int_t ievt = 0; ievt < nevt; ievt++)
@@ -2020,7 +2029,7 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
     for (int ipart = 0; ipart < nParticles; ++ipart)
     {
       particle = event->GetTrack(ipart);
-      if (particle->Id()==421) D0_count++;
+      if (particle->Id()==421) D0_true++;
     }
 
     TVector3 evt_vtx_true(0,0,0); // not sure how to get event vertex
@@ -2078,7 +2087,10 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
     ana_Lc.FillLcTriplets();
   }
 
-  cout<<"D0 count = "<<D0_count<<endl;
+  // kdebug
+  cout<<"D0 true = "<<D0_count<<endl;
+  cout<<"D0 candidates = "<<D0_candidates<<endl;
+  cout<<"D0 filled = "<<D0_filled<<endl;
 
   TFile* fout = new TFile(outFile,"recreate");
 
