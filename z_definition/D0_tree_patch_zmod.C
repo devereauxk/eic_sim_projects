@@ -1603,7 +1603,7 @@ class Lc_reco
       int ietabin = -9999;
       for (int ieta = 0; ieta < etabin-1; ++ieta)
       {
-        if (pair.PseudoRapidity()>=eta_lo[ieta] && pair.PseudoRapidity()<eta_hi[ieta])
+        if (trip.PseudoRapidity()>=eta_lo[ieta] && trip.PseudoRapidity()<eta_hi[ieta])
         {
           ietabin = ieta;
           break;
@@ -1633,7 +1633,7 @@ class Lc_reco
       int iptbin = -9999;
       for (int ipt = 0; ipt < pptbin; ++ipt)
       {
-        if (pair.Pt()>=ppt_lo[ipt] && pair.Pt()<ppt_hi[ipt])
+        if (pair.trip()>=ppt_lo[ipt] && pair.trip()<ppt_hi[ipt])
         {
           iptbin = ipt;
           break;
