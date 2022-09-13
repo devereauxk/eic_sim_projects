@@ -1633,7 +1633,7 @@ class Lc_reco
       int iptbin = -9999;
       for (int ipt = 0; ipt < pptbin; ++ipt)
       {
-        if (pair.trip()>=ppt_lo[ipt] && pair.trip()<ppt_hi[ipt])
+        if (trip.Pt()>=ppt_lo[ipt] && trip.Pt()<ppt_hi[ipt])
         {
           iptbin = ipt;
           break;
