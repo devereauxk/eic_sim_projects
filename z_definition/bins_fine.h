@@ -1,5 +1,7 @@
 const int chargebin = 3; // 0: -, 1: +, 2:+/-
 
+// MUST HAVE LAST BIN INCLUSIVE FOR ALL ETA, Q2, X VARIABLES
+
 //const int etabin = 4;
 //static double eta_lo[etabin] = {-3.5,-1.5,1.5,-3.5};
 //static double eta_hi[etabin] = {-1.5,1.5,3.5,3.5};
@@ -44,3 +46,4 @@ const int nu_color[nubin] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed};
 
 const int processbin = 3;
 //first bin is process=99, second bin is process=135 or 136, third bin is inclusive
+//logic defined in SetProcessID method of D0_tree_patch_zmod.C

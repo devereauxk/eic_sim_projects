@@ -759,12 +759,12 @@ class D0_reco
 
       TLorentzVector pair(kaon_p+pion_p);
       int ietabin = -9999;
-      for (int ieta = 0; ieta < etabin; ++ieta)
+      for (int ieta = 0; ieta < etabin-1; ++ieta)
       {
         if (pair.PseudoRapidity()>=eta_lo[ieta] && pair.PseudoRapidity()<eta_hi[ieta])
         {
           ietabin = ieta;
-          break; // fixes bug with inclusive bin only being only binned filled
+          break;
         }
       }
       if (ietabin<0) return;
@@ -776,14 +776,25 @@ class D0_reco
       // foreground is inclusive for both signal and not signal
       fg2d_Kpimass_vs_p[charge_type][ietabin]->Fill(pair.M(),pair.Pt());
       fg2d_Kpimass_vs_p[2][ietabin]->Fill(pair.M(),pair.Pt());
+      fg2d_Kpimass_vs_p[charge_type][etabin-1]->Fill(pair.M(),pair.Pt());
+      fg2d_Kpimass_vs_p[2][etabin-1]->Fill(pair.M(),pair.Pt());
+
       fg2d_Kpimass_vs_z[charge_type][ietabin]->Fill(pair.M(),frag_z);
       fg2d_Kpimass_vs_z[2][ietabin]->Fill(pair.M(),frag_z);
+      fg2d_Kpimass_vs_z[charge_type][etabin-1]->Fill(pair.M(),frag_z);
+      fg2d_Kpimass_vs_z[2][etabin-1]->Fill(pair.M(),frag_z);
+
       if (!is_SG) // is not signal
       {
         bg2d_Kpimass_vs_p[charge_type][ietabin]->Fill(pair.M(),pair.Pt());
         bg2d_Kpimass_vs_p[2][ietabin]->Fill(pair.M(),pair.Pt());
+        bg2d_Kpimass_vs_p[charge_type][etabin-1]->Fill(pair.M(),pair.Pt());
+        bg2d_Kpimass_vs_p[2][etabin-1]->Fill(pair.M(),pair.Pt());
+
         bg2d_Kpimass_vs_z[charge_type][ietabin]->Fill(pair.M(),frag_z);
         bg2d_Kpimass_vs_z[2][ietabin]->Fill(pair.M(),frag_z);
+        bg2d_Kpimass_vs_z[charge_type][etabin-1]->Fill(pair.M(),frag_z);
+        bg2d_Kpimass_vs_z[2][etabin-1]->Fill(pair.M(),frag_z);
       }
       else // is signal
       {
@@ -808,32 +819,36 @@ class D0_reco
         int iQ2bin = -9999;
         for (int iQ2 = 0; iQ2 < Q2bin-1; ++iQ2)
         {
-          if (Q2_true>=Q2_lo[iQ2] && Q2_true<Q2_hi[iQ2]) iQ2bin = iQ2;
+          if (Q2_true>=Q2_lo[iQ2] && Q2_true<Q2_hi[iQ2])
+          {
+            iQ2bin = iQ2;
+            break;
+          }
         }
+        if (iQ2bin<0) return;
+
         int ixbin = -9999;
         for (int ix = 0; ix < xbin-1; ++ix)
         {
-          if (x_true>=x_lo[ix] && x_true<x_hi[ix]) ixbin = ix;
+          if (x_true>=x_lo[ix] && x_true<x_hi[ix])
+          {
+            ixbin = ix;
+            break;
+          }
         }
+        if (ixbin<0) return;
 
-        if (iQ2bin>=0 && ixbin>=0)
-        {
-          h2d_D0_pt_vs_eta[iQ2bin][ixbin]->Fill(pair.Pt(),pair.PseudoRapidity());
-          h2d_D0_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,pair.PseudoRapidity());
+        h2d_D0_pt_vs_eta[iQ2bin][ixbin]->Fill(pair.Pt(),pair.PseudoRapidity());
+        h2d_D0_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,pair.PseudoRapidity());
 
-          h2d_D0_pt_vs_eta[Q2bin-1][xbin-1]->Fill(pair.Pt(),pair.PseudoRapidity());
-          h2d_D0_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
-        }
+        h2d_D0_pt_vs_eta[Q2bin-1][xbin-1]->Fill(pair.Pt(),pair.PseudoRapidity());
+        h2d_D0_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
 
         cout<<"PROCESS_INDEX = "<<PROCESS_INDEX<<", Q2 = "<<iQ2bin<<", eta = "<<ietabin<<endl;
-        if (iQ2bin>=0)
+        h2d_ztheo_vs_zjet[Q2bin-1][etabin-1][processbin-1]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
+        if (PROCESS_INDEX >= 0)
         {
-          h2d_ztheo_vs_zjet[Q2bin-1][ietabin-1][processbin-1]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
-
-          if (PROCESS_INDEX >= 0)
-          {
-            h2d_ztheo_vs_zjet[iQ2bin][ietabin][PROCESS_INDEX]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
-          }
+          h2d_ztheo_vs_zjet[iQ2bin][ietabin][PROCESS_INDEX]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
         }
 
       }
@@ -1574,9 +1589,13 @@ class Lc_reco
       TLorentzVector trip(kaon_p+pion_p+proton_p);
       // if (is_SG) cout<<"mass "<<trip.M()<<endl;
       int ietabin = -9999;
-      for (int ieta = 0; ieta < etabin; ++ieta)
+      for (int ieta = 0; ieta < etabin-1; ++ieta)
       {
-        if (trip.PseudoRapidity()>=eta_lo[ieta] && trip.PseudoRapidity()<eta_hi[ieta]) ietabin = ieta;
+        if (trip.PseudoRapidity()>=eta_lo[ieta] && trip.PseudoRapidity()<eta_hi[ieta])
+        {
+          ietabin = ieta;
+          break;
+        }
       }
       if (ietabin<0) return;
 
@@ -1584,14 +1603,24 @@ class Lc_reco
 
       fg2d_Kpipmass_vs_p[charge_type][ietabin]->Fill(trip.M(),trip.Pt());
       fg2d_Kpipmass_vs_p[2][ietabin]->Fill(trip.M(),trip.Pt());
+      fg2d_Kpipmass_vs_p[charge_type][etabin-1]->Fill(trip.M(),trip.Pt());
+      fg2d_Kpipmass_vs_p[2][etabin-1]->Fill(trip.M(),trip.Pt());
+
       fg2d_Kpipmass_vs_z[charge_type][ietabin]->Fill(trip.M(),frag_z);
       fg2d_Kpipmass_vs_z[2][ietabin]->Fill(trip.M(),frag_z);
+      fg2d_Kpipmass_vs_z[charge_type][etabin-1]->Fill(trip.M(),frag_z);
+      fg2d_Kpipmass_vs_z[2][etabin-1]->Fill(trip.M(),frag_z);
       if (!is_SG)
       {
         bg2d_Kpipmass_vs_p[charge_type][ietabin]->Fill(trip.M(),trip.Pt());
         bg2d_Kpipmass_vs_p[2][ietabin]->Fill(trip.M(),trip.Pt());
+        bg2d_Kpipmass_vs_p[charge_type][etabin-1]->Fill(trip.M(),trip.Pt());
+        bg2d_Kpipmass_vs_p[2][etabin-1]->Fill(trip.M(),trip.Pt());
+
         bg2d_Kpipmass_vs_z[charge_type][ietabin]->Fill(trip.M(),frag_z);
         bg2d_Kpipmass_vs_z[2][ietabin]->Fill(trip.M(),frag_z);
+        bg2d_Kpipmass_vs_z[charge_type][etabin-1]->Fill(trip.M(),frag_z);
+        bg2d_Kpipmass_vs_z[2][etabin-1]->Fill(trip.M(),frag_z);
       }
       else
       {
