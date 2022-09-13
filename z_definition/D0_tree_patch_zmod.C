@@ -2017,6 +2017,12 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
     nParticles = event->GetNTracks();
     // printf("For Event %d, we have %d particles!\n",ievt,nParticles);
 
+    for (int ipart = 0; ipart < nParticles; ++ipart)
+    {
+      particle = event->GetTrack(ipart);
+      if (particle->Id()==421) D0_count++;
+    }
+
     TVector3 evt_vtx_true(0,0,0); // not sure how to get event vertex
     TVector3 evt_vtx_reco = evt_vtx_true;
     if (smear_option==4)
@@ -2031,7 +2037,6 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
         if (abs(particle->Id())!=2212 && abs(particle->Id())!=211 && abs(particle->Id())!=321) continue; // proton, pion, kaon
         if(fabs(particle->GetEta())<3.5 && particle->GetP()>0.5) multi_charged_hadron_35++;
         if(fabs(particle->GetEta())<1.0 && particle->GetP()>0.5) multi_charged_hadron_10++;
-        if(abs(particle->Id())==421) D0_count++;
       }
       evt_vtx_reco = smearPVTATHENA(evt_vtx_true, multi_charged_hadron_35); // smear transverse direction
       // comment out the longgitunal smearing for now
