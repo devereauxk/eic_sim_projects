@@ -768,6 +768,36 @@ class D0_reco
         }
       }
       if (ietabin<0) return;
+      int iQ2bin = -9999;
+      for (int iQ2 = 0; iQ2 < Q2bin-1; ++iQ2)
+      {
+        if (Q2_true>=Q2_lo[iQ2] && Q2_true<Q2_hi[iQ2])
+        {
+          iQ2bin = iQ2;
+          break;
+        }
+      }
+      if (iQ2bin<0) return;
+      int ixbin = -9999;
+      for (int ix = 0; ix < xbin-1; ++ix)
+      {
+        if (x_true>=x_lo[ix] && x_true<x_hi[ix])
+        {
+          ixbin = ix;
+          break;
+        }
+      }
+      if (ixbin<0) return;
+      int iptbin = -9999;
+      for (int ipt = 0; ipt < pptbin; ++ipt)
+      {
+        if (pair.Pt()>=ppt_lo[ipt] && pair.Pt()<ppt_hi[ipt])
+        {
+          iptbin = ipt;
+          break;
+        }
+      }
+      if (iptbin<0) return;
 
       double frag_z = hadron_beam.Dot(pair)/(nu_true*hadron_beam.M());  // z= Pp/Pq where Pq=nuM
 
@@ -798,57 +828,39 @@ class D0_reco
       }
       else // is signal
       {
-        // cout<<"D0 pt = "<<pair.Pt()<<" eta = "<<pair.PseudoRapidity()<<" z = "<<frag_z<<endl;
-        // if (struck_quark.E()>0.001)
-        // {
-        //   cout<<"D0 energy = "<<pair.E()<<" struck quark energy = "<<struck_quark.E()<<" frac = "<<pair.E()/struck_quark.E()<<endl;
-        //   // cout<<"D0 Pt = "<<pair.Pt()<<" struck quark Pt = "<<struck_quark.Pt()<<" frac = "<<
-        //   cout<<"frac = "<<(pair.Vect()).Dot(struck_quark.Vect())/(struck_quark.Vect()).Dot(struck_quark.Vect())<<endl;
-        //   cout<<"**********************"<<endl;
-        // }
 
-        for (int ipt = 0; ipt < pptbin; ++ipt)
-        {
-          if (pair.Pt()>=ppt_lo[ipt] && pair.Pt()<ppt_hi[ipt])
-          {
-            h2d_K_D0_p_vs_eta[ietabin][ipt]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
-            h2d_pi_D0_p_vs_eta[ietabin][ipt]->Fill(pion_p.P(),pion_p.PseudoRapidity());
-          }
-        }
+        h2d_K_D0_p_vs_eta[ietabin][iptbin]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
+        h2d_K_D0_p_vs_eta[etabin-1][iptbin]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
+        h2d_K_D0_p_vs_eta[ietabin][pptbin-1]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
+        h2d_K_D0_p_vs_eta[etabin-1][pptbin-1]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
 
-        int iQ2bin = -9999;
-        for (int iQ2 = 0; iQ2 < Q2bin-1; ++iQ2)
-        {
-          if (Q2_true>=Q2_lo[iQ2] && Q2_true<Q2_hi[iQ2])
-          {
-            iQ2bin = iQ2;
-            break;
-          }
-        }
-        if (iQ2bin<0) return;
-
-        int ixbin = -9999;
-        for (int ix = 0; ix < xbin-1; ++ix)
-        {
-          if (x_true>=x_lo[ix] && x_true<x_hi[ix])
-          {
-            ixbin = ix;
-            break;
-          }
-        }
-        if (ixbin<0) return;
+        h2d_pi_D0_p_vs_eta[ietabin][ipt]->Fill(pion_p.P(),pion_p.PseudoRapidity());
+        h2d_pi_D0_p_vs_eta[etabin-1][iptbin]->Fill(pion_p.P(),pion_p.PseudoRapidity());
+        h2d_pi_D0_p_vs_eta[ietabin][pptbin]->Fill(pion_p.P(),pion_p.PseudoRapidity());
+        h2d_pi_D0_p_vs_eta[etabin-1][pptbin-1]->Fill(pion_p.P(),pion_p.PseudoRapidity());
 
         h2d_D0_pt_vs_eta[iQ2bin][ixbin]->Fill(pair.Pt(),pair.PseudoRapidity());
-        h2d_D0_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,pair.PseudoRapidity());
-
+        h2d_D0_pt_vs_eta[Q2bin-1][ixbin]->Fill(pair.Pt(),pair.PseudoRapidity());
+        h2d_D0_pt_vs_eta[iQ2bin][xbin-1]->Fill(pair.Pt(),pair.PseudoRapidity());
         h2d_D0_pt_vs_eta[Q2bin-1][xbin-1]->Fill(pair.Pt(),pair.PseudoRapidity());
+
+        h2d_D0_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,pair.PseudoRapidity());
+        h2d_D0_z_vs_eta[Q2bin-1][ixbin]->Fill(frag_z,pair.PseudoRapidity());
+        h2d_D0_z_vs_eta[iQ2bin][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
         h2d_D0_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,pair.PseudoRapidity());
 
         cout<<"PROCESS_INDEX = "<<PROCESS_INDEX<<", Q2 = "<<iQ2bin<<", eta = "<<ietabin<<endl;
-        h2d_ztheo_vs_zjet[Q2bin-1][etabin-1][processbin-1]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
+        double theo_z = ((pair.Vect()).Dot(quark_p.Vect()))/((quark_p.Vect()).Dot(quark_p.Vect()));
+        h2d_ztheo_vs_zjet[iQ2bin][etabin-1][processbin-1]->Fill(theo_z,frag_z);
+        h2d_ztheo_vs_zjet[Q2bin-1][ietabin][processbin-1]->Fill(theo_z,frag_z);
+        h2d_ztheo_vs_zjet[iQ2bin][ietabin][processbin-1]->Fill(theo_z,frag_z);
+        h2d_ztheo_vs_zjet[Q2bin-1][etabin-1][processbin-1]->Fill(theo_z,frag_z);
         if (PROCESS_INDEX >= 0)
         {
-          h2d_ztheo_vs_zjet[iQ2bin][ietabin][PROCESS_INDEX]->Fill((pair.Vect()).Dot(quark_p.Vect())/(quark_p.Vect()).Dot(quark_p.Vect()),frag_z);
+          h2d_ztheo_vs_zjet[iQ2bin][ietabin][PROCESS_INDEX]->Fill(theo_z,frag_z);
+          h2d_ztheo_vs_zjet[Q2bin-1][etabin-1][PROCESS_INDEX]->Fill(theo_z,frag_z);
+          h2d_ztheo_vs_zjet[iQ2bin][etabin-1][PROCESS_INDEX]->Fill(theo_z,frag_z);
+          h2d_ztheo_vs_zjet[Q2bin-1][ietabin][PROCESS_INDEX]->Fill(theo_z,frag_z);
         }
 
       }
@@ -1591,13 +1603,43 @@ class Lc_reco
       int ietabin = -9999;
       for (int ieta = 0; ieta < etabin-1; ++ieta)
       {
-        if (trip.PseudoRapidity()>=eta_lo[ieta] && trip.PseudoRapidity()<eta_hi[ieta])
+        if (pair.PseudoRapidity()>=eta_lo[ieta] && pair.PseudoRapidity()<eta_hi[ieta])
         {
           ietabin = ieta;
           break;
         }
       }
       if (ietabin<0) return;
+      int iQ2bin = -9999;
+      for (int iQ2 = 0; iQ2 < Q2bin-1; ++iQ2)
+      {
+        if (Q2_true>=Q2_lo[iQ2] && Q2_true<Q2_hi[iQ2])
+        {
+          iQ2bin = iQ2;
+          break;
+        }
+      }
+      if (iQ2bin<0) return;
+      int ixbin = -9999;
+      for (int ix = 0; ix < xbin-1; ++ix)
+      {
+        if (x_true>=x_lo[ix] && x_true<x_hi[ix])
+        {
+          ixbin = ix;
+          break;
+        }
+      }
+      if (ixbin<0) return;
+      int iptbin = -9999;
+      for (int ipt = 0; ipt < pptbin; ++ipt)
+      {
+        if (pair.Pt()>=ppt_lo[ipt] && pair.Pt()<ppt_hi[ipt])
+        {
+          iptbin = ipt;
+          break;
+        }
+      }
+      if (iptbin<0) return;
 
       double frag_z = hadron_beam.Dot(trip)/(nu_true*hadron_beam.M());  // z= Pp/Pq where Pq=nuM
 
@@ -1624,42 +1666,42 @@ class Lc_reco
       }
       else
       {
-        for (int ipt = 0; ipt < pptbin; ++ipt)
-        {
-          if (trip.Pt()>=ppt_lo[ipt] && trip.Pt()<ppt_hi[ipt])
-          {
-            cout<<"Lc pt "<<trip.Pt()<<" eta "<<trip.PseudoRapidity()<<endl;
-            h2d_K_Lc_p_vs_eta[ietabin][ipt]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
-            h2d_pi_Lc_p_vs_eta[ietabin][ipt]->Fill(pion_p.P(),pion_p.PseudoRapidity());
-            h2d_p_Lc_p_vs_eta[ietabin][ipt]->Fill(proton_p.P(),proton_p.PseudoRapidity());
-          }
-        }
 
-        int iQ2bin = -9999;
-        for (int iQ2 = 0; iQ2 < Q2bin-1; ++iQ2)
-        {
-          if (Q2_true>=Q2_lo[iQ2] && Q2_true<Q2_hi[iQ2]) iQ2bin = iQ2;
-        }
-        int ixbin = -9999;
-        for (int ix = 0; ix < xbin-1; ++ix)
-        {
-          if (x_true>=x_lo[ix] && x_true<x_hi[ix]) ixbin = ix;
-        }
+        h2d_K_Lc_p_vs_eta[ietabin][iptbin]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
+        h2d_K_Lc_p_vs_eta[etabin-1][iptbin]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
+        h2d_K_Lc_p_vs_eta[ietabin][pptbin-1]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
+        h2d_K_Lc_p_vs_eta[etabin-1][pptbin-1]->Fill(kaon_p.P(),kaon_p.PseudoRapidity());
 
-        if (iQ2bin>=0 && ixbin>=0)
-        {
-          h2d_Lc_pt_vs_eta[iQ2bin][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
-          h2d_Lc_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_pi_Lc_p_vs_eta[ietabin][iptbin]->Fill(pion_p.P(),pion_p.PseudoRapidity());
+        h2d_pi_Lc_p_vs_eta[etabin-1][iptbin]->Fill(pion_p.P(),pion_p.PseudoRapidity());
+        h2d_pi_Lc_p_vs_eta[ietabin][pptbin-1]->Fill(pion_p.P(),pion_p.PseudoRapidity());
+        h2d_pi_Lc_p_vs_eta[etabin-1][pptbin-1]->Fill(pion_p.P(),pion_p.PseudoRapidity());
 
-          h2d_Lc_pt_vs_eta_gen[iQ2bin][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
-          h2d_Lc_z_vs_eta_gen[iQ2bin][ixbin]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_p_Lc_p_vs_eta[ietabin][iptbin]->Fill(proton_p.P(),proton_p.PseudoRapidity());
+        h2d_p_Lc_p_vs_eta[etabin-1][iptbin]->Fill(proton_p.P(),proton_p.PseudoRapidity());
+        h2d_p_Lc_p_vs_eta[ietabin][pptbin-1]->Fill(proton_p.P(),proton_p.PseudoRapidity());
+        h2d_p_Lc_p_vs_eta[etabin-1][pptbin-1]->Fill(proton_p.P(),proton_p.PseudoRapidity());
 
-          h2d_Lc_pt_vs_eta[Q2bin-1][xbin-1]->Fill(trip.Pt(),trip.PseudoRapidity());
-          h2d_Lc_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_Lc_pt_vs_eta[iQ2bin][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
+        h2d_Lc_pt_vs_eta[Q2bin-1][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
+        h2d_Lc_pt_vs_eta[iQ2bin][xbin-1]->Fill(trip.Pt(),trip.PseudoRapidity());
+        h2d_Lc_pt_vs_eta[Q2bin-1][xbin-1]->Fill(trip.Pt(),trip.PseudoRapidity());
 
-          h2d_Lc_pt_vs_eta_gen[Q2bin-1][xbin-1]->Fill(trip.Pt(),trip.PseudoRapidity());
-          h2d_Lc_z_vs_eta_gen[Q2bin-1][xbin-1]->Fill(frag_z,trip.PseudoRapidity());
-        }
+        h2d_Lc_z_vs_eta[iQ2bin][ixbin]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_Lc_z_vs_eta[Q2bin-1][ixbin]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_Lc_z_vs_eta[iQ2bin][xbin-1]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_Lc_z_vs_eta[Q2bin-1][xbin-1]->Fill(frag_z,trip.PseudoRapidity());
+
+        h2d_Lc_pt_vs_eta_gen[iQ2bin][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
+        h2d_Lc_pt_vs_eta_gen[Q2bin-1][ixbin]->Fill(trip.Pt(),trip.PseudoRapidity());
+        h2d_Lc_pt_vs_eta_gen[iQ2bin][xbin-1]->Fill(trip.Pt(),trip.PseudoRapidity());
+        h2d_Lc_pt_vs_eta_gen[Q2bin-1][xbin-1]->Fill(trip.Pt(),trip.PseudoRapidity());
+
+        h2d_Lc_z_vs_eta_gen[iQ2bin][ixbin]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_Lc_z_vs_eta_gen[Q2bin-1][ixbin]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_Lc_z_vs_eta_gen[iQ2bin][xbin-1]->Fill(frag_z,trip.PseudoRapidity());
+        h2d_Lc_z_vs_eta_gen[Q2bin-1][xbin-1]->Fill(frag_z,trip.PseudoRapidity());
+
       }
     }
 

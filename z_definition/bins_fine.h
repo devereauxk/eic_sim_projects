@@ -1,6 +1,7 @@
 const int chargebin = 3; // 0: -, 1: +, 2:+/-
 
 // MUST HAVE LAST BIN INCLUSIVE FOR ALL ETA, Q2, X VARIABLES
+// NO BINS CAN OVERLAP EXCEPT WITH THE INCLUSIVE BIN
 
 //const int etabin = 4;
 //static double eta_lo[etabin] = {-3.5,-1.5,1.5,-3.5};
