@@ -27,8 +27,9 @@ ln -s $WORKING_DIR/D0_tree_patch_zmod.C .
 #ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/ATHENA_Resolutions_r.root .
 #ln -s /gpfs/mnt/gpfs02/eic/kdevereaux/reconstruction/VertexRes_ATHENA.root .
 
-ln -s $FOLDER/outfiles/ep_{$1}.root .
-hname=`echo hists_{$1}.root`
+fname=`echo ep_$1.root`
+ln -s $FOLDER/outfiles/$fname .
+hname=`echo hists_$1.root`
 echo `ls`
 
 root -b -q 'D0_tree_patch_zmod.C("./ep_'$1'.root","'./$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT')'
