@@ -1981,11 +1981,11 @@ void D0_tree_patch_zmod(const char* inFile = "ep_allQ2.20x100.small.root", const
   tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
   // ATHENA smeaing
-  TFile* f_athena_tracks = new TFile("ATHENA_Resolutions_r.root","READ");
-  TFile* f_athena_vertex = new TFile("VertexRes_ATHENA.root","READ");
   if (smear_option==4)
   {
     cout << "Setup ATHENA smearing parameters" << endl;
+    TFile* f_athena_tracks = new TFile("ATHENA_Resolutions_r.root","READ");
+    TFile* f_athena_vertex = new TFile("VertexRes_ATHENA.root","READ");
     setup_ATHENA_single_track_smearing(f_athena_tracks);
     setup_ATHENA_PV_smearing(f_athena_vertex);
   }
