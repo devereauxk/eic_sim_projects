@@ -52,8 +52,8 @@ void plot_z_def_hists(const char* fin_name = "hists.root", const char* out_dir =
     {
       for (int iprocess = 0; iprocess < processbin; ++iprocess)
       {
-        h2d_ztheo_vs_zjet[Q2bin][etabin][iprocess] = (TH2D*) fin->Get(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess));
-        h2d_ztheo_vs_zjet[Q2bin][etabin][iprocess]->SetName(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess));
+        h2d_ztheo_vs_zjet[iQ2][ieta][iprocess] = (TH2D*) fin->Get(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess));
+        h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->SetName(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess));
       }
     }
   }
