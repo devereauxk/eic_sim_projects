@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FOLDER=/eic/u/kdevereaux/work/cross_section/ep_10_100_nlo/outfiles
+FOLDER=/eic/u/kdevereaux/work/cross_section/ep_10_100_nlo
 WORKING_DIR=/eic/u/kdevereaux/work/z_definition
 
 chmod g+rx ${_CONDOR_SCRATCH_DIR}
