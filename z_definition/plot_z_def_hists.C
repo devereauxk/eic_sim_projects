@@ -37,7 +37,7 @@ void individual_hists(const char* out_dir)
           h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->SetTitle(Form("Q2: [%f,%f], eta: [%f,%f]", Q2_lo[iQ2], Q2_hi[iQ2], eta_lo[ieta], eta_hi[ieta]));
           h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->GetXaxis()->SetTitle("z (true)");
           h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->GetYaxis()->SetTitle("z (calculated)");
-          myhset(&h2d_ztheo_vs_zjet[iQ2][ieta][iprocess],1.2,1.6,0.05,0.05);
+          //myhset(&h2d_ztheo_vs_zjet[iQ2][ieta][iprocess],1.2,1.6,0.05,0.05);
 
           gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, out_dir, iQ2, ieta, iprocess) );
           cout<<"D0 entries = "<<h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->GetEntries()<<endl;
