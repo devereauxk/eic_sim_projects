@@ -31,7 +31,7 @@ void individual_hists(const char* out_dir)
           htemp.GetYaxis()->SetTitle("z (calculated)");
           myhset(&htemp,1.2,1.6,0.05,0.05);
 
-          h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Draw("hsame colz");
+          h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Draw("colz");
 
           gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, out_dir, iQ2, ieta, iprocess) );
           cout<<"D0 entries = "<<h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->GetEntries()<<endl;
