@@ -10,4 +10,4 @@ Error          = jobout/err$(Process).err
 Requirements   = (CPU_Speed >= 1)
 
 Arguments      = run_chadron.sh $(Process) 0 0 1 1
-Queue 500
+Queue 100
