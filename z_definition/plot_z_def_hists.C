@@ -32,7 +32,7 @@ void individual_hists()
         // inclusive on process bin
         h2d_ztheo_vs_zjet[iQ2][ieta][2]->Draw("hsame");
 
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, iQ2, ieta, iprocess) );
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, iQ2, ieta, 2) );
       }
     }
   }
