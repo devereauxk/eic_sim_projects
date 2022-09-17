@@ -14,25 +14,27 @@ void individual_hists(const char* out_dir)
   {
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
-      mcs(cno++);
+      for (int iprocess = 0; iprocess < processbin; ++iprocess)
       {
-        float plot_xrange_lo = 0;
-        float plot_xrange_hi = 1;
+        mcs(cno++);
+        {
+          float plot_xrange_lo = 0;
+          float plot_xrange_hi = 1;
 
-        float plot_yrange_lo = 0;
-        float plot_yrange_hi = 1;
+          float plot_yrange_lo = 0;
+          float plot_yrange_hi = 1;
 
-        TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-        htemp.Draw();
-        htemp.SetTitle(Form("Q2: [%f,%f], eta: [%f,%f]", Q2_lo[iQ2], Q2_hi[iQ2], eta_lo[ieta], eta_hi[ieta]));
-        htemp.GetXaxis()->SetTitle("z (true)");
-        htemp.GetYaxis()->SetTitle("z (calculated)");
-        myhset(&htemp,1.2,1.6,0.05,0.05);
+          TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+          htemp.Draw();
+          htemp.SetTitle(Form("Q2: [%f,%f], eta: [%f,%f]", Q2_lo[iQ2], Q2_hi[iQ2], eta_lo[ieta], eta_hi[ieta]));
+          htemp.GetXaxis()->SetTitle("z (true)");
+          htemp.GetYaxis()->SetTitle("z (calculated)");
+          myhset(&htemp,1.2,1.6,0.05,0.05);
 
-        // inclusive on process bin
-        h2d_ztheo_vs_zjet[iQ2][ieta][2]->Draw();
+          h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Draw("hsame");
 
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, out_dir, iQ2, ieta, 2) );
+          gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, out_dir, iQ2, ieta, iprocess) );
+        }
       }
     }
   }

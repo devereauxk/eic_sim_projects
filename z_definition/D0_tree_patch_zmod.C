@@ -339,7 +339,7 @@ class D0_reco
         {
           for (int iprocess = 0; iprocess < processbin; ++iprocess)
           {
-            h2d_ztheo_vs_zjet[iQ2][ieta][iprocess] = new TH2D(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess),"z_{theo} vs z_{jet}",100,0,1,100,0,1);
+            h2d_ztheo_vs_zjet[iQ2][ieta][iprocess] = new TH2D(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess),"z_{theo} vs z_{jet}",20,0,1,20,0,1);
             h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Sumw2();
           }
         }
