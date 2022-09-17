@@ -34,6 +34,7 @@ void individual_hists(const char* out_dir)
           h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Draw("hsame");
 
           gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, out_dir, iQ2, ieta, iprocess) );
+          cout<<"D0 entries = "<<h2d_ztheo_vs_zjet->GetEntries()<<endl;
         }
       }
     }
