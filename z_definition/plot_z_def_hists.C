@@ -25,13 +25,13 @@ void individual_hists(const char* out_dir)
           float plot_yrange_hi = 1;
 
           TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-          htemp.Draw();
           htemp.SetTitle(Form("Q2: [%f,%f], eta: [%f,%f]", Q2_lo[iQ2], Q2_hi[iQ2], eta_lo[ieta], eta_hi[ieta]));
           htemp.GetXaxis()->SetTitle("z (true)");
           htemp.GetYaxis()->SetTitle("z (calculated)");
           myhset(&htemp,1.2,1.6,0.05,0.05);
 
           h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Draw("colz");
+          htemp.Draw();
 
           gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, out_dir, iQ2, ieta, iprocess) );
           cout<<"D0 entries = "<<h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->GetEntries()<<endl;
