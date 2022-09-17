@@ -8,7 +8,7 @@ TH2D* h2d_ztheo_vs_zjet[Q2bin][etabin][processbin] = {0};
 
 static int cno = 0;
 
-void individual_hists()
+void individual_hists(const char* out_dir)
 {
   for (int iQ2 = 0; iQ2 < Q2bin; ++iQ2)
   {
@@ -32,7 +32,7 @@ void individual_hists()
         // inclusive on process bin
         h2d_ztheo_vs_zjet[iQ2][ieta][2]->Draw("hsame");
 
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, iQ2, ieta, 2) );
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, out_dir, iQ2, ieta, 2) );
       }
     }
   }
@@ -59,6 +59,6 @@ void plot_z_def_hists(const char* fin_name = "hists.root", const char* out_dir =
   }
 
   // print individual 2D histograms
-  individual_hists();
+  individual_hists(out_dir);
 
 }
