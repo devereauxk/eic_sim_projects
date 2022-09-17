@@ -4,7 +4,7 @@ R__LOAD_LIBRARY(libeicsmear);
 #include "TGraphErrors.h"
 using namespace std;
 
-TH2D* h2d_ztheo_vs_zjet[Q2bin][etabin] = {0};
+TH2D* h2d_ztheo_vs_zjet[Q2bin][etabin][processbin] = {0};
 
 static int cno = 0;
 
@@ -29,9 +29,10 @@ void individual_hists()
         htemp.GetYaxis()->SetTitle("z (calculated)");
         myhset(&htemp,1.2,1.6,0.05,0.05);
 
-        h2d_ztheo_vs_zjet[iQ2][ieta]->Draw("hsame");
+        // inclusive on process bin
+        h2d_ztheo_vs_zjet[iQ2][ieta][2]->Draw("hsame");
 
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d.pdf\")", cno-1, iQ2, ieta) );
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sz_def_%d_%d_%d.pdf\")", cno-1, iQ2, ieta, iprocess) );
       }
     }
   }
@@ -49,8 +50,11 @@ void plot_z_def_hists(const char* fin_name = "hists.root", const char* out_dir =
   {
     for (int ieta = 0; ieta < etabin; ++ieta)
     {
-      h2d_ztheo_vs_zjet[Q2bin][etabin] = (TH2D*) fin->Get(Form("h2d_z_frag_%d_%d", iQ2, ieta));
-      h2d_ztheo_vs_zjet[Q2bin][etabin]->SetName(Form("h2d_z_frag_%d_%d", iQ2, ieta));
+      for (int iprocess = 0; iprocess < processbin; ++iprocess)
+      {
+        h2d_ztheo_vs_zjet[Q2bin][etabin][iprocess] = (TH2D*) fin->Get(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess));
+        h2d_ztheo_vs_zjet[Q2bin][etabin][iprocess]->SetName(Form("h2d_z_frag_%d_%d_%d", iQ2, ieta, iprocess));
+      }
     }
   }
 
