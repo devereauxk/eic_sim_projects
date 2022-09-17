@@ -25,8 +25,9 @@ void individual_hists(const char* out_dir)
           float plot_yrange_hi = 1;
 
           h2d_ztheo_vs_zjet[iQ2][ieta][iprocess]->Draw("colz");
-          htemp.Draw("hsame");
+
           TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+          htemp.Draw("hsame");
           htemp.SetTitle(Form("Q2: [%f,%f], eta: [%f,%f]", Q2_lo[iQ2], Q2_hi[iQ2], eta_lo[ieta], eta_hi[ieta]));
           htemp.GetXaxis()->SetTitle("z (true)");
           htemp.GetYaxis()->SetTitle("z (calculated)");
