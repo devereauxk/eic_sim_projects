@@ -35,4 +35,4 @@ echo `ls`
 
 root -b -q 'D0_tree_patch_zmod.C("./ep_'$1'.root","'./$hname'",'$NEVT','$SMEAR_OPT','$BFIELD','$ID_OPT')'
 
-mv $hname $WORKING_DIR/test/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
+mv $hname $OUT_DIR/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
