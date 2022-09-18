@@ -2,6 +2,7 @@
 
 FOLDER=/eic/u/kdevereaux/work/cross_section/ep_10_100_nlo
 WORKING_DIR=/eic/u/kdevereaux/work/z_definition
+OUT_DIR=$WORKING_DIR/test/ep_10_100_nlo
 
 chmod g+rx ${_CONDOR_SCRATCH_DIR}
 cd ${_CONDOR_SCRATCH_DIR}
@@ -19,7 +20,7 @@ SMEAR_OPT=$3 # 0--no smearing, 1--DM smearing, 2--LBL smearing, 3--Hybrid smeari
 BFIELD=$4 # 0--Barbar, 1--Beast
 ID_OPT=$5 # 0--no hID (but with eID), 1--PID with no low momentum cutoff, 2--PID with low momentum cutoff & some mis-identified pi, K, 3--PID with low momentum cutoff & all identified pi, K
 
-mkdir $WORKING_DIR/test/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
+mkdir $OUT_DIR/S${SMEAR_OPT}_B${BFIELD}_ID${ID_OPT}
 
 ln -s $WORKING_DIR/fast_sim.h .
 ln -s $WORKING_DIR/bins_fine.h .

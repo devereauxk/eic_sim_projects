@@ -6,9 +6,9 @@ const int chargebin = 3; // 0: -, 1: +, 2:+/-
 //const int etabin = 4;
 //static double eta_lo[etabin] = {-3.5,-1.5,1.5,-3.5};
 //static double eta_hi[etabin] = {-1.5,1.5,3.5,3.5};
-const int etabin = 7;
-static double eta_lo[etabin] = {-3.5,-2.5,-0.5,0.5,1.5,2.5,-3.5};
-static double eta_hi[etabin] = {-2.5,-1.5,0.5,1.5,2.5,3.5,3.5};
+const int etabin = 8;
+static double eta_lo[etabin] = {-3.5,-2.5,-1.5,-0.5,0.5,1.5,2.5,-3.5};
+static double eta_hi[etabin] = {-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5,3.5};
 const int eta_color[etabin] = {kGreen+1, kBlue, kOrange+1, kRed, kYellow+1, kMagenta+1, kCyan+1};
 
 // parent pt bin
