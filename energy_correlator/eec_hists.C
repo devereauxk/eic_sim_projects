@@ -35,7 +35,7 @@ class Correlator_Builder
     {
       particle_list = _particle_list;
       mult = particle_list.size();
-      pair_list = NULL;
+      pair_list(mult, vector<double>(mult));
       scale = _scale;
     }
 
@@ -45,7 +45,7 @@ class Correlator_Builder
       // distance between partices i and j
       for (int i = 0; i < mult; i++)
       {
-        vector<float> inner_list(mult, 0.0);
+        vector<double> inner_list(mult, 0.0);
         for (int j = i; j < mult; j++)
         {
           inner_list[j] = calculate_distance(particle_list[i], particle_list[j]);
@@ -68,11 +68,11 @@ class Correlator_Builder
           if (overlap == 0) eec_weight = eec_weight*2;
           if (overlap > 0) eec_weight = eec_weight*1;
 
-          h1d_jet_ecc->Fill(dist12, eec_weight);
+          h1d_jet_eec->Fill(dist12, eec_weight);
         }
       }
     }
-}
+};
 
 float* logbins(float xmin, float xmax, int nbins)
 {
@@ -96,7 +96,7 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
   h1d_jet_pt->Sumw2();
 
-  Float_t* lbins = logbins(1E-4, 1, 50);
+  float* lbins = logbins(1E-4, 1, 50);
   h1d_jet_eec = new TH1D("h1d_jet_ecc","jet eec",50,lbins);
   h1d_jet_eec->Sumw2();
 
