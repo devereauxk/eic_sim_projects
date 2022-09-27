@@ -35,7 +35,6 @@ class Correlator_Builder
     {
       particle_list = _particle_list;
       mult = particle_list.size();
-      pair_list(mult, vector<double>(mult));
       scale = _scale;
     }
 
@@ -80,7 +79,7 @@ float* logbins(float xmin, float xmax, int nbins)
   double binwidth = (log10(xmax) - log10(xmin)) / nbins;
   for (int i = 0; i < nbins+1; i++)
   {
-    bins[i] = pow(10, log10(xmin) + binwidth * i);
+    bins[i] = TMath::Power(10, log10(xmin) + binwidth * i);
   }
   return bins;
 }
