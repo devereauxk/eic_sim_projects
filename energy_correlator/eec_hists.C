@@ -8,7 +8,9 @@ using namespace std;
 
 const int verbosity = 0;
 
-TH1D* h1d_eec = 0;
+TH1D* h1d_jet_eec = NULL;
+TH1D* h1d_jet_pt = NULL;
+
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -33,7 +35,7 @@ class Correlator_Builder
     {
       particle_list = _particle_list;
       mult = particle_list.size();
-      // pair_list uninitialized intially
+      pair_list = NULL;
       scale = _scale;
     }
 
@@ -52,7 +54,7 @@ class Correlator_Builder
       }
     }
 
-    void construct_EEC(TH1D* h1d_eec)
+    void construct_EEC(TH1D* h1d_jet_eec)
     {
       int overlap = 0;
       for (int i = 0; i < mult; i++)
@@ -65,15 +67,16 @@ class Correlator_Builder
           if (i == j) overlap++;
           if (overlap == 0) eec_weight = eec_weight*2;
           if (overlap > 0) eec_weight = eec_weight*1;
+
+          h1d_jet_ecc->Fill(dist12, eec_weight);
         }
       }
-      h1d_ecc->Fill(dist12, eec_weight);
     }
 }
 
-Float_t* logbins(float xmin, float xmax, int nbins)
+float* logbins(float xmin, float xmax, int nbins)
 {
-  Float_t* bins[nbins+1];
+  float* bins[nbins+1];
   double binwidth = (log10(xmax) - log10(xmin)) / nbins;
   for (int i = 0; i < nbins+1; i++)
   {
@@ -100,15 +103,14 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   //Get EICTree Tree
   TTree *tree = (TTree*)f->Get("EICTree");
 
-  Int_t nEntries = tree->GetEntries();
+  Int_t nevt = tree->GetEntries();
   cout<<"-------------------------------"<<endl;
-  cout<<"Total Number of Events = "<<nEntries<<endl<<endl;
+  cout<<"Total Number of Events = "<<nevt<<endl<<endl;
 
   //Access event Branch
   tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
   //Loop Over Events
-  if (nevt == 0) nevt = nEntries;
   for(Int_t ievt = 0; ievt < nevt; ievt++)
   {
     tree->GetEntry(ievt);
@@ -132,9 +134,9 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     // particle enumeration, addition to jet reco setup, and total pt calculation
     erhic::ParticleMC* particle;
     vector<PseudoJet> jet_constits;
-    for (int ipart = 0; ipart < py_evt->GetNTracks(); ++ipart)
+    for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
     {
-      particle = py_evt->GetTrack(ipart);
+      particle = event->GetTrack(ipart);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
@@ -167,7 +169,7 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
         int ip = constituents.user_index();
-        particle = py_evt->GetTrack(ip);
+        particle = event->GetTrack(ip);
         if (particle->charge() != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
@@ -182,6 +184,6 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   TFile* fout = new TFile(outFile,"recreate");
   fout->Write();
-  h1d_ecc->Write();
+  h1d_jet_ecc->Write();
 
 }
