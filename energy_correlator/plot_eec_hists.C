@@ -14,10 +14,10 @@ void individual_hists(const char* out_dir)
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 50;
+    float plot_xrange_hi = 25;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 200;
+    float plot_yrange_hi = 500;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw("hsame");
@@ -37,7 +37,7 @@ void individual_hists(const char* out_dir)
     float plot_xrange_hi = 1;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 10000;
+    float plot_yrange_hi = 70;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw("hsame");
