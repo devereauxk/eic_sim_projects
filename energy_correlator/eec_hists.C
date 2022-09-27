@@ -29,7 +29,7 @@ class Correlator_Builder
     double scale;
 
   public:
-    D0_reco(vector<PseudoJet> _particle_list, float _scale)
+    Correlator_Builder(vector<PseudoJet> _particle_list, float _scale)
     {
       particle_list = _particle_list;
       mult = particle_list.size();
@@ -37,7 +37,7 @@ class Correlator_Builder
       scale = _scale;
     }
 
-    make_pairs()
+    void make_pairs()
     {
       // produces mult X mult upper triangular matrix with elements being the
       // distance between partices i and j
@@ -46,14 +46,13 @@ class Correlator_Builder
         vector<float> inner_list(mult, 0.0);
         for (int j = i; j < mult; j++)
         {
-          dist = calculate_distance(particle_list[i], particle_list[j]);
-          inner_list[j] = dist;
+          inner_list[j] = calculate_distance(particle_list[i], particle_list[j]);
         }
         pair_list.push_back(inner_list);
       }
     }
 
-    construct_EEC(TH1D* h1d_eec)
+    void construct_EEC(TH1D* h1d_eec)
     {
       int overlap = 0;
       for (int i = 0; i < mult; i++)
