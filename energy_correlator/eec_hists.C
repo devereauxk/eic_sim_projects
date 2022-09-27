@@ -173,7 +173,7 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       */
 
       // eec calculation
-      Correlator_Builder cb(charged_constituents, jets[ijet].pt());
+      Correlator_Builder cb(constituents, jets[ijet].pt());
       cb.make_pairs();
       cb.construct_EEC(h1d_jet_eec);
 
