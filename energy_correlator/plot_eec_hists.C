@@ -47,7 +47,7 @@ void individual_hists(const char* out_dir)
     myhset(&htemp,1.2,1.6,0.05,0.05);
     */
 
-    h1d_jet_eec->Draw("same");
+    h1d_jet_eec->Draw();
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec.pdf\")", cno-1, out_dir) );
   }
