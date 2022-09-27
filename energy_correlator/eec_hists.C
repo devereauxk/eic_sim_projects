@@ -83,7 +83,7 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // compute log bins for eec histogram
   double xmin = 1E-4;
   double xmax = 1;
-  double nbins = 50;
+  int nbins = 50;
   Double_t* lbins[nbins+1];
   double binwidth = (log10(xmax) - log10(xmin)) / nbins;
   for (int i = 0; i < nbins+1; i++)
