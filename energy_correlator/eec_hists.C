@@ -72,7 +72,7 @@ class Correlator_Builder
     }
 };
 
-void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root")
+void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root")
 {
   //Event Class
   erhic::EventPythia *event(NULL);
