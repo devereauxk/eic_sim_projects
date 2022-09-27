@@ -94,7 +94,7 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
   h1d_jet_pt->Sumw2();
 
-  h1d_jet_eec = new TH1D("h1d_jet_ecc","jet eec",50,lbins);
+  h1d_jet_eec = new TH1D("h1d_jet_eec","jet eec",50,lbins);
   h1d_jet_eec->Sumw2();
 
   //Get EICTree Tree
@@ -165,15 +165,15 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       vector<PseudoJet> charged_constituents;
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
-        int ip = constituents.user_index();
+        int ip = constituents[iconstit].user_index();
         particle = event->GetTrack(ip);
-        if (particle->charge() != 0) charged_constituents.push_back(constituents[iconstit]);
+        if (particle->charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
       // eec calculation
       Correlator_Builder cb(charged_constituents, jets[ijet].pt());
       cb.make_pairs();
-      cb.construct_EEC();
+      cb.construct_EEC(h1d_jet_eec);
 
     }
 
@@ -181,6 +181,6 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   TFile* fout = new TFile(outFile,"recreate");
   fout->Write();
-  h1d_jet_ecc->Write();
+  h1d_jet_eec->Write();
 
 }
