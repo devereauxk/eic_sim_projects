@@ -39,11 +39,13 @@ void individual_hists(const char* out_dir)
     float plot_yrange_lo = 0;
     float plot_yrange_hi = 70;
 
+    /*
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw("hsame");
     htemp.GetXaxis()->SetTitle("R_{L}");
     htemp.GetYaxis()->SetTitle("normalized EEC");
     myhset(&htemp,1.2,1.6,0.05,0.05);
+    */
 
     h1d_jet_eec->Draw("same");
 
