@@ -11,7 +11,6 @@ const int verbosity = 0;
 TH1D* h1d_jet_eec = NULL;
 TH1D* h1d_jet_pt = NULL;
 
-
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
   float dphiabs = fabs(p0.phi() - p1.phi());
@@ -84,7 +83,7 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   double xmin = 1E-4;
   double xmax = 1;
   int nbins = 50;
-  Double_t* lbins[nbins+1];
+  Double_t lbins[nbins+1];
   double binwidth = (log10(xmax) - log10(xmin)) / nbins;
   for (int i = 0; i < nbins+1; i++)
   {
