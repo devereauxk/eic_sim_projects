@@ -73,17 +73,6 @@ class Correlator_Builder
     }
 };
 
-float* logbins(float xmin, float xmax, int nbins)
-{
-  float* bins[nbins+1];
-  double binwidth = (log10(xmax) - log10(xmin)) / nbins;
-  for (int i = 0; i < nbins+1; i++)
-  {
-    bins[i] = TMath::Power(10, log10(xmin) + binwidth * i);
-  }
-  return bins;
-}
-
 void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root")
 {
   //Event Class
@@ -91,11 +80,21 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   TFile *f = new TFile(inFile);
 
+  // compute log bins for eec histogram
+  double xmin = 1E-4;
+  double xmax = 1;
+  double nbins = 50;
+  Double_t* lbins[nbins+1];
+  double binwidth = (log10(xmax) - log10(xmin)) / nbins;
+  for (int i = 0; i < nbins+1; i++)
+  {
+    lbins[i] = TMath::Power(10, log10(xmin) + binwidth * i);
+  }
+
   // histogram definitions
   h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
   h1d_jet_pt->Sumw2();
 
-  float* lbins = logbins(1E-4, 1, 50);
   h1d_jet_eec = new TH1D("h1d_jet_ecc","jet eec",50,lbins);
   h1d_jet_eec->Sumw2();
 
