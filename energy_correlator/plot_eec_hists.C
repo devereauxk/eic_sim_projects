@@ -31,7 +31,7 @@ void individual_hists(const char* out_dir)
   }
 
   // 1d jet eec histogram, log bins
-  mcs(cno++);
+  mclogx(cno++);
   {
     float plot_xrange_lo = 1E-4;
     float plot_xrange_hi = 1;
@@ -41,7 +41,7 @@ void individual_hists(const char* out_dir)
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw("hsame");
-    htemp.GetXaxis()->SetTitle("#frac{d#sigma_{ECC}}{d R_{L}}");
+    htemp.GetXaxis()->SetTitle("d#sigma_{ECC}/d R_{L}");
     htemp.GetYaxis()->SetTitle("counts");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
