@@ -161,6 +161,8 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
       }
 
+      h1d_jet_pt->Fill(jets[ijet].pt());
+
       /*
       // take only charged constituents for eec calculation
       vector<PseudoJet> charged_constituents;
