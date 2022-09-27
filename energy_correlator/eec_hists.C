@@ -167,7 +167,7 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       {
         int ip = constituents[iconstit].user_index();
         particle = event->GetTrack(ip);
-        if (particle->charge != 0) charged_constituents.push_back(constituents[iconstit]);
+        if (particle->isCharged() != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
       // eec calculation
