@@ -161,14 +161,16 @@ void ecc_hists(const char* inFile = "merged.root", const char* outFile = "hists_
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
       }
 
+      /*
       // take only charged constituents for eec calculation
       vector<PseudoJet> charged_constituents;
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
         int ip = constituents[iconstit].user_index();
-        particle = event->GetTrack(ip);
-        if (particle->isCharged() != 0) charged_constituents.push_back(constituents[iconstit]);
+        erhic::ParticleMCeA = event->GetTrack(ip)->eA;
+        if (particle->c != 0) charged_constituents.push_back(constituents[iconstit]);
       }
+      */
 
       // eec calculation
       Correlator_Builder cb(charged_constituents, jets[ijet].pt());
