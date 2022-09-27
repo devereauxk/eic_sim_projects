@@ -31,7 +31,7 @@ void individual_hists(const char* out_dir)
   }
 
   // 1d jet eec histogram, log bins
-  mcs(cno++);
+  mclogxy(cno++);
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 1;
