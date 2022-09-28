@@ -171,7 +171,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
         if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
-      if (charged_constituents < 1) continue;
+      if (charged_constituents.size() < 1) continue;
 
       // eec calculation
       Correlator_Builder cb(charged_constituents, jets[ijet].pt());
