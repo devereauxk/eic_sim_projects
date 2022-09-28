@@ -165,10 +165,10 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       {
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
 
-        int ip = constituents[iconstit].user_index();
-        float charge = event->GetTrack(ip)->Id().Info()->Charge();
-        cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
-        if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
+        //int ip = constituents[iconstit].user_index();
+        //float charge = event->GetTrack(ip)->Id().Info()->Charge();
+        //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
+        //if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
       if (charged_constituents.size() < 1) continue;
