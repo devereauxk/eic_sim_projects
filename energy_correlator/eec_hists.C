@@ -138,9 +138,9 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
-        PseudoJet* constit = new PseudoJet(particle->GetPx(),particle->GetPy(),particle->GetPz(),particle->GetE());
+        PseudoJet constit = PseudoJet(particle->GetPx(),particle->GetPy(),particle->GetPz(),particle->GetE());
         constit.set_user_index(ipart);
-        jet_constits.push_back(&constit);
+        jet_constits.push_back(constit);
       }
 
     }
