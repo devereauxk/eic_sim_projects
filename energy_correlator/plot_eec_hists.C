@@ -34,7 +34,7 @@ void individual_hists(const char* out_dir)
 
   TCanvas* c = new TCanvas("c","c", 800, 800);
   c->SetLogx();
-  //c->SetLogy();
+  c->SetLogy();
   c->Range(0,0,1,1);
   c->SetLeftMargin(0.15);
   c->SetRightMargin(0.15);
