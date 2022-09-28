@@ -32,6 +32,7 @@ void individual_hists(const char* out_dir)
 
   // 1d jet eec histogram, log bins
 
+  /*
   TCanvas* c = new TCanvas("c","c", 800, 800);
   c->SetLogx();
   c->SetLogy();
@@ -43,8 +44,8 @@ void individual_hists(const char* out_dir)
   h1d_jet_eec->Draw("hist e");
 
   c->SaveAs( Form("%sh1d_jet_eec.pdf", out_dir));
+  */
 
-  /*
   mclogx(cno++);
   {
     float plot_xrange_lo = 0;
@@ -53,17 +54,17 @@ void individual_hists(const char* out_dir)
     float plot_yrange_lo = 0;
     float plot_yrange_hi = 70;
 
-    TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw("hsame");
     htemp.GetXaxis()->SetTitle("R_{L}");
     htemp.GetYaxis()->SetTitle("normalized EEC");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
-    h1d_jet_eec->Draw("same");
+    h1d_jet_eec->Draw("same hist e");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec.pdf\")", cno-1, out_dir) );
   }
-  */
+
 }
 
 
