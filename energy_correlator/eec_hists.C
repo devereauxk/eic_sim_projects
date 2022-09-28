@@ -138,7 +138,9 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
-        jet_constits.push_back( PseudoJet(particle->GetPx(),particle->GetPy(),particle->GetPz(),particle->GetE()) );
+        PseudoJet* constit = new PseudoJet(particle->GetPx(),particle->GetPy(),particle->GetPz(),particle->GetE());
+        constit->set_user_index(ipart);
+        jet_constits.push_back(constit);
       }
 
     }
@@ -153,24 +155,23 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     {
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
-
-      // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
-      vector<PseudoJet> constituents = jets[ijet].constituents();
-      for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
-      {
-        if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
-      }
-
       h1d_jet_pt->Fill(jets[ijet].pt());
 
+      // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
+      vector<PseudoJet> constituents = jets[ijet].constituents();
       vector<PseudoJet> charged_constituents;
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
+        if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
+
         int ip = constituents[iconstit].user_index();
         float charge = event->GetTrack(ip)->Id().Info()->Charge();
+        cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
         if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
+
+      if (charged_constituents < 1) continue;
 
       // eec calculation
       Correlator_Builder cb(charged_constituents, jets[ijet].pt());
