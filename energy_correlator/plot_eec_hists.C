@@ -40,7 +40,7 @@ void individual_hists(const char* out_dir)
   c->SetRightMargin(0.15);
   c->SetBottomMargin(0.1);
 
-  h1d_jet_eec->Draw();
+  h1d_jet_eec->Draw("hist e");
 
   c->SaveAs( Form("%sh1d_jet_eec.pdf", out_dir));
 
