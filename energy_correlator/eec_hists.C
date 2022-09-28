@@ -140,7 +140,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       {
         PseudoJet* constit = new PseudoJet(particle->GetPx(),particle->GetPy(),particle->GetPz(),particle->GetE());
         //constit->set_user_index(ipart);
-        jet_constits.push_back(constit);
+        //jet_constits.push_back(constit);
       }
 
     }
