@@ -46,7 +46,7 @@ void individual_hists(const char* out_dir)
   c->SaveAs( Form("%sh1d_jet_eec.pdf", out_dir));
   */
 
-  mclogx(cno++);
+  mclogxy(cno++);
   {
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 1;
