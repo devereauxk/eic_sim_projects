@@ -196,6 +196,9 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   TFile* fout = new TFile(outFile,"recreate");
   fout->Write();
   h1d_jet_pt->Write();
-  h1d_jet_eec->Write();
+  for (int ipt = 0; ipt < ptbin; ipt++)
+  {
+    h1d_jet_eec[ipt]->Write();
+  }
 
 }
