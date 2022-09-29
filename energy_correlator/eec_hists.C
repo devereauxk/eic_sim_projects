@@ -8,6 +8,10 @@ using namespace std;
 
 const int verbosity = 0;
 
+//const int ptbin = 3;
+//static double pt_lo[ptbin] = [5, 10, 5];
+//static double pt_hi[ptbin] = [10, 20, 20];
+
 TH1D* h1d_jet_eec = NULL;
 TH1D* h1d_jet_pt = NULL;
 
@@ -167,7 +171,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
         int ip = constituents[iconstit].user_index();
         float charge = event->GetTrack(ip)->Id().Info()->Charge();
-        cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
+        //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
         if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
