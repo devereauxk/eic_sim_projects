@@ -53,8 +53,6 @@ void individual_hists(const char* out_dir)
   {
     mclogxy(cno++);
     {
-      h1d_jet_eec[ipt]->Scale(1/h1d_jet_eec[ipt]->Integral()); // normalization
-
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 1;
 
@@ -81,6 +79,43 @@ void individual_hists(const char* out_dir)
 
 }
 
+void overlay_hists(const char* outdir)
+{
+  mclogxy(cno++);
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 1;
+
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = h1d_jet_eec[ptbin-1]->GetMaximum()*1.50;
+
+    TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
+    htemp.Draw("hsame");
+    htemp.GetXaxis()->SetTitle("R_{L}");
+    htemp.GetYaxis()->SetTitle("normalized EEC");
+    myhset(&htemp,1.2,1.6,0.05,0.05);
+
+    TLegend* leg = new TLegend(0.21,0.17,0.51,0.29);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.03);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    for (int ipt = 0; ipt < ptbin-1; ipt++)
+    {
+      h1d_jet_eec[ipt]->SetMarkerColor(pt_color[ipt]);
+      h1d_jet_eec[ipt]->SetLineColor(pt_color[ipt]);
+      h1d_jet_eec[ipt]->SetMarkerSize(0.5);
+      h1d_jet_eec[ipt]->SetMarkerStyle(21);
+      h1d_jet_eec[ipt]->Draw("same hist e");
+      leg->AddEntry(h1d_jet_eec[ipt],Form("%.1f < p_{T} < %.1",pt_lo[ipt],pt_hi[ipt]));
+    }
+    leg->Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_%d.pdf\")", cno-1, out_dir, ipt) );
+  }
+}
+
 
 void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./")
 {
@@ -96,9 +131,13 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   {
     h1d_jet_eec[ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d", ipt));
     h1d_jet_eec[ipt]->SetName(Form("h1d_jet_eec_%d", ipt));
+
+    h1d_jet_eec[ipt]->Scale(1/h1d_jet_eec[ipt]->Integral()); // normalization
   }
 
   // print individual 2D histograms
   individual_hists(out_dir);
+
+  overlay_hists(outdir);
 
 }
