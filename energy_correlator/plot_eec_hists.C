@@ -111,7 +111,7 @@ void overlay_hists(const char* out_dir)
       h1d_jet_eec[ipt]->SetMarkerSize(0.5);
       h1d_jet_eec[ipt]->SetMarkerStyle(21);
       h1d_jet_eec[ipt]->Draw("same hist e");
-      leg->AddEntry(h1d_jet_eec[ipt],Form("%.1fGeV < p_{T} < %.1fGev",pt_lo[ipt],pt_hi[ipt]));
+      leg->AddEntry(h1d_jet_eec[ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
 
