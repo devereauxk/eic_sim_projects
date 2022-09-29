@@ -9,8 +9,8 @@ using namespace std;
 const int verbosity = 0;
 
 const int ptbin = 3; // inclusive on last bin, inclusive on lower limit, explusive on upper
-static double pt_lo[ptbin] = [5, 10, 5];
-static double pt_hi[ptbin] = [10, 20, 20];
+static double pt_lo[ptbin] = {5, 10, 5};
+static double pt_hi[ptbin] = {10, 20, 20};
 
 TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
@@ -74,7 +74,7 @@ class Correlator_Builder
           {
             if (scale >= pt_lo[ipt] && scale < pt_hi[ipt]) h1d_jet_ecc[ipt]->Fill(dist12, eec_weight);
           }
-          
+
         }
       }
     }
@@ -102,8 +102,11 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
   h1d_jet_pt->Sumw2();
 
-  h1d_jet_eec = new TH1D("h1d_jet_eec","jet eec",50,lbins);
-  h1d_jet_eec->Sumw2();
+  for (int ipt = 0; ipt < ptbin; ipt++)
+  {
+    h1d_jet_eec[ipt] = new TH1D(Form("h1d_jet_eec_%d", ipt),"jet eec",50,lbins);
+    h1d_jet_eec[ipt]->Sumw2();
+  }
 
   //Get EICTree Tree
   TTree *tree = (TTree*)f->Get("EICTree");
