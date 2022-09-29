@@ -60,6 +60,8 @@ void individual_hists(const char* out_dir)
     htemp.GetYaxis()->SetTitle("normalized EEC");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
+    h1d_jet_eec->Scale(1/h1d_jet_eec->Integral()); // normalization
+
     h1d_jet_eec->Draw("same hist e");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec.pdf\")", cno-1, out_dir) );
