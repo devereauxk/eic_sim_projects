@@ -3,8 +3,12 @@ R__LOAD_LIBRARY(libeicsmear);
 #include "TGraphErrors.h"
 using namespace std;
 
+const int ptbin = 3; // inclusive on last bin, inclusive on lower limit, explusive on upper
+static double pt_lo[ptbin] = {5, 10, 5};
+static double pt_hi[ptbin] = {10, 20, 20};
+
+TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
-TH1D* h1d_jet_eec = NULL;
 
 static int cno = 0;
 
@@ -45,32 +49,34 @@ void individual_hists(const char* out_dir)
 
   c->SaveAs( Form("%sh1d_jet_eec.pdf", out_dir));
   */
-
-  mclogxy(cno++);
+  for (int ipt = 0; ipt < ptbin; ipt++)
   {
-    h1d_jet_eec->Scale(1/h1d_jet_eec->Integral()); // normalization
+    mclogxy(cno++);
+    {
+      h1d_jet_eec[ipt]->Scale(1/h1d_jet_eec[ipt]->Integral()); // normalization
 
-    float plot_xrange_lo = 0;
-    float plot_xrange_hi = 1;
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 1;
 
-    float plot_yrange_lo = 0;
-    float plot_yrange_hi = h1d_jet_eec->GetMaximum()*1.50;
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = h1d_jet_eec[ipt]->GetMaximum()*1.50;
 
-    /*
-    TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
-    htemp.Draw("hsame");
-    htemp.GetXaxis()->SetTitle("R_{L}");
-    htemp.GetYaxis()->SetTitle("normalized EEC");
-    myhset(&htemp,1.2,1.6,0.05,0.05);
-    */
+      /*
+      TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
+      htemp.Draw("hsame");
+      htemp.GetXaxis()->SetTitle("R_{L}");
+      htemp.GetYaxis()->SetTitle("normalized EEC");
+      myhset(&htemp,1.2,1.6,0.05,0.05);
+      */
 
-    h1d_jet_eec->GetXaxis()->SetTitle("R_{L}");
-    h1d_jet_eec->GetYaxis()->SetTitle("normalized EEC");
-    h1d_jet_eec->GetXaxis()->SetTitleOffset(1.3);
-    h1d_jet_eec->GetYaxis()->SetTitleOffset(1.5);
-    h1d_jet_eec->Draw("same hist e");
+      h1d_jet_eec[ipt]->GetXaxis()->SetTitle("R_{L}");
+      h1d_jet_eec[ipt]->GetYaxis()->SetTitle("normalized EEC");
+      h1d_jet_eec[ipt]->GetXaxis()->SetTitleOffset(1.3);
+      h1d_jet_eec[ipt]->GetYaxis()->SetTitleOffset(1.5);
+      h1d_jet_eec[ipt]->Draw("same hist e");
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec.pdf\")", cno-1, out_dir) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_%d.pdf\")", cno-1, out_dir, ipt) );
+    }
   }
 
 }
@@ -86,9 +92,11 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   h1d_jet_pt = (TH1D*) fin->Get("h1d_jet_pt");
   h1d_jet_pt->SetName("h1d_jet_pt");
 
-  h1d_jet_eec = (TH1D*) fin->Get("h1d_jet_eec");
-  h1d_jet_eec->SetName("h1d_jet_eec");
-
+  for (int ipt = 0; ipt < ptbin; ipt++)
+  {
+    h1d_jet_eec[ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d", ipt));
+    h1d_jet_eec[ipt]->SetName(Form("h1d_jet_eec_%d", ipt));
+  }
 
   // print individual 2D histograms
   individual_hists(out_dir);
