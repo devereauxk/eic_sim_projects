@@ -14,10 +14,10 @@ void individual_hists(const char* out_dir)
   mcs(cno++);
   {
     float plot_xrange_lo = 0;
-    float plot_xrange_hi = 25;
+    float plot_xrange_hi = 30;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 500;
+    float plot_yrange_hi = h1d_jet_pt->GetMaximum()*1.15;
 
     TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw("hsame");
@@ -52,7 +52,7 @@ void individual_hists(const char* out_dir)
     float plot_xrange_hi = 1;
 
     float plot_yrange_lo = 0;
-    float plot_yrange_hi = 70;
+    float plot_yrange_hi = h1d_jet_eec->GetMaximum()*1.15;
 
     TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw("hsame");
@@ -60,7 +60,7 @@ void individual_hists(const char* out_dir)
     htemp.GetYaxis()->SetTitle("normalized EEC");
     myhset(&htemp,1.2,1.6,0.05,0.05);
 
-    h1d_jet_eec->Scale(1/h1d_jet_eec->Integral()); // normalization
+    //h1d_jet_eec->Scale(1/h1d_jet_eec->Integral()); // normalization
 
     h1d_jet_eec->Draw("same hist e");
 
