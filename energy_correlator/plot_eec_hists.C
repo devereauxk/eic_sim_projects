@@ -98,7 +98,7 @@ void overlay_hists(const char* out_dir)
     myhset(&htemp,1.2,1.6,0.05,0.05);
     */
 
-    TLegend* leg = new TLegend(0.21,0.77,0.51,0.89);
+    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.03);
     leg->SetFillStyle(0);
