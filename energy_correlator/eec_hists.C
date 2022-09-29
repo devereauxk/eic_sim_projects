@@ -72,7 +72,7 @@ class Correlator_Builder
 
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
-            if (scale >= pt_lo[ipt] && scale < pt_hi[ipt]) h1d_jet_ecc[ipt]->Fill(dist12, eec_weight);
+            if (scale >= pt_lo[ipt] && scale < pt_hi[ipt]) h1d_jet_eec[ipt]->Fill(dist12, eec_weight);
           }
 
         }
