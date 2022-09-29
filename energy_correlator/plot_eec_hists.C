@@ -32,8 +32,7 @@ void individual_hists(const char* out_dir)
 
   // 1d jet eec histogram, log bins
 
-  h1d_jet_eec->Scale(1/h1d_jet_eec->Integral()); // normalization
-
+  /*
   TCanvas* c = new TCanvas("c","c", 800, 800);
   c->SetLogx();
   c->SetLogy();
@@ -42,15 +41,11 @@ void individual_hists(const char* out_dir)
   c->SetRightMargin(0.15);
   c->SetBottomMargin(0.1);
 
-  h1d_jet_eec->GetXaxis()->SetTitle("R_{L}");
-  h1d_jet_eec->GetYaxis()->SetTitle("normalized EEC");
-  h1d_jet_eec->GetXaxis()->SetTitleOffset(1.3);
-  h1d_jet_eec->GetYaxis()->SetTitleOffset(1.5);
   h1d_jet_eec->Draw("hist e");
 
   c->SaveAs( Form("%sh1d_jet_eec.pdf", out_dir));
+  */
 
-  /*
   mclogxy(cno++);
   {
     h1d_jet_eec->Scale(1/h1d_jet_eec->Integral()); // normalization
@@ -61,17 +56,22 @@ void individual_hists(const char* out_dir)
     float plot_yrange_lo = 0;
     float plot_yrange_hi = h1d_jet_eec->GetMaximum()*1.50;
 
+    /*
     TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
     htemp.Draw("hsame");
     htemp.GetXaxis()->SetTitle("R_{L}");
     htemp.GetYaxis()->SetTitle("normalized EEC");
     myhset(&htemp,1.2,1.6,0.05,0.05);
+    */
 
+    h1d_jet_eec->GetXaxis()->SetTitle("R_{L}");
+    h1d_jet_eec->GetYaxis()->SetTitle("normalized EEC");
+    h1d_jet_eec->GetXaxis()->SetTitleOffset(1.3);
+    h1d_jet_eec->GetYaxis()->SetTitleOffset(1.5);
     h1d_jet_eec->Draw("same hist e");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec.pdf\")", cno-1, out_dir) );
   }
-  */
 
 }
 

@@ -8,11 +8,11 @@ using namespace std;
 
 const int verbosity = 0;
 
-//const int ptbin = 3;
-//static double pt_lo[ptbin] = [5, 10, 5];
-//static double pt_hi[ptbin] = [10, 20, 20];
+const int ptbin = 3; // inclusive on last bin, inclusive on lower limit, explusive on upper
+static double pt_lo[ptbin] = [5, 10, 5];
+static double pt_hi[ptbin] = [10, 20, 20];
 
-TH1D* h1d_jet_eec = NULL;
+TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
@@ -38,7 +38,7 @@ class Correlator_Builder
     {
       particle_list = _particle_list;
       mult = particle_list.size();
-      scale = _scale;
+      scale = _scale; // jet pt usually
     }
 
     void make_pairs()
@@ -70,7 +70,11 @@ class Correlator_Builder
           if (overlap == 0) eec_weight = eec_weight*2;
           if (overlap > 0) eec_weight = eec_weight*1;
 
-          h1d_jet_eec->Fill(dist12, eec_weight);
+          for (int ipt = 0; ipt < ptbin; ipt++)
+          {
+            if (scale >= pt_lo[ipt] && scale < pt_hi[ipt]) h1d_jet_ecc[ipt]->Fill(dist12, eec_weight);
+          }
+          
         }
       }
     }
