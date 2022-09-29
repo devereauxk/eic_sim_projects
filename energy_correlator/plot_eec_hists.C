@@ -6,6 +6,7 @@ using namespace std;
 const int ptbin = 3; // inclusive on last bin, inclusive on lower limit, explusive on upper
 static double pt_lo[ptbin] = {5, 10, 5};
 static double pt_hi[ptbin] = {10, 20, 20};
+const int pt_color[ptbin] = {kGreen+1, kBlue};
 
 TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
@@ -79,7 +80,7 @@ void individual_hists(const char* out_dir)
 
 }
 
-void overlay_hists(const char* outdir)
+void overlay_hists(const char* out_dir)
 {
   mclogxy(cno++);
   {
@@ -108,11 +109,11 @@ void overlay_hists(const char* outdir)
       h1d_jet_eec[ipt]->SetMarkerSize(0.5);
       h1d_jet_eec[ipt]->SetMarkerStyle(21);
       h1d_jet_eec[ipt]->Draw("same hist e");
-      leg->AddEntry(h1d_jet_eec[ipt],Form("%.1f < p_{T} < %.1",pt_lo[ipt],pt_hi[ipt]));
+      leg->AddEntry(h1d_jet_eec[ipt],Form("%.1f < p_{T} < %.1f",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay.pdf\")", cno-1, out_dir, ipt) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay.pdf\")", cno-1, out_dir) );
   }
 }
 
@@ -138,6 +139,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   // print individual 2D histograms
   individual_hists(out_dir);
 
-  overlay_hists(outdir);
+  // print overlay hists for: pt
+  overlay_hists(out_dir);
 
 }
