@@ -112,7 +112,7 @@ void overlay_hists(const char* outdir)
     }
     leg->Draw("same");
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_%d.pdf\")", cno-1, out_dir, ipt) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay.pdf\")", cno-1, out_dir, ipt) );
   }
 }
 
