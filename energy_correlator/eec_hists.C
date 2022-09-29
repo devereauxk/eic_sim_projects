@@ -56,7 +56,7 @@ class Correlator_Builder
       }
     }
 
-    void construct_EEC(TH1D* h1d_jet_eec)
+    void construct_EEC()
     {
       int overlap = 0;
       for (int i = 0; i < mult; i++)
@@ -187,7 +187,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       // eec calculation
       Correlator_Builder cb(charged_constituents, jets[ijet].pt());
       cb.make_pairs();
-      cb.construct_EEC(h1d_jet_eec);
+      cb.construct_EEC();
 
     }
 
