@@ -1,3 +1,5 @@
+R__LOAD_LIBRARY(libeicsmear);
+
 #include "Pythia8/Pythia.h"
 using namespace Pythia8;
 #include <fstream>
@@ -162,7 +164,7 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
 // modified output function - target=proton collisions only
 // Output function, we need the final-particle list and kinematics of the original event
 // to compute Q, x, etc.
-const int evtn = 0;
+int evtn = 0;
 void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
     // Compute four-momenta of proton, electron, virtual
     Vec4 pProton = pythia.event[1].p(); // four-momentum of proton
