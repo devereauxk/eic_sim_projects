@@ -17,4 +17,3 @@ mkdir -p $TablePath
 Z=1
 A=1
 $exe $Neve $Z $A $M $K $TablePath $folder $Configfile # > /dev/null 2>&1
-

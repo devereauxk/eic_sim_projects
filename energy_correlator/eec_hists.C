@@ -269,8 +269,6 @@ void read_csv(const char* inFile = "merged.csv")
         if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
-      cout<<jets[ijet].pt()<<endl;
-
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
