@@ -224,6 +224,8 @@ void read_csv(const char* inFile = "merged.csv")
 
     vector<PseudoJet> jet_constits;
 
+    cout<<"evt_tree size "<<evt_tree->GetEntries()<<endl;
+
     // loop over particles (entires in ttree)
     for (int ipart = 0; ipart < evt_tree->GetEntries(); ipart++)
     {
