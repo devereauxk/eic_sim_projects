@@ -183,28 +183,22 @@ void read_csv(const char* inFile = "merged.csv")
 
   // set up file as ttree
   TTree* tree = new TTree("tree from csv", "tree from csv");
-  tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Px:Py:Pz:Mass");
+  tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Px:Py:Pz:Mass", ",");
 
   // initialize particle level variables
   Int_t evtn, Id;
   Double_t Charge, Px, Py, Pz, Mass;
 
   // boost calculation
-  TLorentzVector Ei, Ef;
-  Ei.SetXYZM(0,0,-50,Me);
-  Ef.SetXYZM(0,0,-10,Me);
-  TVector3 boost_vec = (Ef-Ei).BoostVector();
+  // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
   TLorentzVector part_rest, part_lab;
-  TLorentzVector Pi, Pf;
-  Pi.SetXYZM(0,0,0,Mp);
-  Pf = Pi; Pf.Boost(boost_vec);
-  Ei.Print();
-  Ef.Print();
-  boost_vec.Print();
-  Pi.Print();
-  Pf.Print();
-
-  return;
+  TLorentzVector Ei, Ef, Pf;
+  Ei.SetXYZM(0,0,-50,Me);
+  Pf.SetXYZM(0,0,100,Me);
+  TVector3 boost_vec = Pi.BoostVector();
+  Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
+  //Ef.Print(); // print lab frame projectile
+  //Pf.Print(); // print lab frame target
 
   // loop over events
   for (int ievt = 0; ievt < nevt; ievt++)//TODO
