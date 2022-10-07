@@ -1,5 +1,3 @@
-R__LOAD_LIBRARY(libeicsmear);
-
 #include "Pythia8/Pythia.h"
 using namespace Pythia8;
 #include <fstream>
@@ -7,9 +5,6 @@ using namespace Pythia8;
 #include <sstream>
 #include <algorithm>
 #include <unistd.h>
-
-const Double_t Mp(0.9383);
-const Double_t Me(0.511E-3);
 
 // A separate Pythia instance that only handles hadronization
 class hadronizer{
@@ -161,9 +156,7 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
 }
 */
 
-// modified output function - target=proton collisions only
-// Output function, we need the final-particle list and kinematics of the original event
-// to compute Q, x, etc.
+// modified output function
 int evtn = 0;
 void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
     // Compute four-momenta of proton, electron, virtual
@@ -178,29 +171,16 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
     double theta = - pGamma.theta();
     double phi = - pGamma.phi();
 
-    // boost calculation
-    TLorentzVector Pi;
-    Pi.SetXYZM(0,0,Etarg,pProton.m());
-    TVector3 boost_vec = Pi.BoostVector();
-    TLorentzVector part_rest;
-    TLorentzVector part_lab;
-
     F << "# " << Q2 << " " << xB << std::endl;
     for (auto & p : plist) {
         if (p.isFinal() && p.isHadron()){
-            // invariant quantities
             int id = p.id();
             double charge = p.charge();
 
-            // boost particle to lab frame, mvoing target
-            part_rest.setXYZM(p.px(), p.py(), p.pz(), p.m());
-            part_lab = p_rest; part_lab.Boost(boost_vec);
+            // kinematics in target rest frame (to be boosted in analysis script)
 
-            // kinematics in lab frame
-
-	    F << evtn << "," << id << "," << charge << ","
-      << part_lab.Eta() << "," << "," << part_lab.Pt() << ","
-      << part_lab.Px() << "," << part_lab.Py() << "," << part_lab.Pz() << "," << part_lab.E() << std::endl;
+	    F << evtn << "," << p.id() << "," << p.charge() << ","
+      << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << std::endl;
 	 }
     }
     evtn++;

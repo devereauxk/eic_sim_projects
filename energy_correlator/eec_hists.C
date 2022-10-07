@@ -6,6 +6,9 @@ R__LOAD_LIBRARY(libfastjet);
 using namespace fastjet;
 using namespace std;
 
+const Double_t Mp(0.9383);
+const Double_t Me(0.511E-3);
+
 const int verbosity = 0;
 
 const int ptbin = 3; // inclusive on last bin, inclusive on lower limit, explusive on upper
@@ -176,15 +179,22 @@ void read_csv(const char* inFile = "merged.csv")
   // csv must be in the following format - eHIJING standard
   // each particle has the line
   // F << evtn << "," << p.id() << "," << p.charge() << ","
-  // << part_lab.Eta() << "," << "," << part_lab.Pt() << ","
-  // << part_lab.Px() << "," << part_lab.Py() << "," << part_lab.Pz() << "," << part_lab.E() << std::endl;
+  // << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << std::endl;
 
   // set up file as ttree
   TTree* tree = new TTree("tree from csv", "tree from csv");
-  tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Pt:Px:Py:Pz:Energy");
+  tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Px:Py:Pz:Mass");
 
+  // initialize particle level variables
   Int_t evtn, Id;
-  Double_t Charge, Eta, Pt, Px, Py, Pz, Energy;
+  Double_t Charge, Px, Py, Pz, Mass;
+
+  // boost calculation
+  TLorentzVector Pi;
+  Pi.SetXYZM(0,0,Etarg,pProton.m());
+  TVector3 boost_vec = Pi.BoostVector();
+  TLorentzVector part_rest;
+  TLorentzVector part_lab;
 
   // loop over events
   for (int ievt = 0; ievt < nevt; ievt++)//TODO
@@ -196,12 +206,10 @@ void read_csv(const char* inFile = "merged.csv")
     evt_tree->SetBranchAddress("evtn",&evtn);
     evt_tree->SetBranchAddress("Id",&Id);
     evt_tree->SetBranchAddress("Charge",&Charge);
-    evt_tree->SetBranchAddress("Eta",&Eta);
-    evt_tree->SetBranchAddress("Pt",&Pt);
     evt_tree->SetBranchAddress("Px",&Px);
     evt_tree->SetBranchAddress("Py",&Py);
     evt_tree->SetBranchAddress("Pz",&Pz);
-    evt_tree->SetBranchAddress("Energy",&Energy);
+    evt_tree->SetBranchAddress("Mass",&Mass);
 
     vector<PseudoJet> jet_constits;
 
@@ -210,10 +218,14 @@ void read_csv(const char* inFile = "merged.csv")
     {
       evt_tree->GetEntry(ipart);
 
+      // apply boost to particle (boost it into lab frame)
+      part_rest.setXYZM(Px, Py, Px, Mass);
+      part_lab = part_rest; part_lab.Boost(boost_vec);
+
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      if (Eta<3.5 && Id!=11)
+      if (fabs(part_lab.Eta())<3.5 && Id!=11)
       {
-        PseudoJet constit = PseudoJet(Px,Py,Pz,Energy);
+        PseudoJet constit = PseudoJet(part_lab.Px(),part_lab.Py(),part_lab.Pz(),part_lab.E());
         constit.set_user_index(ipart);
         jet_constits.push_back(constit);
       }
