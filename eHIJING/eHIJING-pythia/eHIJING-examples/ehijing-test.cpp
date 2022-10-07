@@ -162,6 +162,7 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
 // modified output function - target=proton collisions only
 // Output function, we need the final-particle list and kinematics of the original event
 // to compute Q, x, etc.
+const int evtn = 0;
 void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
     // Compute four-momenta of proton, electron, virtual
     Vec4 pProton = pythia.event[1].p(); // four-momentum of proton
@@ -177,7 +178,7 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
 
     // boost calculation
     TLorentzVector Pi;
-    Pi.SetXYZM(0,0,Etarg,Mp);
+    Pi.SetXYZM(0,0,Etarg,pProton.m());
     TVector3 boost_vec = Pi.BoostVector();
     TLorentzVector part_rest;
     TLorentzVector part_lab;
@@ -194,19 +195,13 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
             part_lab = p_rest; part_lab.Boost(boost_vec);
 
             // kinematics in lab frame
-            double eta = part_lab.Eta();
-            double phi = part_lab.Phi();
-            double pt = part_lab.Pt();
 
-            // Fixed target frame - FOR TESTING
-            auto prot = p.p();
-            prot.rot(0, phi);
-
-	    F << p.id() << "," << p.charge() << ","
-      << eta << "," << phi << "," << pt << ","
-      << prot.eta() << "," << prot.phi() << "," << prot.pT() << "," << std::endl;
+	    F << evtn << "," << id << "," << charge << ","
+      << part_lab.Eta() << "," << "," << part_lab.Pt() << ","
+      << part_lab.Px() << "," << part_lab.Py() << "," << part_lab.Pz() << "," << part_lab.E() << std::endl;
 	 }
     }
+    evtn++;
 }
 
 // low-Q2 medium correction (a Monte Carlo version of the the modified FF model)
