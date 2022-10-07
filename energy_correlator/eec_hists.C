@@ -195,7 +195,7 @@ void read_csv(const char* inFile = "merged.csv")
   TLorentzVector Ei, Ef, Pf;
   Ei.SetXYZM(0,0,-50,Me);
   Pf.SetXYZM(0,0,100,Me);
-  TVector3 boost_vec = Pi.BoostVector();
+  TVector3 boost_vec = Pf.BoostVector();
   Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
   //Ef.Print(); // print lab frame projectile
   //Pf.Print(); // print lab frame target
@@ -228,7 +228,7 @@ void read_csv(const char* inFile = "merged.csv")
       evt_tree->GetEntry(ipart);
 
       // apply boost to particle (boost it into lab frame)
-      part_rest.setXYZM(Px, Py, Px, Mass);
+      part_rest.SetXYZM(Px, Py, Px, Mass);
       part_lab = part_rest; part_lab.Boost(boost_vec);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
@@ -306,7 +306,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   }
 
   // reads file and fills in jet_constits
-  if (gentype == 0) read_root(inFile);
+  if (gen_type == 0) read_root(inFile);
   else read_csv(inFile);
 
   // write out histograms
