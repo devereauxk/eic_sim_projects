@@ -27,6 +27,6 @@ void calc_proj_energy(float proj_lab_e = 10, float targ_lab_e = 100, float proj_
   cout<<"target in target rest frame:"<<endl;
   targ_rest.Print();
 
-  endl<<cout<<"set projectile energy to "<<proj_rest.E()<<" GeV"<<endl;
+  cout<<"set projectile energy to "<<proj_rest.E()<<" GeV"<<endl;
 
 }
