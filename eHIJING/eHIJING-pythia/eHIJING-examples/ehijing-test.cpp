@@ -6,10 +6,13 @@ using namespace Pythia8;
 #include <algorithm>
 #include <unistd.h>
 
+const Double_t Mp(0.9383);
+const Double_t Me(0.511E-3);
+
 // A separate Pythia instance that only handles hadronization
 class hadronizer{
 public:
-    // Constructor, set Pythia, random generator	
+    // Constructor, set Pythia, random generator
     hadronizer():pythia(),rd(),gen(rd()),dist(0.,1.){
       pythia.readString("ProcessLevel:all = off");
       pythia.readString("Print:quiet = on");
@@ -19,7 +22,7 @@ public:
       // prton tune and PDF set, please check
       pythia.readString("Tune:pp = 19");
       pythia.readString("PDF:pSet = 12");
-      // These two parameters have something to do with the 
+      // These two parameters have something to do with the
       // Lund String interative breaking conditions
       // ** We have changed stopMass=0.0 GeV, different from Pythia8 Default
       // too match HERMES FF measurements of pion and Kaon.
@@ -52,9 +55,9 @@ public:
          if (p.status()==63 && 1000<p.idAbs() && p.idAbs()<3000) {
                  // valence stuff, the remnants will contain the rest flavor compoennt.
                  // note that the hard quark has already been sampled accorrding to the
-                 // the isospin content of the nuclear PDF; 
-		 // *** However, the remanent is generated assuming the rest stuff comes 
-		 // from a proton. Therefore, we need to resample it according to the Z/A 
+                 // the isospin content of the nuclear PDF;
+		 // *** However, the remanent is generated assuming the rest stuff comes
+		 // from a proton. Therefore, we need to resample it according to the Z/A
 		 // ratio this nuclei
                  // 1) decide wither it is from a neutron or proton
                  if (dist(gen) < ZoverA) { // From a proton 2212
@@ -122,8 +125,8 @@ bool trigger(Pythia & pythia) {
     return (0.01<y) && (y<0.95) && (1.0<Q2);
 }
 
-// Output function, we need the final-particle list and kinematics of the original event
-// to compute Q, x, etc.
+// old output function
+/*
 void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
     // Compute four-momenta of proton, electron, virtual
     Vec4 pProton = pythia.event[1].p(); // four-momentum of proton
@@ -147,12 +150,58 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
             double pT = p.pT();
 	    double kT = prot.pT();
 	    F << " " << p.id() << " "
-		 // photon-z frame 
+		 // photon-z frame
 		 << z << " " << kT << " " << prot.phi() << " "
 		 // Fixed target frame
-		 << p.pT() << " " << p.y() << " " << p.phi() << std::endl; 
+		 << p.pT() << " " << p.y() << " " << p.phi() << std::endl;
 	 }
     }
+}
+*/
+
+// modified output function - target=proton collisions only
+// Output function, we need the final-particle list and kinematics of the original event
+// to compute Q, x, etc.
+const int evtn = 0;
+void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
+    // Compute four-momenta of proton, electron, virtual
+    Vec4 pProton = pythia.event[1].p(); // four-momentum of proton
+    Vec4 peIn    = pythia.event[4].p(); // incoming electron
+    Vec4 peOut   = pythia.event[6].p(); // outgoing electron
+    Vec4 pGamma = peIn - peOut; // virtual boson photon/Z^0/W^+-
+    double Q2 = - pGamma.m2Calc(); // hard scale square
+    double xB  = Q2 / (2. * pProton * pGamma); // Bjorken x
+    Vec4 pCoM = pGamma + pProton;
+    double nu = pGamma.e();
+    double theta = - pGamma.theta();
+    double phi = - pGamma.phi();
+
+    // boost calculation
+    TLorentzVector Pi;
+    Pi.SetXYZM(0,0,Etarg,pProton.m());
+    TVector3 boost_vec = Pi.BoostVector();
+    TLorentzVector part_rest;
+    TLorentzVector part_lab;
+
+    F << "# " << Q2 << " " << xB << std::endl;
+    for (auto & p : plist) {
+        if (p.isFinal() && p.isHadron()){
+            // invariant quantities
+            int id = p.id();
+            double charge = p.charge();
+
+            // boost particle to lab frame, mvoing target
+            part_rest.setXYZM(p.px(), p.py(), p.pz(), p.m());
+            part_lab = p_rest; part_lab.Boost(boost_vec);
+
+            // kinematics in lab frame
+
+	    F << evtn << "," << id << "," << charge << ","
+      << part_lab.Eta() << "," << "," << part_lab.Pt() << ","
+      << part_lab.Px() << "," << part_lab.Py() << "," << part_lab.Pz() << "," << part_lab.E() << std::endl;
+	 }
+    }
+    evtn++;
 }
 
 // low-Q2 medium correction (a Monte Carlo version of the the modified FF model)
@@ -167,7 +216,7 @@ public:
   };
   void sample_FF_partons(Event & event);
 
-private:	
+private:
     int mode, Z, A;
     double ZoverA;
     EHIJING::MultipleCollision Coll;
@@ -189,20 +238,20 @@ int main(int argc, char *argv[]) {
     int inuclei = 100000000
                 +   Z*10000
                    +   A*10;
-    // Shadowing effect: 
+    // Shadowing effect:
     //   nPDFset=0: only isospin
     //   nPDFset = 1: EPS09 LO
-    //   nPDFset = 2: EPS09 NLO  
+    //   nPDFset = 2: EPS09 NLO
     //   nPDFset = 2: EPPS16 NLO
     // We will use only isospin for deuteron,
-    // and EPPS16 NLO for heavier nucleus 
+    // and EPPS16 NLO for heavier nucleus
     int nPDFset = (A>2)?3:0;
 
     // mode=0: higher-twist, in the soft-gluon-emission limit
     // mode=1: generalized higher-twist, in the soft-gluon-emission limit
     int mode = atof(argv[4]);
 
-    // K-factor of the gluon distribution. 
+    // K-factor of the gluon distribution.
     double K = atof(argv[5]);
 
     // eHIJING table path
@@ -249,11 +298,11 @@ int main(int argc, char *argv[]) {
             Nfailed ++;
             continue;
             // count failed events
-        }; 
+        };
 
         if (!trigger(pythia)) continue; // only study triggered events
         Ntriggered ++;
-        if (Ntriggered%1000==0)  
+        if (Ntriggered%1000==0)
         std::cout << "# of trigged events: " << Ntriggered << std::endl;
 
         // Modify the final shower with low-Q2 medium corrections
@@ -263,7 +312,7 @@ int main(int argc, char *argv[]) {
         auto event2 = HZ.hadronize(pythia, Z, A);
 
         // output
-        Output(pythia, event2, fout);      
+        Output(pythia, event2, fout);
     }
     // Check the trigger rate
     std::cout << "Trigger Rate = " << Ntriggered*100./Ntotal << "%" << std::endl;
@@ -287,7 +336,7 @@ void Modified_FF::sample_FF_partons(Event & event){
     double nu = pGamma.e();
     double W2 = (pProton + pGamma).m2Calc();
     auto & hardP = event[5];
-    
+
     // Use fixed coupling at Qs of this event for anything medium-induced below Qs
     double kt2max_now = event.SeparationScale();
     double alpha_fix = EHIJING::alphas(kt2max_now);
@@ -319,17 +368,17 @@ void Modified_FF::sample_FF_partons(Event & event){
 	int Ncolls = ts.size();
         if (Ncolls==0) continue;
 
-     
+
 	double vx = p.px()/p.e(), vy = p.py()/p.e(), vz = p.pz()/p.e();
-        double L = eHIJING_Geometry.compute_L(event.Rx(), event.Ry(), event.Rz(), 
+        double L = eHIJING_Geometry.compute_L(event.Rx(), event.Ry(), event.Rz(),
                                               vx, vy, vz);
-        double TA = eHIJING_Geometry.compute_TA(event.Rx(), event.Ry(), event.Rz(), 
+        double TA = eHIJING_Geometry.compute_TA(event.Rx(), event.Ry(), event.Rz(),
                                                 vx, vy, vz);
 
 	double sumq2 = 0.; // useful quantity for H-T approach
         for (int i=0; i<Ncolls; i++) sumq2 += qt2s[i];
         if (sumq2<1e-9) continue; // negelect too soft momentum kicks
-	   
+
 
           // tauf ordered fragmentation gluon
 	  // A very large cut off, since the LPM effect will effective regulate the tauf divergence
@@ -492,10 +541,10 @@ void Modified_FF::sample_FF_partons(Event & event){
               p.e(std::sqrt(p.pAbs2()+p.m2()));
               kmu.e(std::sqrt(kmu.pAbs2()));
 
-	      // the gluon can continue to collide 
-               
+	      // the gluon can continue to collide
+
 	      std::vector<double> g_qt2s, g_ts, g_phis;
-              Coll.sample_all_qt2(21, kmu.e(), L, TA, 
+              Coll.sample_all_qt2(21, kmu.e(), L, TA,
 			          xB, Q20, g_qt2s, g_ts, g_phis);
               Vec4 Qtot{0.,0.,0.,0.};
 	      double e0 = kmu.e();
@@ -503,7 +552,7 @@ void Modified_FF::sample_FF_partons(Event & event){
 		 double qt = std::sqrt(g_qt2s[ig]);
                  double phi = g_phis[ig];
 		 Vec4 qmu{qt*std::cos(phi), qt*std::sin(phi), -qt*qt/4./e0, 0.0};
-                 Qtot = Qtot + qmu; 
+                 Qtot = Qtot + qmu;
 	      }
 	      Qtot.rot(kmu.theta(), 0.);
               Qtot.rot(0., kmu.phi());
@@ -515,8 +564,8 @@ void Modified_FF::sample_FF_partons(Event & event){
               // first, the spliting process
               int k_col, k_acol;
               // if the gluon forms inside the nuclei,
-	      // we consider it will lose color correlation with the original parton, 
-	      // and form a new string with beam remnant 
+	      // we consider it will lose color correlation with the original parton,
+	      // and form a new string with beam remnant
               {
                   Particle gluon = Particle(21, 201, i, 0, 0, 0,
                                   event.nextColTag(), event.nextColTag(),
@@ -573,13 +622,13 @@ void Modified_FF::sample_FF_partons(Event & event){
           }
           // Now handles recoil and remannts
           // if there are radiations, recoil goes to radiations
-          // else: goes to the hard quark 
+          // else: goes to the hard quark
 	  int Nrad = frag_gluons.size();
                for (int j=0; j<Ncolls; j++){
                    double qT = std::sqrt(qt2s[j]), phiq = phis[j];
                    double qx = qT*std::cos(phiq);
                    double qy = qT*std::sin(phiq);
-                   double qz = -qT*qT/4./p.e();   
+                   double qz = -qT*qT/4./p.e();
                    Vec4 qmu{qx, qy, qz, 0};
                    qmu.rot(p.theta(), 0.);
                    qmu.rot(0., p.phi());
@@ -667,7 +716,7 @@ void Modified_FF::sample_FF_partons(Event & event){
            for (auto & p : recoil_remnants) new_particles.push_back(p);
         }
 
-        
+
         for (auto & p : new_particles)
             event.append(p.id(), 201, p.col(), p.acol(),
                          p.px(), p.py(), p.pz(), p.e(), p.m());

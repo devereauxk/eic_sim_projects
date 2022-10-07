@@ -80,33 +80,12 @@ class Correlator_Builder
     }
 };
 
-void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root")
+void read_root(const char* inFile = "merged.root")
 {
   //Event Class
   erhic::EventPythia *event(NULL);
 
   TFile *f = new TFile(inFile);
-
-  // compute log bins for eec histogram
-  double xmin = 1E-4;
-  double xmax = 1;
-  int nbins = 50;
-  Double_t lbins[nbins+1];
-  double binwidth = (log10(xmax) - log10(xmin)) / nbins;
-  for (int i = 0; i < nbins+1; i++)
-  {
-    lbins[i] = TMath::Power(10, log10(xmin) + binwidth * i);
-  }
-
-  // histogram definitions
-  h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
-  h1d_jet_pt->Sumw2();
-
-  for (int ipt = 0; ipt < ptbin; ipt++)
-  {
-    h1d_jet_eec[ipt] = new TH1D(Form("h1d_jet_eec_%d", ipt),"jet eec",50,lbins);
-    h1d_jet_eec[ipt]->Sumw2();
-  }
 
   //Get EICTree Tree
   TTree *tree = (TTree*)f->Get("EICTree");
@@ -137,7 +116,6 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     if (event->GetProcess()==135 || event->GetProcess()==136) flag_direct = true;
     if (!flag_direct) continue; // only process direct processes
     */
-
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     erhic::ParticleMC* particle;
@@ -188,11 +166,129 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       Correlator_Builder cb(charged_constituents, jets[ijet].pt());
       cb.make_pairs();
       cb.construct_EEC();
-
     }
 
   }
+}
 
+void read_csv(const char* inFile = "merged.csv")
+{
+  // csv must be in the following format - eHIJING standard
+  // each particle has the line
+  // F << evtn << "," << p.id() << "," << p.charge() << ","
+  // << part_lab.Eta() << "," << "," << part_lab.Pt() << ","
+  // << part_lab.Px() << "," << part_lab.Py() << "," << part_lab.Pz() << "," << part_lab.E() << std::endl;
+
+  // set up file as ttree
+  TTree* tree = new TTree("tree from csv", "tree from csv");
+  tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Pt:Px:Py:Pz:Energy");
+
+  Int_t evtn, Id;
+  Double_t Charge, Eta, Pt, Px, Py, Pz, Energy;
+
+  // loop over events
+  for (int ievt = 0; ievt < nevt; ievt++)//TODO
+  {
+    // get ttree containing all particle info for given event
+    TTree* evt_tree = tree->CopyTree(Form("evtn == %i", ievt));
+
+    // set branch addresses
+    evt_tree->SetBranchAddress("evtn",&evtn);
+    evt_tree->SetBranchAddress("Id",&Id);
+    evt_tree->SetBranchAddress("Charge",&Charge);
+    evt_tree->SetBranchAddress("Eta",&Eta);
+    evt_tree->SetBranchAddress("Pt",&Pt);
+    evt_tree->SetBranchAddress("Px",&Px);
+    evt_tree->SetBranchAddress("Py",&Py);
+    evt_tree->SetBranchAddress("Pz",&Pz);
+    evt_tree->SetBranchAddress("Energy",&Energy);
+
+    vector<PseudoJet> jet_constits;
+
+    // loop over particles (entires in ttree)
+    for (int ipart = 0; ipart < evt_tree->GetEntries(); ipart++)
+    {
+      evt_tree->GetEntry(ipart);
+
+      // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
+      if (Eta<3.5 && Id!=11)
+      {
+        PseudoJet constit = PseudoJet(Px,Py,Pz,Energy);
+        constit.set_user_index(ipart);
+        jet_constits.push_back(constit);
+      }
+    }
+
+    // jet reconstruction
+    JetDefinition R1jetdef(antikt_algorithm, 1.0);
+    ClusterSequence cs(jet_constits, R1jetdef);
+    vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
+
+    // jet processing
+    for (unsigned ijet = 0; ijet < jets.size(); ijet++)
+    {
+      // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
+      if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+      h1d_jet_pt->Fill(jets[ijet].pt());
+
+      // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
+      // take only charged constituents for eec calculation
+      vector<PseudoJet> constituents = jets[ijet].constituents();
+      vector<PseudoJet> charged_constituents;
+      for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
+      {
+        if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
+
+        int ip = constituents[iconstit].user_index();
+        evt_tree->GetEntry(ip);
+        //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
+        if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
+      }
+
+      if (charged_constituents.size() < 1) continue;
+
+      // eec calculation
+      Correlator_Builder cb(charged_constituents, jets[ijet].pt());
+      cb.make_pairs();
+      cb.construct_EEC();
+    }
+
+  }
+}
+
+
+void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 0)
+{
+  cout << "Generator Type: ";
+  if (gen_type==0) cout << "Pythia6" << endl;
+  else cout << "eHIJING" << endl;
+
+  // compute log bins for eec histogram
+  double xmin = 1E-4;
+  double xmax = 1;
+  int nbins = 50;
+  Double_t lbins[nbins+1];
+  double binwidth = (log10(xmax) - log10(xmin)) / nbins;
+  for (int i = 0; i < nbins+1; i++)
+  {
+    lbins[i] = TMath::Power(10, log10(xmin) + binwidth * i);
+  }
+
+  // histogram definitions
+  h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
+  h1d_jet_pt->Sumw2();
+
+  for (int ipt = 0; ipt < ptbin; ipt++)
+  {
+    h1d_jet_eec[ipt] = new TH1D(Form("h1d_jet_eec_%d", ipt),"jet eec",50,lbins);
+    h1d_jet_eec[ipt]->Sumw2();
+  }
+
+  // reads file and fills in jet_constits
+  if (gentype == 0) read_root(inFile);
+  else read_csv(inFile);
+
+  // write out histograms
   TFile* fout = new TFile(outFile,"recreate");
   fout->Write();
   h1d_jet_pt->Write();
