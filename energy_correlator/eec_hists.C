@@ -183,7 +183,7 @@ void read_csv(const char* inFile = "merged.csv")
 
   // set up file as ttree
   TTree* tree = new TTree("tree from csv", "tree from csv");
-  tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Px:Py:Pz:Mass", ",");
+  tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Px:Py:Pz:Mass", ',');
 
   // initialize particle level variables
   Int_t evtn, Id;
