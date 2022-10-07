@@ -190,11 +190,21 @@ void read_csv(const char* inFile = "merged.csv")
   Double_t Charge, Px, Py, Pz, Mass;
 
   // boost calculation
-  TLorentzVector Pi;
-  Pi.SetXYZM(0,0,Etarg,pProton.m());
-  TVector3 boost_vec = Pi.BoostVector();
-  TLorentzVector part_rest;
-  TLorentzVector part_lab;
+  TLorentzVector Ei, Ef;
+  Ei.SetXYZM(0,0,-50,Me);
+  Ef.SetXYZM(0,0,-10,Me);
+  TVector3 boost_vec = (Ef-Ei).BoostVector();
+  TLorentzVector part_rest, part_lab;
+  TLorentzVector Pi, Pf;
+  Pi.SetXYZM(0,0,0,Mp);
+  Pf = Pi; Pf.Boost(boost_vec);
+  Ei.Print();
+  Ef.Print();
+  boost_vec.Print();
+  Pi.Print();
+  Pf.Print();
+
+  return;
 
   // loop over events
   for (int ievt = 0; ievt < nevt; ievt++)//TODO

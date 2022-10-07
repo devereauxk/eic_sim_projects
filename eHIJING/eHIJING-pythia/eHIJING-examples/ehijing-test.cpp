@@ -171,7 +171,7 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
     double theta = - pGamma.theta();
     double phi = - pGamma.phi();
 
-    F << "# " << Q2 << " " << xB << std::endl;
+    //F << "# " << Q2 << " " << xB << std::endl;
     for (auto & p : plist) {
         if (p.isFinal() && p.isHadron()){
             int id = p.id();
