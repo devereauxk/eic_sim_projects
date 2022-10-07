@@ -237,7 +237,8 @@ void read_csv(const char* inFile = "merged.csv")
       part_lab.Print();
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      if (fabs(part_lab.Eta())<3.5 && Id!=11)
+      //if (fabs(part_lab.Eta())<3.5 && Id!=11)
+      if(Id!=11)
       {
         PseudoJet constit = PseudoJet(part_lab.Px(),part_lab.Py(),part_lab.Pz(),part_lab.E());
         constit.set_user_index(ipart);
