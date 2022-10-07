@@ -193,15 +193,15 @@ void read_csv(const char* inFile = "merged.csv")
   // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
   TLorentzVector part_rest, part_lab;
   TLorentzVector Ei, Ef, Pf;
-  Ei.SetXYZM(0,0,-50,Me);
-  Pf.SetXYZM(0,0,100,Me);
+  Ei.SetXYZM(0,0,-2131.56,Me);
+  Pf.SetXYZM(0,0,100,Mp);
   TVector3 boost_vec = Pf.BoostVector();
   Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
 
   cout<<"projectile in lab frame:"<<endl;
-  Pf.Print();
-  cout<<"target in lab frame:"<<endl;
   Ef.Print();
+  cout<<"target in lab frame:"<<endl;
+  Pf.Print();
 
   // number of lines
   tree->SetBranchAddress("evtn",&evtn);
