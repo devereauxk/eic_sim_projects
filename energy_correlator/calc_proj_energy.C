@@ -19,8 +19,8 @@ void calc_proj_energy(float proj_lab_e = 10, float targ_lab_e = 100, float proj_
 
   TVector3 boost_vec = targ_lab.BoostVector();
 
-  proj_rest.Boost(-boost_vec);
-  targ_rest.Boost(-boost_vec);
+  proj_rest = proj_lab; proj_rest.Boost(-boost_vec);
+  targ_rest = targ_lab; targ_rest.Boost(-boost_vec);
 
   cout<<"projectile in target rest frame:"<<endl;
   proj_rest.Print();
