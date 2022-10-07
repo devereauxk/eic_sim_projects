@@ -197,8 +197,11 @@ void read_csv(const char* inFile = "merged.csv")
   Pf.SetXYZM(0,0,100,Me);
   TVector3 boost_vec = Pf.BoostVector();
   Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
-  //Ef.Print(); // print lab frame projectile
-  //Pf.Print(); // print lab frame target
+
+  cout<<"projectile in lab frame:"<<endl;
+  Pf.Print();
+  cout<<"target in lab frame:"<<endl;
+  Ef.Print();
 
   // number of lines
   tree->SetBranchAddress("evtn",&evtn);
