@@ -3,7 +3,7 @@ export PYTHIA8DATA=/eic/u/kdevereaux/work/eHIJING/local/share/Pythia8/xmldoc
 export PYTHIA8=/eic/u/kdevereaux/work/eHIJING/local
 
 exe=build/ehijing-test
-Neve=100 #10000
+Neve=1000000 #10000
 Configfile=s20.setting
 
 K=2.0
