@@ -242,12 +242,12 @@ void read_csv(const char* inFile = "merged.csv")
       }
     }
 
+    cout<<jet_constits.size()<<endl;
+
     // jet reconstruction
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
     ClusterSequence cs(jet_constits, R1jetdef);
     vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
-
-    cout<<jets.size()<<endl;
 
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
