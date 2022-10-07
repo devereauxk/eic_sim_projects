@@ -224,8 +224,6 @@ void read_csv(const char* inFile = "merged.csv")
 
     vector<PseudoJet> jet_constits;
 
-    cout<<"evt_tree size "<<evt_tree->GetEntries()<<endl;
-
     // loop over particles (entires in ttree)
     for (int ipart = 0; ipart < evt_tree->GetEntries(); ipart++)
     {
@@ -248,6 +246,8 @@ void read_csv(const char* inFile = "merged.csv")
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
     ClusterSequence cs(jet_constits, R1jetdef);
     vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
+
+    cout<<jets.size()<<endl;
 
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
