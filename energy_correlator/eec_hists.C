@@ -229,6 +229,8 @@ void read_csv(const char* inFile = "merged.csv")
     {
       evt_tree->GetEntry(ipart);
 
+      evt_tree.Print();
+
       // apply boost to particle (boost it into lab frame)
       part_rest.SetXYZM(Px, Py, Px, Mass);
       part_lab = part_rest; part_lab.Boost(boost_vec);
