@@ -200,8 +200,13 @@ void read_csv(const char* inFile = "merged.csv")
   //Ef.Print(); // print lab frame projectile
   //Pf.Print(); // print lab frame target
 
+  // number of lines
+  tree->SetBranchAddress("evtn",&evtn);
+  tree->GetEntry(tree->GetEntries()-1);
+  int nlines = evtn;
+
   // loop over events
-  for (int ievt = 0; ievt < nevt; ievt++)//TODO
+  for (int ievt = 0; ievt < nlines; ievt++)//TODO
   {
     // get ttree containing all particle info for given event
     TTree* evt_tree = tree->CopyTree(Form("evtn == %i", ievt));
