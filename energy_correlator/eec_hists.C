@@ -229,7 +229,7 @@ void read_csv(const char* inFile = "merged.csv")
     {
       evt_tree->GetEntry(ipart);
 
-      evt_tree.Print();
+      evt_tree->Print();
 
       // apply boost to particle (boost it into lab frame)
       part_rest.SetXYZM(Px, Py, Px, Mass);
@@ -244,7 +244,7 @@ void read_csv(const char* inFile = "merged.csv")
       }
     }
 
-    cout<<jet_constits.size()<<endl;
+    cout<<"-"<<jet_constits.size()<<endl;
 
     // jet reconstruction
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
