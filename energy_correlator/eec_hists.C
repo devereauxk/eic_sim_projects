@@ -233,9 +233,6 @@ void read_csv(const char* inFile = "merged.csv")
       part_rest.SetXYZM(Px, Py, Px, Mass);
       part_lab = part_rest; part_lab.Boost(boost_vec);
 
-      part_rest.Print();
-      part_lab.Print();
-
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       //if (fabs(part_lab.Eta())<3.5 && Id!=11)
       if(Id!=11)
