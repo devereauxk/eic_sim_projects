@@ -238,6 +238,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       part_lab = part_rest; part_lab.Boost(boost_vec);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
+      cout<<"part eta:"<<part_lab.Eta()<<endl;
       if (fabs(part_lab.Eta())<3.5 && Id!=11)
       {
         PseudoJet constit = PseudoJet(part_lab.Px(),part_lab.Py(),part_lab.Pz(),part_lab.E());
