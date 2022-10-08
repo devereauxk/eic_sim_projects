@@ -18,6 +18,7 @@ static double pt_hi[ptbin] = {10, 20, 20};
 
 TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
+TH1D* h1d_jet_eta = NULL;
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -146,9 +147,12 @@ void read_root(const char* inFile = "merged.root")
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
+      // jet histograms filled on inclusive jet information
+      h1d_jet_pt->Fill(jets[ijet].pt());
+      h1d_jet_eta->Fill(jets[ijet].eta());
+
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
-      h1d_jet_pt->Fill(jets[ijet].pt());
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
@@ -258,10 +262,13 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
-      // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
-      cout<<"jet pt:"<<jets[ijet].pt()<<" jet eta:"<<jets[ijet].eta()<<endl;
-      if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+      // jet histograms filled on inclusive jet information
       h1d_jet_pt->Fill(jets[ijet].pt());
+      h1d_jet_eta->Fill(jets[ijet].eta());
+      cout<<"jet pt:"<<jets[ijet].pt()<<" jet eta:"<<jets[ijet].eta()<<endl;
+
+      // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
+      if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
@@ -292,11 +299,11 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 0,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int proj_species = 0, int targ_species = 0)
 {
-  // proj_rest_e = energy of projectile beam in target rest frame
-  // targ_lab_e = energy of target beam in lab frame
+  // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
+  // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
   // all energies positive and in GeV units
-  // proj_species = int specifying the projectile particle, i.e. =0 is electron
-  // targ_species = int specifying the target particle, i.e. =1 is proton
+  // proj_species = int specifying the projectile particle, i.e. =0 is electron, leave blank if pythia
+  // targ_species = int specifying the target particle, i.e. =1 is proton, leave blank if pythia
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
@@ -316,6 +323,8 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // histogram definitions
   h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
   h1d_jet_pt->Sumw2();
+  h1d_jet_eta = new TH1D("h1d_jet_pt", "jet eta",800,-5,5);
+  h1d_jet_eta->Sumw2();
 
   for (int ipt = 0; ipt < ptbin; ipt++)
   {
@@ -332,6 +341,8 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   fout->Write();
   h1d_jet_pt->Write();
   cout<<"h1d_jet_pt entries:"<<h1d_jet_pt->GetEntries()<<endl;
+  h1d_jet_eta->Write();
+  cout<<"h1d_jet_eta entries:"<<h1d_jet_eta->GetEntries()<<endl;
   for (int ipt = 0; ipt < ptbin; ipt++)
   {
     h1d_jet_eec[ipt]->Write();

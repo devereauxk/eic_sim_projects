@@ -10,6 +10,7 @@ const int pt_color[ptbin] = {kGreen+1, kBlue};
 
 TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
+TH1D* h1d_jet_eta = NULL;
 
 static int cno = 0;
 
@@ -33,6 +34,26 @@ void individual_hists(const char* out_dir)
     h1d_jet_pt->Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_pt.pdf\")", cno-1, out_dir) );
+  }
+
+  // 1d jet eta histogram
+  mcs(cno++);
+  {
+    float plot_xrange_lo = -5;
+    float plot_xrange_hi = 5;
+
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = h1d_jet_eta->GetMaximum()*1.15;
+
+    TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
+    htemp.Draw("hsame");
+    htemp.GetXaxis()->SetTitle("jet eta");
+    htemp.GetYaxis()->SetTitle("counts");
+    myhset(&htemp,1.2,1.6,0.05,0.05);
+
+    h1d_jet_eta->Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eta.pdf\")", cno-1, out_dir) );
   }
 
   // 1d jet eec histogram, log bins
@@ -129,12 +150,13 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
   h1d_jet_pt = (TH1D*) fin->Get("h1d_jet_pt");
   h1d_jet_pt->SetName("h1d_jet_pt");
+  h1d_jet_eta = (TH1D*) fin->Get("h1d_jet_eta");
+  h1d_jet_eta->SetName("h1d_jet_eta");
 
   for (int ipt = 0; ipt < ptbin; ipt++)
   {
     h1d_jet_eec[ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d", ipt));
     h1d_jet_eec[ipt]->SetName(Form("h1d_jet_eec_%d", ipt));
-
     h1d_jet_eec[ipt]->Scale(1/h1d_jet_eec[ipt]->Integral()); // normalization
   }
 
