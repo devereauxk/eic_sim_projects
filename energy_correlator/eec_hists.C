@@ -259,7 +259,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
-      cout<<"jet pt:"<<jets[ijet].pt()<<" jet eta:"<<endl;
+      cout<<"jet pt:"<<jets[ijet].pt()<<" jet eta:"<<jets[ijet].eta()<<endl;
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
       h1d_jet_pt->Fill(jets[ijet].pt());
 
