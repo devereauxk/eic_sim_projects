@@ -250,6 +250,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
     ClusterSequence cs(jet_constits, R1jetdef);
     vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
+    cout<<"n jets:"<<jets.size()<<endl;
 
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
