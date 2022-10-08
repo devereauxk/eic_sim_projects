@@ -187,8 +187,10 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   // << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << std::endl;
 
   // set up file as ttree
+  cout<<"Reading in csv file"<<endl;
   TTree* tree = new TTree("tree from csv", "tree from csv");
   tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Px:Py:Pz:Mass", ',');
+  cout<<"File read"<<endl;
 
   // initialize particle level variables
   Int_t evtn, Id;
@@ -257,7 +259,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
     ClusterSequence cs(jet_constits, R1jetdef);
     vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
-    cout<<"n jets:"<<jets.size()<<endl;
+    //cout<<"n jets:"<<jets.size()<<endl;
 
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
@@ -265,7 +267,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       // jet histograms filled on inclusive jet information
       h1d_jet_pt->Fill(jets[ijet].pt());
       h1d_jet_eta->Fill(jets[ijet].eta());
-      cout<<"jet pt:"<<jets[ijet].pt()<<" jet eta:"<<jets[ijet].eta()<<endl;
+      //cout<<"jet pt:"<<jets[ijet].pt()<<" jet eta:"<<jets[ijet].eta()<<endl;
 
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
@@ -280,7 +282,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
         int ip = constituents[iconstit].user_index();
         evt_tree->GetEntry(ip);
-        cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
+        //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
         if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
