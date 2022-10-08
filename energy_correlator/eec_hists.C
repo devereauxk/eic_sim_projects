@@ -238,8 +238,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       part_lab = part_rest; part_lab.Boost(boost_vec);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      //if (fabs(part_lab.Eta())<3.5 && Id!=11)
-      if(Id!=11)
+      if (fabs(part_lab.Eta())<3.5 && Id!=11)
       {
         PseudoJet constit = PseudoJet(part_lab.Px(),part_lab.Py(),part_lab.Pz(),part_lab.E());
         constit.set_user_index(ipart);
@@ -256,7 +255,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
-      //if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+      if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
       h1d_jet_pt->Fill(jets[ijet].pt());
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
@@ -265,7 +264,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       vector<PseudoJet> charged_constituents;
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
-        //if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
+        if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
 
         int ip = constituents[iconstit].user_index();
         evt_tree->GetEntry(ip);
