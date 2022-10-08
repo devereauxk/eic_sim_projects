@@ -235,7 +235,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
       // apply boost to particle (boost it into lab frame)
       part_rest.SetXYZM(Px, Py, Px, Mass);
-      cout<<"part_ret eta:"<<part_rest.Eta();
+      cout<<"part_ret eta:"<<part_rest.Eta()<<" ";
       part_lab = part_rest; part_lab.Boost(boost_vec);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
