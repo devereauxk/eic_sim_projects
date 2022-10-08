@@ -268,7 +268,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
         int ip = constituents[iconstit].user_index();
         evt_tree->GetEntry(ip);
-        //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
+        cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
         if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
