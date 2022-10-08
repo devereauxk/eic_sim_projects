@@ -323,7 +323,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // histogram definitions
   h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
   h1d_jet_pt->Sumw2();
-  h1d_jet_eta = new TH1D("h1d_jet_pt", "jet eta",800,-5,5);
+  h1d_jet_eta = new TH1D("h1d_jet_eta", "jet eta",800,-5,5);
   h1d_jet_eta->Sumw2();
 
   for (int ipt = 0; ipt < ptbin; ipt++)
