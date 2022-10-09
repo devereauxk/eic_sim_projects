@@ -39,6 +39,10 @@ Z=1
 A=1
 $exe $Neve $Z $A $M $K $DIR $DIR $Configfile # > /dev/null 2>&1
 
-mv -v events.dat $folder/ep_${INPUT}.dat
-mv -v GHT.dat $TablePath/GHT_${INPUT}.dat
-mv -v Qs.dat $TablePath/Qs_${INPUT}.dat
+echo `ls`
+echo "====="
+echo `ls $DIR`
+
+mv -v $DIR/events.dat $folder/ep_${INPUT}.dat
+mv -v $DIR/GHT.dat $TablePath/GHT_${INPUT}.dat
+mv -v $DIR/Qs.dat $TablePath/Qs_${INPUT}.dat
