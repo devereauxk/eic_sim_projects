@@ -18,7 +18,6 @@ INPUT=$(( 0 + $1 ))
 echo $INPUT
 DIR=`printf "%04d" $INPUT`
 mkdir $DIR
-cd $DIR
 
 export PYTHIA8DATA=/eic/u/kdevereaux/work/eHIJING/local/share/Pythia8/xmldoc
 export PYTHIA8=/eic/u/kdevereaux/work/eHIJING/local
@@ -39,6 +38,8 @@ Z=1
 A=1
 $exe $Neve $Z $A $M $K $DIR $DIR $Configfile # > /dev/null 2>&1
 
+echo `pwd`
+echo `ls ../`
 echo `ls`
 echo "====="
 echo `ls $DIR`
