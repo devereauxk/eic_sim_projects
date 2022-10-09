@@ -23,4 +23,6 @@ mkdir $DIR
 ln -s $IN_DIR/ep_${INPUT}.dat
 ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
+mkdir $OUT_DIR
+
 root -l -b -q "eec_hists.C(\"ep_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2131.56, 100, 0, 0)"
