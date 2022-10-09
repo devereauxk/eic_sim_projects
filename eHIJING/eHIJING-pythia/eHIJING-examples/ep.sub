@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_ep_condor.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/epjob.out.$(Process)
+Error          = jobout/epjob.err.$(Process)
+Log            = jobout/epjob.log.$(Process)
+Queue 100

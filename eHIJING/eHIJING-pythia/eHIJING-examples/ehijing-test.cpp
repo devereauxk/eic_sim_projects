@@ -247,7 +247,8 @@ int main(int argc, char *argv[]) {
     auto header = std::string(argv[7]);
     int process_id = getpid();
     std::stringstream sout;
-    sout << header << "/" << process_id << ".dat";
+    //sout << header << "/" << process_id << ".dat";
+    sout << header << "/" << "events" << ".dat";
     std::ofstream fout(sout.str());
 
     // initialize the hadronizer instance:
