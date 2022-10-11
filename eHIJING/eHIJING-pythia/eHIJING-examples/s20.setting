@@ -12,7 +12,7 @@ Beams:eB = 2131.56 #50.0 #27.6 #5.014 # electron beam energy (+,0,0,-) [GeV]
 
 # Phasespace cut:
 # Minimum hard scale squared [GeV^2]
-PhaseSpace:Q2Min = 1.0
+PhaseSpace:Q2Min = 10.0 # default 1.0, changed to 10.0 for eAu case
 PhaseSpace:mHatMin = 0
 PhaseSpace:pTHatMinDiverge = 0.5
 # >>>>>> Do not change the following without a good reason...

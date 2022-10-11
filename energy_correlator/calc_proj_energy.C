@@ -3,10 +3,11 @@
 
 R__LOAD_LIBRARY(libeicsmear);
 
-const Double_t Mp(0.9383);
-const Double_t Me(0.511E-3);
+const Double_t Mp(0.9383); // in GeV/c^2
+const Double_t Me(0.511E-3); // in GeV/c^2
+const Double_t MAu(183.4343); // in GeV/c^2
 
-void calc_proj_energy(double proj_lab_e = 10, double targ_lab_e = 100, double proj_mass = Me, double targ_mass = Mp)
+void calc_proj_energy(double proj_lab_e = 10, double targ_lab_e = 100, double proj_mass = Me, double targ_mass = MAu)
 {
   // proj_lab is desired projectile energy in lab frame
   // trag_lab is desired target energy in lab frame
