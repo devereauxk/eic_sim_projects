@@ -19,6 +19,8 @@ void calc_proj_energy(double proj_lab_e = 10, double targ_lab_e = 100, double pr
   targ_lab.SetXYZM(0,0,targ_lab_e,targ_mass);
 
   TVector3 boost_vec = targ_lab.BoostVector();
+  cout<<"boost vector:"<<endl;
+  boost_vec.Print();
 
   proj_rest = proj_lab; proj_rest.Boost(-boost_vec);
   targ_rest = targ_lab; targ_rest.Boost(-boost_vec);
