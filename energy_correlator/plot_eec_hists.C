@@ -17,21 +17,15 @@ static int cno = 0;
 void individual_hists(const char* out_dir)
 {
   // 1d jet pt histogram
-  mcs(cno++);
+  mclogy(cno++);
   {
-    float plot_xrange_lo = 0;
-    float plot_xrange_hi = 30;
-
-    float plot_yrange_lo = 0;
-    float plot_yrange_hi = h1d_jet_pt->GetMaximum()*1.15;
-
-    TH2F htemp("htemp","",10,plot_xrange_lo,plot_xrange_hi,10,plot_yrange_lo,plot_yrange_hi);
-    htemp.Draw("hsame");
-    htemp.GetXaxis()->SetTitle("jet p_{T} [GeV]");
-    htemp.GetYaxis()->SetTitle("counts");
-    myhset(&htemp,1.2,1.6,0.05,0.05);
-
     h1d_jet_pt->Draw("same");
+
+    h1d_jet_pt->GetXaxis()->SetTitle("jet p_{T} [GeV]");
+    h1d_jet_pt->GetYaxis()->SetTitle("counts");
+    h1d_jet_pt->GetXaxis()->SetTitleOffset(1.3);
+    h1d_jet_pt->GetYaxis()->SetTitleOffset(1.5);
+    h1d_jet_pt->Draw("same hist e");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_pt.pdf\")", cno-1, out_dir) );
   }
