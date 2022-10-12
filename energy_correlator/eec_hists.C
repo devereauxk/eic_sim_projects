@@ -305,7 +305,6 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // only for e+A collsions, specify A with atomic mass targ_atomic_mass
   // default is eHIJING-generated e+p boosting 2131.56x0 GeV to 10x100 GeV
 
-
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
   else cout << "eHIJING" << endl;
