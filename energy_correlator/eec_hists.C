@@ -12,9 +12,9 @@ const double proj_species_mass[1] = {0.511E-3};
 // proton, gold [GeV/c^2]
 const double targ_species_mass[2] = {0.9383, 183.4343};
 
-const int ptbin = 3; // inclusive on last bin, inclusive on lower limit, explusive on upper
-static double pt_lo[ptbin] = {5, 10, 5};
-static double pt_hi[ptbin] = {10, 20, 20};
+const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
+static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
+static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
 
 TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
