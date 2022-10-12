@@ -11,6 +11,10 @@ const Double_t Mp(0.9383); // in GeV/c^2
 const Double_t Me(0.511E-3); // in GeV/c^2
 const Double_t MAu(183.4343); // in GeV/c^2
 
+const nspecies = 2;
+static double targ_A = {1, 197};
+static double targ_m = {Mp, MAu};
+
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
 static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
@@ -178,7 +182,7 @@ void read_root(const char* inFile = "merged.root")
   }
 }
 
-void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_atomic_mass = 1, targ_mass = Mp)
+void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0)
 {
   // csv must be in the following format - eHIJING standard
   // each particle has the line
@@ -200,7 +204,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   TLorentzVector part_rest, part_lab;
   TLorentzVector Ei, Ef, Pf;
   Ei.SetXYZM(0, 0, -proj_rest_e, Me);
-  Pf.SetXYZM(0, 0, targ_lab_e * targ_atomic_mass, targ_mass);
+  Pf.SetXYZM(0, 0, targ_lab_e * targ_A[targ_species], targ_m[targ_species]);
   TVector3 boost_vec = Pf.BoostVector();
   Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
 
@@ -298,14 +302,12 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
 
 void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
-    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_atomic_mass = 1, double targ_mass = Mp)
+    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
   // all energies positive and in GeV units
-  // only for e+A collsions, specify A with atomic mass targ_atomic_mass
-  // targ_mass is the mass in GeV/c of the nucleus
-  // default is eHIJING-generated e+p boosting 2131.56x0 GeV to 10x100 GeV
+  // only for e+A collsions, specify A with targ_species, =0 for p, =1 for Au
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
@@ -336,7 +338,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   // reads file and fills in jet_constits
   if (gen_type == 0) read_root(inFile);
-  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_atomic_mass, targ_mass);
+  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species);
 
   // write out histograms
   TFile* fout = new TFile(outFile,"recreate");
