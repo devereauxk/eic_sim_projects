@@ -7,10 +7,8 @@ using namespace fastjet;
 using namespace std;
 const int verbosity = 0;
 
-// electron [GeV/c^2]
-const double proj_species_mass[1] = {0.511E-3};
-// proton, gold [GeV/c^2]
-const double targ_species_mass[2] = {0.9383, 183.4343};
+const Double_t Mp(0.9383); // in GeV/c^2
+const Double_t Me(0.511E-3); // in GeV/c^2
 
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
@@ -179,7 +177,7 @@ void read_root(const char* inFile = "merged.root")
   }
 }
 
-void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int proj_species = 0, int targ_species = 0)
+void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_atomic_mass = 1)
 {
   // csv must be in the following format - eHIJING standard
   // each particle has the line
@@ -200,8 +198,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
   TLorentzVector part_rest, part_lab;
   TLorentzVector Ei, Ef, Pf;
-  Ei.SetXYZM(0, 0, -proj_rest_e, proj_species_mass[proj_species]);
-  Pf.SetXYZM(0, 0, targ_lab_e, targ_species_mass[targ_species]);
+  Ei.SetXYZM(0, 0, -proj_rest_e, Me);
+  Pf.SetXYZM(0, 0, targ_lab_e, Mp*targ_atomic_mass);
   TVector3 boost_vec = Pf.BoostVector();
   Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
 
@@ -298,14 +296,15 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 }
 
 
-void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 0,
-    double proj_rest_e = 2131.56, double targ_lab_e = 100, int proj_species = 0, int targ_species = 0)
+void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
+    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_atomic_mass = 1)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
   // all energies positive and in GeV units
-  // proj_species = int specifying the projectile particle, i.e. =0 is electron, leave blank if pythia
-  // targ_species = int specifying the target particle, i.e. =0 is proton, =1 is Au, leave blank if pythia
+  // only for e+A collsions, specify A with atomic mass targ_atomic_mass
+  // default is eHIJING-generated e+p boosting 2131.56x0 GeV to 10x100 GeV
+
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
@@ -336,7 +335,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   // reads file and fills in jet_constits
   if (gen_type == 0) read_root(inFile);
-  else read_csv(inFile, proj_rest_e, targ_lab_e, proj_species, targ_species);
+  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_atomic_mass);
 
   // write out histograms
   TFile* fout = new TFile(outFile,"recreate");

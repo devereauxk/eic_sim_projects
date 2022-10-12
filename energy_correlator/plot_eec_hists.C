@@ -3,10 +3,10 @@ R__LOAD_LIBRARY(libeicsmear);
 #include "TGraphErrors.h"
 using namespace std;
 
-const int ptbin = 3; // inclusive on last bin, inclusive on lower limit, explusive on upper
-static double pt_lo[ptbin] = {5, 10, 5};
-static double pt_hi[ptbin] = {10, 20, 20};
-const int pt_color[ptbin] = {kGreen+1, kBlue};
+const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
+static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
+static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
+const int pt_color[ptbin] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed};
 
 TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
