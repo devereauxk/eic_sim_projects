@@ -7,10 +7,10 @@ using namespace fastjet;
 using namespace std;
 const int verbosity = 0;
 
-// electron
+// electron [GeV/c^2]
 const double proj_species_mass[1] = {0.511E-3};
-// proton
-const double targ_species_mass[1] = {0.9383};
+// proton, gold [GeV/c^2]
+const double targ_species_mass[2] = {0.9383, 183.4343};
 
 const int ptbin = 3; // inclusive on last bin, inclusive on lower limit, explusive on upper
 static double pt_lo[ptbin] = {5, 10, 5};
@@ -305,7 +305,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
   // all energies positive and in GeV units
   // proj_species = int specifying the projectile particle, i.e. =0 is electron, leave blank if pythia
-  // targ_species = int specifying the target particle, i.e. =1 is proton, leave blank if pythia
+  // targ_species = int specifying the target particle, i.e. =0 is proton, =1 is Au, leave blank if pythia
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
