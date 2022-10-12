@@ -17,7 +17,7 @@ void calc_proj_energy(double proj_lab_e = 10, double targ_lab_e = 100, double ta
 
   TLorentzVector proj_lab, targ_lab, proj_rest, targ_rest;
   proj_lab.SetXYZM(0,0,-proj_lab_e,Me);
-  targ_lab.SetXYZM(0,0,targ_lab_e * targ_atmoic_mass,targ_mass);
+  targ_lab.SetXYZM(0,0,targ_lab_e * targ_atomic_mass,targ_mass);
 
   TVector3 boost_vec = targ_lab.BoostVector();
 
