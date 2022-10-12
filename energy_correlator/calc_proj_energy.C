@@ -5,8 +5,9 @@ R__LOAD_LIBRARY(libeicsmear);
 
 const Double_t Mp(0.9383); // in GeV/c^2
 const Double_t Me(0.511E-3); // in GeV/c^2
+const Double_t MAu(183.4343); // in GeV/c^2
 
-void calc_proj_energy(double proj_lab_e = 10, double targ_lab_e = 100, double targ_atomic_mass = 197)
+void calc_proj_energy(double proj_lab_e = 10, double targ_lab_e = 100, double targ_atomic_mass = 197, targ_mass = MAu)
 {
   // proj_lab is desired projectile energy in lab frame
   // trag_lab is desired target energy in lab frame
@@ -16,7 +17,7 @@ void calc_proj_energy(double proj_lab_e = 10, double targ_lab_e = 100, double ta
 
   TLorentzVector proj_lab, targ_lab, proj_rest, targ_rest;
   proj_lab.SetXYZM(0,0,-proj_lab_e,Me);
-  targ_lab.SetXYZM(0,0,targ_lab_e,Mp * targ_atomic_mass);
+  targ_lab.SetXYZM(0,0,targ_lab_e * targ_atmoic_mass,targ_mass);
 
   TVector3 boost_vec = targ_lab.BoostVector();
 
