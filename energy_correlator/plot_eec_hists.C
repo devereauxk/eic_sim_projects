@@ -21,6 +21,7 @@ void individual_hists(const char* out_dir)
   {
     h1d_jet_pt->Draw("same");
 
+    h1d_jet_pt->GetXaxis()->SetRangeUser(0,70);
     h1d_jet_pt->GetXaxis()->SetTitle("jet p_{T} [GeV]");
     h1d_jet_pt->GetYaxis()->SetTitle("counts");
     h1d_jet_pt->GetXaxis()->SetTitleOffset(1.3);
