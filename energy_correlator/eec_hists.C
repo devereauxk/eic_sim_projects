@@ -213,34 +213,31 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   cout<<"target in lab frame: (should be what you expect)"<<endl;
   Pf.Print();
 
-  // number of lines
+  // branches
   tree->SetBranchAddress("evtn",&evtn);
-  tree->GetEntry(tree->GetEntries()-1);
-  int n_events = evtn;
+  tree->SetBranchAddress("Id",&Id);
+  tree->SetBranchAddress("Charge",&Charge);
+  tree->SetBranchAddress("Px",&Px);
+  tree->SetBranchAddress("Py",&Py);
+  tree->SetBranchAddress("Pz",&Pz);
+  tree->SetBranchAddress("Mass",&Mass);
 
-  // loop over events
-  for (int ievt = 0; ievt < n_events; ievt++)//TODO
+  // number of lines
+  int nlines = tree->GetEntries();
+  int evti;
+
+  // loop over lines
+  for (int iline = 0; iline < nlines; iline++)//TODO
   {
-    if (ievt%1000==0) cout<<"Processing event = "<<ievt<<"/"<<n_events<<endl;
-
-    // get ttree containing all particle info for given event
-    TTree* evt_tree = tree->CopyTree(Form("evtn == %i", ievt));
-
-    // set branch addresses
-    evt_tree->SetBranchAddress("evtn",&evtn);
-    evt_tree->SetBranchAddress("Id",&Id);
-    evt_tree->SetBranchAddress("Charge",&Charge);
-    evt_tree->SetBranchAddress("Px",&Px);
-    evt_tree->SetBranchAddress("Py",&Py);
-    evt_tree->SetBranchAddress("Pz",&Pz);
-    evt_tree->SetBranchAddress("Mass",&Mass);
+    evti = evtn;
 
     vector<PseudoJet> jet_constits;
 
-    // loop over particles (entires in ttree)
-    for (int ipart = 0; ipart < evt_tree->GetEntries(); ipart++)
+    while (evti == evtn)
     {
-      evt_tree->GetEntry(ipart);
+      if (ievt%10000==0) cout<<"Processing line = "<<ievt<<"/"<<n_events<<endl;
+
+      tree->GetEntry(iline);
 
       // apply boost to particle (boost it into lab frame)
       part_rest.SetXYZM(Px, Py, Pz, Mass);
@@ -253,9 +250,11 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       if (fabs(part_lab.Eta())<3.5 && Id!=11)
       {
         PseudoJet constit = PseudoJet(part_lab.Px(),part_lab.Py(),part_lab.Pz(),part_lab.E());
-        constit.set_user_index(ipart);
+        constit.set_user_index(iline);
         jet_constits.push_back(constit);
       }
+
+      iline++;
     }
 
     // jet reconstruction
@@ -283,8 +282,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       {
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
 
-        int ip = constituents[iconstit].user_index();
-        evt_tree->GetEntry(ip);
+        int il = constituents[iconstit].user_index();
+        tree->GetEntry(il);
         //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
         if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
