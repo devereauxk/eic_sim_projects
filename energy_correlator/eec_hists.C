@@ -304,7 +304,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
 
         int il = constituents[iconstit].user_index();
-        tree->GetEntry(il);
+        Charge = stod(content[il][2]);
         //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
         if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
