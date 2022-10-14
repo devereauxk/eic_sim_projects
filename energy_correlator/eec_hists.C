@@ -235,7 +235,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
     while (evti == evtn)
     {
-      if (ievt%10000==0) cout<<"Processing line = "<<ievt<<"/"<<n_events<<endl;
+      if (evti%10000==0) cout<<"Processing line = "<<evti<<"/"<<nlines<<endl;
 
       tree->GetEntry(iline);
 
