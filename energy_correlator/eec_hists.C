@@ -213,7 +213,11 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
   for (int i = 0; i < 5; i++)
   {
-    cout<<content[i]<<endl:
+    for (int j = 0; j < 7; j++)
+    {
+      cout<<content[i][j];
+    }
+    cout<<endl;
   }
   return;
 
