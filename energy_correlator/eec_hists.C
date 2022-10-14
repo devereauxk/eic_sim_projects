@@ -211,16 +211,6 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   }
   cout<<"file read"<<endl;
 
-  for (int i = 0; i < 5; i++)
-  {
-    for (int j = 0; j < 7; j++)
-    {
-      cout<<content[i][j]<<" ";
-    }
-    cout<<endl;
-  }
-  return;
-
   // boost calculation
   // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
   TLorentzVector part_rest, part_lab;
@@ -240,11 +230,12 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   Double_t Charge, Px, Py, Pz, Mass;
 
   // number of lines
+  int iline = 0;
   int nlines = content.size();
   int ievt;
 
   // loop over lines
-  for (int iline = 0; iline < nlines; iline++)//TODO
+  while (iline < nlines)
   {
     ievt = stoi(content[iline][0]); // get event number for this new event
     if (ievt%10000==0) cout<<"Processing line = "<<ievt<<"/"<<nlines<<endl;
