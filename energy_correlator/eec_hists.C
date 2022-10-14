@@ -189,15 +189,33 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   // F << evtn << "," << p.id() << "," << p.charge() << ","
   // << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << std::endl;
 
-  // set up file as ttree
-  cout<<"Reading in csv file"<<endl;
-  TTree* tree = new TTree("tree from csv", "tree from csv");
-  tree->ReadFile(inFile, "evtn/I:Id/I:Charge/D:Px:Py:Pz:Mass", ',');
-  cout<<"File read"<<endl;
+  // set up file and content vector
+  fstream fin;
+  fin.open(inFile, ios::in);
+  vector<vector<string>> content;
+  string line_str, element_str;
 
-  // initialize particle level variables
-  Int_t evtn, Id;
-  Double_t Charge, Px, Py, Pz, Mass;
+  // read in file, write to content 2D vector
+  // note all elements of 2D vector are strings
+  cout<<"reading in file..."<<endl;
+  while (getline(fin, line_str)) // iterate over lines
+  {
+    stringstream str(line_str);
+
+    vector<string> line;
+    while (getline(str, element_str, ',')) // iterate over elements in line
+    {
+      line.push_back(element_str);
+    }
+    content.push_back(line);
+  }
+  cout<<"file read"<<endl;
+
+  for (int i = 0; i < 5; i++)
+  {
+    cout<<content[i]<<endl:
+  }
+  return;
 
   // boost calculation
   // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
@@ -213,31 +231,34 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   cout<<"target in lab frame: (should be what you expect)"<<endl;
   Pf.Print();
 
-  // branches
-  tree->SetBranchAddress("evtn",&evtn);
-  tree->SetBranchAddress("Id",&Id);
-  tree->SetBranchAddress("Charge",&Charge);
-  tree->SetBranchAddress("Px",&Px);
-  tree->SetBranchAddress("Py",&Py);
-  tree->SetBranchAddress("Pz",&Pz);
-  tree->SetBranchAddress("Mass",&Mass);
+  // initialize particle level variables
+  Int_t Id;
+  Double_t Charge, Px, Py, Pz, Mass;
 
   // number of lines
-  int nlines = tree->GetEntries();
-  int evti;
+  int nlines = content.size();
+  int ievt;
 
   // loop over lines
   for (int iline = 0; iline < nlines; iline++)//TODO
   {
-    evti = evtn;
+    ievt = stoi(content[iline][0]); // get event number for this new event
+    if (ievt%10000==0) cout<<"Processing line = "<<ievt<<"/"<<nlines<<endl;
 
     vector<PseudoJet> jet_constits;
 
-    while (evti == evtn)
+    // loop over particles with this event number
+    while (stoi(content[iline][0]) == ievt)
     {
-      if (evti%10000==0) cout<<"Processing line = "<<evti<<"/"<<nlines<<endl;
-
-      tree->GetEntry(iline);
+      // read content for this line, make type conversions
+      vector<string> line;
+      line = content[iline];
+      Id = stoi(line[1]);
+      Charge = stod(line[2]);
+      Px = stod(line[3]);
+      Py = stod(line[4]);
+      Pz = stod(line[5]);
+      Mass = stod(line[6]);
 
       // apply boost to particle (boost it into lab frame)
       part_rest.SetXYZM(Px, Py, Pz, Mass);
