@@ -238,7 +238,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   while (iline < nlines)
   {
     ievt = stoi(content[iline][0]); // get event number for this new event
-    if (ievt%100000==0) cout<<"Processing line = "<<iline<<"/"<<nlines<<endl;
+    if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
 
     vector<PseudoJet> jet_constits;
 
