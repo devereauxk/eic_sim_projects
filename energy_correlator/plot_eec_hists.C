@@ -141,21 +141,23 @@ void ratio_hists(const char* out_dir)
 {
   mclogxy(cno++);
   {
+    float plot_xrange_lo = 1E-2;
+    float plot_xrange_hi = 1;
+
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.03);
     leg->SetFillStyle(0);
     leg->SetMargin(0.1);
 
-    for (int ipt = 0; ipt < ptbin-1; ipt++)
+    for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
-      //h1d_jet_eec[ipt]->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec[ipt]->Clone("ratio");
       ratio->Divide(h1d_jet_eec_baseline[ipt]);
 
       // plot
+      ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       ratio->SetMarkerColor(pt_color[ipt]);
       ratio->SetLineColor(pt_color[ipt]);
       ratio->SetMarkerSize(0.5);
@@ -170,7 +172,7 @@ void ratio_hists(const char* out_dir)
 }
 
 
-void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./", int make_ratios = 1, const char* fin_name_baseline = "")
+void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./", int make_ratios = 0, const char* fin_name_baseline = "")
 {
   // if make_ratios == 1, uses fin_name_baseline to calculate ratios as baseline, else no ratios calculated
 
