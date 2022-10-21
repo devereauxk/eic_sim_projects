@@ -209,7 +209,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
       h1d_jet_eec_baseline[ipt]->Scale(1/h1d_jet_eec_baseline[ipt]->Integral()); // normalization
     }
 
-    ratio_hists(outdir);
+    ratio_hists(out_dir);
   }
 
 }
