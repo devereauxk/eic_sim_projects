@@ -12,6 +12,8 @@ TH1D* h1d_jet_eec[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
 TH1D* h1d_jet_eta = NULL;
 
+TH1D* h1d_jet_eec_baseline[ptbin] = {};
+
 static int cno = 0;
 
 void individual_hists(const char* out_dir)
@@ -135,9 +137,43 @@ void overlay_hists(const char* out_dir)
   }
 }
 
-
-void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./")
+void ratio_hists(const char* out_dir)
 {
+  mclogxy(cno++);
+  {
+    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.03);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    for (int ipt = 0; ipt < ptbin-1; ipt++)
+    {
+      //h1d_jet_eec[ipt]->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+
+      // calculate ratio
+      TH1D* ratio = (TH1D*) h1d_jet_eec[ipt]->Clone("ratio");
+      ratio->Divide(h1d_jet_eec_baseline[ipt]);
+
+      // plot
+      ratio->SetMarkerColor(pt_color[ipt]);
+      ratio->SetLineColor(pt_color[ipt]);
+      ratio->SetMarkerSize(0.5);
+      ratio->SetMarkerStyle(21);
+      ratio->Draw("same hist e");
+      leg->AddEntry(ratio,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+    }
+    leg->Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_ratio.pdf\")", cno-1, out_dir) );
+  }
+}
+
+
+void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./", int make_ratios = 1, const char* fin_name_baseline = "")
+{
+  // if make_ratios == 1, uses fin_name_baseline to calculate ratios as baseline, else no ratios calculated
+
   mcs(-1);
 
   // load histograms
@@ -160,5 +196,20 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
   // print overlay hists for: pt
   overlay_hists(out_dir);
+
+  // print ratio hists for EEC over py, needs baseline file
+  if (make_ratios == 1)
+  {
+    TFile* fin_baseline = new TFile(fin_name_baseline, "READ");
+
+    for (int ipt = 0; ipt < ptbin; ipt++)
+    {
+      h1d_jet_eec_baseline[ipt] = (TH1D*) fin_baseline->Get(Form("h1d_jet_eec_%d", ipt));
+      h1d_jet_eec_baseline[ipt]->SetName(Form("h1d_jet_eec_%d", ipt));
+      h1d_jet_eec_baseline[ipt]->Scale(1/h1d_jet_eec_baseline[ipt]->Integral()); // normalization
+    }
+
+    ratio_hists(outdir);
+  }
 
 }
