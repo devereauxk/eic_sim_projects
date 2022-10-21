@@ -158,6 +158,7 @@ void ratio_hists(const char* out_dir)
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      ratio->GetYaxis()->SetTitle("normalized EEC; energy loss on / off");
       ratio->SetMarkerColor(pt_color[ipt]);
       ratio->SetLineColor(pt_color[ipt]);
       ratio->SetMarkerSize(0.5);
@@ -166,6 +167,11 @@ void ratio_hists(const char* out_dir)
       leg->AddEntry(ratio,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
+
+    TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_ratio.pdf\")", cno-1, out_dir) );
   }
