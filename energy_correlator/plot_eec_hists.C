@@ -139,7 +139,7 @@ void overlay_hists(const char* out_dir)
 
 void ratio_hists(const char* out_dir)
 {
-  mclogx(cno++);
+  mclogxy(cno++);
   {
     float plot_xrange_lo = 1E-2;
     float plot_xrange_hi = 1;
