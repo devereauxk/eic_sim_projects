@@ -70,13 +70,11 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   // secondary plots written to current directory
   mcs(-1);
 
-  tree->Draw("DeltaP:Eta:Momentum>>temp");
-  TH3F* temp = (TH3F*)gDirectory->Get("temp");
-  TH2F* mom_deltap = (TH2F*)temp->Project3D("xy");
+  TGraph* mom_deltap = (TGraph*)tree->Draw("DeltaP:Eta:Momentum");
 
   mcs(cno++);
   {
-    mom_deltap->Draw("colz");
+    mom_deltap->Draw("");
     mom_deltap->GetXaxis()->SetTitle("#eta");
     mom_deltap->GetYaxis()->SetTitle("p [GeV]");
     gROOT->ProcessLine( Form("cc%d->Print(\"%sDeltaP_vs_eta_momentum.pdf\")", cno-1, "./") );
