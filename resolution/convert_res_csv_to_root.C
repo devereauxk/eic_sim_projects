@@ -72,7 +72,7 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
 
   mcs(cno++);
   {
-    tree->Draw("DeltaP:Momentum", "Eta >= -1 && Eta < 1", "goff");
+    tree->Draw("DeltaP:Momentum", "Eta >= -1 && Eta < 1");
     gROOT->ProcessLine( Form("cc%d->Print(\"%sDeltaP_vs_eta_momentum.pdf\")", cno-1, "./") );
   }
 
