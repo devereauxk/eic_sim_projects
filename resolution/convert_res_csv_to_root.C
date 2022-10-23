@@ -15,6 +15,8 @@ TGraph *gmom_res[N_BINS];
 TGraph *gdca_rphi_res[N_BINS];
 TGraph *gdca_z_res[N_BINS];
 
+static int cno = 0;
+
 void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char* outFile = "ePIC_resolutions.root")
 {
 
@@ -62,5 +64,22 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   }
 
   fout->Write();
+
+  // secondary plots written to current directory
+  mcs(-1);
+
+  mcs(cno++);
+  {
+    tree->Draw("Eta:Momentum:DeltaP>>hmdp");
+    TH3F* temp = (TH3F*)gDirectory->Get("hmdp");
+    TH2F* mom_deltap = temp->Project3D("xy");
+    mom_deltap->Draw("colz");
+    mom_deltap->GetXaxis()->SetTitle("#eta");
+    mom_deltap->GetYaxis()->SetTitle("p [GeV]")
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sDeltaP_vs_eta_momentum.pdf\")", cno-1, "./") );
+  }
+
+
+
 
 }
