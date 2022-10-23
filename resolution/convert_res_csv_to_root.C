@@ -70,14 +70,9 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   // secondary plots written to current directory
   mcs(-1);
 
-  n = tree->Draw("DeltaP:Momentum", "Eta >= -1 && Eta < 1", "goff");
-  TGraph* mom_deltap = new TGraph(n, tree->GetV1(), tree->GetV2());
-
   mcs(cno++);
   {
-    mom_deltap->Draw("");
-    mom_deltap->GetXaxis()->SetTitle("p [GeV]");
-    mom_deltap->GetYaxis()->SetTitle("#Delta p [GeV]");
+    tree->Draw("DeltaP:Momentum", "Eta >= -1 && Eta < 1", "goff");
     gROOT->ProcessLine( Form("cc%d->Print(\"%sDeltaP_vs_eta_momentum.pdf\")", cno-1, "./") );
   }
 
