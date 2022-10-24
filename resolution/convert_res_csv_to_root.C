@@ -70,7 +70,7 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   // secondary plots written to current directory
   mcs(-1);
 
-  tree->Draw("DeltaP:Eta:Momentum>>temp", "Eta != 0.9 && Eta != -0.9");
+  tree->Draw("DeltaP:Eta:Momentum>>temp(19,0,120,19,-3.5,3.5,1000,0,1)", "Eta != 0.9 && Eta != -0.9");
   TH3F* temp = (TH3F*)gDirectory->Get("temp");
   TProfile2D* mom_deltap = (TProfile2D*)temp->Project3DProfile("xy");
 
@@ -82,33 +82,6 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
     mom_deltap->Draw("colz");
     gROOT->ProcessLine( Form("cc%d->Print(\"%sDeltaP_vs_eta_momentum.pdf\")", cno-1, "./") );
   }
-
-  tree->Draw("DCArPhi:Eta:Momentum>>temp", "Eta != 0.9 && Eta != -0.9");
-  temp = (TH3F*)gDirectory->Get("temp");
-  mom_deltap = (TProfile2D*)temp->Project3DProfile("xy");
-
-  mcs(cno++, 0, 0, 800, 800, 0.1, 0.27, 0.1, 0.23);
-  {
-    mom_deltap->GetYaxis()->SetRangeUser(0,120);
-    mom_deltap->GetXaxis()->SetTitle("#eta");
-    mom_deltap->GetYaxis()->SetTitle("p [GeV]");
-    mom_deltap->Draw("colz");
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sDCArPhi_vs_eta_momentum.pdf\")", cno-1, "./") );
-  }
-
-  tree->Draw("DCAz:Eta:Momentum>>temp", "Eta != 0.9 && Eta != -0.9");
-  temp = (TH3F*)gDirectory->Get("temp");
-  mom_deltap = (TProfile2D*)temp->Project3DProfile("xy");
-
-  mcs(cno++, 0, 0, 800, 800, 0.1, 0.27, 0.1, 0.23);
-  {
-    mom_deltap->GetYaxis()->SetRangeUser(0,120);
-    mom_deltap->GetXaxis()->SetTitle("#eta");
-    mom_deltap->GetYaxis()->SetTitle("p [GeV]");
-    mom_deltap->Draw("colz");
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sDCAz_vs_eta_momentum.pdf\")", cno-1, "./") );
-  }
-
 
 
 
