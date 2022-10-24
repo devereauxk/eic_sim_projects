@@ -70,7 +70,7 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   // secondary plots written to current directory
   mcs(-1);
 
-  tree->Draw("DeltaP:Eta:Momentum>>temp(25,0,120,25,-3.5,3.5,1000,0,0.5)", "Eta != 0.9 && Eta != -0.9");
+  tree->Draw("DeltaP:Eta:Momentum>>temp(20,0,120,20,-3.5,3.5,1000,0,0.5)", "Eta != 0.9 && Eta != -0.9");
   TH3F* temp = (TH3F*)gDirectory->Get("temp");
   TProfile2D* mom_deltap = (TProfile2D*)temp->Project3DProfile("xy");
 
