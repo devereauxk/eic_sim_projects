@@ -74,9 +74,8 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   TH3F* temp = (TH3F*)gDirectory->Get("temp");
   TProfile2D* mom_deltap = (TProfile2D*)temp->Project3DProfile("xy");
 
-  mcs(cno++);
+  mcs(cno++, 0, 0, 400, 800);
   {
-    gROOT->ProcessLine(Form("cc%d->SetRightMargin(10)", cno-1));
     mom_deltap->GetYaxis()->SetRangeUser(0,120);
     mom_deltap->GetXaxis()->SetTitle("#eta");
     mom_deltap->GetYaxis()->SetTitle("p [GeV]");
