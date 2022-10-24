@@ -73,13 +73,14 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   tree->Draw("DeltaP:Eta:Momentum>>temp", "Eta != 0.9 && Eta != -0.9");
   TH3F* temp = (TH3F*)gDirectory->Get("temp");
   TProfile2D* mom_deltap = (TProfile2D*)temp->Project3DProfile("xy");
+  mom_deltap->SetBinsLength(20);
 
   mcs(cno++);
   {
-    //mom_deltap->Draw("colz");
-    //mom_deltap->GetXaxis()->SetTitle("#eta");
-    //mom_deltap->GetYaxis()->SetTitle("p [GeV]");
+    mom_deltap->GetYaxis()->SetRangeUser(0,120);
     mom_deltap->Draw("colz");
+    mom_deltap->GetXaxis()->SetTitle("#eta");
+    mom_deltap->GetYaxis()->SetTitle("p [GeV]");
     gROOT->ProcessLine( Form("cc%d->Print(\"%sDeltaP_vs_eta_momentum.pdf\")", cno-1, "./") );
   }
 
