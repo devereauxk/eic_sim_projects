@@ -70,16 +70,19 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
   // secondary plots written to current directory
   mcs(-1);
 
-  tree->Draw("DeltaP:Eta:Momentum>>temp(20,0,120,20,-3.5,3.5,1000,0,0.5)", "Eta != 0.9 && Eta != -0.9");
+  tree->Draw("DeltaP:Eta:Momentum>>temp", "Eta != 0.9 && Eta != -0.9");
   TH3F* temp = (TH3F*)gDirectory->Get("temp");
   TProfile2D* mom_deltap = (TProfile2D*)temp->Project3DProfile("xy");
 
   mcs(cno++);
   {
+    gROOT->ProcessLine(Form("cc%d->SetRightMargin(0.2)"), cno-1);
     mom_deltap->GetYaxis()->SetRangeUser(0,120);
-    mom_deltap->Draw("colz");
     mom_deltap->GetXaxis()->SetTitle("#eta");
     mom_deltap->GetYaxis()->SetTitle("p [GeV]");
+    mom_deltap->GetZaxis()->SetTitle("#Delta p [GeV]");
+    mom_deltap->Draw("colz");
+    mom_deltap->SetTitle("EPIC detector momentum resolution vs #eta, p");
     gROOT->ProcessLine( Form("cc%d->Print(\"%sDeltaP_vs_eta_momentum.pdf\")", cno-1, "./") );
   }
 
