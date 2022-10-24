@@ -79,7 +79,7 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
     //mom_deltap->Draw("colz");
     //mom_deltap->GetXaxis()->SetTitle("#eta");
     //mom_deltap->GetYaxis()->SetTitle("p [GeV]");
-    mom_deltap->Draw();
+    mom_deltap->Draw("colz");
     gROOT->ProcessLine( Form("cc%d->Print(\"%sDeltaP_vs_eta_momentum.pdf\")", cno-1, "./") );
   }
 
