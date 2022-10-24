@@ -76,7 +76,7 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
 
   mcs(cno++);
   {
-    gROOT->ProcessLine(Form("cc%d->SetRightMargin(0.2)"), cno-1);
+    gROOT->ProcessLine(Form("cc%d->SetRightMargin(0.2)", cno-1));
     mom_deltap->GetYaxis()->SetRangeUser(0,120);
     mom_deltap->GetXaxis()->SetTitle("#eta");
     mom_deltap->GetYaxis()->SetTitle("p [GeV]");
