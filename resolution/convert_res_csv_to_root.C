@@ -109,11 +109,11 @@ void convert_res_csv_to_root(const char* inFile = "for_Wenqing.csv", const char*
     gROOT->ProcessLine( Form("cc%d->Print(\"%sDCAz_vs_eta_momentum.pdf\")", cno-1, "./") );
   }
 
-  tree->Draw("DeltaP/Momentum:Eta:Momentum>>temp3(12,0,120,19,-3.5,3.5,1000,0,0.05)", "Eta != 0.9 && Eta != -0.9");
+  tree->Draw("100*DeltaP/Momentum:Eta:Momentum>>temp3(12,0,120,19,-3.5,3.5,1000,0,0.05)", "Eta != 0.9 && Eta != -0.9");
   TH3F* temp3 = (TH3F*)gDirectory->Get("temp3");
   TProfile2D* mom_deltap3 = (TProfile2D*)temp3->Project3DProfile("xy");
 
-  mclogz(cno++, 0, 0, 800, 800, 0.1, 0.27, 0.1, 0.23);
+  mcs(cno++, 0, 0, 800, 800, 0.1, 0.27, 0.1, 0.23);
   {
     mom_deltap3->GetYaxis()->SetRangeUser(0,120);
     mom_deltap3->GetXaxis()->SetTitle("#eta");
