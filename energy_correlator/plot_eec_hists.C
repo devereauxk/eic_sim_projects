@@ -110,41 +110,50 @@ void individual_hists(const char* out_dir)
 
 void overlay_hists(const char* out_dir)
 {
-  // overlay h1d_jet_pt with pt binnings, inclusive on eta
-  mclogxy(cno++);
+  // overlay h1d_jet_pt with pt binnings, one plot per eta binning
+  for (int ieta = 0; ieta < etabin; ieta++)
   {
-    /*
-    float plot_xrange_lo = 0;
-    float plot_xrange_hi = 1;
-
-    float plot_yrange_lo = 0;
-    float plot_yrange_hi = h1d_jet_eec[ptbin-1]->GetMaximum()*1.50;
-
-    TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
-    htemp.Draw("hsame");
-    htemp.GetXaxis()->SetTitle("R_{L}");
-    htemp.GetYaxis()->SetTitle("normalized EEC");
-    myhset(&htemp,1.2,1.6,0.05,0.05);
-    */
-
-    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.03);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.1);
-
-    for (int ipt = 0; ipt < ptbin-1; ipt++)
+    mclogxy(cno++);
     {
-      h1d_jet_eec[etabin-1][ipt]->SetMarkerColor(pt_color[ipt]);
-      h1d_jet_eec[etabin-1][ipt]->SetLineColor(pt_color[ipt]);
-      h1d_jet_eec[etabin-1][ipt]->SetMarkerSize(0.5);
-      h1d_jet_eec[etabin-1][ipt]->SetMarkerStyle(21);
-      h1d_jet_eec[etabin-1][ipt]->Draw("same hist e");
-      leg->AddEntry(h1d_jet_eec[etabin-1][ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
-    }
-    leg->Draw("same");
+      /*
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 1;
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay.pdf\")", cno-1, out_dir) );
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = h1d_jet_eec[ptbin-1]->GetMaximum()*1.50;
+
+      TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
+      htemp.Draw("hsame");
+      htemp.GetXaxis()->SetTitle("R_{L}");
+      htemp.GetYaxis()->SetTitle("normalized EEC");
+      myhset(&htemp,1.2,1.6,0.05,0.05);
+      */
+
+      TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+      leg->SetBorderSize(0);
+      leg->SetTextSize(0.03);
+      leg->SetFillStyle(0);
+      leg->SetMargin(0.1);
+
+      for (int ipt = 0; ipt < ptbin-1; ipt++)
+      {
+        h1d_jet_eec[ieta][ipt]->SetMarkerColor(pt_color[ipt]);
+        h1d_jet_eec[ieta][ipt]->SetLineColor(pt_color[ipt]);
+        h1d_jet_eec[ieta][ipt]->SetMarkerSize(0.5);
+        h1d_jet_eec[ieta][ipt]->SetMarkerStyle(21);
+        h1d_jet_eec[ieta][ipt]->Draw("same hist e");
+        leg->AddEntry(h1d_jet_eec[ieta][ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+      }
+      leg->Draw("same");
+
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.025);
+      tl->SetTextColor(kBlack);
+      tl->DrawLatexNDC(0.2,0.91,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+      
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d.pdf\")", cno-1, out_dir, ieta) );
+    }
   }
 
   // overlay h1d_jet_eec_rlsqrtpt with pt binnings
