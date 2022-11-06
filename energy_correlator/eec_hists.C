@@ -88,7 +88,7 @@ class Correlator_Builder
           // filling h1d_jet_eec[etabin][ptbin] histograms
           for (int ieta = 0; ieta < etabin; ieta++)
           {
-            if (jet_eta >= eta_lo[ieta] && jet_eta < eta_lo[ieta])
+            if (jet_eta >= eta_lo[ieta] && jet_eta < eta_hi[ieta])
             {
               for (int ipt = 0; ipt < ptbin; ipt++)
               {
