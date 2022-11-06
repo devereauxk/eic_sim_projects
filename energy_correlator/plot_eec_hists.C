@@ -150,7 +150,7 @@ void overlay_hists(const char* out_dir)
       tl->SetTextAlign(11);
       tl->SetTextSize(0.025);
       tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.21,0.83,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+      tl->DrawLatexNDC(0.22,0.85,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d.pdf\")", cno-1, out_dir, ieta) );
     }
