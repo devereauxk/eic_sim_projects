@@ -131,7 +131,7 @@ void overlay_hists(const char* out_dir)
 
       TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
       leg->SetBorderSize(0);
-      leg->SetTextSize(0.03);
+      leg->SetTextSize(0.025);
       leg->SetFillStyle(0);
       leg->SetMargin(0.1);
 
@@ -150,8 +150,8 @@ void overlay_hists(const char* out_dir)
       tl->SetTextAlign(11);
       tl->SetTextSize(0.025);
       tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.2,0.91,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
-      
+      tl->DrawLatexNDC(0.21,0.83,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d.pdf\")", cno-1, out_dir, ieta) );
     }
   }
@@ -161,7 +161,7 @@ void overlay_hists(const char* out_dir)
   {
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
-    leg->SetTextSize(0.03);
+    leg->SetTextSize(0.025);
     leg->SetFillStyle(0);
     leg->SetMargin(0.1);
 
@@ -192,7 +192,7 @@ void ratio_hists(const char* out_dir)
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
-    leg->SetTextSize(0.03);
+    leg->SetTextSize(0.025);
     leg->SetFillStyle(0);
     leg->SetMargin(0.1);
 
@@ -230,7 +230,7 @@ void ratio_hists(const char* out_dir)
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
-    leg->SetTextSize(0.03);
+    leg->SetTextSize(0.025);
     leg->SetFillStyle(0);
     leg->SetMargin(0.1);
 
