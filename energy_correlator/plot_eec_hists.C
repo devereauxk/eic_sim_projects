@@ -309,7 +309,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h1d_jet_eec_rlsqrtpt_baseline[ipt] = (TH1D*) fin_baseline->Get(Form("sh1d_jet_eec_rlsqrtpt_%d", ipt));
+      h1d_jet_eec_rlsqrtpt_baseline[ipt] = (TH1D*) fin_baseline->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
       h1d_jet_eec_rlsqrtpt_baseline[ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
       h1d_jet_eec_rlsqrtpt_baseline[ipt]->Scale(1/h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()); // normalization
     }
