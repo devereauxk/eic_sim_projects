@@ -148,7 +148,7 @@ void overlay_hists(const char* out_dir)
   }
 
   // overlay h1d_jet_eec_rlsqrtpt with pt binnings
-  mcslogxy(cno++);
+  mclogxy(cno++);
   {
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
