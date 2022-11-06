@@ -270,7 +270,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h1d_jet_eec[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec__%d_%d", ieta, ipt));
+      h1d_jet_eec[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
       h1d_jet_eec[ieta][ipt]->SetName(Form("h1d_jet_eec_%d_%d", ieta, ipt));
       h1d_jet_eec[ieta][ipt]->Scale(1/h1d_jet_eec[ieta][ipt]->Integral()); // normalization
     }
