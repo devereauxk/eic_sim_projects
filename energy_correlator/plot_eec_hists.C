@@ -239,7 +239,7 @@ void ratio_hists(const char* out_dir)
       ratio->SetLineColor(pt_color[ipt]);
       ratio->SetMarkerSize(0.5);
       ratio->SetMarkerStyle(21);
-      ratio->Draw("same hist e");
+      ratio->Draw("same hist");
       leg->AddEntry(ratio,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
