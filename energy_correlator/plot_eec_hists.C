@@ -13,7 +13,7 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
-TH1D* h1d_jet_eec[ptbin] = {};
+TH1D* h1d_jet_eec[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
 TH1D* h1d_jet_eta = NULL;
