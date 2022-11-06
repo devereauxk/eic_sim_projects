@@ -364,7 +364,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   xmax = 50;
   nbins = 50;
   Double_t lbins_rlsqrtpt[nbins+1];
-  double binwidth = (log10(xmax) - log10(xmin)) / nbins;
+  binwidth = (log10(xmax) - log10(xmin)) / nbins;
   for (int i = 0; i < nbins+1; i++)
   {
     lbins_rlsqrtpt[i] = TMath::Power(10, log10(xmin) + binwidth * i);
