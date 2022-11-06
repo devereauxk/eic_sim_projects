@@ -162,7 +162,7 @@ void overlay_hists(const char* out_dir)
       h1d_jet_eec_rlsqrtpt[ipt]->SetLineColor(pt_color[ipt]);
       h1d_jet_eec_rlsqrtpt[ipt]->SetMarkerSize(0);
       h1d_jet_eec_rlsqrtpt[ipt]->SetMarkerStyle(21);
-      //h1d_jet_eec_rlsqrtpt[ipt]->Draw("same hist e");
+      h1d_jet_eec_rlsqrtpt[ipt]->Draw("hist e");
       h1d_jet_eec_rlsqrtpt[ipt]->GetXaxis()->SetTitle("R_{L}#cdot #sqrt{p_{T,jet}}");
       h1d_jet_eec_rlsqrtpt[ipt]->GetYaxis()->SetTitle("normalized EEC");
       leg->AddEntry(h1d_jet_eec_rlsqrtpt[ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
