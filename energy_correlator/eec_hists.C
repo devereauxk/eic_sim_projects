@@ -195,7 +195,7 @@ void read_root(const char* inFile = "merged.root")
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
-      Correlator_Builder cb(charged_constituents, jets[ijet].pt());
+      Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta());
       cb.make_pairs();
       cb.construct_EEC();
     }
@@ -360,14 +360,14 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     lbins[i] = TMath::Power(10, log10(xmin) + binwidth * i);
   }
 
-  double xmin = 5E-3;
-  double xmax = 50;
-  int nbins = 50;
-  Double_t lbins[nbins+1];
+  xmin = 5E-3;
+  xmax = 50;
+  nbins = 50;
+  Double_t lbins_rlsqrtpt[nbins+1];
   double binwidth = (log10(xmax) - log10(xmin)) / nbins;
   for (int i = 0; i < nbins+1; i++)
   {
-    lbins[i] = TMath::Power(10, log10(xmin) + binwidth * i);
+    lbins_rlsqrtpt[i] = TMath::Power(10, log10(xmin) + binwidth * i);
   }
 
   // histogram definitions
