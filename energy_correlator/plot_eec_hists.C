@@ -148,7 +148,7 @@ void overlay_hists(const char* out_dir)
   }
 
   // overlay h1d_jet_eec_rlsqrtpt with pt binnings
-  mcs(cno++);
+  mcslogxy(cno++);
   {
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
@@ -163,7 +163,7 @@ void overlay_hists(const char* out_dir)
       h1d_jet_eec_rlsqrtpt[ipt]->SetMarkerSize(0.5);
       h1d_jet_eec_rlsqrtpt[ipt]->SetMarkerStyle(21);
       h1d_jet_eec_rlsqrtpt[ipt]->Draw("hist same");
-      h1d_jet_eec_rlsqrtpt[ipt]->GetXaxis()->SetTitle("R_{L}#cdot #sqrt{p_{T,jet}}");
+      h1d_jet_eec_rlsqrtpt[ipt]->GetXaxis()->SetTitle("R_{L} #sqrt{p_{T,jet}}");
       h1d_jet_eec_rlsqrtpt[ipt]->GetYaxis()->SetTitle("normalized EEC");
       leg->AddEntry(h1d_jet_eec_rlsqrtpt[ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
     }
