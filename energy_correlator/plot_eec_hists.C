@@ -115,19 +115,10 @@ void overlay_hists(const char* out_dir)
   {
     mclogxy(cno++);
     {
-      /*
-      float plot_xrange_lo = 0;
+      float plot_xrange_lo = 1E-2;
       float plot_xrange_hi = 1;
-
-      float plot_yrange_lo = 0;
-      float plot_yrange_hi = h1d_jet_eec[ptbin-1]->GetMaximum()*1.50;
-
-      TH2F htemp("htemp","",50,plot_xrange_lo,plot_xrange_hi,50,plot_yrange_lo,plot_yrange_hi);
-      htemp.Draw("hsame");
-      htemp.GetXaxis()->SetTitle("R_{L}");
-      htemp.GetYaxis()->SetTitle("normalized EEC");
-      myhset(&htemp,1.2,1.6,0.05,0.05);
-      */
+      float plot_yrange_lo = 1E-5;
+      float plot_yrange_hi = 5E-1;
 
       TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
       leg->SetBorderSize(0);
@@ -137,6 +128,8 @@ void overlay_hists(const char* out_dir)
 
       for (int ipt = 0; ipt < ptbin-1; ipt++)
       {
+        h1d_jet_eec[ieta][ipt]->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        h1d_jet_eec[ieta][ipt]->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         h1d_jet_eec[ieta][ipt]->SetMarkerColor(pt_color[ipt]);
         h1d_jet_eec[ieta][ipt]->SetLineColor(pt_color[ipt]);
         h1d_jet_eec[ieta][ipt]->SetMarkerSize(0.5);
@@ -236,6 +229,8 @@ void ratio_hists(const char* out_dir)
   {
     float plot_xrange_lo = 5E-2;
     float plot_xrange_hi = 50;
+    float plot_yrange_lo = 0.4;
+    float plot_yrange_hi = 2.5;
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
