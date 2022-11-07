@@ -46,14 +46,16 @@ class Correlator_Builder
     vector<vector<double>> pair_list;
     double jet_pt;
     double jet_eta;
+    int weight_pow;
 
   public:
-    Correlator_Builder(vector<PseudoJet> _particle_list, float _jet_pt, float _jet_eta)
+    Correlator_Builder(vector<PseudoJet> _particle_list, float _jet_pt, float _jet_eta, int _weight_pow)
     {
       particle_list = _particle_list;
       mult = particle_list.size();
       jet_pt = _jet_pt;
       jet_eta = _jet_eta;
+      weight_pow = _weight_pow; // power of the pt1 * pt2 / pt^2jet factor used in calculation
     }
 
     void make_pairs()
@@ -79,7 +81,7 @@ class Correlator_Builder
         for (int j = i; j < mult; j++)
         {
           double dist12 = pair_list[i][j];
-          double eec_weight = (particle_list[i].pt() * particle_list[j].pt()) / pow(jet_pt, 2);
+          double eec_weight = pow((particle_list[i].pt() * particle_list[j].pt()) / pow(jet_pt, 2), weight_pow);
 
           if (i == j) overlap++;
           if (overlap == 0) eec_weight = eec_weight*2;
@@ -109,7 +111,7 @@ class Correlator_Builder
     }
 };
 
-void read_root(const char* inFile = "merged.root")
+void read_root(const char* inFile = "merged.root", int eec_weight_power = 1)
 {
   //Event Class
   erhic::EventPythia *event(NULL);
@@ -195,7 +197,7 @@ void read_root(const char* inFile = "merged.root")
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
-      Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta());
+      Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
       cb.make_pairs();
       cb.construct_EEC();
     }
@@ -203,7 +205,7 @@ void read_root(const char* inFile = "merged.root")
   }
 }
 
-void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0)
+void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0, int eec_weight_power = 1)
 {
   // csv must be in the following format - eHIJING standard
   // each particle has the line
@@ -328,7 +330,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
-      Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta());
+      Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
       cb.make_pairs();
       cb.construct_EEC();
     }
@@ -338,7 +340,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
 
 void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
-    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0)
+    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, int eec_weight_power = 1)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
@@ -393,8 +395,8 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
 
   // reads file and fills in jet_constits
-  if (gen_type == 0) read_root(inFile);
-  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species);
+  if (gen_type == 0) read_root(inFile, eec_weight_power);
+  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power);
 
   // write out histograms
   TFile* fout = new TFile(outFile,"recreate");
