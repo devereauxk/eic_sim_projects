@@ -230,8 +230,10 @@ void ratio_hists(const char* out_dir)
   // ratio hists for h1d_jet_eec_rlsqrtpt
   mclogxy(cno++);
   {
-    float plot_xrange_lo = 5E-2;
-    float plot_xrange_hi = 7;
+    float plot_xrange_lo = 1E-2;
+    float plot_xrange_hi = 5;
+    float plot_yrange_lo = 0.5;
+    float plot_yrange_hi = 6;
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
@@ -247,6 +249,7 @@ void ratio_hists(const char* out_dir)
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       ratio->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
       ratio->GetYaxis()->SetTitle("normalized EEC; energy loss on / off");
       ratio->SetMarkerColor(pt_color[ipt]);
