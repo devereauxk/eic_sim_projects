@@ -238,10 +238,12 @@ void ratio_hists(const char* out_dir)
     }
     leg->Draw("same");
 
+    /*
     TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
     l1.SetLineStyle(7);
     l1.SetLineColor(kGray+2);
     l1.Draw("same");
+    */
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_ratio.pdf\")", cno-1, out_dir) );
   }
@@ -304,7 +306,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
         h1d_jet_eec_baseline[ieta][ipt]->SetName(Form("h1d_jet_eec_%d_%d_baseline", ieta, ipt));
 
         // normalized histogram
-        h1d_jet_eec_baseline_norm[ieta][ipt] = (TH1D*) h1d_jet_eec_baseline[ieta][ipt]->Clone(Form("h1d_jet_eec_%d_baseline_norm", ieta, ipt));
+        h1d_jet_eec_baseline_norm[ieta][ipt] = (TH1D*) h1d_jet_eec_baseline[ieta][ipt]->Clone(Form("h1d_jet_eec_%d_%d_norm", ieta, ipt));
         h1d_jet_eec_baseline_norm[ieta][ipt]->Scale(1/h1d_jet_eec_baseline_norm[ieta][ipt]->Integral()); // normalization
       }
     }
