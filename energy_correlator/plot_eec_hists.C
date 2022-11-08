@@ -202,11 +202,11 @@ void ratio_hists(const char* out_dir)
   }
 
   // ratio hists for h1d_jet_eec_rlsqrtpt
-  mclogxy(cno++);
+  mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
-    float plot_yrange_lo = 0.5;
+    float plot_yrange_lo = -1;
     float plot_yrange_hi = 5;
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
