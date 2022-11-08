@@ -222,7 +222,7 @@ void ratio_hists(const char* out_dir)
       //ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
       //ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
       ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
-      ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline->Integral()/ratio->Integral());
+      ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()/ratio->Integral());
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
