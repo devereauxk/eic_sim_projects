@@ -207,7 +207,7 @@ void ratio_hists(const char* out_dir)
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
     float plot_yrange_lo = -1;
-    float plot_yrange_hi = 5;
+    float plot_yrange_hi = 3;
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
@@ -222,7 +222,7 @@ void ratio_hists(const char* out_dir)
       //ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
       //ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
       ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
-      ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()/ratio->Integral());
+      ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()/h1d_jet_eec_rlsqrtpt[ipt]->Integral());
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
