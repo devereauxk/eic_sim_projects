@@ -221,7 +221,7 @@ void ratio_hists(const char* out_dir)
     {
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
-      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline, -1);
+      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
       ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
 
       // plot
