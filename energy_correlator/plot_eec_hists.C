@@ -201,7 +201,50 @@ void ratio_hists(const char* out_dir)
     }
   }
 
-  // ratio hists for h1d_jet_eec_rlsqrtpt
+  // ratio hists for h1d_jet_eec_rlsqrtpt, on / off, on and off normalized
+  mclogxy(cno++);
+  {
+    float plot_xrange_lo = 1E-1;
+    float plot_xrange_hi = 5;
+    float plot_yrange_lo = 0.5;
+    float plot_yrange_hi = 5;
+
+    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.025);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    for (int ipt = 0; ipt < ptbin-2; ipt++)
+    {
+      // calculate ratio
+      TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
+      ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
+      ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()/h1d_jet_eec_rlsqrtpt[ipt]->Integral());
+
+      // plot
+      ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      ratio->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
+      ratio->GetYaxis()->SetTitle("normalized EEC; energy loss on / off");
+      ratio->SetMarkerColor(pt_color[ipt]);
+      ratio->SetLineColor(pt_color[ipt]);
+      ratio->SetMarkerSize(0.5);
+      ratio->SetMarkerStyle(21);
+      ratio->Draw("same hist");
+      leg->AddEntry(ratio,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+    }
+    leg->Draw("same");
+
+    TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_ratio.pdf\")", cno-1, out_dir) );
+  }
+
+  // ratio hists for h1d_jet_eec_rlsqrtpt, (on - off) / off, no normalization
   mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
@@ -219,10 +262,8 @@ void ratio_hists(const char* out_dir)
     {
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
-      //ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
-      //ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
+      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
       ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
-      ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()/h1d_jet_eec_rlsqrtpt[ipt]->Integral());
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -238,14 +279,12 @@ void ratio_hists(const char* out_dir)
     }
     leg->Draw("same");
 
-    /*
-    TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
+    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
     l1.SetLineStyle(7);
     l1.SetLineColor(kGray+2);
     l1.Draw("same");
-    */
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_ratio.pdf\")", cno-1, out_dir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_ratio_shifted.pdf\")", cno-1, out_dir) );
   }
 }
 
