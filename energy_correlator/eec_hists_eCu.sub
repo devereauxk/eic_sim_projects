@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_eec_hists_eCu.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eCujob.out.$(Process)
+Error          = jobout/eCujob.err.$(Process)
+Log            = jobout/eCujob.log.$(Process)
+Queue 500

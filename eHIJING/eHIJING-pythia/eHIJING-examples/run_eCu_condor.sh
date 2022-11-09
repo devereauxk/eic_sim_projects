@@ -26,18 +26,18 @@ exe=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/build/ehijing
 Configfile=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/s20.setting
 Neve=200000
 
-K=2 # default: 4.0 for EIC
+K=4 # default: 4.0 for EIC
 M=1 # Generlizaed HT:1,  HIgher-twist:0, both in the soft gluon emission limit.
 
-label="eAu_1E8_K2"
+label="eCu_1E8_K4"
 folder=$OUT_DIR/Events/$label
 TablePath=$OUT_DIR/Tables/$label
 mkdir -p $folder
 mkdir -p $TablePath
-Z=79
-A=197
+Z=29
+A=64
 $exe $Neve $Z $A $M $K $DIR $DIR $Configfile # > /dev/null 2>&1
 
-mv -v $DIR/events.dat $folder/eAu_${INPUT}.dat
+mv -v $DIR/events.dat $folder/eCu_${INPUT}.dat
 mv -v $DIR/GHT.dat $TablePath/GHT_${INPUT}.dat
 mv -v $DIR/Qs.dat $TablePath/Qs_${INPUT}.dat
