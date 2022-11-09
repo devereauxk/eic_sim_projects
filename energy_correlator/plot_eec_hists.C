@@ -262,13 +262,14 @@ void ratio_hists(const char* out_dir)
     {
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
+      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
       ratio->Scale(1/h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral());
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      //ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       ratio->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
-      ratio->GetYaxis()->SetTitle("normalized EEC");
+      ratio->GetYaxis()->SetTitle("normalized EEC (on - off)");
       ratio->SetMarkerColor(pt_color[ipt]);
       ratio->SetLineColor(pt_color[ipt]);
       ratio->SetMarkerSize(0.5);
