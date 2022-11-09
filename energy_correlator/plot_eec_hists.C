@@ -267,7 +267,7 @@ void ratio_hists(const char* out_dir)
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      //ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       ratio->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
       ratio->GetYaxis()->SetTitle("EEC; (energy loss on - off) / off");
       ratio->SetMarkerColor(pt_color[ipt]);
