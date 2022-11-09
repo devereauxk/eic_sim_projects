@@ -268,7 +268,7 @@ void ratio_hists(const char* out_dir)
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       ratio->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
-      ratio->GetYaxis()->SetTitle("EEC; K(R_{L}) / #int dR_{L} K_{0}(R_{L})");
+      ratio->GetYaxis()->SetTitle(Form("EEC; K=K(R_{L}) / #int dR_{L} K=0(R_{L})");
       ratio->SetMarkerColor(pt_color[ipt]);
       ratio->SetLineColor(pt_color[ipt]);
       ratio->SetMarkerSize(0.5);
