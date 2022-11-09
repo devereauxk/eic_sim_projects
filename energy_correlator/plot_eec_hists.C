@@ -250,7 +250,7 @@ void ratio_hists(const char* out_dir)
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
     float plot_yrange_lo = 1E-3;
-    float plot_yrange_hi = 0.2;
+    float plot_yrange_hi = 0.5;
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
@@ -266,9 +266,9 @@ void ratio_hists(const char* out_dir)
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      //ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       ratio->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
-      ratio->GetYaxis()->SetTitle("EEC; K(R_{L}) / #int dR_{L} K_{0}(R_{L})");
+      ratio->GetYaxis()->SetTitle("EEC; K(R_{L}) / #smallint dR_{L} K_{0}(R_{L})");
       ratio->SetMarkerColor(pt_color[ipt]);
       ratio->SetLineColor(pt_color[ipt]);
       ratio->SetMarkerSize(0.5);
