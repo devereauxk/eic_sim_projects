@@ -245,7 +245,7 @@ void ratio_hists(const char* out_dir)
   }
 
   // ratio hists for h1d_jet_eec_rlsqrtpt, on / int dR_L off
-  mclogxy(cno++);
+  mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
