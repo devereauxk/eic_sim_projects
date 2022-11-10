@@ -364,14 +364,14 @@ void ratio_hists(const char* out_dir)
 
       // calculate relative normalization range by finding enhancement point; i.e. the x-intercept
       int norm_binrange_hi = 1;
-      for(int bini = 0; ibin < on_over_off_ratio->GetNBinsX(); bini++)
+      for(int ibin = 0; ibin < on_over_off_ratio->GetNbinsX(); ibin++)
       {
-        cout<<on_over_off_ratio->GetBinContent(bini)<<endl;
-        if(on_over_off_ratio->GetBinContent(bini) > 0) break;
+        cout<<on_over_off_ratio->GetBinContent(ibin)<<endl;
+        if(on_over_off_ratio->GetBinContent(ibin) > 0) break;
         else norm_binrange_hi++;
       }
-      int norm_range_lo = 1E-2;
-      int norm_range_hi = on_over_off_ratio->GetXAxis()->GetBinCenter(norm_binrange_hi);
+      dobule norm_range_lo = 1E-2;
+      double norm_range_hi = on_over_off_ratio->GetXAxis()->GetBinCenter(norm_binrange_hi);
       cout<<"relative normalization range: ["<<norm_range_lo<<", "<<norm_range_hi<<"]"<<endl;
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_range_lo,norm_range_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_range_lo,norm_range_hi);
       cout<<"relative normalization: "<<relative_normalization<<endl;
