@@ -294,8 +294,8 @@ void ratio_hists(const char* out_dir)
   {
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
-    float plot_yrange_lo = -0.02;
-    float plot_yrange_hi = 0.035;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.04;
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
@@ -308,7 +308,7 @@ void ratio_hists(const char* out_dir)
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
       int norm_binrange_lo = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1E-1);
-      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1.5);
+      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1.1);
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
       ratio->Scale(relative_normalization);
       ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
