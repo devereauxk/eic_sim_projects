@@ -370,7 +370,7 @@ void ratio_hists(const char* out_dir)
         if(on_over_off_ratio->GetBinContent(ibin) > 0) break;
         else norm_binrange_hi++;
       }
-      dobule norm_range_lo = 1E-2;
+      double norm_range_lo = 1E-2;
       double norm_range_hi = on_over_off_ratio->GetBinCenter(norm_binrange_hi);
       cout<<"relative normalization range: ["<<norm_range_lo<<", "<<norm_range_hi<<"]"<<endl;
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_range_lo,norm_range_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_range_lo,norm_range_hi);
