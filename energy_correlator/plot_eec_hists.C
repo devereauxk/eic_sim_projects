@@ -350,8 +350,8 @@ void ratio_hists(const char* out_dir)
   for(int ibin = 0; ibin < on_over_off_ratio->GetNbinsX(); ibin++)
   {
     cout<<on_over_off_ratio->GetBinContent(ibin)<<endl;
-    if(on_over_off_ratio->GetBinContent(ibin) >= 1) break;
-    else norm_binrange_hi++;
+    //if(on_over_off_ratio->GetBinContent(ibin) >= 1) break;
+    //else norm_binrange_hi++;
   }
   double norm_range_lo = 1E-2;
   double norm_range_hi = on_over_off_ratio->GetBinCenter(norm_binrange_hi);
