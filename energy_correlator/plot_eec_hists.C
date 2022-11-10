@@ -364,7 +364,11 @@ void ratio_hists(const char* out_dir)
       for(int ibin = 0; ibin < on_over_off_ratio->GetNbinsX(); ibin++)
       {
         cout<<on_over_off_ratio->GetBinContent(ibin)<<endl;
-        if(on_over_off_ratio->GetBinContent(ibin) >= 1 && on_over_off_ratio->GetBinCenter(norm_binrange_hi) > 1) break;
+        if(on_over_off_ratio->GetBinContent(ibin) >= 1 && on_over_off_ratio->GetBinCenter(norm_binrange_hi) > 1)
+        {
+          norm_binrange_hi--;
+          break;
+        }
         else norm_binrange_hi++;
       }
       cout<<"relative normalization range: ["<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_lo)<<", "<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_hi)<<"]"<<endl;
