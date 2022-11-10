@@ -308,7 +308,8 @@ void ratio_hists(const char* out_dir)
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
       int norm_binrange_lo = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1E-2);
-      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1.1);
+      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1.5);
+      cout<<"hi bin center"<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_hi)<<endl;
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
       ratio->Scale(relative_normalization);
       ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
@@ -339,6 +340,7 @@ void ratio_hists(const char* out_dir)
   // ratio hists for h1d_jet_eec_rlsqrtpt, (relative normalization * on - off) / int dR_L off
   // Determine “relative normalization” by making sure that K=10 and K=0 are on top of each other in the region where we know there is no modification (small angle region).
   // small angle region determined by finding the x-intercept od the normalizaed on / off plot
+  /*
   mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
@@ -403,7 +405,7 @@ void ratio_hists(const char* out_dir)
     l1.Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_ratio_shifted_relnorm_onenhancement.pdf\")", cno-1, out_dir) );
-  }
+  }*/
 
 
 }
