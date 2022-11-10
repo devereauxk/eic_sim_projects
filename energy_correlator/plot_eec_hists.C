@@ -309,7 +309,7 @@ void ratio_hists(const char* out_dir)
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
       int norm_binrange_lo = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1E-2);
       int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1.5);
-      cout<<"hi bin center"<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_hi)<<endl;
+      cout<<"hi bin high edge "<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec_rlsqrtpt[ipt]->GetBinWidth(norm_binrange_hi)<<endl;
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
       ratio->Scale(relative_normalization);
       ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
