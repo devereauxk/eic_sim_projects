@@ -308,12 +308,8 @@ void ratio_hists(const char* out_dir)
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
       int norm_binrange_lo = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1E-2);
-      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(2);
+      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1E-1);
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
-      cout<<"tot integral: "<<h1d_jet_eec_rlsqrtpt[ipt]->Integral()<<endl;
-      cout<<"tot integral baseline: "<<h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()<<endl;
-      cout<<"ranged integral: "<<h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi)<<
-      cout<<"relative normalization: "<<relative_normalization<<endl;
       ratio->Scale(relative_normalization);
       ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
       ratio->Scale(1/h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral());
@@ -343,27 +339,6 @@ void ratio_hists(const char* out_dir)
   // ratio hists for h1d_jet_eec_rlsqrtpt, (relative normalization * on - off) / int dR_L off
   // Determine “relative normalization” by making sure that K=10 and K=0 are on top of each other in the region where we know there is no modification (small angle region).
   // small angle region determined by finding the x-intercept od the normalizaed on / off plot
-
-  TH1D* on_over_off_ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[0]->Clone("temp_ratio");
-  on_over_off_ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[0]);
-  on_over_off_ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[0]->Integral()/h1d_jet_eec_rlsqrtpt[0]->Integral());
-
-  // calculate relative normalization range by finding enhancement point; i.e. the x-intercept for lowest pt bin
-  int norm_binrange_hi = 1;
-  for(int ibin = 0; ibin < on_over_off_ratio->GetNbinsX(); ibin++)
-  {
-    cout<<on_over_off_ratio->GetBinContent(ibin)<<endl;
-    if(on_over_off_ratio->GetBinContent(ibin) >= 1 && on_over_off_ratio->GetBinCenter(norm_binrange_hi) > 1E-1) break;
-    else norm_binrange_hi++;
-  }
-  double norm_range_lo = 1E-2;
-  double norm_range_hi = on_over_off_ratio->GetBinCenter(norm_binrange_hi);
-  cout<<"relative normalization range: ["<<norm_range_lo<<", "<<norm_range_hi<<"]"<<endl;
-  double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[0]->Integral(1,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[0]->Integral(1,norm_binrange_hi);
-  cout<<h1d_jet_eec_rlsqrtpt_baseline[0]->Integral()<<" "<<h1d_jet_eec_rlsqrtpt_baseline[0]->Integral(1,norm_binrange_hi)<<endl;
-  cout<<h1d_jet_eec_rlsqrtpt[0]->Integral()<<" "<<h1d_jet_eec_rlsqrtpt[0]->Integral(1,norm_binrange_hi)<<endl;
-  cout<<"relative normalization: "<<relative_normalization<<endl;
-  /*
   mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
@@ -379,6 +354,25 @@ void ratio_hists(const char* out_dir)
 
     for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
+      // calculate relative normalization range by finding enhancement point; i.e. the x-intercept for lowest pt bin
+      TH1D* on_over_off_ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("temp_ratio");
+      on_over_off_ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
+      on_over_off_ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()/h1d_jet_eec_rlsqrtpt[ipt]->Integral());
+
+      int norm_binrange_lo = 1;
+      int norm_binrange_hi = 1;
+      for(int ibin = 0; ibin < on_over_off_ratio->GetNbinsX(); ibin++)
+      {
+        cout<<on_over_off_ratio->GetBinContent(ibin)<<endl;
+        if(on_over_off_ratio->GetBinContent(ibin) >= 1 && on_over_off_ratio->GetBinCenter(norm_binrange_hi) > 1) break;
+        else norm_binrange_hi++;
+      }
+      cout<<"relative normalization bin range: ["<<norm_binrange_lo<<", "<<norm_binrange_hi<<"]"<<endl;
+      double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
+      cout<<h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()<<" "<<h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
+      cout<<h1d_jet_eec_rlsqrtpt[ipt]->Integral()<<" "<<h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
+      cout<<"relative normalization: "<<relative_normalization<<endl;
+
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
       ratio->Scale(relative_normalization);
@@ -405,7 +399,7 @@ void ratio_hists(const char* out_dir)
     l1.Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_ratio_shifted_relnorm_onenhancement.pdf\")", cno-1, out_dir) );
-  }*/
+  }
 
 
 }
