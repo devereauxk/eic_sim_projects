@@ -367,7 +367,7 @@ void ratio_hists(const char* out_dir)
         if(on_over_off_ratio->GetBinContent(ibin) >= 1 && on_over_off_ratio->GetBinCenter(norm_binrange_hi) > 1) break;
         else norm_binrange_hi++;
       }
-      cout<<"relative normalization bin range: ["<<norm_binrange_lo<<", "<<norm_binrange_hi<<"]"<<endl;
+      cout<<"relative normalization range: ["<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_lo)<<", "<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter()<<"]"<<endl;
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
       cout<<h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()<<" "<<h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
       cout<<h1d_jet_eec_rlsqrtpt[ipt]->Integral()<<" "<<h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
