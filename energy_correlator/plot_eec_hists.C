@@ -201,7 +201,7 @@ void ratio_hists(const char* out_dir)
     }
   }
 
-  // ratio hists for h1d_jet_eec, (on - off) / int dR_L off
+  // ratio hists for h1d_jet_eec, (on - off) / int dR_L off, only calculated for inclusive eta bin (etabin-1)
   mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
@@ -218,9 +218,9 @@ void ratio_hists(const char* out_dir)
     for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
       // calculate ratio
-      TH1D* ratio = (TH1D*) h1d_jet_eec[ipt]->Clone("ratio");
-      ratio->Add(h1d_jet_eec_baseline[ipt], -1);
-      ratio->Scale(1/h1d_jet_eec_baseline[ipt]->Integral());
+      TH1D* ratio = (TH1D*) h1d_jet_eec[etabin-1][ipt]->Clone("ratio");
+      ratio->Add(h1d_jet_eec_baseline[etabin-1][ipt], -1);
+      ratio->Scale(1/h1d_jet_eec_baseline[etabin-1][ipt]->Integral());
 
       // plot
       //ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -240,6 +240,12 @@ void ratio_hists(const char* out_dir)
     l1.SetLineStyle(7);
     l1.SetLineColor(kGray+2);
     l1.Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.025);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin-1],eta_hi[etabin-1]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_ratio_shifted.pdf\")", cno-1, out_dir) );
   }
