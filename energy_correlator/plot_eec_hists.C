@@ -223,7 +223,7 @@ void ratio_hists(const char* out_dir)
       ratio->Scale(1/h1d_jet_eec_baseline[etabin-1][ipt]->Integral());
 
       // plot
-      //ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       //ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       ratio->GetXaxis()->SetTitle("R_{L}");
       ratio->GetYaxis()->SetTitle("normalized EEC (on - off)");
