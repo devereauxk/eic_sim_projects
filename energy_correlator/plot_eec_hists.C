@@ -204,10 +204,10 @@ void ratio_hists(const char* out_dir)
   // ratio hists for h1d_jet_eec, (on - off) / int dR_L off, only calculated for inclusive eta bin (etabin-1)
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-1;
-    float plot_xrange_hi = 5;
-    float plot_yrange_lo = -0.06;
-    float plot_yrange_hi = 0.02;
+    float plot_xrange_lo = 1E-2;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = -0.3;
+    float plot_yrange_hi = 0.1;
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
@@ -224,7 +224,7 @@ void ratio_hists(const char* out_dir)
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      //ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       ratio->GetXaxis()->SetTitle("R_{L}");
       ratio->GetYaxis()->SetTitle("normalized EEC (on - off)");
       ratio->SetMarkerColor(pt_color[ipt]);
