@@ -10,10 +10,12 @@ const int verbosity = 0;
 const Double_t Mp(0.9383); // in GeV/c^2
 const Double_t Me(0.511E-3); // in GeV/c^2
 const Double_t MAu(183.4343); // in GeV/c^2
+const Double_t MCarbon(11.26703); // in GeV/c^2
+const Double_t MCu(60.09468); // in GeV/c^2
 
-const int nspecies = 2;
-static double targ_A[nspecies] = {1, 197};
-static double targ_m[nspecies] = {Mp, MAu};
+const int nspecies = 4;
+static double targ_A[nspecies] = {1, 197, 12, 64};
+static double targ_m[nspecies] = {Mp, MAu, MCarbon, MCu};
 
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double pt_lo[ptbin] = {5, 10, 20, 40, 5};

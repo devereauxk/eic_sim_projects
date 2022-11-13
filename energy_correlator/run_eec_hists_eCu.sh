@@ -25,4 +25,4 @@ ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
 mkdir $OUT_DIR
 
-root -l -b -q "eec_hists.C(\"eAu_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2147.95, 100, 1, 1)"
+root -l -b -q "eec_hists.C(\"eCu_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.02, 100, 3, 1)"
