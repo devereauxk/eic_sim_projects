@@ -357,7 +357,7 @@ void ratio_hists(const char* out_dir)
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
       int norm_binrange_lo = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1E-2);
-      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1E-1);
+      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1);
       cout<<"hi bin high edge "<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec_rlsqrtpt[ipt]->GetBinWidth(norm_binrange_hi)<<endl;
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
       ratio->Scale(relative_normalization);
@@ -404,7 +404,7 @@ void ratio_hists(const char* out_dir)
       // calculate ratio
       TH1D* ratio = (TH1D*) h1d_jet_eec[etabin-1][ipt]->Clone("ratio");
       int norm_binrange_lo = h1d_jet_eec[etabin-1][ipt]->FindBin(1E-2);
-      int norm_binrange_hi = h1d_jet_eec[etabin-1][ipt]->FindBin(1E-1);
+      int norm_binrange_hi = h1d_jet_eec[etabin-1][ipt]->FindBin(0.2);
       cout<<"hi bin high edge "<<h1d_jet_eec[etabin-1][ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec[etabin-1][ipt]->GetBinWidth(norm_binrange_hi)<<endl;
       double relative_normalization =  h1d_jet_eec_baseline[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
       ratio->Scale(relative_normalization);
