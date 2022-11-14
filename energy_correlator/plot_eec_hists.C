@@ -390,8 +390,8 @@ void ratio_hists(const char* out_dir)
   {
     float plot_xrange_lo = 1E-2;
     float plot_xrange_hi = 1;
-    float plot_yrange_lo = -0.05;
-    float plot_yrange_hi = 0.03;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.04;
 
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
