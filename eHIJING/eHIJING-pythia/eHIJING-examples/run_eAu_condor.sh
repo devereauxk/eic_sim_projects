@@ -29,7 +29,7 @@ Neve=200000
 K=4 # default: 4.0 for EIC
 M=1 # Generlizaed HT:1,  HIgher-twist:0, both in the soft gluon emission limit.
 
-label="eAu_18_110_K4"
+label="eAu_5_41_K4"
 folder=$OUT_DIR/Events/$label
 TablePath=$OUT_DIR/Tables/$label
 mkdir -p $folder

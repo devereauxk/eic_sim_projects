@@ -8,7 +8,7 @@ Beams:idA = 2212
 Beams:idB = 11
 Beams:frameType = 2
 Beams:eA = 0 # proton beam energy (+,0,0,+) [GeV], E=max(M, eA)
-Beams:eB = 4252.93 # for e+Au18x110 2130.16 for e+C10x100 2147.95 for e+Au10x100 # e+p10x100 2131.56 #50.0 #27.6 #5.014 # electron beam energy (+,0,0,-) [GeV]
+Beams:eB = 440.378 # for e+Au5x41 4252.93 for e+Au18x110 2130.16 for e+C10x100 2147.95 for e+Au10x100 # e+p10x100 2131.56 #50.0 #27.6 #5.014 # electron beam energy (+,0,0,-) [GeV]
 
 # Phasespace cut:
 # Minimum hard scale squared [GeV^2]
