@@ -87,7 +87,46 @@ void plot_eec_paper()
 
 void pt_eta_3by3_hists()
 {
-  
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < ptbin; ipt++)
+    {
+      mclogxy(cno++);
+      {
+        float plot_xrange_lo = 1E-2;
+        float plot_xrange_hi = 1;
+        float plot_yrange_lo = 1E-5;
+        float plot_yrange_hi = 5E-1;
+
+        TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+        leg->SetBorderSize(0);
+        leg->SetTextSize(0.025);
+        leg->SetFillStyle(0);
+        leg->SetMargin(0.1);
+
+        for (int ik = 0; ik < knum; ik++)
+        {
+          h1d_jet_eec[ieta][ipt]->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+          h1d_jet_eec[ieta][ipt]->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+          h1d_jet_eec[ieta][ipt]->SetMarkerColor(pt_color[ipt]);
+          h1d_jet_eec[ieta][ipt]->SetLineColor(pt_color[ipt]);
+          h1d_jet_eec[ieta][ipt]->SetMarkerSize(0.5);
+          h1d_jet_eec[ieta][ipt]->SetMarkerStyle(21);
+          h1d_jet_eec[ieta][ipt]->Draw("same hist e");
+          leg->AddEntry(h1d_jet_eec[ieta][ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+        }
+        leg->Draw("same");
+
+        TLatex* tl = new TLatex();
+        tl->SetTextAlign(11);
+        tl->SetTextSize(0.025);
+        tl->SetTextColor(kBlack);
+        tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d.pdf\")", cno-1, out_dir, ieta) );
+      }
+    }
+  }
 
 }
 
