@@ -42,7 +42,7 @@ void pt_eta_3by3_hists()
     {
       mclogxy(cno++);
       {
-        float plot_xrange_lo = 0.04;
+        float plot_xrange_lo = 0.02;
         float plot_xrange_hi = 1;
         float plot_yrange_lo = 1E-3;
         float plot_yrange_hi = 5E-1;
@@ -51,7 +51,7 @@ void pt_eta_3by3_hists()
 
         TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
         leg->SetBorderSize(0);
-        leg->SetTextSize(0.03);
+        leg->SetTextSize(0.028);
         leg->SetFillStyle(0);
         leg->SetMargin(0.1);
 
@@ -72,7 +72,7 @@ void pt_eta_3by3_hists()
 
           // plot histogram
           temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-          //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+          temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
           temp->GetXaxis()->SetTitle("R_{L}");
           temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
           temp->SetMarkerColor(pt_color[ik]);
@@ -87,7 +87,7 @@ void pt_eta_3by3_hists()
 
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
-        tl->SetTextSize(0.03);
+        tl->SetTextSize(0.028);
         tl->SetTextColor(kBlack);
         tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 10^{8} events");
         tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
