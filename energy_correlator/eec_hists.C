@@ -262,8 +262,13 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   // loop over lines
   while (iline < nlines)
   {
-    cout<<"@kdebug -2"<<endl;
-    ievt = stoi(content[iline][0]); // get event number for this new event
+    try {
+      cout<<"@kdebug -2"<<endl;
+      ievt = stoi(content[iline][0]); // get event number for this new event
+    } catch (invalid_argument& e) {
+      cout<<"@kdebug -1.5"<<endl;
+      break;
+    }
     cout<<"@kdebug -1"<<endl;
     if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
 
@@ -304,15 +309,11 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       iline++;
     }
 
-    cout<<"@kdebug 0"<<endl;
-
     // jet reconstruction
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
     ClusterSequence cs(jet_constits, R1jetdef);
     vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
     //cout<<"n jets:"<<jets.size()<<endl;
-
-    cout<<"@kdebug 1"<<endl;
 
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
