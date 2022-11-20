@@ -58,7 +58,7 @@ void pt_eta_3by3_hists()
         TH1D* temp;
         TH1D* temp_baseline;
 
-        for (int ik = 1; ik < knum; ik++)
+        for (int ik = 0; ik < knum; ik++)
         {
           temp = (TH1D*) h1d_jet_eec[2][ik][ieta][ipt]->Clone();
           TH1D* temp_baseline = (TH1D*) h1d_jet_eec[2][ik][ieta][ipt]->Clone();
