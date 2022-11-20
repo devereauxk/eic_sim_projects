@@ -26,7 +26,7 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 
 TH1D* h1d_jet_eec[etabin][ptbin] = {};
-TH1D* h1d_jet_eec_rlsqrtpt[ptbin] = {};
+TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
 TH1D* h1d_jet_pt = NULL;
 TH1D* h1d_jet_eta = NULL;
 
@@ -90,22 +90,22 @@ class Correlator_Builder
           if (overlap > 0) eec_weight = eec_weight*1;
 
           // filling h1d_jet_eec[etabin][ptbin] histograms
+          // filing h1d_jet_eec_rlsqrtpt[etabin][ptbin] histograms
           for (int ieta = 0; ieta < etabin; ieta++)
           {
             if (jet_eta >= eta_lo[ieta] && jet_eta < eta_hi[ieta])
             {
               for (int ipt = 0; ipt < ptbin; ipt++)
               {
-                if (jet_pt >= pt_lo[ipt] && jet_pt < pt_hi[ipt]) h1d_jet_eec[ieta][ipt]->Fill(dist12, eec_weight);
+                if (jet_pt >= pt_lo[ipt] && jet_pt < pt_hi[ipt])
+                {
+                  h1d_jet_eec[ieta][ipt]->Fill(dist12, eec_weight);
+
+                  float rlsqrtpt = dist12 * sqrt(jet_pt);
+                  h1d_jet_eec_rlsqrtpt[ieta][ipt]->Fill(rlsqrtpt, eec_weight);
+                }
               }
             }
-          }
-
-          // filing h1d_jet_eec_rlsqrtpt[ptbin] histograms
-          for (int ipt = 0; ipt < ptbin; ipt++)
-          {
-            float rlsqrtpt = dist12 * sqrt(jet_pt);
-            if (jet_pt >= pt_lo[ipt] && jet_pt < pt_hi[ipt]) h1d_jet_eec_rlsqrtpt[ipt]->Fill(rlsqrtpt, eec_weight);
           }
 
         }
@@ -386,13 +386,10 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     {
       h1d_jet_eec[ieta][ipt] = new TH1D(Form("h1d_jet_eec_%d_%d", ieta, ipt),"jet eec",50,lbins);
       h1d_jet_eec[ieta][ipt]->Sumw2();
-    }
-  }
 
-  for (int ipt = 0; ipt < ptbin; ipt++)
-  {
-    h1d_jet_eec_rlsqrtpt[ipt] = new TH1D(Form("h1d_jet_eec_rlsqrtpt_%d", ipt),"jet eec rlsqrtpt",50,lbins_rlsqrtpt);
-    h1d_jet_eec_rlsqrtpt[ipt]->Sumw2();
+      h1d_jet_eec_rlsqrtpt[ieta][ipt] = new TH1D(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt),"jet eec rlsqrtpt",50,lbins_rlsqrtpt);
+      h1d_jet_eec_rlsqrtpt[ieta][ipt]->Sumw2();
+    }
   }
 
 
@@ -413,12 +410,10 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     {
       h1d_jet_eec[ieta][ipt]->Write();
       cout<<"h1d_jet_eec_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_eec[ieta][ipt]->GetEntries()<<endl;
+
+      h1d_jet_eec_rlsqrtpt[ieta][ipt]->Write();
+      cout<<"h1d_jet_eec_rlsqrtpt_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_eec_rlsqrtpt[ieta][ipt]->GetEntries()<<endl;
     }
-  }
-  for (int ipt = 0; ipt < ptbin; ipt++)
-  {
-    h1d_jet_eec_rlsqrtpt[ipt]->Write();
-    cout<<"h1d_jet_eec_rlsqrtpt_"<<ipt<<" entries:"<<h1d_jet_eec_rlsqrtpt[ipt]->GetEntries()<<endl;
   }
 
 }
