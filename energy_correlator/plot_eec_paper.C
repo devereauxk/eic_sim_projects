@@ -315,8 +315,8 @@ void plot_eec_paper()
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
             // raw data histogram
-            h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][ik][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
-            h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][ik][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubyE_%d_%d_%d", ipt, ienergy, ik));
+            h1d_jet_eec_rlsqrtpt_eAu_by_E[ienergy][ik][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
+            h1d_jet_eec_rlsqrtpt_eAu_by_E[ienergy][ik][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubyE_%d_%d_%d", ipt, ienergy, ik));
           }
           cout<<fin_name<<" loaded!"<<endl;
         }
