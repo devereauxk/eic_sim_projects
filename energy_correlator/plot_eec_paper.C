@@ -126,7 +126,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec[ispecies][0][etabin_pick][ptbin_pick]->Clone();
@@ -144,8 +144,8 @@ void nuclei_hists()
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[ik-1]);
-      temp->SetLineColor(pt_color[ik-1]);
+      temp->SetMarkerColor(pt_color[ispecies]);
+      temp->SetLineColor(pt_color[ispecies]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
