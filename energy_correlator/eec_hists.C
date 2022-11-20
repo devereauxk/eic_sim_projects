@@ -260,7 +260,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   int ievt;
 
   // loop over lines
-  while (iline < nlines-1)
+  while (iline < nlines)
   {
     ievt = stoi(content[iline][0]); // get event number for this new event
     if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
@@ -270,7 +270,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     cout<<"ievt "<<ievt<<endl;
 
     // loop over particles with this event number
-    while (iline < nlines-1 && stoi(content[iline][0]) == ievt)
+    while (iline < nlines && stoi(content[iline][0]) == ievt)
     {
       // read content for this line, make type conversions
       vector<string> line;
@@ -302,11 +302,15 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       iline++;
     }
 
+    cout<<"@kdebug 0"<<endl;
+
     // jet reconstruction
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
     ClusterSequence cs(jet_constits, R1jetdef);
     vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
     //cout<<"n jets:"<<jets.size()<<endl;
+
+    cout<<"@kdebug 1"<<endl;
 
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
@@ -335,11 +339,17 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
       if (charged_constituents.size() < 1) continue;
 
+      cout<<"@kdebug 5"<<endl;
+
       // eec calculation
       Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
       cb.make_pairs();
       cb.construct_EEC();
+
+      cout<<"@kdebug 6"<<endl;
     }
+
+    cout<<"@kdebug 7"<<endl;
 
   }
 }
@@ -400,6 +410,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // reads file and fills in jet_constits
   if (gen_type == 0) read_root(inFile, eec_weight_power);
   else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power);
+  cout<<"@kdebug last"<<endl;
 
   // write out histograms
   TFile* fout = new TFile(outFile,"recreate");
