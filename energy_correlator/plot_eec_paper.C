@@ -55,20 +55,8 @@ void pt_eta_3by3_hists()
         leg->SetFillStyle(0);
         leg->SetMargin(0.1);
 
-        TH1D* temp = (TH1D*) h1d_jet_eec[2][0][ieta][ipt]->Clone();
-        TH1D* temp_baseline = (TH1D*) h1d_jet_eec[2][0][ieta][ipt]->Clone();
-        temp->Scale(1/temp_baseline->Integral());
-
-        temp_baseline->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-        temp_baseline->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-        temp_baseline->GetXaxis()->SetTitle("R_{L}");
-        temp_baseline->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-        temp_baseline->SetMarkerColor(pt_color[0]);
-        temp_baseline->SetLineColor(pt_color[0]);
-        temp_baseline->SetMarkerSize(0.5);
-        temp_baseline->SetMarkerStyle(21);
-        temp_baseline->Draw("same hist e");
-        leg->AddEntry(temp_baseline,"K = 0");
+        TH1D* temp;
+        TH1D* temp_baseline;
 
         for (int ik = 1; ik < knum; ik++)
         {
