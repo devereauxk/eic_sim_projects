@@ -263,18 +263,14 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   while (iline < nlines)
   {
     try {
-      cout<<"@kdebug -2"<<endl;
       ievt = stoi(content[iline][0]); // get event number for this new event
     } catch (invalid_argument& e) {
       cout<<"@kdebug -1.5"<<endl;
       break;
     }
-    cout<<"@kdebug -1"<<endl;
     if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
 
     vector<PseudoJet> jet_constits;
-
-    cout<<"ievt "<<ievt<<endl;
 
     // loop over particles with this event number
     while (iline < nlines && stoi(content[iline][0]) == ievt)
@@ -289,7 +285,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       Pz = stod(line[5]);
       Mass = stod(line[6]);
 
-      cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
+      //cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
 
       // apply boost to particle (boost it into lab frame)
       part_rest.SetXYZM(Px, Py, Pz, Mass);
@@ -349,11 +345,10 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
     }
 
-    cout<<"@kdebug 7"<<endl;
-
   }
 
-  cout<<"@kdebug 8"<<endl;
+  fin.close();
+
 }
 
 
