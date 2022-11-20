@@ -558,8 +558,10 @@ void plot_eec_paper()
         }
         cout<<fin_name<<" loaded!"<<endl;
       }
-
-      cout<<"couldn't find file at "<<fin_name<<endl;
+      else
+      {
+        cout<<"couldn't find file at "<<fin_name<<endl;
+      }
 
     }
   }
