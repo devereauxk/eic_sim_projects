@@ -27,7 +27,7 @@ static char* fname_eCu_by_K[knum] = {(char*)"./eHIJING/eCu_1E8_K0/merged.root", 
 static char* fname_eAu_by_K[knum] = {(char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_1E8_K2/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_1E8_condor_v2/merged.root"};
 static char** fname_eA_by_K[speciesnum] = {fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K};
 
-const char* out_dir = "./paperplots";
+const char* out_dir = "./paperplots/";
 
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][ptbin] = {};
@@ -55,8 +55,9 @@ void pt_eta_3by3_hists()
         leg->SetFillStyle(0);
         leg->SetMargin(0.1);
 
-        TH1D* temp;
+        TH1D* temp = (TH1D*) h1d_jet_eec[2][0][ieta][ipt]->Clone();
         TH1D* temp_baseline = (TH1D*) h1d_jet_eec[2][0][ieta][ipt]->Clone();
+        temp->Scale(1/temp_baseline->Integral());
 
         temp_baseline->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         temp_baseline->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
@@ -74,11 +75,10 @@ void pt_eta_3by3_hists()
           temp = (TH1D*) h1d_jet_eec[2][ik][ieta][ipt]->Clone();
 
           // calculate relative normalization ratio
-          int norm_binrange_lo = temp->FindBin(1E-2);
-          int norm_binrange_hi = temp->FindBin(0.2);
-          double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-          temp->Scale(relative_normalization);
-          temp->Add(temp_baseline, -1);
+          //int norm_binrange_lo = temp->FindBin(1E-2);
+          //int norm_binrange_hi = temp->FindBin(0.2);
+          //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+          //temp->Scale(relative_normalization);
           temp->Scale(1/temp_baseline->Integral());
 
           // plot histogram
