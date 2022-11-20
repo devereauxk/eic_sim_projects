@@ -255,12 +255,12 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   Double_t Charge, Px, Py, Pz, Mass;
 
   // number of lines
-  int iline = 1;
+  int iline = 0;
   int nlines = content.size();
   int ievt;
 
   // loop over lines
-  while (iline < nlines)
+  while (iline < nlines-1)
   {
     ievt = stoi(content[iline][0]); // get event number for this new event
     if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
@@ -270,7 +270,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     cout<<"ievt "<<ievt<<endl;
 
     // loop over particles with this event number
-    while (iline < nlines && stoi(content[iline][0]) == ievt)
+    while (iline < nlines-1 && stoi(content[iline][0]) == ievt)
     {
       // read content for this line, make type conversions
       vector<string> line;
