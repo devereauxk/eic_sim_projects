@@ -267,6 +267,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
     vector<PseudoJet> jet_constits;
 
+    cout<<"ievt "<<ievt<<endl;
+
     // loop over particles with this event number
     while (iline < nlines && stoi(content[iline][0]) == ievt)
     {
@@ -280,8 +282,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       Pz = stod(line[5]);
       Mass = stod(line[6]);
 
-      cout<<"line "<<iline<<endl;
-      cout<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
+      cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
 
       // apply boost to particle (boost it into lab frame)
       part_rest.SetXYZM(Px, Py, Pz, Mass);
