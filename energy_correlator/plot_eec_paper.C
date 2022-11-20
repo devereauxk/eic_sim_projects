@@ -560,7 +560,7 @@ void plot_eec_paper()
       }
       else
       {
-        cout<<"couldn't find file at "<<fin_name<<endl;
+        cout<<"couldn't find file for "<<species[ispecies]<<" with K = "<<k[ik]<<endl;
       }
 
     }
