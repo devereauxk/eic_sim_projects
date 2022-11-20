@@ -42,16 +42,16 @@ void pt_eta_3by3_hists()
     {
       mclogxy(cno++);
       {
-        float plot_xrange_lo = 1E-2;
+        float plot_xrange_lo = 0.04;
         float plot_xrange_hi = 1;
-        float plot_yrange_lo = 1E-5;
+        float plot_yrange_lo = 1E-3;
         float plot_yrange_hi = 5E-1;
         float legend_x = 0.7;
         float legend_y = 0.2;
 
         TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
         leg->SetBorderSize(0);
-        leg->SetTextSize(0.025);
+        leg->SetTextSize(0.03);
         leg->SetFillStyle(0);
         leg->SetMargin(0.1);
 
@@ -87,11 +87,11 @@ void pt_eta_3by3_hists()
 
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
-        tl->SetTextSize(0.025);
+        tl->SetTextSize(0.03);
         tl->SetTextColor(kBlack);
-        tl->DrawLatexNDC(0.22,0.86,"eHIJING, e+Au @ 10+100 GeV, 10^{8} events");
-        tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
-        tl->DrawLatexNDC(0.22,0.82,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 10^{8} events");
+        tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+        tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
 
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d_%d.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
