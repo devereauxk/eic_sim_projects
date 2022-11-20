@@ -27,7 +27,7 @@ static char* fname_eCu_by_K[knum] = {(char*)"./eHIJING/eCu_1E8_K0/merged.root", 
 static char* fname_eAu_by_K[knum] = {(char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_1E8_K2/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_1E8_condor_v2/merged.root"};
 static char** fname_eA_by_K[speciesnum] = {fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K};
 
-const char* out_dir = "./";
+const char* out_dir = "./paperplots";
 
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][ptbin] = {};
@@ -46,10 +46,10 @@ void pt_eta_3by3_hists()
         float plot_xrange_hi = 1;
         float plot_yrange_lo = 1E-5;
         float plot_yrange_hi = 5E-1;
-        float legend_x = 0.5;
+        float legend_x = 0.7;
         float legend_y = 0.2;
 
-        TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.2);
+        TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.1.5);
         leg->SetBorderSize(0);
         leg->SetTextSize(0.025);
         leg->SetFillStyle(0);
@@ -57,7 +57,19 @@ void pt_eta_3by3_hists()
 
         TH1D* temp;
         TH1D* temp_baseline = (TH1D*) h1d_jet_eec[2][0][ieta][ipt]->Clone();
-        for (int ik = 0; ik < knum; ik++)
+
+        temp_baseline->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        temp_baseline->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp_baseline->GetXaxis()->SetTitle("R_{L}");
+        temp_baseline->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
+        temp_baseline->SetMarkerColor(pt_color[ik]);
+        temp_baseline->SetLineColor(pt_color[ik]);
+        temp_baseline->SetMarkerSize(0.5);
+        temp_baseline->SetMarkerStyle(21);
+        temp_baseline->Draw("same hist e");
+        temp_baseline->AddEntry(temp_baseline,"K = 0");
+
+        for (int ik = 1; ik < knum; ik++)
         {
           temp = (TH1D*) h1d_jet_eec[2][ik][ieta][ipt]->Clone();
 
@@ -544,7 +556,10 @@ void plot_eec_paper()
           h1d_jet_eec_rlsqrtpt[ispecies][ik][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
           h1d_jet_eec_rlsqrtpt[ispecies][ik][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_%d_%d", ipt, ispecies, ik));
         }
+        cout<<fin_name<<" loaded!"<<endl;
       }
+
+      cout<<"couldn't find file at "<<fin_name<<endl;
 
     }
   }
