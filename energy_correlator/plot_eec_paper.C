@@ -308,15 +308,15 @@ void plot_eec_paper()
             for (int ipt = 0; ipt < ptbin; ipt++)
             {
               // raw data histograms
-              h1d_jet_eec_eAu_by_E[ienergy][0][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
-              h1d_jet_eec_eAu_by_E[ienergy][0][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubyE_%d_%d_%d_%d", ieta, ipt, ienergy, 0));
+              h1d_jet_eec_eAu_by_E[ienergy][ik][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+              h1d_jet_eec_eAu_by_E[ienergy][ik][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubyE_%d_%d_%d_%d", ieta, ipt, ienergy, ik));
             }
           }
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
             // raw data histogram
-            h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][0][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
-            h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][0][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubyE_%d_%d_%d", ipt, ienergy, 0));
+            h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][ik][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
+            h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][ik][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubyE_%d_%d_%d", ipt, ienergy, ik));
           }
           cout<<fin_name<<" loaded!"<<endl;
         }
