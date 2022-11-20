@@ -20,11 +20,11 @@ const int knum = 4;
 static int k[knum] = {0,2,4,10};
 
 const int energynum = 3;
-static char* energy[energynum] = {"5 on 41 GeV", "10 on 100 GeV", "18 on 110 GeV"};
+static char* energy[energynum] = {(char*)"5 on 41 GeV", (char*)"10 on 100 GeV", (char*)"18 on 110 GeV"};
 
-static char* fname_eC_by_K[knum] = {"./eHIJING/eC_1E8_K0/merged.root", "", "./eHIJING/eC_1E8_K4/merged.root", ""};
-static char* fname_eCu_by_K[knum] = {"./eHIJING/eCu_1E8_K0/merged.root", "", "./eHIJING/eCu_1E8_K4/merged.root", ""};
-static char* fname_eAu_by_K[knum] = {"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", "./eHIJING/eAu_1E8_K2/merged.root", "./eHIJING/eAu_1E8_K4/merged.root", "./eHIJING/eAu_1E8_condor_v2/merged.root"};
+static char* fname_eC_by_K[knum] = {(char*)"./eHIJING/eC_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eC_1E8_K4/merged.root", (char*)""};
+static char* fname_eCu_by_K[knum] = {(char*)"./eHIJING/eCu_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eCu_1E8_K4/merged.root", (char*)""};
+static char* fname_eAu_by_K[knum] = {(char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_1E8_K2/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_1E8_condor_v2/merged.root"};
 static char** fname_eA_by_K[speciesnum] = {fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K};
 
 const char* out_dir = "./";
