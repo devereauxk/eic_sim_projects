@@ -49,7 +49,7 @@ void pt_eta_3by3_hists()
         float legend_x = 0.7;
         float legend_y = 0.2;
 
-        TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.1.5);
+        TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
         leg->SetBorderSize(0);
         leg->SetTextSize(0.025);
         leg->SetFillStyle(0);
@@ -62,12 +62,12 @@ void pt_eta_3by3_hists()
         temp_baseline->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp_baseline->GetXaxis()->SetTitle("R_{L}");
         temp_baseline->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-        temp_baseline->SetMarkerColor(pt_color[ik]);
-        temp_baseline->SetLineColor(pt_color[ik]);
+        temp_baseline->SetMarkerColor(pt_color[0]);
+        temp_baseline->SetLineColor(pt_color[0]);
         temp_baseline->SetMarkerSize(0.5);
         temp_baseline->SetMarkerStyle(21);
         temp_baseline->Draw("same hist e");
-        temp_baseline->AddEntry(temp_baseline,"K = 0");
+        leg->AddEntry(temp_baseline,"K = 0");
 
         for (int ik = 1; ik < knum; ik++)
         {
