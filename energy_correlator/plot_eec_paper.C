@@ -14,7 +14,7 @@ static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
 const int speciesnum = 3;
-static char* species[speciesnum] = {"e+C", "e+Cu", "e+Au";}
+static char* species[speciesnum] = {(char*)"e+C", (char*)"e+Cu", (char*)"e+Au"};
 
 const int knum = 4;
 static int k[knum] = {0,2,4,10};
@@ -27,7 +27,7 @@ static char* fname_eCu_by_K[knum] = {"./eHIJING/eCu_1E8_K0/merged.root", "", "./
 static char* fname_eAu_by_K[knum] = {"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", "./eHIJING/eAu_1E8_K2/merged.root", "./eHIJING/eAu_1E8_K4/merged.root", "./eHIJING/eAu_1E8_condor_v2/merged.root"};
 static char** fname_eA_by_K[speciesnum] = {fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K};
 
-const char* out_dir = "./"
+const char* out_dir = "./";
 
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][ptbin] = {};
