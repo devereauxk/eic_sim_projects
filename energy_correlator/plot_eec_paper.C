@@ -114,8 +114,8 @@ void nuclei_hists()
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
-    float legend_x = 0.7;
-    float legend_y = 0.2;
+    float legend_x = 0.25;
+    float legend_y = 0.5;
 
     TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
     leg->SetBorderSize(0);
@@ -133,7 +133,7 @@ void nuclei_hists()
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(1E-1);
+      int norm_binrange_hi = temp->FindBin(0.2);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
