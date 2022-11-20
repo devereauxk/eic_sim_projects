@@ -525,7 +525,7 @@ void plot_eec_paper()
     {
       fin_name = fname_eA_by_K[ispecies][ik];
 
-      if (fin_name != (char*) "")
+      if (strcmp(fin_name,"") != 0)
       {
         fin = new TFile(fin_name, "READ");
 
