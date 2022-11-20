@@ -27,8 +27,9 @@ static char* fname_eCu_by_K[knum] = {(char*)"./eHIJING/eCu_1E8_K0/merged.root", 
 static char* fname_eAu_by_K[knum] = {(char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_1E8_K2/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_1E8_condor_v2/merged.root"};
 static char** fname_eA_by_K[speciesnum] = {fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K};
 
-static char* fname_eAu_by_E_K4[energynum] = {(char*)"./eHIJING/eAu_5_41_K4/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_18_110_K4/merged.root"};
 static char* fname_eAu_by_E_K0[energynum] = {(char*)"./eHIJING/eAu_5_41_K0/merged.root", (char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_18_110_K0/merged.root"};
+static char* fname_eAu_by_E_K4[energynum] = {(char*)"./eHIJING/eAu_5_41_K4/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_18_110_K4/merged.root"};
+static char** fname_eAu_by_E[knum] = {fname_eAu_by_E_K0, NULL, fname_eAu_by_E_K4, NULL};
 
 const char* out_dir = "./paperplots/";
 
@@ -220,8 +221,8 @@ void energy_hists()
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[ispecies]);
-      temp->SetLineColor(pt_color[ispecies]);
+      temp->SetMarkerColor(pt_color[ienergy]);
+      temp->SetLineColor(pt_color[ienergy]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
@@ -292,65 +293,39 @@ void plot_eec_paper()
 
   for (int ienergy = 0; ienergy < energynum; ienergy++)
   {
-    // K0
-    fin_name = fname_eAu_by_E_K0[ienergy];
-
-    if (strcmp(fin_name,"") != 0)
+    for (int ik = 0; ik < knum; ik++)
     {
-      fin = new TFile(fin_name, "READ");
-
-      for (int ieta = 0; ieta < etabin; ieta++)
+      if (fname_eAu_by_E[ik] != NULL)
       {
-        for (int ipt = 0; ipt < ptbin; ipt++)
+        fin_name = fname_eAu_by_E[ik][ienergy];
+
+        if (strcmp(fin_name,"") != 0)
         {
-          // raw data histograms
-          h1d_jet_eec_eAu_by_E[ienergy][0][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
-          h1d_jet_eec_eAu_by_E[ienergy][0][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubyE_%d_%d_%d_%d", ieta, ipt, ispecies, ik));
+          fin = new TFile(fin_name, "READ");
+
+          for (int ieta = 0; ieta < etabin; ieta++)
+          {
+            for (int ipt = 0; ipt < ptbin; ipt++)
+            {
+              // raw data histograms
+              h1d_jet_eec_eAu_by_E[ienergy][0][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+              h1d_jet_eec_eAu_by_E[ienergy][0][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubyE_%d_%d_%d_%d", ieta, ipt, ienergy, 0));
+            }
+          }
+          for (int ipt = 0; ipt < ptbin; ipt++)
+          {
+            // raw data histogram
+            h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][0][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
+            h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][0][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubyE_%d_%d_%d", ipt, ienergy, 0));
+          }
+          cout<<fin_name<<" loaded!"<<endl;
+        }
+        else
+        {
+          cout<<"couldn't find file for "<<energy[ienergy]<<endl;
         }
       }
-      for (int ipt = 0; ipt < ptbin; ipt++)
-      {
-        // raw data histogram
-        h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][0][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
-        h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][0][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubyE_%d_%d_%d", ipt, ispecies, ik));
-      }
-      cout<<fin_name<<" loaded!"<<endl;
     }
-    else
-    {
-      cout<<"couldn't find file for "<<energy[ienergy]<<endl;
-    }
-
-    // K4
-    fin_name = fname_eAu_by_E_K4[ienergy];
-
-    if (strcmp(fin_name,"") != 0)
-    {
-      fin = new TFile(fin_name, "READ");
-
-      for (int ieta = 0; ieta < etabin; ieta++)
-      {
-        for (int ipt = 0; ipt < ptbin; ipt++)
-        {
-          // raw data histograms
-          h1d_jet_eec_eAu_by_E[ienergy][2][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
-          h1d_jet_eec_eAu_by_E[ienergy][2][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubyE_%d_%d_%d_%d", ieta, ipt, ispecies, ik));
-        }
-      }
-      for (int ipt = 0; ipt < ptbin; ipt++)
-      {
-        // raw data histogram
-        h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][2][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
-        h1d_jet_eec_rlsqrtpt_eAu_by_E[ispecies][2][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubyE_%d_%d_%d", ipt, ispecies, ik));
-      }
-      cout<<fin_name<<" loaded!"<<endl;
-    }
-    else
-    {
-      cout<<"couldn't find file for "<<energy[ienergy]<<endl;
-    }
-
-
   }
 
   // plot individual panels
