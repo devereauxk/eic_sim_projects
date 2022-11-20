@@ -73,6 +73,7 @@ void pt_eta_3by3_hists()
         for (int ik = 1; ik < knum; ik++)
         {
           temp = (TH1D*) h1d_jet_eec[2][ik][ieta][ipt]->Clone();
+          TH1D* temp_baseline = (TH1D*) h1d_jet_eec[2][ik][ieta][ipt]->Clone();
 
           // calculate relative normalization ratio
           //int norm_binrange_lo = temp->FindBin(1E-2);
