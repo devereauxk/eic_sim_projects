@@ -280,6 +280,9 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       Pz = stod(line[5]);
       Mass = stod(line[6]);
 
+      cout<<"line "<<iline<<endl;
+      cout<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
+
       // apply boost to particle (boost it into lab frame)
       part_rest.SetXYZM(Px, Py, Pz, Mass);
       //part_rest.Print();
