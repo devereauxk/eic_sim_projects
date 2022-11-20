@@ -56,7 +56,7 @@ void pt_eta_3by3_hists()
         leg->SetMargin(0.1);
 
         TH1D* temp;
-        TH1D* temp_baseline = h1d_jet_eec[2][0][ieta][ipt]->Clone();
+        TH1D* temp_baseline = (TH1D*) h1d_jet_eec[2][0][ieta][ipt]->Clone();
         for (int ik = 0; ik < knum; ik++)
         {
           temp = (TH1D*) h1d_jet_eec[2][ik][ieta][ipt]->Clone();
@@ -525,7 +525,7 @@ void plot_eec_paper()
     {
       fin_name = fname_eA_by_K[ispecies][ik];
 
-      if (fin_name != "")
+      if (fin_name != (char*) "")
       {
         fin = new TFile(fin_name, "READ");
 
