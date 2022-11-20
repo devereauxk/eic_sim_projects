@@ -255,7 +255,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   Double_t Charge, Px, Py, Pz, Mass;
 
   // number of lines
-  int iline = 0;
+  int iline = 1;
   int nlines = content.size();
   int ievt;
 
