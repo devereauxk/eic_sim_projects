@@ -262,7 +262,9 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   // loop over lines
   while (iline < nlines)
   {
+    cout<<"@kdebug -2"<<endl;
     ievt = stoi(content[iline][0]); // get event number for this new event
+    cout<<"@kdebug -1"<<endl;
     if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
 
     vector<PseudoJet> jet_constits;
@@ -339,19 +341,18 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
       if (charged_constituents.size() < 1) continue;
 
-      cout<<"@kdebug 5"<<endl;
-
       // eec calculation
       Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
       cb.make_pairs();
       cb.construct_EEC();
 
-      cout<<"@kdebug 6"<<endl;
     }
 
     cout<<"@kdebug 7"<<endl;
 
   }
+
+  cout<<"@kdebug 8"<<endl;
 }
 
 
