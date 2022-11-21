@@ -278,8 +278,8 @@ void nuclei_hists()
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
-      temp->SetMarkerColor(pt_color[ik]);
-      temp->SetLineColor(pt_color[ik]);
+      temp->SetMarkerColor(pt_color[ispecies]);
+      temp->SetLineColor(pt_color[ispecies]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
