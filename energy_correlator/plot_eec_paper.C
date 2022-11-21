@@ -166,7 +166,7 @@ void pt_eta_3by3_hists()
         tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
         tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
 
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d_%d.pdf\")", cno-1, out_dir, ieta, ipt) );
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_overlay_%d_%d.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
     }
   }
