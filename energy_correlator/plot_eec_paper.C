@@ -207,6 +207,8 @@ void energy_hists()
     {
       temp = (TH1D*) h1d_jet_eec_eAu_by_E[ienergy][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_eAu_by_E[ienergy][0][etabin_pick][ptbin_pick]->Clone();
+      cout<<ienergy<<" integral "<<temp->Integral()<<endl;
+      cout<<ienergy<<" baseline integral"<<temp_baseline->Integral()<<endl;
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(1E-3);
