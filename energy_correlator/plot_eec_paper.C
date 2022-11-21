@@ -117,8 +117,8 @@ void pt_eta_3by3_hists()
       {
         float plot_xrange_lo = 0.1;
         float plot_xrange_hi = 5;
-        float plot_yrange_lo = -0.015;
-        float plot_yrange_hi = 0.04;
+        float plot_yrange_lo = 1E-3;
+        float plot_yrange_hi = 0.5;
         float legend_x = 0.22;
         float legend_y = 0.6;
 
@@ -144,7 +144,7 @@ void pt_eta_3by3_hists()
           temp->Scale(1/temp_baseline->Integral());
 
           // plot histogram
-          temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+          //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
           //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
           temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
           temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
@@ -152,7 +152,7 @@ void pt_eta_3by3_hists()
           temp->SetLineColor(pt_color[ik]);
           temp->SetMarkerSize(0.5);
           temp->SetMarkerStyle(21);
-          temp->Draw("same hist e");
+          temp->Draw("same hist");
           leg->AddEntry(temp,Form("K = %i",k[ik]));
         }
 
