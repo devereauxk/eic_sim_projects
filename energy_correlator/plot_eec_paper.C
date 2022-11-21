@@ -324,8 +324,8 @@ void nuclei_hists()
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(1);
+      int norm_binrange_lo = temp->FindBin(1E-2);
+      int norm_binrange_hi = temp->FindBin(0.1);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -358,7 +358,7 @@ void nuclei_hists()
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrt_by_nuclei_ratio.pdf\")", cno-1, out_dir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_by_nuclei_ratio.pdf\")", cno-1, out_dir) );
 
   }
 
