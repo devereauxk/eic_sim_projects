@@ -158,11 +158,6 @@ void pt_eta_3by3_hists()
 
         leg->Draw("same");
 
-        TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
-        l1.SetLineStyle(7);
-        l1.SetLineColor(kGray+2);
-        l1.Draw("same");
-
         TLatex* tl = new TLatex();
         tl->SetTextAlign(11);
         tl->SetTextSize(0.028);
@@ -182,8 +177,8 @@ void nuclei_hists()
 {
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   int k_pick = 2;
-  int ptbin_pick = 2;
   int etabin_pick = 2;
+  int ptbin_pick = 2;
 
   mclogx(cno++);
   {
@@ -243,8 +238,65 @@ void nuclei_hists()
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_by_nuclei.pdf\")", cno-1, out_dir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_by_nuclei_ratio.pdf\")", cno-1, out_dir) );
 
+  }
+
+  // with R_L on the x-axis, plotting (alpha_i * K=i) / (int R_L K=0)
+  mclogxy(cno++);
+  {
+    float plot_xrange_lo = 0.02;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = 1E-3;
+    float plot_yrange_hi = 5E-1;
+    float legend_x = 0.7;
+    float legend_y = 0.2;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+    TH1D* temp_baseline;
+
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    {
+      temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec[ispecies][0][etabin_pick][ptbin_pick]->Clone();
+
+      // calculate relative normalization ratio
+      int norm_binrange_lo = temp->FindBin(1E-3);
+      int norm_binrange_hi = temp->FindBin(1E-1);
+      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+      temp->Scale(relative_normalization);
+      temp->Scale(1/temp_baseline->Integral());
+
+      // plot histogram
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetXaxis()->SetTitle("R_{L}");
+      temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
+      temp->SetMarkerColor(pt_color[ik]);
+      temp->SetLineColor(pt_color[ik]);
+      temp->SetMarkerSize(0.5);
+      temp->SetMarkerStyle(21);
+      temp->Draw("same hist");
+      leg->AddEntry(temp,Form("%s, K = %i",species[ispecies], k[k_pick]));
+    }
+
+    leg->Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.028);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
+    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_by_nuclei_ratio.pdf\")", cno-1, out_dir) );
   }
 }
 
