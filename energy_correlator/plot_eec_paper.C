@@ -300,10 +300,6 @@ void nuclei_hists()
   }
 
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
-  int k_pick = 2;
-  int etabin_pick = 2;
-  int ptbin_pick = 2;
-
   mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
