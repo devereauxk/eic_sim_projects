@@ -113,7 +113,7 @@ void pt_eta_3by3_hists()
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      mclogxy(cno++);
+      mclogx(cno++);
       {
         float plot_xrange_lo = 0.1;
         float plot_xrange_hi = 5;
