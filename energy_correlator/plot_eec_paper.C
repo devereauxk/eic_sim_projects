@@ -152,7 +152,7 @@ void pt_eta_3by3_hists()
           temp->SetLineColor(pt_color[ik]);
           temp->SetMarkerSize(0.5);
           temp->SetMarkerStyle(21);
-          temp->Draw("same hist e");
+          temp->Draw("same hist");
           leg->AddEntry(temp,Form("K = %i",k[ik]));
         }
 
