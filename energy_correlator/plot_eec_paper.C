@@ -584,7 +584,7 @@ void energy_hists()
 
       // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
       temp->SetMarkerColor(pt_color[ienergy]);
@@ -609,7 +609,7 @@ void energy_hists()
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrt_by_energy_ratio.pdf\")", cno-1, out_dir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_by_energy_ratio.pdf\")", cno-1, out_dir) );
 
   }
 
