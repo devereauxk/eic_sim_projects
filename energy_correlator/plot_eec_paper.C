@@ -583,7 +583,7 @@ void energy_hists()
       temp->Scale(1/temp_baseline->Integral());
 
       // plot
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
