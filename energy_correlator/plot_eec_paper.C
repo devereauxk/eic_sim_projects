@@ -575,7 +575,7 @@ void plot_eec_paper()
 
   nuclei_hists();
 
-  //energy_hists();
+  energy_hists();
 
   //power_hists();
 
