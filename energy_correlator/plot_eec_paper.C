@@ -571,8 +571,8 @@ void energy_hists()
 
     for (int ienergy = 0; ienergy < energynum; ienergy++)
     {
-      temp = (TH1D*) h1d_jet_eec_eAu_by_E[ienergy][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_eAu_by_E[ienergy][0][etabin_pick][ptbin_pick]->Clone();
+      temp = (TH1D*) h1d_jet_eec_rlsqrtpt_eAu_by_E[ienergy][k_pick][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt_eAu_by_E[ienergy][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(1E-3);
@@ -583,8 +583,8 @@ void energy_hists()
       temp->Scale(1/temp_baseline->Integral());
 
       // plot
-      //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
       temp->SetMarkerColor(pt_color[ienergy]);
