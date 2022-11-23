@@ -39,7 +39,7 @@ TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.08;
+const float rl_norm_hi = 0.3;
 const float rl_norm_lo = 1E-3;
 
 const float rlsqrtpt_norm_hi = rl_norm_hi * sqrt(20);
