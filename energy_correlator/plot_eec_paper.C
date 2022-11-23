@@ -330,7 +330,7 @@ void nuclei_hists()
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo)+1;
+      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
       int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi)+1;
       cout<<species[ispecies]<<" norm range "<<rlsqrtpt_norm_lo<<" "<<rlsqrtpt_norm_hi<<endl;
       cout<<species[ispecies]<<" norm range in bins "<<norm_binrange_lo<<" "<<norm_binrange_hi<<endl;
