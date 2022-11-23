@@ -331,7 +331,17 @@ void nuclei_hists()
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
-      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi)+1;
+      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       cout<<species[ispecies]<<" norm range "<<rlsqrtpt_norm_lo<<" "<<rlsqrtpt_norm_hi<<endl;
       cout<<species[ispecies]<<" norm range in bins "<<norm_binrange_lo<<" "<<norm_binrange_hi<<endl;
       cout<<species[ispecies]<<" baseline integral "<<temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
