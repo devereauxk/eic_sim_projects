@@ -188,7 +188,7 @@ void nuclei_hists()
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-2;
+    float plot_xrange_lo = 1E-3;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
@@ -308,7 +308,7 @@ void nuclei_hists()
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-1;
+    float plot_xrange_lo = 1E-3;
     float plot_xrange_hi = 5;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
