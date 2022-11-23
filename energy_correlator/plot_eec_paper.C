@@ -39,6 +39,12 @@ TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 
+const float rl_norm_hi = 0.08;
+const float rl_norm_lo = 1E-3;
+
+const float rlsqrtpt_norm_hi = rl_norm_hi * sqrt(20);
+const float rlsqrtpt_norm_lo = rl_norm_lo * sqrt(20);
+
 static int cno = 0;
 
 void pt_eta_3by3_hists()
@@ -74,8 +80,8 @@ void pt_eta_3by3_hists()
           temp_baseline = (TH1D*) h1d_jet_eec[species_pick][0][ieta][ipt]->Clone();
 
           // calculate relative normalization ratio
-          int norm_binrange_lo = temp->FindBin(1E-3);
-          int norm_binrange_hi = temp->FindBin(1E-1);
+          int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+          int norm_binrange_hi = temp->FindBin(rl_norm_hi);
           double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
           temp->Scale(relative_normalization);
           temp->Scale(1/temp_baseline->Integral());
@@ -137,8 +143,8 @@ void pt_eta_3by3_hists()
           temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[species_pick][0][ieta][ipt]->Clone();
 
           // calculate relative normalization ratio
-          int norm_binrange_lo = temp->FindBin(1E-3);
-          int norm_binrange_hi = temp->FindBin(1);
+          int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
+          int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
           double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
           temp->Scale(relative_normalization);
           temp->Scale(1/temp_baseline->Integral());
@@ -204,8 +210,8 @@ void nuclei_hists()
       temp_baseline = (TH1D*) h1d_jet_eec[ispecies][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(0.2);
+      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -267,8 +273,8 @@ void nuclei_hists()
       temp_baseline = (TH1D*) h1d_jet_eec[ispecies][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(1E-1);
+      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
@@ -324,8 +330,8 @@ void nuclei_hists()
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(1);
+      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -387,8 +393,8 @@ void nuclei_hists()
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(1);
+      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
@@ -455,8 +461,8 @@ void energy_hists()
       cout<<ienergy<<" baseline integral"<<temp_baseline->Integral()<<endl;
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(0.2);
+      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -518,8 +524,8 @@ void energy_hists()
       temp_baseline = (TH1D*) h1d_jet_eec_eAu_by_E[ienergy][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(0.2);
+      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
@@ -575,8 +581,8 @@ void energy_hists()
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt_eAu_by_E[ienergy][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(1);
+      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -638,8 +644,8 @@ void energy_hists()
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt_eAu_by_E[ienergy][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(1E-3);
-      int norm_binrange_hi = temp->FindBin(1);
+      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
