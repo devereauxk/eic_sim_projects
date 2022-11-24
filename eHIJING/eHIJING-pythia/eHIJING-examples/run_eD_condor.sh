@@ -38,6 +38,6 @@ Z=1
 A=2
 $exe $Neve $Z $A $M $K $DIR $DIR $Configfile # > /dev/null 2>&1
 
-mv -v $DIR/events.dat $folder/ep_${INPUT}.dat
+mv -v $DIR/events.dat $folder/eD_${INPUT}.dat
 mv -v $DIR/GHT.dat $TablePath/GHT_${INPUT}.dat
 mv -v $DIR/Qs.dat $TablePath/Qs_${INPUT}.dat
