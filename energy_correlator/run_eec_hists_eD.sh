@@ -1,6 +1,6 @@
 #!/bin/bash
-IN_DIR=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eD_10_100_K0
-OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/eD_10_100_K0
+IN_DIR=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eD_10_100_K4
+OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/eD_10_100_K4
 
 if [ -z "$1" ]
 then
@@ -20,9 +20,9 @@ echo $INPUT
 DIR=`printf "%04d" $INPUT`
 mkdir $DIR
 
-ln -s $IN_DIR/ep_${INPUT}.dat
+ln -s $IN_DIR/eD_${INPUT}.dat
 ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
 mkdir $OUT_DIR
 
-root -l -b -q "eec_hists.C(\"ep_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 4, 1)"
+root -l -b -q "eec_hists.C(\"eD_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 4, 1)"
