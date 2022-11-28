@@ -21,8 +21,8 @@ TH1D* h1d_jet_eec_norm[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_baseline[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_baseline_norm[etabin][ptbin] = {};
 
-TH1D* h1d_jet_eec_rlsqrtpt[ptbin] = {};
-TH1D* h1d_jet_eec_rlsqrtpt_baseline[ptbin] = {};
+TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
+TH1D* h1d_jet_eec_rlsqrtpt_baseline[etabin][ptbin] = {};
 
 static int cno = 0;
 
@@ -134,14 +134,14 @@ void overlay_hists(const char* out_dir)
 
     for (int ipt = 0; ipt < ptbin-1; ipt++)
     {
-      h1d_jet_eec_rlsqrtpt[ipt]->SetMarkerColor(pt_color[ipt]);
-      h1d_jet_eec_rlsqrtpt[ipt]->SetLineColor(pt_color[ipt]);
-      h1d_jet_eec_rlsqrtpt[ipt]->SetMarkerSize(0.5);
-      h1d_jet_eec_rlsqrtpt[ipt]->SetMarkerStyle(21);
-      h1d_jet_eec_rlsqrtpt[ipt]->Draw("hist same");
-      h1d_jet_eec_rlsqrtpt[ipt]->GetXaxis()->SetTitle("R_{L} #sqrt{p_{T,jet}}");
-      h1d_jet_eec_rlsqrtpt[ipt]->GetYaxis()->SetTitle("EEC (no normalization)");
-      leg->AddEntry(h1d_jet_eec_rlsqrtpt[ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->SetMarkerColor(pt_color[ipt]);
+      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->SetLineColor(pt_color[ipt]);
+      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->SetMarkerSize(0.5);
+      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->SetMarkerStyle(21);
+      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->Draw("hist same");
+      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->GetXaxis()->SetTitle("R_{L} #sqrt{p_{T,jet}}");
+      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->GetYaxis()->SetTitle("EEC (no normalization)");
+      leg->AddEntry(h1d_jet_eec_rlsqrtpt[etabin-1][ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
 
@@ -267,9 +267,9 @@ void ratio_hists(const char* out_dir)
     for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
       // calculate ratio
-      TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
-      ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
-      ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()/h1d_jet_eec_rlsqrtpt[ipt]->Integral());
+      TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->Clone("ratio");
+      ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[etabin-1][ipt]);
+      ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[etabin-1][ipt]->Integral()/h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->Integral());
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -310,9 +310,9 @@ void ratio_hists(const char* out_dir)
     for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
       // calculate ratio
-      TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
-      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
-      ratio->Scale(1/h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral());
+      TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->Clone("ratio");
+      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[etabin-1][ipt], -1);
+      ratio->Scale(1/h1d_jet_eec_rlsqrtpt_baseline[etabin-1][ipt]->Integral());
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -355,14 +355,24 @@ void ratio_hists(const char* out_dir)
     for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
       // calculate ratio
-      TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
-      int norm_binrange_lo = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1E-2);
-      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[ipt]->FindBin(1);
-      cout<<"hi bin high edge "<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec_rlsqrtpt[ipt]->GetBinWidth(norm_binrange_hi)<<endl;
-      double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
+      TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->Clone("ratio");
+      int norm_binrange_lo = h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->FindBin(1E-2);
+      int norm_binrange_hi = h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->FindBin(1);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
+      cout<<"hi bin high edge "<<h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->GetBinWidth(norm_binrange_hi)<<endl;
+      double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
       ratio->Scale(relative_normalization);
-      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
-      ratio->Scale(1/h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral());
+      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[etabin-1][ipt], -1);
+      ratio->Scale(1/h1d_jet_eec_rlsqrtpt_baseline[etabin-1][ipt]->Integral());
 
       // plot
       ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -405,6 +415,16 @@ void ratio_hists(const char* out_dir)
       TH1D* ratio = (TH1D*) h1d_jet_eec[etabin-1][ipt]->Clone("ratio");
       int norm_binrange_lo = h1d_jet_eec[etabin-1][ipt]->FindBin(1E-2);
       int norm_binrange_hi = h1d_jet_eec[etabin-1][ipt]->FindBin(0.2);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       cout<<"hi bin high edge "<<h1d_jet_eec[etabin-1][ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec[etabin-1][ipt]->GetBinWidth(norm_binrange_hi)<<endl;
       double relative_normalization =  h1d_jet_eec_baseline[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
       ratio->Scale(relative_normalization);
@@ -433,77 +453,6 @@ void ratio_hists(const char* out_dir)
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_ratio_shifted_relnorm.pdf\")", cno-1, out_dir) );
   }
 
-  // ratio hists for h1d_jet_eec_rlsqrtpt, (relative normalization * on - off) / int dR_L off
-  // Determine “relative normalization” by making sure that K=10 and K=0 are on top of each other in the region where we know there is no modification (small angle region).
-  // small angle region determined by finding the x-intercept od the normalizaed on / off plot
-  /*
-  mclogx(cno++);
-  {
-    float plot_xrange_lo = 1E-1;
-    float plot_xrange_hi = 5;
-    float plot_yrange_lo = -0.02;
-    float plot_yrange_hi = 0.035;
-
-    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.025);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.1);
-
-    for (int ipt = 0; ipt < ptbin-2; ipt++)
-    {
-      // calculate relative normalization range by finding enhancement point; i.e. the x-intercept for lowest pt bin
-      TH1D* on_over_off_ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("temp_ratio");
-      on_over_off_ratio->Divide(h1d_jet_eec_rlsqrtpt_baseline[ipt]);
-      on_over_off_ratio->Scale(h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()/h1d_jet_eec_rlsqrtpt[ipt]->Integral());
-
-      int norm_binrange_lo = 1;
-      int norm_binrange_hi = 1;
-      for(int ibin = 0; ibin < on_over_off_ratio->GetNbinsX(); ibin++)
-      {
-        cout<<on_over_off_ratio->GetBinContent(ibin)<<endl;
-        if(on_over_off_ratio->GetBinContent(ibin) >= 1 && on_over_off_ratio->GetBinCenter(norm_binrange_hi) > 1)
-        {
-          norm_binrange_hi--;
-          break;
-        }
-        else norm_binrange_hi++;
-      }
-      cout<<"relative normalization range: ["<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_lo)<<", "<<h1d_jet_eec_rlsqrtpt[ipt]->GetBinCenter(norm_binrange_hi)<<"]"<<endl;
-      double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
-      cout<<h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral()<<" "<<h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
-      cout<<h1d_jet_eec_rlsqrtpt[ipt]->Integral()<<" "<<h1d_jet_eec_rlsqrtpt[ipt]->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
-      cout<<"relative normalization: "<<relative_normalization<<endl;
-
-      // calculate ratio
-      TH1D* ratio = (TH1D*) h1d_jet_eec_rlsqrtpt[ipt]->Clone("ratio");
-      ratio->Scale(relative_normalization);
-      ratio->Add(h1d_jet_eec_rlsqrtpt_baseline[ipt], -1);
-      ratio->Scale(1/h1d_jet_eec_rlsqrtpt_baseline[ipt]->Integral());
-
-      // plot
-      ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      ratio->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
-      ratio->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      ratio->SetMarkerColor(pt_color[ipt]);
-      ratio->SetLineColor(pt_color[ipt]);
-      ratio->SetMarkerSize(0.5);
-      ratio->SetMarkerStyle(21);
-      ratio->Draw("same hist");
-      leg->AddEntry(ratio,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
-    }
-    leg->Draw("same");
-
-    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
-    l1.SetLineStyle(7);
-    l1.SetLineColor(kGray+2);
-    l1.Draw("same");
-
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_ratio_shifted_relnorm_onenhancement.pdf\")", cno-1, out_dir) );
-  }*/
-
-
 }
 
 
@@ -529,19 +478,14 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
       h1d_jet_eec[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
       h1d_jet_eec[ieta][ipt]->SetName(Form("h1d_jet_eec_%d_%d", ieta, ipt));
 
+      h1d_jet_eec_rlsqrtpt[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
+      h1d_jet_eec_rlsqrtpt[ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
+
       // normalized histogram
       h1d_jet_eec_norm[ieta][ipt] = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone(Form("h1d_jet_eec_%d_%d_norm", ieta, ipt));
       h1d_jet_eec_norm[ieta][ipt]->Scale(1/h1d_jet_eec_norm[ieta][ipt]->Integral()); // normalization
     }
   }
-
-  for (int ipt = 0; ipt < ptbin; ipt++)
-  {
-    // raw data histogram
-    h1d_jet_eec_rlsqrtpt[ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
-    h1d_jet_eec_rlsqrtpt[ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
-  }
-
 
   // print individual 2D histograms
   individual_hists(out_dir);
@@ -562,16 +506,13 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
         h1d_jet_eec_baseline[ieta][ipt] = (TH1D*) fin_baseline->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
         h1d_jet_eec_baseline[ieta][ipt]->SetName(Form("h1d_jet_eec_%d_%d_baseline", ieta, ipt));
 
+        h1d_jet_eec_rlsqrtpt_baseline[ieta][ipt] = (TH1D*) fin_baseline->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
+        h1d_jet_eec_rlsqrtpt_baseline[ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_%d_baseline", ieta, ipt));
+
         // normalized histogram
         h1d_jet_eec_baseline_norm[ieta][ipt] = (TH1D*) h1d_jet_eec_baseline[ieta][ipt]->Clone(Form("h1d_jet_eec_%d_%d_norm", ieta, ipt));
         h1d_jet_eec_baseline_norm[ieta][ipt]->Scale(1/h1d_jet_eec_baseline_norm[ieta][ipt]->Integral()); // normalization
       }
-    }
-
-    for (int ipt = 0; ipt < ptbin; ipt++)
-    {
-      h1d_jet_eec_rlsqrtpt_baseline[ipt] = (TH1D*) fin_baseline->Get(Form("h1d_jet_eec_rlsqrtpt_%d", ipt));
-      h1d_jet_eec_rlsqrtpt_baseline[ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_baseline", ipt));
     }
 
     ratio_hists(out_dir);
