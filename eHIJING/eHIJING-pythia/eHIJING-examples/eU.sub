@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_eU_condor.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eUjob.out.$(Process)
+Error          = jobout/eUjob.err.$(Process)
+Log            = jobout/eUjob.log.$(Process)
+Queue 500
