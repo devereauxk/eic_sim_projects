@@ -363,10 +363,10 @@ void ratio_hists(const char* out_dir)
         norm_binrange_lo = 1;
         cout<<"bin range lo too low; set to 1"<<endl;
       }
-      if (norm_binrange_hi > temp->GetNbinsX())
+      if (norm_binrange_hi > ratio->GetNbinsX())
       {
-        norm_binrange_lo = temp->GetNbinsX();
-        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+        norm_binrange_lo = ratio->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<ratio->GetNbinsX()<<endl;
       }
       cout<<"hi bin high edge "<<h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->GetBinWidth(norm_binrange_hi)<<endl;
       double relative_normalization =  h1d_jet_eec_rlsqrtpt_baseline[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -420,10 +420,10 @@ void ratio_hists(const char* out_dir)
         norm_binrange_lo = 1;
         cout<<"bin range lo too low; set to 1"<<endl;
       }
-      if (norm_binrange_hi > temp->GetNbinsX())
+      if (norm_binrange_hi > ratio->GetNbinsX())
       {
-        norm_binrange_lo = temp->GetNbinsX();
-        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+        norm_binrange_lo = ratio->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<ratio->GetNbinsX()<<endl;
       }
       cout<<"hi bin high edge "<<h1d_jet_eec[etabin-1][ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec[etabin-1][ipt]->GetBinWidth(norm_binrange_hi)<<endl;
       double relative_normalization =  h1d_jet_eec_baseline[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
