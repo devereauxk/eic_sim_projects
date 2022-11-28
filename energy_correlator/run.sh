@@ -13,3 +13,8 @@ root -l -q "plot_eec_hists.C(\"./eHIJING/eAu_1E8_K4_pow2/merged.root\", \"./eHIJ
 root -l -q "plot_eec_hists.C(\"./eHIJING/eC_1E8_K4/merged.root\", \"./eHIJING/eC_1E8_K4/\", 1, \"./eHIJING/eC_1E8_K0/merged.root\")"
 
 root -l -q "plot_eec_hists.C(\"./eHIJING/eCu_1E8_K4/merged.root\", \"./eHIJING/eCu_1E8_K4/\", 1, \"./eHIJING/eCu_1E8_K0/merged.root\")"
+
+# eD comparisons
+root -l -q "plot_eec_hists.C(\"./eHIJING/eD_10_100_K0/merged.root\", \"./eHIJING/eD_10_100_K0/\", 1, \"./eHIJING/eAu_1E8_K0_condor_v2/merged.root\")"
+
+root -l -q "plot_eec_hists.C(\"./eHIJING/eD_10_100_K4/merged.root\", \"./eHIJING/eD_10_100_K4/\", 1, \"./eHIJING/eAu_1E8_K0_condor_v2/merged.root\")"

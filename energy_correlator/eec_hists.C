@@ -14,7 +14,7 @@ const Double_t MCarbon(11.26703); // in GeV/c^2
 const Double_t MCu(60.09468); // in GeV/c^2
 const Double_t Md(1.87783); // in GeV/c^2
 
-const int nspecies = 4;
+const int nspecies = 5;
 static double targ_A[nspecies] = {1, 197, 12, 64, 2};
 static double targ_m[nspecies] = {Mp, MAu, MCarbon, MCu, Md};
 
