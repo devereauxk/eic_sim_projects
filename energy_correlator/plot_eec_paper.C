@@ -431,8 +431,8 @@ void nuclei_hists()
   {
     float plot_xrange_lo = 1E-3;
     float plot_xrange_hi = 5;
-    float plot_yrange_lo = -5; //-0.015;
-    float plot_yrange_hi = 15; //0.04;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.04;
     float legend_x = 0.22;
     float legend_y = 0.6;
 
