@@ -82,6 +82,16 @@ void pt_eta_3by3_hists()
           // calculate relative normalization ratio
           int norm_binrange_lo = temp->FindBin(rl_norm_lo);
           int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+          if (norm_binrange_lo == 0)
+          {
+            norm_binrange_lo = 1;
+            cout<<"bin range lo too low; set to 1"<<endl;
+          }
+          if (norm_binrange_hi > temp->GetNbinsX())
+          {
+            norm_binrange_lo = temp->GetNbinsX();
+            cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+          }
           double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
           temp->Scale(relative_normalization);
           temp->Scale(1/temp_baseline->Integral());
@@ -146,6 +156,16 @@ void pt_eta_3by3_hists()
           // calculate relative normalization ratio
           int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
           int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
+          if (norm_binrange_lo == 0)
+          {
+            norm_binrange_lo = 1;
+            cout<<"bin range lo too low; set to 1"<<endl;
+          }
+          if (norm_binrange_hi > temp->GetNbinsX())
+          {
+            norm_binrange_lo = temp->GetNbinsX();
+            cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+          }
           double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
           temp->Scale(relative_normalization);
           temp->Scale(1/temp_baseline->Integral());
@@ -214,6 +234,16 @@ void pt_bin_side_by_side()
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
       int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -283,6 +313,16 @@ void nuclei_hists()
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
       int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -346,6 +386,16 @@ void nuclei_hists()
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
       int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
@@ -413,15 +463,10 @@ void nuclei_hists()
         norm_binrange_lo = temp->GetNbinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
-      cout<<species[ispecies]<<" norm range "<<rlsqrtpt_norm_lo<<" "<<rlsqrtpt_norm_hi<<endl;
-      cout<<species[ispecies]<<" norm range in bins "<<norm_binrange_lo<<" "<<norm_binrange_hi<<endl;
-      cout<<species[ispecies]<<" baseline integral "<<temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
-      cout<<species[ispecies]<<" temp integral "<<temp->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
-      cout<<species[ispecies]<<" temp integral after subtraction "<<temp->Integral(norm_binrange_lo,norm_binrange_hi)<<endl;
-      //temp->Scale(1/temp_baseline->Integral());
+      temp->Scale(1/temp_baseline->Integral());
 
 
       // plot
@@ -482,6 +527,16 @@ void nuclei_hists()
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
       int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
@@ -550,6 +605,16 @@ void energy_hists()
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
       int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -613,6 +678,16 @@ void energy_hists()
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
       int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
@@ -670,6 +745,16 @@ void energy_hists()
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
       int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
@@ -733,6 +818,16 @@ void energy_hists()
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
       int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
