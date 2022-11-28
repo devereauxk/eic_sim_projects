@@ -204,7 +204,7 @@ void pt_eta_3by3_hists()
 void pt_bin_side_by_side()
 {
   int species_pick = 2;
-  int eta_pick = 2;
+  int etabin_pick = 2;
   int k_pick = 2;
 
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
@@ -259,7 +259,7 @@ void pt_bin_side_by_side()
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
-      leg->AddEntry(ratio,Form("p_{T} #in [%.1f, %.1f)",pt_lo[ipt],pt_hi[ipt]));
+      leg->AddEntry(temp,Form("p_{T} #in [%.1f, %.1f)",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
 
