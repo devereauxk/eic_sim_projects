@@ -40,10 +40,10 @@ TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 1E-1; //0.08;
+const float rl_norm_hi = 0.2; //0.08;
 const float rl_norm_lo = 1E-2;
 
-const float rlsqrtpt_norm_hi = 0.2; //1;
+const float rlsqrtpt_norm_hi = 1E-1; //1;
 const float rlsqrtpt_norm_lo = 1E-2; //rl_norm_lo * sqrt(20);
 
 static int cno = 0;
@@ -273,7 +273,7 @@ void pt_bin_side_by_side()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 10^{8} events", species[species_pick]));
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rl.pdf\")", cno-1, out_dir) );
@@ -344,7 +344,7 @@ void pt_bin_side_by_side()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 10^{8} events", species[species_pick]));
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rlsqrtpt.pdf\")", cno-1, out_dir) );
