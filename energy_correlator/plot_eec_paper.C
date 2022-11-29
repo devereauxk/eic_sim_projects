@@ -210,7 +210,7 @@ void pt_bin_side_by_side()
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-3;
+    float plot_xrange_lo = 1E-2;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
