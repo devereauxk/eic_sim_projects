@@ -325,8 +325,8 @@ void pt_bin_side_by_side()
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[ispecies]);
-      temp->SetLineColor(pt_color[ispecies]);
+      temp->SetMarkerColor(pt_color[ipt]);
+      temp->SetLineColor(pt_color[ipt]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
