@@ -436,7 +436,7 @@ void eAu_eD_comparison()
 void nuclei_hists()
 {
   int k_pick = 2;
-  int etabin_pick = 2;
+  int etabin_pick = 3;
   int ptbin_pick = 2;
 
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
