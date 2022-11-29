@@ -205,7 +205,7 @@ void pt_eta_3by3_hists()
 void pt_bin_side_by_side()
 {
   int species_pick = 2;
-  int etabin_pick = 3;
+  int etabin_pick = 2;
   int k_pick = 2;
 
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
