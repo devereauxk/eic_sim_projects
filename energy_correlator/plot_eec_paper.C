@@ -358,7 +358,7 @@ void eAu_eD_comparison()
   int etabin_pick = 3;
   int k_pick = 0;
   int nspecies_picks = 2;
-  int species_picks[nspecies_picks] = {2, 3};
+  static int species_picks[nspecies_picks] = {2, 3};
 
   // with R_L on the x-axis, plotting (alpha_i * K=0) / (int dR_L K=0) for eD K=0 with eAu K=0 as baseline
   // three plots - one for each pt bin, all have inclusive eta
@@ -414,7 +414,7 @@ void eAu_eD_comparison()
         temp->SetMarkerSize(0.5);
         temp->SetMarkerStyle(21);
         temp->Draw("same hist e");
-        leg->AddEntry(temp,Form("%s, K = %i",species[nspecies_picks[ispecies]], k[k_pick]));
+        leg->AddEntry(temp,Form("%s, K = %i",species[species_picks[ispecies]], k[k_pick]));
       }
 
       leg->Draw("same");
