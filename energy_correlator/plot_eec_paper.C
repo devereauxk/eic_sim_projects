@@ -40,11 +40,11 @@ TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.2; //0.08;
-const float rl_norm_lo = 1E-3;
+const float rl_norm_hi = 1E-1; //0.08;
+const float rl_norm_lo = 1E-2;
 
-const float rlsqrtpt_norm_hi = 1; //1;
-const float rlsqrtpt_norm_lo = 1E-3; //rl_norm_lo * sqrt(20);
+const float rlsqrtpt_norm_hi = 0.2; //1;
+const float rlsqrtpt_norm_lo = 1E-2; //rl_norm_lo * sqrt(20);
 
 static int cno = 0;
 
