@@ -278,6 +278,78 @@ void pt_bin_side_by_side()
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rl.pdf\")", cno-1, out_dir) );
   }
 
+  // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
+  mclogx(cno++);
+  {
+    float plot_xrange_lo = 1E-3;
+    float plot_xrange_hi = 5;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.04;
+    float legend_x = 0.22;
+    float legend_y = 0.6;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+    TH1D* temp_baseline;
+
+    for (int ipt = 0; ipt < ptbin-2; ipt++)
+    {
+      temp = (TH1D*) h1d_jet_eec_rlsqrtpt[species_pick][k_pick][etabin_pick][ipt]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[species_pick][0][etabin_pick][ipt]->Clone();
+
+      // calculate relative normalization ratio
+      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
+      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+      temp->Scale(relative_normalization);
+      temp->Add(temp_baseline, -1);
+      temp->Scale(1/temp_baseline->Integral());
+
+      // plot
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
+      temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
+      temp->SetMarkerColor(pt_color[ispecies]);
+      temp->SetLineColor(pt_color[ispecies]);
+      temp->SetMarkerSize(0.5);
+      temp->SetMarkerStyle(21);
+      temp->Draw("same hist");
+      leg->AddEntry(temp,Form("p_{T} #in [%.1f, %.1f)",pt_lo[ipt],pt_hi[ipt]));
+    }
+    leg->Draw("same");
+
+    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.028);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rlsqrtpt.pdf\")", cno-1, out_dir) );
+
+  }
+
 }
 
 void nuclei_hists()
