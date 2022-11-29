@@ -13,8 +13,8 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
-const int speciesnum = 3;
-static char* species[speciesnum] = {(char*)"e+C", (char*)"e+Cu", (char*)"e+Au"};
+const int speciesnum = 4;
+static char* species[speciesnum] = {(char*)"e+C", (char*)"e+Cu", (char*)"e+Au", (char*)"e+D"};
 
 const int knum = 4;
 static int k[knum] = {0,2,4,10};
@@ -25,7 +25,8 @@ static char* energy[energynum] = {(char*)"5 on 41 GeV", (char*)"10 on 100 GeV", 
 static char* fname_eC_by_K[knum] = {(char*)"./eHIJING/eC_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eC_1E8_K4/merged.root", (char*)""};
 static char* fname_eCu_by_K[knum] = {(char*)"./eHIJING/eCu_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eCu_1E8_K4/merged.root", (char*)""};
 static char* fname_eAu_by_K[knum] = {(char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_1E8_K2/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_1E8_condor_v2/merged.root"};
-static char** fname_eA_by_K[speciesnum] = {fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K};
+static char* fname_eD_by_K[knum] = {(char*)"./eHIJING/eD_10_100_K0/merged.root", (char*)"", (char*)"./eHIJING/eD_10_100_K4/merged.root", (char*)""};
+static char** fname_eA_by_K[speciesnum] = {fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K, fname_eD_by_K};
 
 static char* fname_eAu_by_E_K0[energynum] = {(char*)"./eHIJING/eAu_5_41_K0/merged.root", (char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_18_110_K0/merged.root"};
 static char* fname_eAu_by_E_K4[energynum] = {(char*)"./eHIJING/eAu_5_41_K4/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_18_110_K4/merged.root"};
@@ -352,6 +353,85 @@ void pt_bin_side_by_side()
 
 }
 
+void eAu_eD_comparison()
+{
+  int etabin_pick = 3;
+  int k_pick = 0;
+  int nspecies_picks = 2;
+  int species_picks[nspecies_picks] = {2, 3};
+
+  // with R_L on the x-axis, plotting (alpha_i * K=0) / (int dR_L K=0) for eD K=0 with eAu K=0 as baseline
+  // three plots - one for each pt bin, all have inclusive eta
+  for (int ipt = 0; ipt < ptbin; ipt++)
+  {
+    mclogxy(cno++);
+    {
+      float plot_xrange_lo = 0.02;
+      float plot_xrange_hi = 1;
+      float plot_yrange_lo = 1E-3;
+      float plot_yrange_hi = 5E-1;
+      float legend_x = 0.7;
+      float legend_y = 0.2;
+
+      TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+      leg->SetBorderSize(0);
+      leg->SetTextSize(0.028);
+      leg->SetFillStyle(0);
+      leg->SetMargin(0.1);
+
+      TH1D* temp;
+      TH1D* temp_baseline;
+
+      for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
+      {
+        temp = (TH1D*) h1d_jet_eec[species_picks[ispecies]][k_pick][etabin_pick][ipt]->Clone();
+        temp_baseline = (TH1D*) h1d_jet_eec[species_picks[ispecies]][k_pick][etabin_pick][ipt]->Clone();
+
+        // calculate relative normalization ratio
+        int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+        int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+        if (norm_binrange_lo == 0)
+        {
+          norm_binrange_lo = 1;
+          cout<<"bin range lo too low; set to 1"<<endl;
+        }
+        if (norm_binrange_hi > temp->GetNbinsX())
+        {
+          norm_binrange_lo = temp->GetNbinsX();
+          cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+        }
+        double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+        temp->Scale(relative_normalization);
+        temp->Scale(1/temp_baseline->Integral());
+
+        // plot histogram
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetXaxis()->SetTitle("R_{L}");
+        temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
+        temp->SetMarkerColor(pt_color[ispecies]);
+        temp->SetLineColor(pt_color[ispecies]);
+        temp->SetMarkerSize(0.5);
+        temp->SetMarkerStyle(21);
+        temp->Draw("same hist e");
+        leg->AddEntry(temp,Form("%s, K = %i",species[nspecies_picks[ispecies]], k[k_pick]));
+      }
+
+      leg->Draw("same");
+
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.028);
+      tl->SetTextColor(kBlack);
+      tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 10^{8} events");
+      tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
+      tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_eD_comparison_%d.pdf\")", cno-1, out_dir, ipt) );
+    }
+  }
+}
+
 void nuclei_hists()
 {
   int k_pick = 2;
@@ -361,7 +441,7 @@ void nuclei_hists()
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-3;
+    float plot_xrange_lo = 1E-2;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
@@ -501,7 +581,7 @@ void nuclei_hists()
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-2;
+    float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
@@ -539,7 +619,6 @@ void nuclei_hists()
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
       temp->Scale(1/temp_baseline->Integral());
-
 
       // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -1013,6 +1092,8 @@ void plot_eec_paper()
   pt_eta_3by3_hists();
 
   pt_bin_side_by_side();
+
+  eAu_eD_comparison();
 
   nuclei_hists();
 
