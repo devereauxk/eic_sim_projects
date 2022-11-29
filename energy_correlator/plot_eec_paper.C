@@ -40,10 +40,10 @@ TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.2; //0.08;
+const float rl_norm_hi = 0.08; //0.08;
 const float rl_norm_lo = 1E-2;
 
-const float rlsqrtpt_norm_hi = 1E-1; //1;
+const float rlsqrtpt_norm_hi = 0.2; //1;
 const float rlsqrtpt_norm_lo = 1E-2; //rl_norm_lo * sqrt(20);
 
 static int cno = 0;
@@ -205,7 +205,7 @@ void pt_eta_3by3_hists()
 void pt_bin_side_by_side()
 {
   int species_pick = 2;
-  int etabin_pick = 3;
+  int etabin_pick = 2;
   int k_pick = 2;
 
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
