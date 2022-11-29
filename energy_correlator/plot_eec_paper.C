@@ -206,13 +206,11 @@ void pt_bin_side_by_side()
   int species_pick = 2;
   int etabin_pick = 2;
   int k_pick = 2;
-  int ptbin_pick = 2;
 
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
-  // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-3;
+    float plot_xrange_lo = 1E-2;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
@@ -228,10 +226,10 @@ void pt_bin_side_by_side()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
-      temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec[ispecies][0][etabin_pick][ptbin_pick]->Clone();
+      temp = (TH1D*) h1d_jet_eec[species_pick][k_pick][etabin_pick][ipt]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec[species_pick][0][etabin_pick][ipt]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
@@ -256,12 +254,12 @@ void pt_bin_side_by_side()
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[ispecies]);
-      temp->SetLineColor(pt_color[ispecies]);
+      temp->SetMarkerColor(pt_color[ipt]);
+      temp->SetLineColor(pt_color[ipt]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
-      leg->AddEntry(temp,Form("%s, K = %i",species[ispecies], k[k_pick]));
+      leg->AddEntry(temp,Form("p_{T} #in [%.1f, %.1f)",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
 
@@ -274,12 +272,10 @@ void pt_bin_side_by_side()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 10^{8} events");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
-    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rl.pdf\")", cno-1, out_dir) );
-
   }
 
 }
