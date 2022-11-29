@@ -40,7 +40,7 @@ TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.2;
+const float rl_norm_hi = 0.08;
 const float rl_norm_lo = 1E-3;
 
 const float rlsqrtpt_norm_hi = 1;
@@ -59,7 +59,7 @@ void pt_eta_3by3_hists()
     {
       mclogxy(cno++);
       {
-        float plot_xrange_lo = 0.02;
+        float plot_xrange_lo = 0.05;
         float plot_xrange_hi = 1;
         float plot_yrange_lo = 1E-3;
         float plot_yrange_hi = 5E-1;
@@ -366,9 +366,9 @@ void eAu_eD_comparison()
   {
     mclogxy(cno++);
     {
-      float plot_xrange_lo = 0.02;
+      float plot_xrange_lo = 0.05;
       float plot_xrange_hi = 1;
-      float plot_yrange_lo = 1E-3;
+      float plot_yrange_lo = 5E-3;
       float plot_yrange_hi = 5E-1;
       float legend_x = 0.7;
       float legend_y = 0.2;
@@ -441,7 +441,7 @@ void nuclei_hists()
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-2;
+    float plot_xrange_lo = 5E-2;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
@@ -514,9 +514,9 @@ void nuclei_hists()
   // with R_L on the x-axis, plotting (alpha_i * K=i) / (int R_L K=0)
   mclogxy(cno++);
   {
-    float plot_xrange_lo = 0.02;
+    float plot_xrange_lo = 0.05;
     float plot_xrange_hi = 1;
-    float plot_yrange_lo = 1E-3;
+    float plot_yrange_lo = 5E-3;
     float plot_yrange_hi = 5E-1;
     float legend_x = 0.7;
     float legend_y = 0.2;
@@ -730,7 +730,7 @@ void energy_hists()
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
-    float plot_xrange_lo = 1E-2;
+    float plot_xrange_lo = 5E-2;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
@@ -805,9 +805,9 @@ void energy_hists()
   // with R_L on the x-axis, plotting (alpha_i * K=i) / (int R_L K=0)
   mclogxy(cno++);
   {
-    float plot_xrange_lo = 0.02;
+    float plot_xrange_lo = 0.05;
     float plot_xrange_hi = 1;
-    float plot_yrange_lo = 1E-3;
+    float plot_yrange_lo = 5E-3;
     float plot_yrange_hi = 5E-1;
     float legend_x = 0.7;
     float legend_y = 0.2;
