@@ -40,10 +40,10 @@ TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.08;
+const float rl_norm_hi = 1E-2; //0.08;
 const float rl_norm_lo = 1E-3;
 
-const float rlsqrtpt_norm_hi = 1;
+const float rlsqrtpt_norm_hi = 1E-1; //1;
 const float rlsqrtpt_norm_lo = 1E-3; //rl_norm_lo * sqrt(20);
 
 static int cno = 0;
@@ -430,6 +430,7 @@ void eAu_eD_comparison()
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_eD_comparison_%d.pdf\")", cno-1, out_dir, ipt) );
     }
   }
+
 }
 
 void nuclei_hists()
