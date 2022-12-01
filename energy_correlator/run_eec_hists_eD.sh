@@ -1,6 +1,6 @@
 #!/bin/bash
-IN_DIR=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eD_10_100_K4
-OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/eD_10_100_K4
+IN_DIR=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eD_10_100_K0
+OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/eD_10_100_K0
 
 if [ -z "$1" ]
 then
