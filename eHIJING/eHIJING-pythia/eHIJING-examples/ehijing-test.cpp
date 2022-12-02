@@ -224,10 +224,14 @@ int main(int argc, char *argv[]) {
     //   nPDFset=0: only isospin
     //   nPDFset = 1: EPS09 LO
     //   nPDFset = 2: EPS09 NLO
-    //   nPDFset = 2: EPPS16 NLO
+    //   nPDFset = 3: EPPS16 NLO
     // We will use only isospin for deuteron,
     // and EPPS16 NLO for heavier nucleus
     int nPDFset = (A>2)?3:0;
+    if (A == 238)
+    {
+      nPDFset = 2;
+    }
 
     // mode=0: higher-twist, in the soft-gluon-emission limit
     // mode=1: generalized higher-twist, in the soft-gluon-emission limit

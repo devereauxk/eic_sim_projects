@@ -7,4 +7,4 @@ Arguments      = "$(Process)"
 Output         = jobout/eUjob.out.$(Process)
 Error          = jobout/eUjob.err.$(Process)
 Log            = jobout/eUjob.log.$(Process)
-Queue 500
+Queue 1000
