@@ -481,7 +481,7 @@ void nuclei_hists()
       temp->SetLineColor(pt_color[ispecies]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
-      temp->Draw("hist same e1");
+      temp->Draw("same hist");
       leg->AddEntry(temp,Form("%s, K = %i",species[ispecies], k[k_pick]));
     }
     leg->Draw("same");

@@ -49,10 +49,10 @@ class Correlator_Builder
     vector<vector<double>> pair_list;
     double jet_pt;
     double jet_eta;
-    int weight_pow;
+    double weight_pow;
 
   public:
-    Correlator_Builder(vector<PseudoJet> _particle_list, float _jet_pt, float _jet_eta, int _weight_pow)
+    Correlator_Builder(vector<PseudoJet> _particle_list, float _jet_pt, float _jet_eta, double _weight_pow)
     {
       particle_list = _particle_list;
       mult = particle_list.size();
@@ -114,7 +114,7 @@ class Correlator_Builder
     }
 };
 
-void read_root(const char* inFile = "merged.root", int eec_weight_power = 1)
+void read_root(const char* inFile = "merged.root", double eec_weight_power = 1)
 {
   //Event Class
   erhic::EventPythia *event(NULL);
@@ -208,7 +208,7 @@ void read_root(const char* inFile = "merged.root", int eec_weight_power = 1)
   }
 }
 
-void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0, int eec_weight_power = 1)
+void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1)
 {
   // csv must be in the following format - eHIJING standard
   // each particle has the line
@@ -354,7 +354,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
 
 void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
-    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, int eec_weight_power = 1)
+    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
