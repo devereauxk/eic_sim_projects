@@ -425,7 +425,7 @@ void baseline_comparison()
 void nuclei_hists()
 {
   int k_pick = 2;
-  int etabin_pick = 3;
+  int etabin_pick = 2;
   int ptbin_pick = 2;
 
   // using ep K=0 w/ 2E8 events the baseline
@@ -481,7 +481,7 @@ void nuclei_hists()
       temp->SetLineColor(pt_color[ispecies]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
-      temp->Draw("same hist");
+      temp->Draw("same h");
       leg->AddEntry(temp,Form("%s, K = %i",species[ispecies], k[k_pick]));
     }
     leg->Draw("same");
@@ -522,7 +522,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 1; ispecies < speciesnum-1; ispecies++)
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
@@ -662,7 +662,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 1; ispecies < speciesnum-1; ispecies++)
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
