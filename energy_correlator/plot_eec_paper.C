@@ -23,7 +23,7 @@ const int energynum = 3;
 static char* energy[energynum] = {(char*)"5 on 41 GeV", (char*)"10 on 100 GeV", (char*)"18 on 110 GeV"};
 
 const int pownum = 4;
-static double pow[pownum] = {0.5, 1, 1.5, 2};
+static double power[pownum] = {0.5, 1, 1.5, 2};
 
 static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"", (char*)"", (char*)""};
 static char* fname_eD_by_K[knum] = {(char*)"./eHIJING/eD_10_100_K0/merged.root", (char*)"", (char*)"./eHIJING/eD_10_100_K4/merged.root", (char*)""};
@@ -36,8 +36,8 @@ static char* fname_eAu_by_E_K0[energynum] = {(char*)"./eHIJING/eAu_5_41_K0/merge
 static char* fname_eAu_by_E_K4[energynum] = {(char*)"./eHIJING/eAu_5_41_K4/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_18_110_K4/merged.root"};
 static char** fname_eAu_by_E[knum] = {fname_eAu_by_E_K0, NULL, fname_eAu_by_E_K4, NULL}; // all cases are 1E8 events
 
-static char* fname_ep_by_pow[pownum] = {(char*)"./eHIJING/ep_10_100_K4_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K4/merged.root", (char*)"./eHIJING/ep_10_100_K4_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K4_pow2/merged.root"}; // all cases are 2E8 events
-static char* fname_eAu_by_pow[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are 2E8 events
+static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K4_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K4/merged.root", (char*)"./eHIJING/ep_10_100_K4_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K4_pow2/merged.root"}; // all cases are 2E8 events
+static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are 2E8 events
 
 const char* out_dir = "./paperplots/";
 
@@ -49,10 +49,10 @@ TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 
-TH1D* h1d_jet_eec_ep_by_pow[pownum][etabin][ptbin] = {};
-TH1D* h1d_jet_eec_eAu_by_pow[pownum][etabin][ptbin] = {};
-TH1D* h1d_jet_eec_rlsqrtpt_ep_by_pow[pownum][etabin][ptbin] = {};
-TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_pow[pownum][etabin][ptbin] = {};
+TH1D* h1d_jet_eec_ep_by_power[pownum][etabin][ptbin] = {};
+TH1D* h1d_jet_eec_eAu_by_power[pownum][etabin][ptbin] = {};
+TH1D* h1d_jet_eec_rlsqrtpt_ep_by_power[pownum][etabin][ptbin] = {};
+TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_power[pownum][etabin][ptbin] = {};
 
 const float rl_norm_hi = 0.08; //0.08;
 const float rl_norm_lo = 1E-3;
@@ -1016,7 +1016,7 @@ void energy_hists()
 
 }
 
-void pow_hists()
+void power_hists()
 {
   int ptbin_pick = 1;
   int etabin_pick = 2;
@@ -1040,10 +1040,10 @@ void pow_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ipow = 0; ipow < pownum; ipow++)
+    for (int ipower = 0; ipower < pownum; ipower++)
     {
-      temp = (TH1D*) h1d_jet_eec_eAu_by_pow[ipow][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_ep_by_pow[ipow][etabin_pick][ptbin_pick]->Clone();
+      temp = (TH1D*) h1d_jet_eec_eAu_by_power[ipower][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_ep_by_power[ipower][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
@@ -1068,12 +1068,12 @@ void pow_hists()
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[ipow]);
-      temp->SetLineColor(pt_color[ipow]);
+      temp->SetMarkerColor(pt_color[ipower]);
+      temp->SetLineColor(pt_color[ipower]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
-      leg->AddEntry(temp,Form("power = %.1f", pow[ipow]));
+      leg->AddEntry(temp,Form("power = %.1f", power[ipower]));
     }
     leg->Draw("same");
 
@@ -1113,10 +1113,10 @@ void pow_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ipow = 0; ipow < pownum; ipow++)
+    for (int ipower = 0; ipower < pownum; ipower++)
     {
-      temp = (TH1D*) h1d_jet_eec_rlsqrtpt_eAu_by_E[ipow][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt_ep_by_E[ipow][etabin_pick][ptbin_pick]->Clone();
+      temp = (TH1D*) h1d_jet_eec_rlsqrtpt_eAu_by_power[ipower][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt_ep_by_power[ipower][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
@@ -1141,12 +1141,12 @@ void pow_hists()
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[ipow]);
-      temp->SetLineColor(pt_color[ipow]);
+      temp->SetMarkerColor(pt_color[ipower]);
+      temp->SetLineColor(pt_color[ipower]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
-      leg->AddEntry(temp,Form("power = %.1f", pow[ipow]));
+      leg->AddEntry(temp,Form("power = %.1f", power[ipower]));
     }
     leg->Draw("same");
 
@@ -1282,10 +1282,10 @@ void plot_eec_paper()
     }
   }
 
-  for (int ipow = 0; ipow < pownum; ipow++)
+  for (int ipower = 0; ipower < pownum; ipower++)
   {
     // e+p
-    fin_name = fname_ep_by_pow[ipow];
+    fin_name = fname_ep_by_power[ipower];
     fin = new TFile(fin_name, "READ");
 
     for (int ieta = 0; ieta < etabin; ieta++)
@@ -1293,18 +1293,18 @@ void plot_eec_paper()
       for (int ipt = 0; ipt < ptbin; ipt++)
       {
         // raw data histograms
-        h1d_jet_eec_ep_by_pow[ipow][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
-        h1d_jet_eec_ep_by_pow[ipow][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubypow_ep_%d_%d_%d", ieta, ipt, ipow));
+        h1d_jet_eec_ep_by_power[ipower][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+        h1d_jet_eec_ep_by_power[ipower][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubypow_ep_%d_%d_%d", ieta, ipt, ipower));
 
-        h1d_jet_eec_rlsqrtpt_ep_by_pow[ipow][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
-        h1d_jet_eec_rlsqrtpt_ep_by_pow[ipow][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubypow_ep_%d_%d_%d", ieta, ipt, ipow));
+        h1d_jet_eec_rlsqrtpt_ep_by_power[ipower][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
+        h1d_jet_eec_rlsqrtpt_ep_by_power[ipower][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubypow_ep_%d_%d_%d", ieta, ipt, ipower));
       }
     }
 
     cout<<fin_name<<" loaded!"<<endl;
 
     // e+Au
-    fin_name = fname_eAu_by_pow[ipow];
+    fin_name = fname_eAu_by_power[ipower];
     fin = new TFile(fin_name, "READ");
 
     for (int ieta = 0; ieta < etabin; ieta++)
@@ -1312,11 +1312,11 @@ void plot_eec_paper()
       for (int ipt = 0; ipt < ptbin; ipt++)
       {
         // raw data histograms
-        h1d_jet_eec_eAu_by_pow[ipow][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
-        h1d_jet_eec_eAu_by_pow[ipow][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubypow_eAu_%d_%d_%d", ieta, ipt, ipow));
+        h1d_jet_eec_eAu_by_power[ipower][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+        h1d_jet_eec_eAu_by_power[ipower][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubypow_eAu_%d_%d_%d", ieta, ipt, ipower));
 
-        h1d_jet_eec_rlsqrtpt_eAu_by_pow[ipow][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
-        h1d_jet_eec_rlsqrtpt_eAu_by_pow[ipow][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubypow_eAu_%d_%d_%d", ieta, ipt, ipow));
+        h1d_jet_eec_rlsqrtpt_eAu_by_power[ipower][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
+        h1d_jet_eec_rlsqrtpt_eAu_by_power[ipower][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubypow_eAu_%d_%d_%d", ieta, ipt, ipower));
       }
     }
 
@@ -1335,7 +1335,7 @@ void plot_eec_paper()
 
   //energy_hists();
 
-  pow_hists();
+  power_hists();
 
   pt_spectra();
 
