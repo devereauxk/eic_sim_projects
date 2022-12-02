@@ -22,6 +22,9 @@ static int k[knum] = {0,2,4,10};
 const int energynum = 3;
 static char* energy[energynum] = {(char*)"5 on 41 GeV", (char*)"10 on 100 GeV", (char*)"18 on 110 GeV"};
 
+const int pownum = 4;
+static double pow[pownum] = {0.5, 1, 1.5, 2};
+
 static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"", (char*)"", (char*)""};
 static char* fname_eD_by_K[knum] = {(char*)"./eHIJING/eD_10_100_K0/merged.root", (char*)"", (char*)"./eHIJING/eD_10_100_K4/merged.root", (char*)""};
 static char* fname_eC_by_K[knum] = {(char*)"./eHIJING/eC_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eC_1E8_K4/merged.root", (char*)""};
@@ -33,13 +36,23 @@ static char* fname_eAu_by_E_K0[energynum] = {(char*)"./eHIJING/eAu_5_41_K0/merge
 static char* fname_eAu_by_E_K4[energynum] = {(char*)"./eHIJING/eAu_5_41_K4/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_18_110_K4/merged.root"};
 static char** fname_eAu_by_E[knum] = {fname_eAu_by_E_K0, NULL, fname_eAu_by_E_K4, NULL}; // all cases are 1E8 events
 
+static char* fname_ep_by_pow[pownum] = {(char*)"./eHIJING/ep_10_100_K4_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K4/merged.root", (char*)"./eHIJING/ep_10_100_K4_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K4_pow2/merged.root"}; // all cases are 2E8 events
+static char* fname_eAu_by_pow[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are 2E8 events
+
 const char* out_dir = "./paperplots/";
+
+TH1D* h1d_jet_pt[speciesnum] = {}; // K=4, 10x100, 2E8 events
 
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 
 TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
+
+TH1D* h1d_jet_eec_ep_by_pow[pownum][etabin][ptbin] = {};
+TH1D* h1d_jet_eec_eAu_by_pow[pownum][etabin][ptbin] = {};
+TH1D* h1d_jet_eec_rlsqrtpt_ep_by_pow[pownum][etabin][ptbin] = {};
+TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_pow[pownum][etabin][ptbin] = {};
 
 const float rl_norm_hi = 0.08; //0.08;
 const float rl_norm_lo = 1E-3;
@@ -1001,7 +1014,191 @@ void energy_hists()
 
   }
 
+}
 
+void pow_hists()
+{
+  int ptbin_pick = 1;
+  int etabin_pick = 2;
+
+  // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
+  mclogx(cno++);
+  {
+    float plot_xrange_lo = 5E-2;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.04;
+    float legend_x = 0.22;
+    float legend_y = 0.6;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+    TH1D* temp_baseline;
+
+    for (int ipow = 0; ipow < pownum; ipow++)
+    {
+      temp = (TH1D*) h1d_jet_eec_eAu_by_pow[ipow][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_ep_by_pow[ipow][etabin_pick][ptbin_pick]->Clone();
+
+      // calculate relative normalization ratio
+      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
+      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+      temp->Scale(relative_normalization);
+      temp->Add(temp_baseline, -1);
+      temp->Scale(1/temp_baseline->Integral());
+
+      // plot
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetXaxis()->SetTitle("R_{L}");
+      temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
+      temp->SetMarkerColor(pt_color[ipow]);
+      temp->SetLineColor(pt_color[ipow]);
+      temp->SetMarkerSize(0.5);
+      temp->SetMarkerStyle(21);
+      temp->Draw("same hist");
+      leg->AddEntry(temp,Form("power = %.1f", pow[ipow]));
+    }
+    leg->Draw("same");
+
+    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.028);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au, 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
+    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_by_pow_ratio.pdf\")", cno-1, out_dir) );
+
+  }
+
+  // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
+  mclogx(cno++);
+  {
+    float plot_xrange_lo = 1E-1;
+    float plot_xrange_hi = 5;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.04;
+    float legend_x = 0.22;
+    float legend_y = 0.6;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+    TH1D* temp_baseline;
+
+    for (int ipow = 0; ipow < pownum; ipow++)
+    {
+      temp = (TH1D*) h1d_jet_eec_rlsqrtpt_eAu_by_E[ipow][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt_ep_by_E[ipow][etabin_pick][ptbin_pick]->Clone();
+
+      // calculate relative normalization ratio
+      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
+      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+      temp->Scale(relative_normalization);
+      temp->Add(temp_baseline, -1);
+      temp->Scale(1/temp_baseline->Integral());
+
+      // plot
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
+      temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
+      temp->SetMarkerColor(pt_color[ipow]);
+      temp->SetLineColor(pt_color[ipow]);
+      temp->SetMarkerSize(0.5);
+      temp->SetMarkerStyle(21);
+      temp->Draw("same hist");
+      leg->AddEntry(temp,Form("power = %.1f", pow[ipow]));
+    }
+    leg->Draw("same");
+
+    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.028);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au, 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
+    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_by_pow_ratio.pdf\")", cno-1, out_dir) );
+
+  }
+}
+
+void pt_spectra()
+{
+  // overlay of jet pt distribution for each species, K=4 10x100
+  mclogy(cno++);
+  {
+    float legend_x = 0.6;
+    float legend_y = 0.6;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    {
+      temp = (TH1D*) h1d_jet_pt[ispecies]->Clone();
+      temp->GetXaxis()->SetRangeUser(0,50);
+      temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
+      temp->GetYaxis()->SetTitle("counts");
+      temp->GetXaxis()->SetTitleOffset(1.3);
+      temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->Draw("same hist e");
+      leg->AddEntry(temp,species[ispecies]);
+    }
+    leg->Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_pt_spectra.pdf\")", cno-1, out_dir) );
+  }
 }
 
 void plot_eec_paper()
@@ -1021,6 +1218,12 @@ void plot_eec_paper()
       if (strcmp(fin_name,"") != 0)
       {
         fin = new TFile(fin_name, "READ");
+
+        if (k[ik] == 4)
+        {
+          h1d_jet_pt[ispecies] = (TH1D*) fin->Get("h1d_jet_eec");
+          h1d_jet_pt[ispecies]->SetName(Form("h1d_jet_pt_%d", ispecies));
+        }
 
         for (int ieta = 0; ieta < etabin; ieta++)
         {
@@ -1079,6 +1282,47 @@ void plot_eec_paper()
     }
   }
 
+  for (int ipow = 0; ipow < pownum; ipow++)
+  {
+    // e+p
+    fin_name = fname_ep_by_pow[ipow];
+    fin = new TFile(fin_name, "READ");
+
+    for (int ieta = 0; ieta < etabin; ieta++)
+    {
+      for (int ipt = 0; ipt < ptbin; ipt++)
+      {
+        // raw data histograms
+        h1d_jet_eec_ep_by_pow[ipow][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+        h1d_jet_eec_ep_by_pow[ipow][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubypow_ep_%d_%d_%d", ieta, ipt, ipow));
+
+        h1d_jet_eec_rlsqrtpt_ep_by_pow[ipow][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
+        h1d_jet_eec_rlsqrtpt_ep_by_pow[ipow][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubypow_ep_%d_%d_%d", ieta, ipt, ipow));
+      }
+    }
+
+    cout<<fin_name<<" loaded!"<<endl;
+
+    // e+Au
+    fin_name = fname_eAu_by_pow[ipow];
+    fin = new TFile(fin_name, "READ");
+
+    for (int ieta = 0; ieta < etabin; ieta++)
+    {
+      for (int ipt = 0; ipt < ptbin; ipt++)
+      {
+        // raw data histograms
+        h1d_jet_eec_eAu_by_pow[ipow][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+        h1d_jet_eec_eAu_by_pow[ipow][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubypow_eAu_%d_%d_%d", ieta, ipt, ipow));
+
+        h1d_jet_eec_rlsqrtpt_eAu_by_pow[ipow][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
+        h1d_jet_eec_rlsqrtpt_eAu_by_pow[ipow][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubypow_eAu_%d_%d_%d", ieta, ipt, ipow));
+      }
+    }
+
+    cout<<fin_name<<" loaded!"<<endl;
+  }
+
   // plot individual panels
 
   pt_eta_3by3_hists();
@@ -1089,8 +1333,10 @@ void plot_eec_paper()
 
   nuclei_hists();
 
-  energy_hists();
+  //energy_hists();
 
-  //power_hists();
+  pow_hists();
+
+  pt_spectra();
 
 }
