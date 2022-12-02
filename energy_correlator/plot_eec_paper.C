@@ -1221,7 +1221,7 @@ void plot_eec_paper()
 
         if (k[ik] == 4)
         {
-          h1d_jet_pt[ispecies] = (TH1D*) fin->Get("h1d_jet_eec");
+          h1d_jet_pt[ispecies] = (TH1D*) fin->Get("h1d_jet_pt");
           h1d_jet_pt[ispecies]->SetName(Form("h1d_jet_pt_%d", ispecies));
         }
 
