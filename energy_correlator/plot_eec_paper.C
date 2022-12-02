@@ -416,7 +416,7 @@ void baseline_comparison()
       tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
       tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_eD_comparison_%d.pdf\")", cno-1, out_dir, ipt) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_baseline_comparison_%d.pdf\")", cno-1, out_dir, ipt) );
     }
   }
 
@@ -449,7 +449,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
@@ -522,7 +522,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 0; ispecies < speciesnum-1; ispecies++)
+    for (int ispecies = 1; ispecies < speciesnum-1; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
@@ -589,7 +589,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
@@ -662,7 +662,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 0; ispecies < speciesnum-1; ispecies++)
+    for (int ispecies = 1; ispecies < speciesnum-1; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
