@@ -1184,7 +1184,7 @@ void pt_spectra()
 
     TH1D* temp;
 
-    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_pt[ispecies]->Clone();
       temp->GetXaxis()->SetRangeUser(0,50);
