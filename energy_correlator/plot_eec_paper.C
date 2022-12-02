@@ -13,8 +13,8 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
-const int speciesnum = 4;
-static char* species[speciesnum] = {(char*)"e+C", (char*)"e+Cu", (char*)"e+Au", (char*)"e+D"};
+const int speciesnum = 5
+static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+C", (char*)"e+Cu", (char*)"e+Au"};
 
 const int knum = 4;
 static int k[knum] = {0,2,4,10};
@@ -22,11 +22,12 @@ static int k[knum] = {0,2,4,10};
 const int energynum = 3;
 static char* energy[energynum] = {(char*)"5 on 41 GeV", (char*)"10 on 100 GeV", (char*)"18 on 110 GeV"};
 
+static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"", (char*)"", (char*)""};
+static char* fname_eD_by_K[knum] = {(char*)"./eHIJING/eD_10_100_K0/merged.root", (char*)"", (char*)"./eHIJING/eD_10_100_K4/merged.root", (char*)""};
 static char* fname_eC_by_K[knum] = {(char*)"./eHIJING/eC_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eC_1E8_K4/merged.root", (char*)""};
 static char* fname_eCu_by_K[knum] = {(char*)"./eHIJING/eCu_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eCu_1E8_K4/merged.root", (char*)""};
 static char* fname_eAu_by_K[knum] = {(char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_1E8_K2/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_1E8_condor_v2/merged.root"};
-static char* fname_eD_by_K[knum] = {(char*)"./eHIJING/eD_10_100_K0/merged.root", (char*)"", (char*)"./eHIJING/eD_10_100_K4/merged.root", (char*)""};
-static char** fname_eA_by_K[speciesnum] = {fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K, fname_eD_by_K};
+static char** fname_eA_by_K[speciesnum] = {fname_ep_by_K, fname_eD_by_K, fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K};
 
 static char* fname_eAu_by_E_K0[energynum] = {(char*)"./eHIJING/eAu_5_41_K0/merged.root", (char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_18_110_K0/merged.root"};
 static char* fname_eAu_by_E_K4[energynum] = {(char*)"./eHIJING/eAu_5_41_K4/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_18_110_K4/merged.root"};
@@ -50,7 +51,9 @@ static int cno = 0;
 
 void pt_eta_3by3_hists()
 {
-  int species_pick = 2;
+  int species_pick = 4;
+
+  // using ep K=0 w/ 2E8 events the baseline
 
   // with R_L on the x-axis, plotting (alpha_i * K=i) / (int dR_L K=0)
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -78,7 +81,7 @@ void pt_eta_3by3_hists()
         for (int ik = 0; ik < knum; ik++)
         {
           temp = (TH1D*) h1d_jet_eec[species_pick][ik][ieta][ipt]->Clone();
-          temp_baseline = (TH1D*) h1d_jet_eec[species_pick][0][ieta][ipt]->Clone();
+          temp_baseline = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
 
           // calculate relative normalization ratio
           int norm_binrange_lo = temp->FindBin(rl_norm_lo);
@@ -204,9 +207,11 @@ void pt_eta_3by3_hists()
 
 void pt_bin_side_by_side()
 {
-  int species_pick = 2;
+  int species_pick = 4;
   int etabin_pick = 2;
   int k_pick = 2;
+
+  // using ep K=0 w/ 2E8 events the baseline
 
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
   mclogx(cno++);
@@ -230,7 +235,7 @@ void pt_bin_side_by_side()
     for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
       temp = (TH1D*) h1d_jet_eec[species_pick][k_pick][etabin_pick][ipt]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec[species_pick][0][etabin_pick][ipt]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ipt]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
@@ -301,7 +306,7 @@ void pt_bin_side_by_side()
     for (int ipt = 0; ipt < ptbin-2; ipt++)
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[species_pick][k_pick][etabin_pick][ipt]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[species_pick][0][etabin_pick][ipt]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ipt]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
@@ -353,12 +358,12 @@ void pt_bin_side_by_side()
 
 }
 
-void eAu_eD_comparison()
+void baseline_comparison()
 {
   int etabin_pick = 3;
   int k_pick = 0;
-  const int nspecies_picks = 2;
-  static int species_picks[nspecies_picks] = {2, 3};
+  const int nspecies_picks = 3;
+  static int species_picks[nspecies_picks] = {0, 1, 4};
 
   // with R_L on the x-axis, plotting (alpha_i * K=0) / (int dR_L K=0) for eD K=0 with eAu K=0 as baseline
   // three plots - one for each pt bin, all have inclusive eta
@@ -380,35 +385,19 @@ void eAu_eD_comparison()
       leg->SetMargin(0.1);
 
       TH1D* temp;
-      TH1D* temp_baseline;
 
       for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
       {
         temp = (TH1D*) h1d_jet_eec[species_picks[ispecies]][k_pick][etabin_pick][ipt]->Clone();
-        temp_baseline = (TH1D*) h1d_jet_eec[species_picks[ispecies]][k_pick][etabin_pick][ipt]->Clone();
 
         // calculate relative normalization ratio
-        int norm_binrange_lo = temp->FindBin(rl_norm_lo);
-        int norm_binrange_hi = temp->FindBin(rl_norm_hi);
-        if (norm_binrange_lo == 0)
-        {
-          norm_binrange_lo = 1;
-          cout<<"bin range lo too low; set to 1"<<endl;
-        }
-        if (norm_binrange_hi > temp->GetNbinsX())
-        {
-          norm_binrange_lo = temp->GetNbinsX();
-          cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
-        }
-        double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-        temp->Scale(relative_normalization);
-        temp->Scale(1/temp_baseline->Integral());
+        temp->Scale(1/temp->Integral());
 
         // plot histogram
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->GetXaxis()->SetTitle("R_{L}");
-        temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
+        temp->GetYaxis()->SetTitle("normalized EEC");
         temp->SetMarkerColor(pt_color[ispecies]);
         temp->SetLineColor(pt_color[ispecies]);
         temp->SetMarkerSize(0.5);
@@ -439,6 +428,8 @@ void nuclei_hists()
   int etabin_pick = 3;
   int ptbin_pick = 2;
 
+  // using ep K=0 w/ 2E8 events the baseline
+
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
@@ -461,7 +452,7 @@ void nuclei_hists()
     for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec[ispecies][0][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
@@ -534,7 +525,7 @@ void nuclei_hists()
     for (int ispecies = 0; ispecies < speciesnum-1; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec[ispecies][0][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rl_norm_lo);
@@ -601,7 +592,7 @@ void nuclei_hists()
     for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][0][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
@@ -674,7 +665,7 @@ void nuclei_hists()
     for (int ispecies = 0; ispecies < speciesnum-1; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][0][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
@@ -1094,7 +1085,7 @@ void plot_eec_paper()
 
   pt_bin_side_by_side();
 
-  eAu_eD_comparison();
+  baseline_comparison();
 
   nuclei_hists();
 
