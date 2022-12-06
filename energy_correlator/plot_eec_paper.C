@@ -632,7 +632,7 @@ void nuclei_hists()
   int k_pick = 2;
   int etabin_pick = 2;
   int ptbin_pick = 2;
-  const int nspecies_picks = 4;
+  const int nspecies_picks = 6;
   static int species_picks[nspecies_picks] = {1, 2, 3, 4, 5, 6};
 
   // using ep K=0 w/ 2E8 events the baseline
