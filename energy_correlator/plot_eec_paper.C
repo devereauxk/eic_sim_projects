@@ -1417,8 +1417,8 @@ void pt_spectra()
       temp->GetXaxis()->SetRangeUser(0,50);
       temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
       temp->GetYaxis()->SetTitle("counts");
-      temp->SetMarkerColor(pt_color[ispecies]);
-      temp->SetLineColor(pt_color[ispecies]);
+      temp->SetMarkerColor(pt_color[ispecies-1]);
+      temp->SetLineColor(pt_color[ispecies-1]);
       temp->GetXaxis()->SetTitleOffset(1.3);
       temp->GetYaxis()->SetTitleOffset(1.5);
       temp->Draw("same hist e");
