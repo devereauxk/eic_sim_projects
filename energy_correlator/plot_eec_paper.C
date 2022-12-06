@@ -1440,9 +1440,9 @@ void peak_height_vs_A()
     float legend_x = 0.22;
     float legend_y = 0.6;
 
-    int peak_height_by_A[speciesnum] = {};
+    double peak_height_by_A[speciesnum] = {};
     peak_height_by_A[0] = 0;
-    
+
     TH1D* temp;
     TH1D* temp_baseline;
     for (int ispecies = 1; ispecies < speciesnum; ispecies++)
