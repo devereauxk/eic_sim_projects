@@ -422,7 +422,7 @@ void pt_bin_side_by_side_pow05()
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
     float legend_x = 0.22;
-    float legend_y = 0.6;
+    float legend_y = 0.8;
 
     TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
     leg->SetBorderSize(0);
@@ -493,7 +493,7 @@ void pt_bin_side_by_side_pow05()
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.04;
     float legend_x = 0.22;
-    float legend_y = 0.6;
+    float legend_y = 0.8;
 
     TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
     leg->SetBorderSize(0);
