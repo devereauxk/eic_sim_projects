@@ -462,7 +462,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
@@ -535,7 +535,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
@@ -602,7 +602,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
@@ -675,7 +675,7 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
