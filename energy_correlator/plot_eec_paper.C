@@ -479,7 +479,7 @@ void pt_bin_side_by_side_pow05()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 2*10^{8} events, power=0.5", species[species_pick]));
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 2*10^{8} events, power=0.5");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rl_pow05.pdf\")", cno-1, out_dir) );
@@ -550,7 +550,7 @@ void pt_bin_side_by_side_pow05()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 2*10^{8} events, power=0.5", species[species_pick]));
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 2*10^{8} events, power=0.5");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rlsqrtpt_pow05.pdf\")", cno-1, out_dir) );
