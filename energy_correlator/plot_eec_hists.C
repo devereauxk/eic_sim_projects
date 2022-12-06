@@ -453,6 +453,63 @@ void ratio_hists(const char* out_dir)
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_ratio_shifted_relnorm.pdf\")", cno-1, out_dir) );
   }
 
+  mclogx(cno++);
+  {
+    float plot_xrange_lo = 1E-2;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.04;
+
+    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.025);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    for (int ipt = 0; ipt < ptbin-2; ipt++)
+    {
+      // calculate ratio
+      TH1D* ratio = (TH1D*) h1d_jet_eec[etabin-1][ipt]->Clone("ratio");
+      int norm_binrange_lo = h1d_jet_eec[etabin-1][ipt]->FindBin(1E-2);
+      int norm_binrange_hi = h1d_jet_eec[etabin-1][ipt]->FindBin(0.2);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > ratio->GetNbinsX())
+      {
+        norm_binrange_lo = ratio->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<ratio->GetNbinsX()<<endl;
+      }
+      cout<<"hi bin high edge "<<h1d_jet_eec[etabin-1][ipt]->GetBinCenter(norm_binrange_hi) + h1d_jet_eec[etabin-1][ipt]->GetBinWidth(norm_binrange_hi)<<endl;
+      double relative_normalization =  h1d_jet_eec_baseline[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi) / h1d_jet_eec[etabin-1][ipt]->Integral(norm_binrange_lo,norm_binrange_hi);
+      ratio->Scale(relative_normalization);
+      ratio->Add(h1d_jet_eec_baseline[etabin-1][ipt], -1);
+      ratio->Divide(h1d_jet_eec_baseline[etabin-1][ipt]);
+
+      // plot
+      ratio->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      ratio->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      ratio->GetXaxis()->SetTitle("R_{L}");
+      ratio->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off) / off");
+      ratio->SetMarkerColor(pt_color[ipt]);
+      ratio->SetLineColor(pt_color[ipt]);
+      ratio->SetMarkerSize(0.5);
+      ratio->SetMarkerStyle(21);
+      ratio->Draw("same hist");
+      leg->AddEntry(ratio,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+    }
+    leg->Draw("same");
+
+    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_ratiowholehist_shifted_relnorm_.pdf\")", cno-1, out_dir) );
+  }
+
 }
 
 
