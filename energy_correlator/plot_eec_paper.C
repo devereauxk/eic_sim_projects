@@ -91,7 +91,41 @@ void pt_eta_3by3_hists()
         TH1D* temp;
         TH1D* temp_baseline;
 
-        for (int ik = 0; ik < knum; ik++)
+        // ep, K=0
+        temp = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
+        temp_baseline = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
+
+        // calculate relative normalization ratio
+        int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+        int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+        if (norm_binrange_lo == 0)
+        {
+          norm_binrange_lo = 1;
+          cout<<"bin range lo too low; set to 1"<<endl;
+        }
+        if (norm_binrange_hi > temp->GetNbinsX())
+        {
+          norm_binrange_lo = temp->GetNbinsX();
+          cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+        }
+        double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+        temp->Scale(relative_normalization);
+        temp->Scale(1/temp_baseline->Integral());
+
+        // plot histogram
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetXaxis()->SetTitle("R_{L}");
+        temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
+        temp->SetMarkerColor(pt_color[0]);
+        temp->SetLineColor(pt_color[0]);
+        temp->SetMarkerSize(0.5);
+        temp->SetMarkerStyle(21);
+        temp->Draw("same hist e");
+        leg->AddEntry(temp,"e+p, K = 0");
+
+        // eAu, K=ik
+        for (int ik = 1; ik < knum; ik++)
         {
           temp = (TH1D*) h1d_jet_eec[species_pick][ik][ieta][ipt]->Clone();
           temp_baseline = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
@@ -123,7 +157,7 @@ void pt_eta_3by3_hists()
           temp->SetMarkerSize(0.5);
           temp->SetMarkerStyle(21);
           temp->Draw("same hist e");
-          leg->AddEntry(temp,Form("K = %i",k[ik]));
+          leg->AddEntry(temp,Form("e+Au, K = %i",k[ik]));
         }
 
         leg->Draw("same");
