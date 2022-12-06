@@ -1440,7 +1440,7 @@ void peak_height_vs_A()
   mcs(cno++);
   {
     float plot_xrange_lo = 0.8;
-    float plot_xrange_hi = 2.6;
+    float plot_xrange_hi = 2.7;
     float plot_yrange_lo = -0.005;
     float plot_yrange_hi = 0.04;
 
@@ -1477,8 +1477,8 @@ void peak_height_vs_A()
 
     auto g = new TGraph(speciesnum, species_A16, peak_height_by_A);
 
-    //g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-    //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+    g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     g->GetXaxis()->SetTitle("A^{1/6}");
     g->GetYaxis()->SetTitle("normalized EEC value @ R_{L}=1");
     g->SetMarkerColor(pt_color[0]);
