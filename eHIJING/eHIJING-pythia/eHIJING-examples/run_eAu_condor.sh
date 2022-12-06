@@ -26,10 +26,10 @@ exe=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/build/ehijing
 Configfile=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/s20.setting
 Neve=200000
 
-K=4 # default: 4.0 for EIC
+K=10 # default: 4.0 for EIC
 M=1 # Generlizaed HT:1,  HIgher-twist:0, both in the soft gluon emission limit.
 
-label="eAu_10_100_K4"
+label="eAu_1E8_condor"
 folder=$OUT_DIR/Events/$label
 TablePath=$OUT_DIR/Tables/$label
 mkdir -p $folder
