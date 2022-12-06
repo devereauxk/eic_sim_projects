@@ -6,7 +6,7 @@ using namespace std;
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
 static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
-const int pt_color[6] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1};
+const int pt_color[7] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1, kAzure+7};
 
 const int etabin = 4; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
@@ -633,7 +633,7 @@ void nuclei_hists()
   int etabin_pick = 2;
   int ptbin_pick = 2;
   const int nspecies_picks = 4;
-  static int species_picks[nspecies_picks] = {1, 2, 4, 5};
+  static int species_picks[nspecies_picks] = {1, 2, 3, 4, 5, 6};
 
   // using ep K=0 w/ 2E8 events the baseline
 
@@ -699,8 +699,8 @@ void nuclei_hists()
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[i]);
-      temp->SetLineColor(pt_color[i]);
+      temp->SetMarkerColor(pt_color[i+1]);
+      temp->SetLineColor(pt_color[i+1]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
