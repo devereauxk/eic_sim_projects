@@ -16,7 +16,7 @@ const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 const int speciesnum = 5;
 static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+C", (char*)"e+Cu", (char*)"e+Au"};
 static int species_A[speciesnum] = {1, 2, 12, 64, 197};
-static int species_A16[speciesnum] = {1, 1.12246, 1.51309, 2, 2.41219};
+static double species_A16[speciesnum] = {1, 1.12246, 1.51309, 2, 2.41219};
 
 const int knum = 4;
 static int k[knum] = {0,2,4,10};
@@ -1442,6 +1442,9 @@ void peak_height_vs_A()
 
     int peak_height_by_A[speciesnum] = {};
     peak_height_by_A[0] = 0;
+    
+    TH1D* temp;
+    TH1D* temp_baseline;
     for (int ispecies = 1; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
