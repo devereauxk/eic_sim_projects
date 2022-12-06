@@ -16,7 +16,9 @@ root -l -q "plot_eec_hists.C(\"./eHIJING/eCu_1E8_K4/merged.root\", \"./eHIJING/e
 
 # above deprecated since they use K=0 instead of ep as the baseline
 
-# eD comparisons
+# baseline comparisons
 root -l -q "plot_eec_hists.C(\"./eHIJING/eD_10_100_K0/merged.root\", \"./eHIJING/eD_10_100_K0/\", 1, \"./eHIJING/ep_10_100_K0/merged.root\")"
 
 root -l -q "plot_eec_hists.C(\"./eHIJING/eD_10_100_K4/merged.root\", \"./eHIJING/eD_10_100_K4/\", 1, \"./eHIJING/ep_10_100_K0/merged.root\")"
+
+root -l -q "plot_eec_hists.C(\"./eHIJING/eAu_1E8_K0_condor_v2/merged.root\", \"./eHIJING/eAu_1E8_K0_condor_v2/\", 1, \"./eHIJING/ep_10_100_K0/merged.root\")"

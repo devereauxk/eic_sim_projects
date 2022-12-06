@@ -132,7 +132,7 @@ void pt_eta_3by3_hists()
         tl->SetTextAlign(11);
         tl->SetTextSize(0.028);
         tl->SetTextColor(kBlack);
-        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 2 #cdot 10^{8} events");
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 2*10^{8} events");
         tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
         tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
 
@@ -206,7 +206,7 @@ void pt_eta_3by3_hists()
         tl->SetTextAlign(11);
         tl->SetTextSize(0.028);
         tl->SetTextColor(kBlack);
-        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 2 #cdot 10^{8} events");
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 2*10^{8} events");
         tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
         tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
 
@@ -291,7 +291,7 @@ void pt_bin_side_by_side()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 2 #cdot 10^{8} events", species[species_pick]));
+    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 2*10^{8} events", species[species_pick]));
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rl.pdf\")", cno-1, out_dir) );
@@ -362,7 +362,7 @@ void pt_bin_side_by_side()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 2 #cdot 10^{8} events", species[species_pick]));
+    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 2*10^{8} events", species[species_pick]));
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rlsqrtpt.pdf\")", cno-1, out_dir) );
@@ -425,7 +425,7 @@ void baseline_comparison()
       tl->SetTextAlign(11);
       tl->SetTextSize(0.028);
       tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 2 #cdot 10^{8} events");
+      tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 2*10^{8} events");
       tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
       tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
 
@@ -508,7 +508,7 @@ void nuclei_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 2 #cdot 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 2*10^{8} events");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -576,7 +576,7 @@ void nuclei_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 2 #cdot 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 2*10^{8} events");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -648,7 +648,7 @@ void nuclei_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 2 #cdot 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 2*10^{8} events");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -716,7 +716,7 @@ void nuclei_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 2 #cdot 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 2*10^{8} events");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -799,7 +799,7 @@ void energy_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, e+Au, 2 #cdot 10^{8} events, K=%i",k[k_pick]));
+    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, e+Au, 2*10^{8} events, K=%i",k[k_pick]));
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -866,7 +866,7 @@ void energy_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, e+Au, 2 #cdot 10^{8} events, K=%i",k[k_pick]));
+    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, e+Au, 2*10^{8} events, K=%i",k[k_pick]));
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -939,7 +939,7 @@ void energy_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, e+Au, 2 #cdot 10^{8} events, K=%i",k[k_pick]));
+    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, e+Au, 2*10^{8} events, K=%i",k[k_pick]));
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -1006,7 +1006,7 @@ void energy_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, e+Au, 2 #cdot 10^{8} events, K=%i",k[k_pick]));
+    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, e+Au, 2*10^{8} events, K=%i",k[k_pick]));
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -1086,7 +1086,7 @@ void power_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au, 2 #cdot 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au, 2*10^{8} events");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
@@ -1159,7 +1159,7 @@ void power_hists()
     tl->SetTextAlign(11);
     tl->SetTextSize(0.028);
     tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au, 2 #cdot 10^{8} events");
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au, 2*10^{8} events");
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
