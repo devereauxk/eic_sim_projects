@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_eec_hists_eU.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eUjob.out.$(Process)
+Error          = jobout/eUjob.err.$(Process)
+Log            = jobout/eUjob.log.$(Process)
+Queue 1000

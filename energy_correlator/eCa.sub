@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_eec_hists_eCa.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eCajob.out.$(Process)
+Error          = jobout/eCajob.err.$(Process)
+Log            = jobout/eCajob.log.$(Process)
+Queue 1000
