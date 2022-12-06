@@ -15,6 +15,8 @@ const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
 const int speciesnum = 5;
 static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+C", (char*)"e+Cu", (char*)"e+Au"};
+static int species_A[speciesnum] = {1, 2, 12, 64, 197};
+static int species_A16[speciesnum] = {1, 1.12246, 1.51309, 2, 2.41219};
 
 const int knum = 4;
 static int k[knum] = {0,2,4,10};
@@ -1422,6 +1424,68 @@ void pt_spectra()
   }
 }
 
+void peak_height_vs_A()
+{
+  int k_pick = 2;
+  int ptbin_pick = 2;
+  int etabin_pick = 2;
+
+  // y-value of (alpha_i * K=i - K=0) / (int R_L K=0) at R_L = 1 vs A^{1/6} of nucleus. Each point is an eA nuclei species
+  mclogx(cno++);
+  {
+    float plot_xrange_lo = 5E-2;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.04;
+    float legend_x = 0.22;
+    float legend_y = 0.6;
+
+    int peak_height_by_A[speciesnum] = {};
+    peak_height_by_A[0] = 0;
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    {
+      temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
+
+      // calculate relative normalization ratio
+      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
+      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+      temp->Scale(relative_normalization);
+      temp->Add(temp_baseline, -1);
+      temp->Scale(1/temp_baseline->Integral());
+
+      peak_height_by_A[ispecies] = temp->GetBinContent(temp->FindBin(0.999));
+    }
+
+    auto g = new TGraph(speciesnum, species_A16, peak_height_by_A);
+
+    //g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+    g->GetXaxis()->SetTitle("A^{1/6}");
+    g->GetYaxis()->SetTitle("normalized EEC value @ R_{L}=1");
+    g->SetMarkerColor(pt_color[0]);
+    g->SetLineColor(pt_color[0]);
+    g->SetMarkerSize(0.5);
+    g->SetMarkerStyle(21);
+    g->Draw("");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_height_by_A16.pdf\")", cno-1, out_dir) );
+
+  }
+
+}
+
 void plot_eec_paper()
 {
 
@@ -1561,5 +1625,7 @@ void plot_eec_paper()
   power_hists();
 
   pt_spectra();
+
+  peak_height_vs_A();
 
 }
