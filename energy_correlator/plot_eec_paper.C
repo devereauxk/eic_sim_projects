@@ -1431,7 +1431,7 @@ void peak_height_vs_A()
   int etabin_pick = 2;
 
   // y-value of (alpha_i * K=i - K=0) / (int R_L K=0) at R_L = 1 vs A^{1/6} of nucleus. Each point is an eA nuclei species
-  mclogx(cno++);
+  mcs(cno++);
   {
     float plot_xrange_lo = 5E-2;
     float plot_xrange_hi = 1;
