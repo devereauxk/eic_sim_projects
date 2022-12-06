@@ -13,10 +13,10 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
-const int speciesnum = 5;
-static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+C", (char*)"e+Cu", (char*)"e+Au"};
-static int species_A[speciesnum] = {1, 2, 12, 64, 197};
-static double species_A16[speciesnum] = {1, 1.12246, 1.51309, 2, 2.41219};
+const int speciesnum = 7;
+static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+C", (char*)"e+Ca", (char*)"e+Cu", (char*)"e+Au", (char*)"e+U"};
+static int species_A[speciesnum] = {1, 2, 12, 40, 64, 197, 238};
+static double species_A16[speciesnum] = {1, 1.12246, 1.51309, 1.84931, 2, 2.41219, 2.48941};
 
 const int knum = 4;
 static int k[knum] = {0,2,4,10};
@@ -30,9 +30,11 @@ static double power[pownum] = {0.5, 1, 1.5, 2};
 static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"", (char*)"", (char*)""};
 static char* fname_eD_by_K[knum] = {(char*)"./eHIJING/eD_10_100_K0/merged.root", (char*)"", (char*)"./eHIJING/eD_10_100_K4/merged.root", (char*)""};
 static char* fname_eC_by_K[knum] = {(char*)"./eHIJING/eC_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eC_1E8_K4/merged.root", (char*)""};
+static char* fname_eCa_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eCa_10_100_K4/merged.root", (char*)""};
 static char* fname_eCu_by_K[knum] = {(char*)"./eHIJING/eCu_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eCu_1E8_K4/merged.root", (char*)""};
 static char* fname_eAu_by_K[knum] = {(char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_1E8_K2/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_1E8_condor_v2/merged.root"};
-static char** fname_eA_by_K[speciesnum] = {fname_ep_by_K, fname_eD_by_K, fname_eC_by_K, fname_eCu_by_K, fname_eAu_by_K}; // K=4 cases are 2E8 events, 1E8 events otherwise
+static char* fname_eU_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eU_10_100_K4/merged.root", (char*)""};
+static char** fname_eA_by_K[speciesnum] = {fname_ep_by_K, fname_eD_by_K, fname_eC_by_K, fname_eCa_by_K, fname_eCu_by_K, fname_eAu_by_K, fname_eU_by_K}; // K=4 cases are 2E8 events, 1E8 events otherwise
 
 static char* fname_eAu_by_E_K0[energynum] = {(char*)"./eHIJING/eAu_5_41_K0/merged.root", (char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_18_110_K0/merged.root"};
 static char* fname_eAu_by_E_K4[energynum] = {(char*)"./eHIJING/eAu_5_41_K4/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_18_110_K4/merged.root"};
@@ -66,7 +68,7 @@ static int cno = 0;
 
 void pt_eta_3by3_hists()
 {
-  int species_pick = 4;
+  int species_pick = 5;
 
   // using ep K=0 w/ 2E8 events the baseline
 
@@ -256,7 +258,7 @@ void pt_eta_3by3_hists()
 
 void pt_bin_side_by_side()
 {
-  int species_pick = 4;
+  int species_pick = 5;
   int etabin_pick = 2;
   int k_pick = 2;
 
@@ -566,7 +568,7 @@ void baseline_comparison()
   int etabin_pick = 3;
   int k_pick = 0;
   const int nspecies_picks = 3;
-  static int species_picks[nspecies_picks] = {0, 1, 4};
+  static int species_picks[nspecies_picks] = {0, 1, 5};
 
   // with R_L on the x-axis, plotting (alpha_i * K=0) / (int dR_L K=0) for eD K=0 with eAu K=0 as baseline
   // three plots - one for each pt bin, all have inclusive eta
@@ -630,6 +632,8 @@ void nuclei_hists()
   int k_pick = 2;
   int etabin_pick = 2;
   int ptbin_pick = 2;
+  const int nspecies_picks = 5;
+  static int species_picks[nspecies_picks] = {0, 1, 2, 4, 5};
 
   // using ep K=0 w/ 2E8 events the baseline
 
@@ -666,8 +670,9 @@ void nuclei_hists()
     temp->Draw("same hist");
     leg->AddEntry(temp,"e+p, K = 0");
 
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    for (int i = 0; i < nspecies_picks; i++)
     {
+      int ispecies = species_picks[i];
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
 
@@ -822,8 +827,9 @@ void nuclei_hists()
     temp->Draw("same hist");
     leg->AddEntry(temp,"e+p, K = 0");
 
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    for (int i = 0; i < nspecies_picks; i++)
     {
+      int ispecies = species_picks[i];
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
 
@@ -1397,7 +1403,7 @@ void pt_spectra()
     float legend_x = 0.6;
     float legend_y = 0.6;
 
-    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.20);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.028);
     leg->SetFillStyle(0);
@@ -1433,12 +1439,10 @@ void peak_height_vs_A()
   // y-value of (alpha_i * K=i - K=0) / (int R_L K=0) at R_L = 1 vs A^{1/6} of nucleus. Each point is an eA nuclei species
   mcs(cno++);
   {
-    float plot_xrange_lo = 5E-2;
-    float plot_xrange_hi = 1;
-    float plot_yrange_lo = -0.015;
+    float plot_xrange_lo = 0.8;
+    float plot_xrange_hi = 2.6;
+    float plot_yrange_lo = -0.005;
     float plot_yrange_hi = 0.04;
-    float legend_x = 0.22;
-    float legend_y = 0.6;
 
     double peak_height_by_A[speciesnum] = {};
     peak_height_by_A[0] = 0;
