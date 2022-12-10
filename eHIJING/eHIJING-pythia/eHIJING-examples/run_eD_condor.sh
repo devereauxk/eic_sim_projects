@@ -24,7 +24,7 @@ export PYTHIA8=/eic/u/kdevereaux/work/eHIJING/local
 
 exe=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/build/ehijing-test
 Configfile=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/s20.setting
-Neve=200000
+Neve=400000
 
 K=4 # default: 4.0 for EIC
 M=1 # Generlizaed HT:1,  HIgher-twist:0, both in the soft gluon emission limit.
