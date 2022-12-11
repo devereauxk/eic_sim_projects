@@ -1,6 +1,6 @@
 #!/bin/bash
 IN_DIR=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eD_10_100_K4
-OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/eD_10_100_K4
+OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/eD_10_100_K4_pow05
 
 if [ -z "$1" ]
 then
@@ -25,4 +25,4 @@ ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
 mkdir $OUT_DIR
 
-root -l -b -q "eec_hists.C(\"eD_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 4, 1)"
+root -l -b -q "eec_hists.C(\"eD_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 4, 0.5)"
