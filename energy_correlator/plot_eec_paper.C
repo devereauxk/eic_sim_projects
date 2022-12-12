@@ -27,6 +27,18 @@ static char* energy[energynum] = {(char*)"5 on 41 GeV", (char*)"10 on 100 GeV", 
 const int pownum = 4;
 static double power[pownum] = {0.5, 1, 1.5, 2};
 
+// power=0.5
+static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"", (char*)"", (char*)""};
+static char* fname_eD_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eD_10_100_K4_pow05/merged.root", (char*)""};
+static char* fname_eC_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eC_1E8_K4_pow05/merged.root", (char*)""};
+static char* fname_eCa_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eCa_10_100_K4_pow05/merged.root", (char*)""};
+static char* fname_eCu_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eCu_1E8_K4_pow05/merged.root", (char*)""};
+static char* fname_eAu_by_K[knum] = {(char*)"", (char*)"./eHIJING/eAu_1E8_K2_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_condor_pow05/merged.root"};
+static char* fname_eU_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eU_10_100_K4_pow05/merged.root", (char*)""};
+static char** fname_eA_by_K[speciesnum] = {fname_ep_by_K, fname_eD_by_K, fname_eC_by_K, fname_eCa_by_K, fname_eCu_by_K, fname_eAu_by_K, fname_eU_by_K}; // K=4 cases are 2E8 events, 1E8 events otherwise
+
+// power=1
+/*
 static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"", (char*)"", (char*)""};
 static char* fname_eD_by_K[knum] = {(char*)"./eHIJING/eD_10_100_K0/merged.root", (char*)"", (char*)"./eHIJING/eD_10_100_K4/merged.root", (char*)""};
 static char* fname_eC_by_K[knum] = {(char*)"./eHIJING/eC_1E8_K0/merged.root", (char*)"", (char*)"./eHIJING/eC_1E8_K4/merged.root", (char*)""};
@@ -35,10 +47,13 @@ static char* fname_eCu_by_K[knum] = {(char*)"./eHIJING/eCu_1E8_K0/merged.root", 
 static char* fname_eAu_by_K[knum] = {(char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_1E8_K2/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_1E8_condor_v2/merged.root"};
 static char* fname_eU_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eU_10_100_K4/merged.root", (char*)""};
 static char** fname_eA_by_K[speciesnum] = {fname_ep_by_K, fname_eD_by_K, fname_eC_by_K, fname_eCa_by_K, fname_eCu_by_K, fname_eAu_by_K, fname_eU_by_K}; // K=4 cases are 2E8 events, 1E8 events otherwise
+*/
 
+/*
 static char* fname_eAu_by_E_K0[energynum] = {(char*)"./eHIJING/eAu_5_41_K0/merged.root", (char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)"./eHIJING/eAu_18_110_K0/merged.root"};
 static char* fname_eAu_by_E_K4[energynum] = {(char*)"./eHIJING/eAu_5_41_K4/merged.root", (char*)"./eHIJING/eAu_1E8_K4/merged.root", (char*)"./eHIJING/eAu_18_110_K4/merged.root"};
 static char** fname_eAu_by_E[knum] = {fname_eAu_by_E_K0, NULL, fname_eAu_by_E_K4, NULL}; // all cases are 1E8 events
+*/
 
 static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"}; // all cases are K=0, 2E8 events
 static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are K=4, 2E8 events
@@ -1539,6 +1554,7 @@ void plot_eec_paper()
     }
   }
 
+  /*
   for (int ienergy = 0; ienergy < energynum; ienergy++)
   {
     for (int ik = 0; ik < knum; ik++)
@@ -1573,6 +1589,7 @@ void plot_eec_paper()
       }
     }
   }
+  */
 
   for (int ipower = 0; ipower < pownum; ipower++)
   {
@@ -1617,7 +1634,7 @@ void plot_eec_paper()
 
   // plot individual panels
 
-  pt_eta_3by3_hists();
+  //pt_eta_3by3_hists();
 
   pt_bin_side_by_side();
 
