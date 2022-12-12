@@ -285,7 +285,7 @@ void pt_bin_side_by_side()
     float plot_xrange_lo = 5E-2;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
-    float plot_yrange_hi = 0.04;
+    float plot_yrange_hi = 0.08; //0.04;
     float legend_x = 0.22;
     float legend_y = 0.6;
 
@@ -356,7 +356,7 @@ void pt_bin_side_by_side()
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
     float plot_yrange_lo = -0.015;
-    float plot_yrange_hi = 0.04;
+    float plot_yrange_hi = 0.08 //0.04;
     float legend_x = 0.22;
     float legend_y = 0.6;
 
@@ -658,7 +658,7 @@ void nuclei_hists()
     float plot_xrange_lo = 5E-2;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
-    float plot_yrange_hi = 0.04;
+    float plot_yrange_hi = 0.08; //0.04;
     float legend_x = 0.22;
     float legend_y = 0.6;
 
@@ -815,7 +815,7 @@ void nuclei_hists()
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
     float plot_yrange_lo = -0.015;
-    float plot_yrange_hi = 0.04;
+    float plot_yrange_hi = 0.08; //0.04;
     float legend_x = 0.22;
     float legend_y = 0.6;
 
@@ -1493,7 +1493,7 @@ void peak_height_vs_A()
     auto g = new TGraph(speciesnum, species_A16, peak_height_by_A);
 
     g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-    g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+    //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     g->GetXaxis()->SetTitle("A^{1/6}");
     g->GetYaxis()->SetTitle("normalized EEC value @ R_{L}=1");
     g->SetMarkerColor(pt_color[0]);
@@ -1638,7 +1638,7 @@ void plot_eec_paper()
 
   pt_bin_side_by_side();
 
-  pt_bin_side_by_side_pow05();
+  //pt_bin_side_by_side_pow05();
 
   //baseline_comparison();
 
