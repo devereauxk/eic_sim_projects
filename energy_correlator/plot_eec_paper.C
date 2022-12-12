@@ -1640,7 +1640,7 @@ void plot_eec_paper()
 
   pt_bin_side_by_side_pow05();
 
-  baseline_comparison();
+  //baseline_comparison();
 
   nuclei_hists();
 
