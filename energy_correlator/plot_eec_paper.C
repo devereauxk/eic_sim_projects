@@ -28,12 +28,12 @@ const int pownum = 4;
 static double power[pownum] = {0.5, 1, 1.5, 2};
 
 // power=0.5
-static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"", (char*)"", (char*)""};
+static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/eec_hists_1.root", (char*)"", (char*)"", (char*)""};
 static char* fname_eD_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eD_10_100_K4_pow05/merged.root", (char*)""};
 static char* fname_eC_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eC_1E8_K4_pow05/merged.root", (char*)""};
 static char* fname_eCa_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eCa_10_100_K4_pow05/merged.root", (char*)""};
 static char* fname_eCu_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eCu_1E8_K4_pow05/merged.root", (char*)""};
-static char* fname_eAu_by_K[knum] = {(char*)"", (char*)"./eHIJING/eAu_1E8_K2_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_condor_pow05/merged.root"};
+static char* fname_eAu_by_K[knum] = {(char*)"", (char*)"./eHIJING/eAu_1E8_K2_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow05/eec_hists_1.root", (char*)"./eHIJING/eAu_1E8_condor_pow05/merged.root"};
 static char* fname_eU_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eU_10_100_K4_pow05/merged.root", (char*)""};
 static char** fname_eA_by_K[speciesnum] = {fname_ep_by_K, fname_eD_by_K, fname_eC_by_K, fname_eCa_by_K, fname_eCu_by_K, fname_eAu_by_K, fname_eU_by_K}; // K=4 cases are 2E8 events, 1E8 events otherwise
 
@@ -58,7 +58,7 @@ static char** fname_eAu_by_E[knum] = {fname_eAu_by_E_K0, NULL, fname_eAu_by_E_K4
 static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"}; // all cases are K=0, 2E8 events
 static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are K=4, 2E8 events
 
-const char* out_dir = "./paperplots/";
+const char* out_dir = "./test/";
 
 TH1D* h1d_jet_pt[speciesnum] = {}; // K=4, 10x100, 2E8 events
 
