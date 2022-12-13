@@ -334,9 +334,9 @@ void pt_bin_side_by_side()
       temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
       temp->SetMarkerColor(pt_color[ipt]);
       temp->SetLineColor(pt_color[ipt]);
-      temp->SetMarkerSize(0.5);
-      temp->SetMarkerStyle(21);
-      temp->Draw("same hist");
+      //temp->SetMarkerSize(0.5);
+      //temp->SetMarkerStyle(21);
+      temp->Draw("same hist e");
       leg->AddEntry(temp,Form("p_{T} #in [%.1f, %.1f)",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
