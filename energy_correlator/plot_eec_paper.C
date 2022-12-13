@@ -321,6 +321,12 @@ void pt_bin_side_by_side()
       temp->Add(temp_baseline, -1);
       temp->Scale(1/temp_baseline->Integral());
 
+      for (int i = 0; i < temp->GetNbinsX(); i++)
+      {
+        cout<<temp->GetBinError(i)<<" ";
+      }
+      cout<<endl;
+
       // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
