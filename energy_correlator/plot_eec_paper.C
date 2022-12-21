@@ -1471,7 +1471,7 @@ void peak_height_vs_A()
     static double species_logA[speciesnum] = {};
     for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
-      species_logA[ispecies] = TMath::Log(species_A[ispecies]);
+      species_logA[ispecies] = TMath::Log10(species_A[ispecies]);
     }
 
     // get y values
@@ -1518,7 +1518,7 @@ void peak_height_vs_A()
     g->SetMarkerStyle(21);
     g->Draw("");
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_height_by_A16.pdf\")", cno-1, out_dir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_height_by_logA.pdf\")", cno-1, out_dir) );
 
   }
 
