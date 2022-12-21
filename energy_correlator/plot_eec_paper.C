@@ -1469,7 +1469,7 @@ void peak_height_vs_A()
     static double species_logA[speciesnum] = {};
     for (int ispecies = 0; ispecies < speciesnum; ispecies++)
     {
-      species_logA = Log(species_A[ispecies]);
+      species_logA = TMath::Log(species_A[ispecies]);
     }
 
     // get y values
