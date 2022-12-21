@@ -16,7 +16,7 @@ const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 const int speciesnum = 7;
 static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+C", (char*)"e+Ca", (char*)"e+Cu", (char*)"e+Au", (char*)"e+U"};
 static int species_A[speciesnum] = {1, 2, 12, 40, 64, 197, 238};
-static double species_A16[speciesnum] = {1, 1.12246, 1.51309, 1.84931, 2, 2.41219, 2.48941};
+//static double species_A16[speciesnum] = {1, 1.12246, 1.51309, 1.84931, 2, 2.41219, 2.48941};
 
 const int knum = 4;
 static int k[knum] = {0,2,4,10};
@@ -1266,7 +1266,7 @@ void energy_hists()
 
 void power_hists()
 {
-  int ptbin_pick = 2;
+  int ptbin_pick = 1;
   int etabin_pick = 2;
 
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
@@ -1465,6 +1465,14 @@ void peak_height_vs_A()
     float plot_yrange_lo = -0.005;
     float plot_yrange_hi = 0.04;
 
+    // get x values
+    static double species_logA[speciesnum] = {};
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    {
+      species_logA = Log(species_A[ispecies]);
+    }
+
+    // get y values
     double peak_height_by_A[speciesnum] = {};
     peak_height_by_A[0] = 0;
 
@@ -1496,11 +1504,11 @@ void peak_height_vs_A()
       peak_height_by_A[ispecies] = temp->GetBinContent(temp->FindBin(0.999));
     }
 
-    auto g = new TGraph(speciesnum, species_A16, peak_height_by_A);
+    auto g = new TGraph(speciesnum, species_logA, peak_height_by_A);
 
     g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
     //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-    g->GetXaxis()->SetTitle("A^{1/6}");
+    g->GetXaxis()->SetTitle("ln(A)");
     g->GetYaxis()->SetTitle("normalized EEC value @ R_{L}=1");
     g->SetMarkerColor(pt_color[0]);
     g->SetLineColor(pt_color[0]);
