@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_eHe3_condor.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eHe3job.out.$(Process)
+Error          = jobout/eHe3job.err.$(Process)
+Log            = jobout/eHe3job.log.$(Process)
+Queue 1000
