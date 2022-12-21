@@ -1343,6 +1343,7 @@ void power_hists()
   }
 
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
+  /*
   mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
@@ -1414,6 +1415,7 @@ void power_hists()
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_by_pow_ratio.pdf\")", cno-1, out_dir) );
 
   }
+  */
 }
 
 void pt_spectra()
@@ -1506,7 +1508,7 @@ void peak_height_vs_A()
 
     auto g = new TGraph(speciesnum, species_logA, peak_height_by_A);
 
-    g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    //g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
     //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     g->GetXaxis()->SetTitle("ln(A)");
     g->GetYaxis()->SetTitle("normalized EEC value @ R_{L}=1");
