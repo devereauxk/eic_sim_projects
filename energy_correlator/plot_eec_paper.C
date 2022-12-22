@@ -585,7 +585,9 @@ void nuclei_hists()
 
     // proton
     temp = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
+    temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
     temp->Add(temp, -1);
+    temp->Scale(1/temp->Integral());
     temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
     temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
