@@ -1,10 +1,10 @@
 Universe       = vanilla
 Notification   = Never
-Executable     = run_eec_hists_eHe4.sh
+Executable     = run_eec_hists_eHe3.sh
 GetEnv         = True
 Input	       = /dev/null
 Arguments      = "$(Process)"
-Output         = jobout/eHe4job.out.$(Process)
-Error          = jobout/eHe4job.err.$(Process)
-Log            = jobout/eHe4job.log.$(Process)
+Output         = jobout/eHe3job.out.$(Process)
+Error          = jobout/eHe3job.err.$(Process)
+Log            = jobout/eHe3job.log.$(Process)
 Queue 1000
