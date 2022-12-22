@@ -72,7 +72,7 @@ static int cno = 0;
 
 
 // convert an array of TH1Ds (of same binsize and range) to csv file
-void hists_to_csv(const char* outfile_name, TH1* hists, int size)
+void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 {
    ofstream outfile;
    outfile.open(Form("%s%s.csv", out_dir, outfile_name));
@@ -83,7 +83,7 @@ void hists_to_csv(const char* outfile_name, TH1* hists, int size)
    {
      string line = to_string(hists[0]->GetBinCenter(i)) + "," + to_string(hists[0]->GetBinWidth(i));
 
-     for (int ihist = 0; ihist < size; ihist++)
+     for (int ihist = 0; ihist < hists.size(); ihist++)
      {
        line += "," + to_string(hists[ihist]->GetBinContent(i)) + "," + to_string(hists[ihist]->GetBinError(i));
      }
