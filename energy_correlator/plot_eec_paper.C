@@ -88,7 +88,7 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
        outfile << "," << hists[ihist]->GetBinContent(i) << "," << hists[ihist]->GetBinError(i);
      }
      outfile << "\n";
-     
+
    }
    outfile.close();
 
@@ -653,7 +653,7 @@ void nuclei_hists()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_by_nuclei_ratio.pdf\")", cno-1, out_dir) );
 
-    hists_to_csv("fig5.csv");
+    hists_to_csv("fig5.csv", hists);
   }
 
   /*
