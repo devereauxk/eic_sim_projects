@@ -732,7 +732,7 @@ void nuclei_hists()
 
 void power_hists()
 {
-  int ptbin_pick = 1;
+  int ptbin_pick = 2;
   int etabin_pick = 2;
 
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
