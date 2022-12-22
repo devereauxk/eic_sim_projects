@@ -1,6 +1,9 @@
 R__LOAD_LIBRARY(libeicsmear);
 #include "TStyle.h"
 #include "TGraphErrors.h"
+#include <fstream>
+#include <iostream>
+#include <string.h>
 using namespace std;
 
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
@@ -65,7 +68,33 @@ const float rlsqrtpt_norm_lo = rl_norm_lo * sqrt(20); //rl_norm_lo * sqrt(20);
 
 static int cno = 0;
 
-// output file initialization
+// output file initialization; one file per graph
+
+
+// convert an array of TH1Ds (of same binsize and range) to csv file
+void hists_to_csv(const char* outfile_name, TH1* hists, int size)
+{
+   ofstream outfile;
+   outfile.open(Form("%s%s.csv", out_dir, outfile_name));
+
+   int n = hists[0]->GetNbinsX();
+
+   for (int i = 1; i <= n; i++) // loop over lines
+   {
+     string line = to_string(hists[0]->GetBinCenter(i)) + "," + to_string(hists[0]->GetBinWidth(i));
+
+     for (int ihist = 0; ihist < size; ihist++)
+     {
+       line += "," + to_string(hists[ihist]->GetBinContent(i)) + "," + to_string(hists[ihist]->GetBinError(i));
+     }
+     line += "\n";
+
+     outfile<<line;
+   }
+   outfile.close();
+
+}
+
 
 void pt_eta_3by3_hists()
 {
