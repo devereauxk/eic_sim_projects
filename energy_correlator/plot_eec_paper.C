@@ -60,7 +60,7 @@ TH1D* h1d_jet_eec_eAu_by_power[pownum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_ep_by_power[pownum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_power[pownum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.08; //0.08;
+const float rl_norm_hi = 0.05; //0.08;
 const float rl_norm_lo = 1E-3;
 
 const float rlsqrtpt_norm_hi = rl_norm_hi * sqrt(20); //1;
