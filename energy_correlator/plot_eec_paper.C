@@ -1059,7 +1059,7 @@ void plot_eec_paper()
 
   power_hists();
 
-  pt_spectra();
+  //pt_spectra();
 
   //peak_height_vs_A();
 
