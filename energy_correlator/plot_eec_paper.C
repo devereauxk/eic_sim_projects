@@ -75,7 +75,7 @@ static int cno = 0;
 void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 {
    ofstream outfile;
-   outfile.open(Form("%s%s.csv", out_dir, outfile_name));
+   outfile.open(Form("%s%s", out_dir, outfile_name));
 
    int n = hists[0]->GetNbinsX();
 
@@ -107,6 +107,8 @@ void pt_eta_3by3_hists()
   // with R_L on the x-axis, plotting (alpha_i * K=i) / (int dR_L K=0)
   mclogxy(cno++);
   {
+    vector<TH1*> hists;
+
     float plot_xrange_lo = 0.05;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = 1E-3;
@@ -179,6 +181,8 @@ void pt_eta_3by3_hists()
       temp->Scale(relative_normalization);
       temp->Scale(1/temp_baseline->Integral());
 
+      hists.push_back(temp);
+
       // plot histogram
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
@@ -203,6 +207,8 @@ void pt_eta_3by3_hists()
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay.pdf\")", cno-1, out_dir) );
+
+    hists_to_csv("test.csv", hists);
   }
 
 }
