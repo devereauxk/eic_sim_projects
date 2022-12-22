@@ -81,17 +81,34 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 
    for (int i = 1; i <= n; i++) // loop over lines
    {
-     string line = to_string(hists[0]->GetBinCenter(i)) + "," + to_string(hists[0]->GetBinWidth(i));
+     outfile << hists[0]->GetBinCenter(i) << "," << hists[0]->GetBinWidth(i);
 
      for (int ihist = 0; ihist < hists.size(); ihist++)
      {
-       line += "," + to_string(hists[ihist]->GetBinContent(i)) + "," + to_string(hists[ihist]->GetBinError(i));
+       outfile << "," << hists[ihist]->GetBinContent(i) << "," << hists[ihist]->GetBinError(i);
      }
-     line += "\n";
-
-     outfile<<line;
+     outfile << "\n";
+     
    }
    outfile.close();
+
+}
+
+// convert a TGraph to csv file
+void graph_to_csv(const char* outfile_name, TGraph* graph)
+{
+  ofstream outfile;
+  outfile.open(Form("%s%s", out_dir, outfile_name));
+
+  int n = graph->GetN();
+  Double_t* x = graph->GetX();
+  Double_t* y = graph->GetY();
+
+  for (int i = 0; i < n; i++) // loop over lines
+  {
+    outfile << x[i] << "," << y[i] << "\n";
+  }
+  outfile.close();
 
 }
 
@@ -158,6 +175,8 @@ void pt_eta_3by3_hists()
     temp->Draw("same hist e");
     leg->AddEntry(temp,"e+p, K = 0");
 
+    hists.push_back(temp);
+
     // eAu, K=ik
     for (int ik = 1; ik < knum; ik++)
     {
@@ -208,7 +227,7 @@ void pt_eta_3by3_hists()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay.pdf\")", cno-1, out_dir) );
 
-    hists_to_csv("test.csv", hists);
+    hists_to_csv("fig2.csv", hists);
   }
 
 }
@@ -303,6 +322,8 @@ void pt_bin_side_by_side()
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
   mclogx(cno++);
   {
+    vector<TH1*> hists;
+
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
     float plot_yrange_lo = -0.015;
@@ -342,6 +363,8 @@ void pt_bin_side_by_side()
       temp->Add(temp_baseline, -1);
       temp->Scale(1/temp_baseline->Integral());
 
+      hists.push_back(temp);
+
       // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
@@ -370,6 +393,7 @@ void pt_bin_side_by_side()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rlsqrtpt.pdf\")", cno-1, out_dir) );
 
+    hists_to_csv("fig3.csv", hists);
   }
 
 }
@@ -541,6 +565,8 @@ void nuclei_hists()
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
+    vector<TH1*> hists;
+
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
     float plot_yrange_lo = -0.015;
@@ -570,6 +596,7 @@ void nuclei_hists()
     temp->SetMarkerStyle(21);
     temp->Draw("same hist");
     leg->AddEntry(temp,"e+p, K = 0");
+    hists.push_back(temp);
 
     for (int i = 0; i < nspecies_picks; i++)
     {
@@ -594,6 +621,8 @@ void nuclei_hists()
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
       temp->Scale(1/temp_baseline->Integral());
+
+      hists.push_back(temp);
 
       // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -624,6 +653,7 @@ void nuclei_hists()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_by_nuclei_ratio.pdf\")", cno-1, out_dir) );
 
+    hists_to_csv("fig5.csv");
   }
 
   /*
@@ -706,6 +736,8 @@ void power_hists()
   // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
+    vector<TH1*> hists;
+
     float plot_xrange_lo = 5E-2;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.025; //-0.015;
@@ -745,6 +777,8 @@ void power_hists()
       temp->Add(temp_baseline, -1);
       temp->Scale(1/temp_baseline->Integral());
 
+      hists.push_back(temp);
+
       // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
@@ -774,6 +808,7 @@ void power_hists()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_by_pow_ratio.pdf\")", cno-1, out_dir) );
 
+    hists_to_csv("fig4.csv", hists);
   }
 
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
@@ -954,6 +989,7 @@ void peak_height_vs_A()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_height_by_logA.pdf\")", cno-1, out_dir) );
 
+    graph_to_csv("fig5a.csv", g);
   }
 
 }
