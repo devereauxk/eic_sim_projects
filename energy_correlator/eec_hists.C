@@ -15,10 +15,12 @@ const Double_t MCu(60.09468); // in GeV/c^2
 const Double_t Md(1.87783); // in GeV/c^2
 const Double_t Mu(223.49758); // in GeV/c^2
 const Double_t MCa(37.55675); // in GeV/c^2
+const Double_t MHe3(2.8161095); // in GeV/c^2
+const Double_t MHe4(3.755675); // in GeV/c^2
 
-const int nspecies = 7;
-static double targ_A[nspecies] = {1, 197, 12, 64, 2, 40, 238};
-static double targ_m[nspecies] = {Mp, MAu, MCarbon, MCu, Md, MCa, Mu};
+const int nspecies = 9;
+static double targ_A[nspecies] = {1, 197, 12, 64, 2, 40, 238, 3, 4};
+static double targ_m[nspecies] = {Mp, MAu, MCarbon, MCu, Md, MCa, Mu, MHe3, MHe4};
 
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double pt_lo[ptbin] = {5, 10, 20, 40, 5};

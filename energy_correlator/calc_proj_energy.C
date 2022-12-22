@@ -13,6 +13,8 @@ const Double_t MCu(60.09468); // in GeV/c^2
 const Double_t Md(1.87783); // in GeV/c^2
 const Double_t Mu(223.49758); // in GeV/c^2
 const Double_t MCa(37.55675); // in GeV/c^2
+const Double_t MHe3(2.8161095); // in GeV/c^2
+const Double_t MHe4(3.755675); // in GeV/c^2
 
 void calc_proj_energy(double proj_lab_e = 10, double targ_lab_e = 100, double targ_atomic_mass = 197, double targ_mass = MAu)
 {
