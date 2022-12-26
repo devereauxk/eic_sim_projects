@@ -29,7 +29,7 @@ Neve=400000 #10000
 K=0
 M=1 # Generlizaed HT:1,  HIgher-twist:0, both in the soft gluon emission limit.
 
-label="ep_10_100_K0"
+label="ep_10_100_K0_Q2x"
 folder=$OUT_DIR/Events/$label
 TablePath=$OUT_DIR/Tables/$label
 mkdir -p $folder

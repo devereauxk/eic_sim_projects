@@ -33,14 +33,18 @@ static double power[pownum] = {0.5, 1, 1.5, 2};
 // power=0.5
 static char* fname_ep_by_K[knum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"", (char*)"", (char*)""};
 static char* fname_eD_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eD_10_100_K4_pow05/merged.root", (char*)""};
-static char* fname_eHe3_by_K[knum] = {(char*)"", (char*)"", (char*)"", (char*)""};
-static char* fname_eHe4_by_K[knum] = {(char*)"", (char*)"", (char*)"", (char*)""};
+static char* fname_eHe3_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eHe3_10_100_pdf0/merged.root", (char*)""};
+static char* fname_eHe4_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eHe4_10_100_pdf0/merged.root", (char*)""};
 static char* fname_eC_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eC_1E8_K4_pow05/merged.root", (char*)""};
 static char* fname_eCa_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eCa_10_100_K4_pow05/merged.root", (char*)""};
 static char* fname_eCu_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eCu_1E8_K4_pow05/merged.root", (char*)""};
 static char* fname_eAu_by_K[knum] = {(char*)"", (char*)"./eHIJING/eAu_1E8_K2_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_condor_pow05/merged.root"};
 static char* fname_eU_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eU_10_100_K4_pow05/merged.root", (char*)""};
 static char** fname_eA_by_K[speciesnum] = {fname_ep_by_K, fname_eD_by_K, fname_eHe3_by_K, fname_eHe4_by_K, fname_eC_by_K, fname_eCa_by_K, fname_eCu_by_K, fname_eAu_by_K, fname_eU_by_K}; // K=4 cases are 2E8 events, 1E8 events otherwise
+
+static char* fname_eA_isospin[speciesnum] {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/eD_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eHe3_10_100_pdf0/merged.root",\
+  (char*)"./eHIJING/eHe4_10_100_pdf0/merged.root", (char*)"./eHIJING/eC_10_100_pdf0/merged.root", (char*)"./eHIJING/eCa_10_100_pdf0/merged.root",\
+  (char*)"./eHIJING/eCu_10_100_pdf0/merged.root", (char*)"./eHIJING/eAu_10_100_pdf0/merged.root", (char*)"./eHIJING/eU_10_100_pdf0/merged.root"};
 
 static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"}; // all cases are K=0, 2E8 events
 static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are K=4, 2E8 events
@@ -52,13 +56,12 @@ TH1D* h1d_jet_pt[speciesnum] = {}; // K=4, 10x100, 2E8 events
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
 
-TH1D* h1d_jet_eec_eAu_by_E[energynum][knum][etabin][ptbin] = {};
-TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_E[energynum][knum][etabin][ptbin] = {};
-
 TH1D* h1d_jet_eec_ep_by_power[pownum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_eAu_by_power[pownum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_ep_by_power[pownum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_power[pownum][etabin][ptbin] = {};
+
+TH1D* h1d_jet_eec_isospin[speciesnum][etabin][ptbin] = {};
 
 const float rl_norm_hi = 0.05; //0.08;
 const float rl_norm_lo = 1E-3;
@@ -991,7 +994,79 @@ void peak_height_vs_A()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_height_by_logA.pdf\")", cno-1, out_dir) );
 
-    graph_to_csv("fig5a.csv", g);
+    graph_to_csv("fig5_insert.csv", g);
+  }
+
+}
+
+void peak_height_vs_A_isospin()
+{
+  int ptbin_pick = 2;
+  int etabin_pick = 2;
+
+  // nPDFset = 0 for all these data sets
+  // y-value of (alpha_i * K=i - K=0) / (int R_L K=0) at R_L = 1 vs A^{1/6} of nucleus. Each point is an eA nuclei species
+  mcs(cno++);
+  {
+    float plot_xrange_lo = 0.8;
+    float plot_xrange_hi = 2.7;
+    float plot_yrange_lo = -0.005;
+    float plot_yrange_hi = 0.04;
+
+    // get x values
+    static double species_logA[speciesnum] = {};
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    {
+      species_logA[ispecies] = TMath::Log10(species_A[ispecies]);
+    }
+
+    // get y values
+    double peak_height_by_A[speciesnum] = {};
+    peak_height_by_A[0] = 0;
+
+    TH1D* temp;
+    TH1D* temp_baseline;
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    {
+      temp = (TH1D*) h1d_jet_eec_isospin[ispecies][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_isospin[0][etabin_pick][ptbin_pick]->Clone();
+
+      // calculate relative normalization ratio
+      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp->GetNbinsX())
+      {
+        norm_binrange_lo = temp->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+      }
+      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+      temp->Scale(relative_normalization);
+      temp->Add(temp_baseline, -1);
+      temp->Scale(1/temp_baseline->Integral());
+
+      peak_height_by_A[ispecies] = temp->GetBinContent(temp->FindBin(0.999));
+    }
+
+    auto g = new TGraph(speciesnum, species_logA, peak_height_by_A);
+
+    //g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+    g->GetXaxis()->SetTitle("log(A)");
+    g->GetYaxis()->SetTitle("normalized EEC value @ R_{L}=1");
+    g->SetMarkerColor(pt_color[0]);
+    g->SetLineColor(pt_color[0]);
+    g->SetMarkerSize(0.5);
+    g->SetMarkerStyle(21);
+    g->Draw("");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_height_by_logA_isospin.pdf\")", cno-1, out_dir) );
+
+    graph_to_csv("fig5_insert_isospin.csv", g);
   }
 
 }
@@ -1042,43 +1117,6 @@ void plot_eec_paper()
     }
   }
 
-  /*
-  for (int ienergy = 0; ienergy < energynum; ienergy++)
-  {
-    for (int ik = 0; ik < knum; ik++)
-    {
-      if (fname_eAu_by_E[ik] != NULL)
-      {
-        fin_name = fname_eAu_by_E[ik][ienergy];
-
-        if (strcmp(fin_name,"") != 0)
-        {
-          fin = new TFile(fin_name, "READ");
-
-          for (int ieta = 0; ieta < etabin; ieta++)
-          {
-            for (int ipt = 0; ipt < ptbin; ipt++)
-            {
-              // raw data histograms
-              h1d_jet_eec_eAu_by_E[ienergy][ik][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
-              h1d_jet_eec_eAu_by_E[ienergy][ik][ieta][ipt]->SetName(Form("h1d_jet_eec_eAubyE_%d_%d_%d_%d", ieta, ipt, ienergy, ik));
-
-              h1d_jet_eec_rlsqrtpt_eAu_by_E[ienergy][ik][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
-              h1d_jet_eec_rlsqrtpt_eAu_by_E[ienergy][ik][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_eAubyE_%d_%d_%d_%d", ieta, ipt, ienergy, ik));
-            }
-          }
-
-          cout<<fin_name<<" loaded!"<<endl;
-        }
-        else
-        {
-          cout<<"couldn't find file for "<<energy[ienergy]<<endl;
-        }
-      }
-    }
-  }
-  */
-
   for (int ipower = 0; ipower < pownum; ipower++)
   {
     // e+p
@@ -1120,6 +1158,24 @@ void plot_eec_paper()
     cout<<fin_name<<" loaded!"<<endl;
   }
 
+  for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+  {
+    fin_name = fname_eA_isospin[ispecies];
+    fin = new TFile(fin_name, "READ");
+
+    for (int ieta = 0; ieta < etabin; ieta++)
+    {
+      for (int ipt = 0; ipt < ptbin; ipt++)
+      {
+        // raw data histograms
+        h1d_jet_eec_isospin[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+        h1d_jet_eec_isospin[ispecies][ieta][ipt]->SetName(Form("h1d_jet_eec_isospin_%d_%d_%d", ieta, ipt, ispecies));
+      }
+    }
+
+    cout<<fin_name<<" loaded!"<<endl;
+  }
+
   // plot individual panels
 
   pt_eta_3by3_hists();
@@ -1134,6 +1190,8 @@ void plot_eec_paper()
 
   //pt_spectra();
 
-  //peak_height_vs_A();
+  peak_height_vs_A();
+
+  peak_height_by_A_isospin();
 
 }

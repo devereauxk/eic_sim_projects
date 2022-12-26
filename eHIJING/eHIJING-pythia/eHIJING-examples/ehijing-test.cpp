@@ -173,15 +173,19 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
 
     //F << "# " << Q2 << " " << xB << std::endl;
     for (auto & p : plist) {
-        if (p.isFinal() && p.isHadron()){
+        if (p.isFinal() && p.isHadron())
+        {
             int id = p.id();
             double charge = p.charge();
 
             // kinematics in target rest frame (to be boosted in analysis script)
 
-	    F << evtn << "," << p.id() << "," << p.charge() << ","
-      << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << std::endl;
-	 }
+            /*
+      	    F << evtn << "," << p.id() << "," << p.charge() << ","
+            << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << std::endl;
+            */
+            F << evtn << "," << Q2 << "," << xB << std::endl;
+	      }
     }
     evtn++;
 }
