@@ -81,7 +81,7 @@ void read_csv(const char* inFile = "merged.csv")
 }
 
 
-void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_Q2_x.root")
+void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_Q2_x.root")
 {
 
   // compute log bins for Q2-x
