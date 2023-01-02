@@ -63,8 +63,6 @@ void read_csv(const char* inFile = "merged.csv")
     }
     if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
 
-    vector<PseudoJet> jet_constits;
-
     // loop over particles with this event number
     while (iline < nlines && stoi(content[iline][0]) == ievt)
     {
@@ -90,7 +88,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   double xmin = 1E-6;
   double xmax = 1;
   int xnbins = 50;
-  Double_t xlbins[nbins+1];
+  Double_t xlbins[xnbins+1];
   double xbinwidth = (log10(xmax) - log10(xmin)) / xnbins;
   for (int i = 0; i < xnbins+1; i++)
   {
@@ -100,7 +98,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   double ymin = 1;
   double ymax = 1E4;
   int ynbins = 50;
-  Double_t ylbins[nbins+1];
+  Double_t ylbins[ynbins+1];
   double ybinwidth = (log10(ymax) - log10(ymin)) / ynbins;
   for (int i = 0; i < ynbins+1; i++)
   {
@@ -118,7 +116,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   }
 
 
-  // reads file and fills in jet_constits
+  // reads file
   read_csv(inFile);
   cout<<"@kdebug last"<<endl;
 
