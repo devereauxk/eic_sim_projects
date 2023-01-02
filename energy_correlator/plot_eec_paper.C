@@ -1192,6 +1192,6 @@ void plot_eec_paper()
 
   peak_height_vs_A();
 
-  peak_height_by_A_isospin();
+  peak_height_vs_A_isospin();
 
 }
