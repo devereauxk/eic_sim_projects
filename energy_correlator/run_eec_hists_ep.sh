@@ -26,3 +26,5 @@ ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 mkdir $OUT_DIR
 
 root -l -b -q "eec_hists.C(\"ep_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2131.56, 100, 0, 0.5)"
+
+# root -l -q "eec_hists.C(\"$EVENTS/ep_10_100_K0_Q2x/ep_1.dat\",\"eHIJING/ep_10_100_K0_Q2x/test_1.root\", 1, 2131.56, 100, 0, 0.5)"

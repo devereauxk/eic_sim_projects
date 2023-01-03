@@ -85,6 +85,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   int nlines = content.size();
   int ievt;
 
+  int total_jets = 0;
+
   // loop over lines
   while (iline < nlines)
   {
@@ -142,6 +144,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
+      total_jets++;
+
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
 
@@ -163,6 +167,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     }
 
   }
+
+  cout<<"total num jets = "<<total_jets<<endl;
 
   fin.close();
 
@@ -218,7 +224,7 @@ void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.r
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
       h2d_Q2_x[ieta][ipt]->Write();
-      cout<<"h1d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
+      cout<<"h2d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
     }
   }
 
