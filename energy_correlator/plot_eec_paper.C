@@ -1087,12 +1087,15 @@ void Q2_x_panel()
         float plot_xrange_hi = 2.7;
         float plot_yrange_lo = -0.005;
         float plot_yrange_hi = 0.04;
+        float plot_zrange_lo = 0;
+        float plot_zrange_hi = 750E3;
 
         TH2D* temp = (TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone();
 
         // plot
         //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
         temp->GetXaxis()->SetTitle("x_{B}");
         temp->GetYaxis()->SetTitle("Q^{2} (GeV^{2})");
         temp->Draw("colz");
