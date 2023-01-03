@@ -1,6 +1,9 @@
 R__LOAD_LIBRARY(libeicsmear);
+R__LOAD_LIBRARY(libfastjet);
 
+#include "fastjet/ClusterSequence.hh"
 #include <iostream>
+using namespace fastjet;
 using namespace std;
 const int verbosity = 0;
 
