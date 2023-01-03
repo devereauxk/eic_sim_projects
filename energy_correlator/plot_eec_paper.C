@@ -42,6 +42,8 @@ static char* fname_eAu_by_K[knum] = {(char*)"", (char*)"./eHIJING/eAu_1E8_K2_pow
 static char* fname_eU_by_K[knum] = {(char*)"", (char*)"", (char*)"./eHIJING/eU_10_100_K4_pow05/merged.root", (char*)""};
 static char** fname_eA_by_K[speciesnum] = {fname_ep_by_K, fname_eD_by_K, fname_eHe3_by_K, fname_eHe4_by_K, fname_eC_by_K, fname_eCa_by_K, fname_eCu_by_K, fname_eAu_by_K, fname_eU_by_K}; // K=4 cases are 2E8 events, 1E8 events otherwise
 
+static char* fname_eA_baseline[speciesnum] = {(char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/eD_10_100_K0/merged.root", (char*)"", (char*)"", (char*)"", (char*)"", (char*)"", (char*)"./eHIJING/eAu_1E8_K0_condor_v2/merged.root", (char*)""};
+
 static char* fname_eA_isospin[speciesnum] {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/eD_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eHe3_10_100_pdf0/merged.root",\
   (char*)"./eHIJING/eHe4_10_100_pdf0/merged.root", (char*)"./eHIJING/eC_10_100_pdf0/merged.root", (char*)"./eHIJING/eCa_10_100_pdf0/merged.root",\
   (char*)"./eHIJING/eCu_10_100_pdf0/merged.root", (char*)"./eHIJING/eAu_10_100_pdf0/merged.root", (char*)"./eHIJING/eU_10_100_pdf0/merged.root"};
@@ -66,6 +68,8 @@ TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_power[pownum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_isospin[speciesnum][etabin][ptbin] = {};
 
 TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
+
+TH1D* h1d_jet_eec_baseline[speciesnum][etabin][ptbin] = {};
 
 const float rl_norm_hi = 0.05; //0.08;
 const float rl_norm_lo = 1E-3;
@@ -436,7 +440,7 @@ void baseline_comparison()
 
       for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
       {
-        temp = (TH1D*) h1d_jet_eec[species_picks[ispecies]][k_pick][etabin_pick][ipt]->Clone();
+        temp = (TH1D*) h1d_jet_eec_baseline[species_picks[ispecies][k_pick][etabin_pick][ipt]->Clone();
 
         // calculate relative normalization ratio
         temp->Scale(1/temp->Integral());
@@ -1238,6 +1242,32 @@ void plot_eec_paper()
   }
 
   cout<<fin_name<<" loaded!"<<endl;
+
+  for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+  {
+    fin_name = fname_eA_baseline[ispecies];
+
+    if (strcmp(fin_name,"") != 0)
+    {
+      fin = new TFile(fin_name, "READ");
+
+      for (int ieta = 0; ieta < etabin; ieta++)
+      {
+        for (int ipt = 0; ipt < ptbin; ipt++)
+        {
+          // raw data histograms
+          h1d_jet_eec_baseline[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+          h1d_jet_eec_baseline[ispecies][ieta][ipt]->SetName(Form("h1d_jet_eec_baseline_%d_%d_%d", ieta, ipt, ispecies));
+        }
+      }
+
+      cout<<fin_name<<" loaded!"<<endl;
+    }
+    else
+    {
+      cout<<"couldn't find file for "<<species[ispecies]<<" baseline"<<endl;
+    }
+  }
 
   // plot individual panels
 
