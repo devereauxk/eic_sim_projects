@@ -440,8 +440,7 @@ void baseline_comparison()
 
       for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
       {
-        cout<<h1d_jet_eec_baseline<<endl;
-        temp = (TH1D*) h1d_jet_eec_baseline[species_picks[ispecies]][k_pick][etabin_pick][ipt]->Clone();
+        temp = ((TH1D*) h1d_jet_eec_baseline[species_picks[ispecies]][k_pick][etabin_pick][ipt])->Clone();
 
         // calculate relative normalization ratio
         temp->Scale(1/temp->Integral());
