@@ -49,6 +49,8 @@ static char* fname_eA_isospin[speciesnum] {(char*)"./eHIJING/ep_10_100_K0_pow05/
 static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"}; // all cases are K=0, 2E8 events
 static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are K=4, 2E8 events
 
+const char* fname_ep_Q2x = "./eHIJING/ep_10_100_K0_Q2x/merged.root"
+
 const char* out_dir = "./paperplots/";
 
 TH1D* h1d_jet_pt[speciesnum] = {}; // K=4, 10x100, 2E8 events
@@ -62,6 +64,8 @@ TH1D* h1d_jet_eec_rlsqrtpt_ep_by_power[pownum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_power[pownum][etabin][ptbin] = {};
 
 TH1D* h1d_jet_eec_isospin[speciesnum][etabin][ptbin] = {};
+
+TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
 
 const float rl_norm_hi = 0.05; //0.08;
 const float rl_norm_lo = 1E-3;
@@ -1071,6 +1075,11 @@ void peak_height_vs_A_isospin()
 
 }
 
+void Q2_x_panel()
+{
+
+}
+
 void plot_eec_paper()
 {
 
@@ -1176,6 +1185,21 @@ void plot_eec_paper()
     cout<<fin_name<<" loaded!"<<endl;
   }
 
+  fin_name = fname_ep_Q2x;
+  fin = new TFile(fin_name, "READ");
+
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < ptbin; ipt++)
+    {
+      // raw data histograms
+      h2d_jet_Q2x[ieta][ipt] = (TH1D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      h2d_jet_Q2x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+    }
+  }
+
+  cout<<fin_name<<" loaded!"<<endl;
+
   // plot individual panels
 
   pt_eta_3by3_hists();
@@ -1193,5 +1217,7 @@ void plot_eec_paper()
   peak_height_vs_A();
 
   peak_height_vs_A_isospin();
+
+  Q2_x_panel();
 
 }

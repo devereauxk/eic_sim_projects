@@ -152,7 +152,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
         {
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
-            if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_lo[ipt])
+            if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
             {
               h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
             }
@@ -205,7 +205,6 @@ void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.r
       h2d_Q2_x[ieta][ipt]->Sumw2();
     }
   }
-
 
   // reads file
   read_csv(inFile, proj_rest_e, targ_lab_e, targ_species);
