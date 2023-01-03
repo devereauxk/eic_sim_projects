@@ -417,7 +417,7 @@ void baseline_comparison()
 
   // with R_L on the x-axis, plotting (alpha_i * K=0) / (int dR_L K=0) for eD K=0 with eAu K=0 as baseline
   // three plots - one for each pt bin, all have inclusive eta
-  for (int ipt = 0; ipt < ptbin; ipt++)
+  for (int ipt = 0; ipt < ptbin-2; ipt++)
   {
     mclogxy(cno++);
     {
