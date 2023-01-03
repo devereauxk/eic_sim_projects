@@ -52,6 +52,8 @@ void read_csv(const char* inFile = "merged.csv")
   int nlines = content.size();
   int ievt;
 
+  cout << "nlines: " << nlines<<endl;
+
   // loop over lines
   while (iline < nlines)
   {
@@ -128,7 +130,7 @@ void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_Q2_x.
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
       h2d_Q2_x[ieta][ipt]->Write();
-      cout<<"h1d_jet_eec_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
+      cout<<"h1d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
     }
   }
 
