@@ -50,32 +50,25 @@ void read_csv(const char* inFile = "merged.csv")
   // number of lines
   int iline = 0;
   int nlines = content.size();
-  int ievt;
 
   cout << "nlines: " << nlines<<endl;
 
   // loop over lines
   while (iline < nlines)
   {
-    try {
-      ievt = stoi(content[iline][0]); // get event number for this new event
-    } catch (invalid_argument& e) {
-      cout<<"@kdebug -1.5"<<endl;
-      break;
-    }
-    if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
 
-    // loop over particles with this event number
-    while (iline < nlines && stoi(content[iline][0]) == ievt)
-    {
-      // read content for this line, make type conversions
-      vector<string> line;
-      line = content[iline];
-      Q2 = stod(line[1]);
-      xB = stod(line[2]);
+    if (iline%10000==0) cout<<"Processing event = "<<iline<<endl;
 
-      cout<<iline<<" "<<Q2<<" "<<xB<<endl;
-    }
+    // read content for this line, make type conversions
+    vector<string> line;
+    line = content[iline];
+    Q2 = stod(line[1]);
+    xB = stod(line[2]);
+
+    cout<<iline<<" "<<Q2<<" "<<xB<<endl;
+
+    iline++;
+
   }
 
   fin.close();
