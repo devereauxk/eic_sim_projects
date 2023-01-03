@@ -1081,7 +1081,7 @@ void Q2_x_panel()
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      mclogxy(cno++);
+      mclogxy(cno++, 0, 0, 400, 400, 0.1, 0.1, 0.1, 0.13);
       {
         float plot_xrange_lo = 0.8;
         float plot_xrange_hi = 2.7;
