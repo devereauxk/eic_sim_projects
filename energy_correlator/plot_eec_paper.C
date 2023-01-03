@@ -1077,7 +1077,38 @@ void peak_height_vs_A_isospin()
 
 void Q2_x_panel()
 {
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < ptbin; ipt++)
+    {
+      mclogxy(cno++);
+      {
+        float plot_xrange_lo = 0.8;
+        float plot_xrange_hi = 2.7;
+        float plot_yrange_lo = -0.005;
+        float plot_yrange_hi = 0.04;
 
+        TH2D* temp = (TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone();
+
+        // plot
+        //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetXaxis()->SetTitle("x_{B}");
+        temp->GetYaxis()->SetTitle("Q^{2} (GeV^{2})");
+        temp->Draw("colz");
+
+        TLatex* tl = new TLatex();
+        tl->SetTextAlign(11);
+        tl->SetTextSize(0.028);
+        tl->SetTextColor(kBlack);
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+p, 4*10^{8} events");
+        tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+        tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
+      }
+    }
+  }
 }
 
 void plot_eec_paper()
