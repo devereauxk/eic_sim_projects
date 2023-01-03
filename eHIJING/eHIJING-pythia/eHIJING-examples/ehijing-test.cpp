@@ -171,9 +171,6 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
     double theta = - pGamma.theta();
     double phi = - pGamma.phi();
 
-    F << evtn << "," << Q2 << "," << xB << std::endl; // remove this line when done with the Q2-x plots
-
-    /*
     for (auto & p : plist) {
         if (p.isFinal() && p.isHadron())
         {
@@ -182,11 +179,10 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
 
             // kinematics in target rest frame (to be boosted in analysis script)
       	    F << evtn << "," << p.id() << "," << p.charge() << ","
-            << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << std::endl;
+            << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << "," << Q2 << "," << xB << std::endl;
 
 	      }
     }
-    */
     evtn++;
 }
 
