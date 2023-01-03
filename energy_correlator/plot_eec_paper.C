@@ -1224,7 +1224,7 @@ void plot_eec_paper()
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
       // raw data histograms
-      h2d_jet_Q2_x[ieta][ipt] = (TH1D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
       h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
     }
   }
