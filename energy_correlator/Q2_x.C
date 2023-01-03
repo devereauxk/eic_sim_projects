@@ -144,10 +144,10 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
-      total_jets++;
-
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+
+      total_jets++;
 
       // fill Q2-x histograms
       for (int ieta = 0; ieta < etabin; ieta++)
