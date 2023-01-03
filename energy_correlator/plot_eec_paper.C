@@ -400,7 +400,6 @@ void pt_bin_side_by_side()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rlsqrtpt.pdf\")", cno-1, out_dir) );
 
-    hists_to_csv("fig3.csv", hists);
   }
 
 }
@@ -418,6 +417,8 @@ void baseline_comparison()
   {
     mclogxy(cno++);
     {
+      vector<TH1*> hists;
+
       float plot_xrange_lo = 0.05;
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 5E-3;
@@ -439,6 +440,8 @@ void baseline_comparison()
 
         // calculate relative normalization ratio
         temp->Scale(1/temp->Integral());
+
+        hists.push_back(temp);
 
         // plot histogram
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -464,6 +467,8 @@ void baseline_comparison()
       tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_baseline_comparison_%d.pdf\")", cno-1, out_dir, ipt) );
+
+      hists_to_csv(Form("baseline_%i.csv", ipt), hists);
     }
   }
 
@@ -1240,7 +1245,7 @@ void plot_eec_paper()
 
   pt_bin_side_by_side();
 
-  //baseline_comparison();
+  baseline_comparison();
 
   nuclei_hists();
 
