@@ -146,11 +146,11 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
 
       // fill Q2-x histograms
-      for (int ieta = 0; ieta < etabins; ieta++)
+      for (int ieta = 0; ieta < etabin; ieta++)
       {
         if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].eta() < eta_hi[ieta])
         {
-          for (int ipt = 0; ipt < ptbins; ipt++)
+          for (int ipt = 0; ipt < ptbin; ipt++)
           {
             if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_lo[ipt])
             {
