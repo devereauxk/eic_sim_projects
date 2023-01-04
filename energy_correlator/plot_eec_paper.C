@@ -105,6 +105,32 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 
 }
 
+void hists_to_csv_2d(const char* outfile_name, vector<TH2*> hists)
+{
+  ofstream outfile;
+  outfile.open(Form("%s%s", out_dir, outfile_name));
+
+  int nx = hists[0]->GetNbinsX();
+  int ny = hists[0]->GetNbinsY();
+
+  for (int i = 1; i <= nx; i++) // loop over lines, x axis loop
+  {
+    for (int j = 1; j <= ny; j++) // y axis loop
+    {
+      outfile << hists[0]->GetXaxis()->GetBinCenter(i) << "," << hists[0]->GetXaxis()->GetBinWidth(i) << ",";
+      outfile << hists[0]->GetYaxis()->GetBinCenter(j) << "," << hists[0]->GetYaxis()->GetBinWidth(j);
+
+      for (int ihist = 0; ihist < hists.size(); ihist++)
+      {
+        outfile << "," << hists[ihist]->GetBinContent(i,j) << "," << hists[ihist]->GetBinError(i,j);
+      }
+      outfile << "\n";
+    }
+
+  }
+  outfile.close();
+}
+
 // convert a TGraph to csv file
 void graph_to_csv(const char* outfile_name, TGraph* graph)
 {
@@ -1086,9 +1112,11 @@ void peak_height_vs_A_isospin()
 
 void Q2_x_panel()
 {
-  for (int ieta = 0; ieta < etabin; ieta++)
+  vector<TH2*> hists;
+
+  for (int ieta = 0; ieta < 3; ieta++)
   {
-    for (int ipt = 0; ipt < ptbin; ipt++)
+    for (int ipt = 0; ipt < 3; ipt++)
     {
       mclogxy(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
       {
@@ -1100,6 +1128,8 @@ void Q2_x_panel()
         float plot_zrange_hi = 750E3;
 
         TH2D* temp = (TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone();
+
+        hists.push_back(temp);
 
         // plot
         //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -1121,6 +1151,9 @@ void Q2_x_panel()
       }
     }
   }
+
+  hists_to_csv_2d("Q2x.csv", hists);
+
 }
 
 void plot_eec_paper()
