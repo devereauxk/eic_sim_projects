@@ -1149,6 +1149,65 @@ void Q2_x_panel()
 
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
+      mclogxy(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13); // x-projection
+      {
+        float plot_xrange_lo = 0.8;
+        float plot_xrange_hi = 2.7;
+        float plot_yrange_lo = -0.005;
+        float plot_yrange_hi = 0.04;
+        float plot_zrange_lo = 0;
+        float plot_zrange_hi = 750E3;
+
+        TH1D* temp = ((TH1D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionX();
+
+        // plot
+        //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetYaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+        temp->GetXaxis()->SetTitle("x_{B}");
+        temp->GetYaxis()->SetTitle("counts");
+        temp->Draw("same");
+
+        TLatex* tl = new TLatex();
+        tl->SetTextAlign(11);
+        tl->SetTextSize(0.028);
+        tl->SetTextColor(kBlack);
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+p, 4*10^{8} events");
+        tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+        tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
+      }
+      mclogxy(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13); // Q2-projection
+      {
+        float plot_xrange_lo = 0.8;
+        float plot_xrange_hi = 2.7;
+        float plot_yrange_lo = -0.005;
+        float plot_yrange_hi = 0.04;
+        float plot_zrange_lo = 0;
+        float plot_zrange_hi = 750E3;
+
+        TH1D* temp = ((TH1D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionY();
+
+        // plot
+        //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetYaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+        temp->GetXaxis()->SetTitle("Q^{2}");
+        temp->GetYaxis()->SetTitle("counts");
+        temp->Draw("same");
+
+        TLatex* tl = new TLatex();
+        tl->SetTextAlign(11);
+        tl->SetTextSize(0.028);
+        tl->SetTextColor(kBlack);
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+p, 4*10^{8} events");
+        tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+        tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_Q2_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
+      }
+
     }
   }
 
