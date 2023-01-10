@@ -1151,7 +1151,7 @@ void Q2_x_panel()
       }
       mclogxy(cno++); // Q2-projection
       {
-        TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionY("temp");
+        TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionX("temp");
 
         temp->Draw("same");
         temp->SetMarkerSize(0.7);
@@ -1160,7 +1160,6 @@ void Q2_x_panel()
         temp->SetLineColor(38);
 
         // plot
-        temp->Draw("e same");
         temp->GetXaxis()->SetTitle("Q^{2} (GeV^{2})");
         temp->GetYaxis()->SetTitle("counts");
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_Q2_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
