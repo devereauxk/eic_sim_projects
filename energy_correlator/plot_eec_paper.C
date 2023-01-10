@@ -1149,7 +1149,7 @@ void Q2_x_panel()
 
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
-      mclogx(cno++); // x-projection
+      mclogxy(cno++); // x-projection
       {
         TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionX("temp");
 
@@ -1159,6 +1159,7 @@ void Q2_x_panel()
         temp->SetMarkerColor(38);
         temp->SetLineColor(38);
         temp->GetXaxis()->SetRangeUser(1E-4, 1);
+        temp->GetYaxis()->SetRangeUser(0, 1E7);
 
         // plot
         temp->GetXaxis()->SetTitle("x_{B}");
