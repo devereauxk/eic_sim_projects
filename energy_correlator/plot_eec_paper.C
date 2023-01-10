@@ -1149,23 +1149,11 @@ void Q2_x_panel()
 
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
-      mclogx(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13); // x-projection
+      mclogx(cno++); // Q2-projection
       {
-        TH1D* temp = ((TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionX();
+        TH1D* temp = ((TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionY("ed");
 
         // plot
-        temp->Draw();
-        temp->GetXaxis()->SetTitle("x_{B}");
-        temp->GetYaxis()->SetTitle("counts");
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
-
-      }
-      mclogx(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13); // Q2-projection
-      {
-        TH1D* temp = ((TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionY();
-
-        // plot
-        temp->Draw();
         temp->GetXaxis()->SetTitle("Q^{2} (GeV^{2})");
         temp->GetYaxis()->SetTitle("counts");
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_Q2_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
