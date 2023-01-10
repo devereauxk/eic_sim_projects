@@ -509,8 +509,8 @@ void nuclei_hists()
   int k_pick = 2;
   int etabin_pick = 2;
   int ptbin_pick = 2;
-  const int nspecies_picks = 6;
-  static int species_picks[nspecies_picks] = {1, 4, 5, 6, 7, 8};
+  const int nspecies_picks = 8;
+  static int species_picks[nspecies_picks] = {1, 2, 3, 4, 5, 6, 7, 8};
 
   // using ep K=0 w/ 2E8 events the baseline
 
@@ -1149,24 +1149,6 @@ void Q2_x_panel()
 
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
-      mclogxy(cno++); // x-projection
-      {
-        TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionX("temp");
-
-        temp->Draw("");
-        temp->SetMarkerSize(0.7);
-        temp->SetMarkerStyle(21);
-        temp->SetMarkerColor(38);
-        temp->SetLineColor(38);
-        temp->GetXaxis()->SetRangeUser(1E-4, 1);
-        temp->GetYaxis()->SetRangeUser(0, 1E7);
-
-        // plot
-        temp->GetXaxis()->SetTitle("x_{B}");
-        temp->GetYaxis()->SetTitle("counts");
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
-      }
-
     }
   }
 
