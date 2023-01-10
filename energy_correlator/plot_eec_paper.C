@@ -1151,7 +1151,13 @@ void Q2_x_panel()
       }
       mclogxy(cno++); // Q2-projection
       {
-        TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionY("");
+        TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionY("temp");
+
+        temp->Draw("same");
+        temp->SetMarkerSize(0.7);
+        temp->SetMarkerStyle(21);
+        temp->SetMarkerColor(38);
+        temp->SetLineColor(38);
 
         // plot
         temp->Draw("e same");
