@@ -1151,7 +1151,7 @@ void Q2_x_panel()
       }
       mclogxy(cno++); // Q2-projection
       {
-        TH1D* temp = ((TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionY("e");
+        TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionY("");
 
         // plot
         temp->Draw("e same");
