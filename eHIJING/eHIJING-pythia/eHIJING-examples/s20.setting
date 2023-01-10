@@ -12,7 +12,7 @@ Beams:eB = 2130.17 # 2129.82 for e+U10x100 2130.17 for e+D10x100 440.378 for e+A
 
 # Phasespace cut:
 # Minimum hard scale squared [GeV^2]
-PhaseSpace:Q2Min = 10.0 # default 1.0, changed to 10.0 for eAu case
+PhaseSpace:Q2Min = 40.0 # default 1.0, changed to 10.0 for eAu case, CHANGE BACK TO 10 WHEN DONE WITH Q2-x plots
 PhaseSpace:mHatMin = 0
 PhaseSpace:pTHatMinDiverge = 0.5
 # >>>>>> Do not change the following without a good reason...
