@@ -1149,7 +1149,7 @@ void Q2_x_panel()
 
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
-      mclogy(cno++); // x-projection
+      mclogx(cno++); // x-projection
       {
         TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionX("temp");
 
