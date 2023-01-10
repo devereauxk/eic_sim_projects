@@ -1149,7 +1149,7 @@ void Q2_x_panel()
 
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
-      mcs(cno++); // Q2-projection
+      mclogxy(cno++); // x-projection
       {
         TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionX("temp");
 
@@ -1158,11 +1158,12 @@ void Q2_x_panel()
         temp->SetMarkerStyle(21);
         temp->SetMarkerColor(38);
         temp->SetLineColor(38);
+        temp->GetXaxis()->SetRangeUser(1E-4, 1);
 
         // plot
-        temp->GetXaxis()->SetTitle("Q^{2} (GeV^{2})");
+        temp->GetXaxis()->SetTitle("x_{B}");
         temp->GetYaxis()->SetTitle("counts");
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_Q2_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
 
     }
