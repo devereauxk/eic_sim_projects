@@ -1158,7 +1158,7 @@ void Q2_x_panel()
         float plot_zrange_lo = 0;
         float plot_zrange_hi = 750E3;
 
-        TH1D* temp = ((TH1D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionX();
+        TH1D* temp = ((TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionX();
 
         // plot
         //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -1187,7 +1187,7 @@ void Q2_x_panel()
         float plot_zrange_lo = 0;
         float plot_zrange_hi = 750E3;
 
-        TH1D* temp = ((TH1D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionY();
+        TH1D* temp = ((TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionY();
 
         // plot
         //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
