@@ -1154,7 +1154,9 @@ void Q2_x_panel()
         TH1D* temp = ((TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionX();
 
         // plot
-        temp->Draw("same");
+        temp->Draw();
+        temp->GetXaxis()->SetTitle("x_{B}");
+        temp->GetYaxis()->SetTitle("counts");
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
 
       }
@@ -1163,8 +1165,9 @@ void Q2_x_panel()
         TH1D* temp = ((TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone())->ProjectionY();
 
         // plot
-        temp->Draw("same");
-
+        temp->Draw();
+        temp->GetXaxis()->SetTitle("Q^{2} (GeV^{2})");
+        temp->GetYaxis()->SetTitle("counts");
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_Q2_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
 
