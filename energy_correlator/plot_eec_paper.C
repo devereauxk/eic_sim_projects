@@ -1149,11 +1149,11 @@ void Q2_x_panel()
 
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
-      mclogxy(cno++); // Q2-projection
+      mcs(cno++); // Q2-projection
       {
         TH1D* temp = (TH1D*) h2d_jet_Q2_x[ieta][ipt]->ProjectionX("temp");
 
-        temp->Draw("same");
+        temp->Draw("");
         temp->SetMarkerSize(0.7);
         temp->SetMarkerStyle(21);
         temp->SetMarkerColor(38);
