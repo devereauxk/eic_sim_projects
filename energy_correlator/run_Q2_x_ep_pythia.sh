@@ -20,7 +20,7 @@ echo $INPUT
 DIR=`printf "%04d" $INPUT`
 mkdir $DIR
 
-ln -s $IN_DIR/ep_${INPUT}.dat
+ln -s $IN_DIR/ep_${INPUT}.root
 ln -s /eic/u/kdevereaux/work/energy_correlator/Q2_x.C
 
 mkdir $OUT_DIR
