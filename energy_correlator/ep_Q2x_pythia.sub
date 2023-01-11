@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_Q2_x_ep_pythia.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/epQ2xpythiajob.out.$(Process)
+Error          = jobout/epQ2xpythiajob.err.$(Process)
+Log            = jobout/epQ2xpythiajob.log.$(Process)
+Queue 500
