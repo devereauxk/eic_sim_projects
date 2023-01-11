@@ -125,7 +125,7 @@ void read_root(const char* inFile = "merged.root")
 
   cout<<"total num jets = "<<total_jets<<endl;
 
-  fin.close();
+  f.close();
 
 }
 
