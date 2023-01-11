@@ -1,6 +1,6 @@
 #!/bin/bash
 IN_DIR=/eic/u/kdevereaux/work/reconstruction/ep_10_100/outfiles
-OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/ep_10_100_K0_Q2x_Q40_pythia
+OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/ep_10_100_Q2x_pythia
 
 if [ -z "$1" ]
 then
@@ -27,4 +27,4 @@ mkdir $OUT_DIR
 
 root -l -b -q "Q2_x.C(\"ep_${INPUT}.root\",\"$OUT_DIR/hists_Q2_x_${INPUT}.root\", 0)"
 
-root -l -q "Q2_x.C(\"$IN_DIR/ep_1.root\",\"$OUT_DIR/test.root\", 0)"
+#root -l -q "Q2_x.C(\"/eic/u/kdevereaux/work/reconstruction/ep_10_100/outfiles/ep_1.root\",\"./test.root\", 0)"
