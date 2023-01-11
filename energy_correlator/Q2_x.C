@@ -32,6 +32,101 @@ static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 
 TH2D* h2d_Q2_x[etabin][ptbin] = {};
 
+void read_root(const char* inFile = "merged.root")
+{
+  //Event Class
+  erhic::EventPythia *event(NULL);
+
+  TFile *f = new TFile(inFile);
+
+  //Get EICTree Tree
+  TTree *tree = (TTree*)f->Get("EICTree");
+
+  Int_t nevt = tree->GetEntries();
+  cout<<"-------------------------------"<<endl;
+  cout<<"Total Number of Events = "<<nevt<<endl<<endl;
+
+  //Access event Branch
+  tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
+
+  //Loop Over Events
+  for(Int_t ievt = 0; ievt < nevt; ievt++)
+  {
+    tree->GetEntry(ievt);
+
+    if (ievt%1000==0) cout<<"Processing event = "<<ievt<<"/"<<nevt<<endl;
+
+    double xB = event->GetX();
+    double Q2 = event->GetQ2();
+    
+    /*
+    //Write Out Q2
+    double Q2 = event->GetQ2(); //Can also do event->QSquared
+    // printf("For Event %d, Q^2 = %.3f GeV^2!\n",ievt,Q2);
+
+    // process cuts
+    bool flag_direct = false;
+    if (event->GetProcess()==99) flag_direct = true;
+    if (event->GetProcess()==131 || event->GetProcess()==132) flag_direct = true;
+    if (event->GetProcess()==135 || event->GetProcess()==136) flag_direct = true;
+    if (!flag_direct) continue; // only process direct processes
+    */
+
+    // particle enumeration, addition to jet reco setup, and total pt calculation
+    erhic::ParticleMC* particle;
+    vector<PseudoJet> jet_constits;
+    for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
+    {
+      particle = event->GetTrack(ipart);
+
+      // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
+      if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
+      {
+        PseudoJet constit = PseudoJet(particle->GetPx(),particle->GetPy(),particle->GetPz(),particle->GetE());
+        constit.set_user_index(ipart);
+        jet_constits.push_back(constit);
+      }
+
+    }
+
+    // jet reconstruction
+    JetDefinition R1jetdef(antikt_algorithm, 1.0);
+    ClusterSequence cs(jet_constits, R1jetdef);
+    vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
+
+    // jet processing
+    for (unsigned ijet = 0; ijet < jets.size(); ijet++)
+    {
+      // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
+      if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+
+      total_jets++;
+
+      // fill Q2-x histograms
+      for (int ieta = 0; ieta < etabin; ieta++)
+      {
+        if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].eta() < eta_hi[ieta])
+        {
+          for (int ipt = 0; ipt < ptbin; ipt++)
+          {
+            if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
+            {
+              h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+
+  cout<<"total num jets = "<<total_jets<<endl;
+
+  fin.close();
+
+}
+
 void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0)
 {
   // csv must be in the following format - eHIJING standard
@@ -175,9 +270,13 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 }
 
 
-void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.root",
+void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0)
 {
+
+  cout << "Generator Type: ";
+  if (gen_type==0) cout << "Pythia6" << endl;
+  else cout << "eHIJING" << endl;
 
   // compute log bins for Q2-x
   // xbins correspond to xB
@@ -213,8 +312,10 @@ void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.r
   }
 
   // reads file
-  read_csv(inFile, proj_rest_e, targ_lab_e, targ_species);
+  if (gen_type == 0) read_root(inFile); // assumes lab frame, pythia
+  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species); // assumes target frame, eHIJING
   cout<<"@kdebug last"<<endl;
+
 
   // write out histograms
   TFile* fout = new TFile(outFile,"recreate");
