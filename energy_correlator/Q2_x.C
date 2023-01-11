@@ -49,6 +49,8 @@ void read_root(const char* inFile = "merged.root")
   //Access event Branch
   tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
+  int total_jets = 0;
+
   //Loop Over Events
   for(Int_t ievt = 0; ievt < nevt; ievt++)
   {
@@ -58,7 +60,7 @@ void read_root(const char* inFile = "merged.root")
 
     double xB = event->GetX();
     double Q2 = event->GetQ2();
-    
+
     /*
     //Write Out Q2
     double Q2 = event->GetQ2(); //Can also do event->QSquared
