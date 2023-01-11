@@ -125,8 +125,6 @@ void read_root(const char* inFile = "merged.root")
 
   cout<<"total num jets = "<<total_jets<<endl;
 
-  f->close();
-
 }
 
 void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0)
