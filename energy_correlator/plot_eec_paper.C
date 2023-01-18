@@ -633,12 +633,12 @@ void nuclei_hists()
   // with R_L on the x-axis, plotting RAW EEC
   mclogx(cno++);
   {
-    float plot_xrange_lo = 0.05;
+    float plot_xrange_lo = 0.01;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.08; //0.04;
     float legend_x = 0.22;
-    float legend_y = 0.6;
+    float legend_y = 0.5;
 
     TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.2);
     leg->SetBorderSize(0);
