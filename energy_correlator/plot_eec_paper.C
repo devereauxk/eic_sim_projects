@@ -633,14 +633,14 @@ void nuclei_hists()
   // with R_L on the x-axis, plotting RAW EEC
   mclogx(cno++);
   {
-    float plot_xrange_lo = 5E-2;
+    float plot_xrange_lo = 0.05;
     float plot_xrange_hi = 1;
     float plot_yrange_lo = -0.015;
     float plot_yrange_hi = 0.08; //0.04;
     float legend_x = 0.22;
     float legend_y = 0.6;
 
-    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.2);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.028);
     leg->SetFillStyle(0);
@@ -652,7 +652,7 @@ void nuclei_hists()
     // proton
     temp = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
     //temp->Add(temp, -1);
-    //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
     //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     temp->GetXaxis()->SetTitle("R_{L}");
     temp->GetYaxis()->SetTitle("raw EEC");
