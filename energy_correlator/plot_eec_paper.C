@@ -9,7 +9,7 @@ using namespace std;
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double pt_lo[ptbin] = {5, 10, 20, 30, 5};
 static double pt_hi[ptbin] = {10, 20, 30, 60, 60};
-const int pt_color[7] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1, kAzure+7};
+const int pt_color[9] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1, kAzure+7, kViolet+7, kViolet-7};
 
 const int etabin = 4; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
@@ -655,7 +655,7 @@ void nuclei_hists()
     //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
     //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     temp->GetXaxis()->SetTitle("R_{L}");
-    temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
+    temp->GetYaxis()->SetTitle("raw EEC");
     temp->SetMarkerColor(pt_color[0]);
     temp->SetLineColor(pt_color[0]);
     temp->SetMarkerSize(0.5);
