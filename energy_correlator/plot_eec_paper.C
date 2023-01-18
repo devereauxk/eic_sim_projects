@@ -9,7 +9,7 @@ using namespace std;
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double pt_lo[ptbin] = {5, 10, 20, 30, 5};
 static double pt_hi[ptbin] = {10, 20, 30, 60, 60};
-const int pt_color[9] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1, kAzure+7, kViolet+7, kViolet-7};
+const int pt_color[9] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1, kAzure+7, kViolet+7, kBlack};
 
 const int etabin = 4; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
