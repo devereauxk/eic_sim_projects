@@ -87,7 +87,7 @@ class Correlator_Builder
       {
         for (int j = i; j < mult; j++)
         {
-          double dist12 = pair_list[i][j];
+          double dist12 = pair_list[i][j]; // only thing to change in boost
           double eec_weight = pow((particle_list[i].pt() * particle_list[j].pt()) / pow(jet_pt, 2), weight_pow);
 
           if (i == j) overlap++;
@@ -326,6 +326,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+
+      // TODO for calculation in nuclear rest frame, boost constituents here
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation

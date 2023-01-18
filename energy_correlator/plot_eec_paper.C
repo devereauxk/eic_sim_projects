@@ -630,8 +630,7 @@ void nuclei_hists()
 
   // using ep K=0 w/ 2E8 events the baseline
 
-  // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
-  /*
+  // with R_L on the x-axis, plotting RAW EEC
   mclogx(cno++);
   {
     float plot_xrange_lo = 5E-2;
@@ -652,9 +651,9 @@ void nuclei_hists()
 
     // proton
     temp = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
-    temp->Add(temp, -1);
-    temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-    temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+    //temp->Add(temp, -1);
+    //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     temp->GetXaxis()->SetTitle("R_{L}");
     temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
     temp->SetMarkerColor(pt_color[0]);
@@ -662,7 +661,7 @@ void nuclei_hists()
     temp->SetMarkerSize(0.5);
     temp->SetMarkerStyle(21);
     temp->Draw("same hist");
-    leg->AddEntry(temp,"e+p, K = 0");
+    leg->AddEntry(temp,"e+p");
 
     for (int i = 0; i < nspecies_picks; i++)
     {
@@ -683,10 +682,10 @@ void nuclei_hists()
         norm_binrange_lo = temp->GetNbinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
-      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-      temp->Scale(relative_normalization);
-      temp->Add(temp_baseline, -1);
-      temp->Scale(1/temp_baseline->Integral());
+      //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+      //temp->Scale(relative_normalization);
+      //temp->Add(temp_baseline, -1);
+      //temp->Scale(1/temp_baseline->Integral());
 
       // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -698,7 +697,7 @@ void nuclei_hists()
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
-      leg->AddEntry(temp,Form("%s, K = %i",species[ispecies], k[k_pick]));
+      leg->AddEntry(temp,Form("%s",species[ispecies]));
     }
     leg->Draw("same");
 
@@ -715,7 +714,7 @@ void nuclei_hists()
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_by_nuclei_ratio.pdf\")", cno-1, out_dir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_raw_by_nuclei.pdf\")", cno-1, out_dir) );
 
   }
   */
