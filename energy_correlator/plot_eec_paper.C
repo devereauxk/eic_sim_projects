@@ -688,10 +688,10 @@ void nuclei_hists()
       //temp->Scale(1/temp_baseline->Integral());
 
       // plot
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
-      temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
+      temp->GetYaxis()->SetTitle("raw EEC");
       temp->SetMarkerColor(pt_color[i+1]);
       temp->SetLineColor(pt_color[i+1]);
       temp->SetMarkerSize(0.5);
@@ -717,7 +717,6 @@ void nuclei_hists()
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_raw_by_nuclei.pdf\")", cno-1, out_dir) );
 
   }
-  */
 
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
