@@ -197,9 +197,9 @@ void pt_eta_3by3_hists()
       norm_binrange_lo = temp->GetNbinsX();
       cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
     }
-    //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-    //temp->Scale(relative_normalization);
-    //temp->Scale(1/temp_baseline->Integral());
+    double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+    temp->Scale(relative_normalization);
+    temp->Scale(1/temp_baseline->Integral());
 
     // plot histogram
     temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -511,10 +511,10 @@ void pt_bin_side_by_side()
         norm_binrange_lo = temp->GetNbinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
-      //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-      //temp->Scale(relative_normalization);
-      //temp->Add(temp_baseline, -1);
-      //temp->Scale(1/temp_baseline->Integral());
+      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+      temp->Scale(relative_normalization);
+      temp->Add(temp_baseline, -1);
+      temp->Scale(1/temp_baseline->Integral());
 
       hists.push_back(temp);
 
@@ -546,6 +546,7 @@ void pt_bin_side_by_side()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rlsqrtpt.pdf\")", cno-1, out_dir) );
 
+    hists_to_csv("fig3.csv", hists);
   }
 
 }
@@ -631,7 +632,7 @@ void nuclei_hists()
   // using ep K=0 w/ 2E8 events the baseline
 
   // with R_L on the x-axis, plotting RAW EEC
-  mclogx(cno++);
+  mclogxy(cno++);
   {
     float plot_xrange_lo = 0.01;
     float plot_xrange_hi = 1;
@@ -688,7 +689,7 @@ void nuclei_hists()
       //temp->Scale(1/temp_baseline->Integral());
 
       // plot
-      //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
       temp->GetYaxis()->SetTitle("raw EEC");
@@ -966,7 +967,7 @@ void power_hists()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_by_pow_ratio.pdf\")", cno-1, out_dir) );
 
-    // hists_to_csv("fig4.csv", hists);
+    hists_to_csv("fig4.csv", hists);
   }
 
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
