@@ -212,7 +212,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1)
   }
 }
 
-void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1)
+void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
+    double eec_weight_power = 1, int in_lab_frame = 0)
 {
   // csv must be in the following format - eHIJING standard
   // each particle has the line
@@ -338,9 +339,27 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
 
         int il = constituents[iconstit].user_index();
-        Charge = stod(content[il][2]);
+        line = content[il];
+        Charge = stod(line[2]);
         //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
-        if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
+        if (Charge != 0)
+        {
+          if (in_lab_frame == 0)
+          {
+            charged_constituents.push_back(constituents[iconstit]); // keep in lab frame
+          }
+          else if (in_lab_frame == 1) // boost back charged constituent to nuclear rest frane
+          {
+            Px = stod(line[3]);
+            Py = stod(line[4]);
+            Pz = stod(line[5]);
+            Mass = stod(line[6]);
+
+            part_rest.SetXYZM(Px, Py, Pz, Mass);
+            PseudoJet constituent_rest_frame = PseudoJet(part_rest.Px(),part_rest.Py(),part_rest.Pz(),part_rest.E()); // in original nuclear rest frame
+            charged_constituents.push_back(constituent_rest_frame);
+          }
+        }
       }
 
       if (charged_constituents.size() < 1) continue;
@@ -360,12 +379,14 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
 
 void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
-    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1)
+    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1,
+    int in_lab_frame = 0)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
   // all energies positive and in GeV units
   // only for e+A collsions, specify A with targ_species, =0 for p, =1 for Au
+  // in_lab_frame = 0 for dist12 calculation in lab frame, =1 for dist12 calculation in nuclear rest frame
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
@@ -413,7 +434,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   // reads file and fills in jet_constits
   if (gen_type == 0) read_root(inFile, eec_weight_power);
-  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power);
+  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power, in_lab_frame);
   cout<<"@kdebug last"<<endl;
 
   // write out histograms
