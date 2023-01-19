@@ -35,8 +35,8 @@ TH2D* h2d_Q2_x[etabin][ptbin] = {};
 void read_root(const char* inFile = "merged.root", int gen_type = 0)
 {
   //Event Class
+  erhic::EventHepMC *event(NULL);
   if (gen_type==0) erhic::EventPythia *event(NULL); // pythia6
-  else erhic::EventHepMC *event(NULL);
 
   TFile *f = new TFile(inFile);
 
