@@ -371,7 +371,7 @@ void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.r
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
-  else if (get_type==1) cout << "Pythia8" << endl;
+  else if (gen_type==1) cout << "Pythia8" << endl;
   else cout << "eHIJING" << endl;
 
   // compute log bins for Q2-x
@@ -409,7 +409,7 @@ void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.r
 
   // reads file
   if (gen_type == 0) read_root(inFile); // assumes lab frame, pythia6
-  else if (get_type == 1) read_HepMC(inFile); // assumes lab frame, pythia8
+  else if (gen_type == 1) read_HepMC(inFile); // assumes lab frame, pythia8
   else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species); // assumes target frame, eHIJING
   cout<<"@kdebug last"<<endl;
 
