@@ -7,4 +7,4 @@ Arguments      = "$(Process)"
 Output         = jobout/epQ2xpythiajob.out.$(Process)
 Error          = jobout/epQ2xpythiajob.err.$(Process)
 Log            = jobout/epQ2xpythiajob.log.$(Process)
-Queue 500
+Queue 100
