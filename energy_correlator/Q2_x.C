@@ -365,7 +365,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 }
 
 
-void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 2,
+void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", int gen_type = 2,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0)
 {
 
