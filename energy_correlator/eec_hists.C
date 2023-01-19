@@ -339,7 +339,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
 
         int il = constituents[iconstit].user_index();
-        line = content[il];
+        vector<string> line = content[il];
         Charge = stod(line[2]);
         //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
         if (Charge != 0)
