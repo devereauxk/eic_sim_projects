@@ -32,4 +32,4 @@ mkdir $OUT_DIR
 root -l -b -q "Q2_x.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_Q2_x_${INPUT}.root\", 1)"
 
 #root -l -q "Q2_x.C(\"/eic/u/kdevereaux/work/reconstruction/ep_10_100/outfiles/ep_1.root\",\"./test.root\", 0)"
-root -l -b -q "Q2_x.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB/ep_minbias_highQ2_1.root\",\"./hepmc_test.root\", 1)"
+#root -l -b -q "Q2_x.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB/ep_minbias_highQ2_1.root\",\"./hepmc_test.root\", 1)"
