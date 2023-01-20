@@ -425,7 +425,7 @@ void pt_eta_3by3_hists()
         leg->AddEntry(temp,"e+p, K = 0");
 
         // eAu, K=0
-        temp = (TH1D*) h1d_jet_eec_nuclearrf[0][ieta][ipt]->Clone();
+        temp = (TH1D*) h1d_jet_eec_nuclearrf[1][ieta][ipt]->Clone();
 
         // plot histogram
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
