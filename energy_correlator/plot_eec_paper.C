@@ -1508,10 +1508,6 @@ void plot_eec_paper()
 
       cout<<fin_name<<" loaded!"<<endl;
     }
-    else
-    {
-      cout<<"couldn't find file for "<<species[ispecies]<<" baseline"<<endl;
-    }
   }
 
   // plot individual panels
