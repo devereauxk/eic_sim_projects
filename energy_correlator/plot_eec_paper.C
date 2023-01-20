@@ -53,6 +53,8 @@ static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05
 
 static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_Q2x_pythia8/merged.root";
 
+static char* fname_eA_nuclearrf[2] = {(char*) "./eHIJING/ep_10_100_nuclearrf/merged.root", (char*) "./eHIJING/eAu_10_100_nuclearrf/merged.root"}; // data analyzed with pow=0.5 in the nuclear rest frane
+
 const char* out_dir = "./paperplots/test/";
 
 TH1D* h1d_jet_pt[speciesnum] = {}; // K=4, 10x100, 2E8 events
@@ -68,6 +70,8 @@ TH1D* h1d_jet_eec_rlsqrtpt_eAu_by_power[pownum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_isospin[speciesnum][etabin][ptbin] = {};
 
 TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
+
+TH1D* h1d_jet_eec_nuclearrf[2][etabin][ptbin] = {};
 
 TH1D* h1d_jet_eec_baseline[speciesnum][etabin][ptbin] = {};
 
@@ -379,6 +383,74 @@ void pt_eta_3by3_hists()
         gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
 
         hists_to_csv(Form("raw_eec_%i_%i.csv", ieta, ipt), hists);
+      }
+    }
+  }
+
+  // 3x3 panel, RAW EEC (used for special ep (K=0) and eAu (K=4) inputs)
+  for (int ieta = 0; ieta < 3; ieta++)
+  {
+    for (int ipt = 0; ipt < 3; ipt++)
+    {
+      mclogxy(cno++);
+      {
+        float plot_xrange_lo = 0.05;
+        float plot_xrange_hi = 1;
+        float plot_yrange_lo = 1E-3;
+        float plot_yrange_hi = 5E-1;
+        float legend_x = 0.7;
+        float legend_y = 0.2;
+
+        TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+        leg->SetBorderSize(0);
+        leg->SetTextSize(0.028);
+        leg->SetFillStyle(0);
+        leg->SetMargin(0.1);
+
+        TH1D* temp;
+
+        // ep, K=0
+        temp = (TH1D*) h1d_jet_eec_nuclearrf[0][ieta][ipt]->Clone();
+
+        // plot histogram
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetXaxis()->SetTitle("R_{L}");
+        temp->GetYaxis()->SetTitle("raw EEC");
+        temp->SetMarkerColor(pt_color[0]);
+        temp->SetLineColor(pt_color[0]);
+        temp->SetMarkerSize(0.5);
+        temp->SetMarkerStyle(21);
+        temp->Draw("same hist e");
+        leg->AddEntry(temp,"e+p, K = 0");
+
+        // eAu, K=0
+        temp = (TH1D*) h1d_jet_eec_nuclearrf[0][ieta][ipt]->Clone();
+
+        // plot histogram
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetXaxis()->SetTitle("R_{L}");
+        temp->GetYaxis()->SetTitle("raw EEC");
+        temp->SetMarkerColor(pt_color[1]);
+        temp->SetLineColor(pt_color[1]);
+        temp->SetMarkerSize(0.5);
+        temp->SetMarkerStyle(21);
+        temp->Draw("same hist e");
+        leg->AddEntry(temp,"e+Au, K = 4");
+
+        leg->Draw("same");
+
+        TLatex* tl = new TLatex();
+        tl->SetTextAlign(11);
+        tl->SetTextSize(0.028);
+        tl->SetTextColor(kBlack);
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+p,e+Au nuclear rest frame, 4*10^{8} events");
+        tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+        tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_raw_nuclearrf_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
+
       }
     }
   }
@@ -885,7 +957,6 @@ void nuclei_hists()
   */
 
 }
-
 
 void power_hists()
 {
@@ -1406,6 +1477,32 @@ void plot_eec_paper()
           // raw data histograms
           h1d_jet_eec_baseline[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
           h1d_jet_eec_baseline[ispecies][ieta][ipt]->SetName(Form("h1d_jet_eec_baseline_%d_%d_%d", ieta, ipt, ispecies));
+        }
+      }
+
+      cout<<fin_name<<" loaded!"<<endl;
+    }
+    else
+    {
+      cout<<"couldn't find file for "<<species[ispecies]<<" baseline"<<endl;
+    }
+  }
+
+  for (int iname = 0; iname < 2; iname++)
+  {
+    fin_name = fname_eA_nuclearrf[iname];
+
+    if (strcmp(fin_name,"") != 0)
+    {
+      fin = new TFile(fin_name, "READ");
+
+      for (int ieta = 0; ieta < etabin; ieta++)
+      {
+        for (int ipt = 0; ipt < ptbin; ipt++)
+        {
+          // raw data histograms
+          h1d_jet_eec_nuclearrf[iname][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
+          h1d_jet_eec_nuclearrf[iname][ieta][ipt]->SetName(Form("h1d_jet_eec_nuclearrf_%d_%d_%d", ieta, ipt, iname));
         }
       }
 
