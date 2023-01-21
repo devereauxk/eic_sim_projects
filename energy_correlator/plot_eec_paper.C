@@ -1158,7 +1158,7 @@ void power_hists()
 void pt_spectra()
 {
   // average pt calculation for ep
-  TH1D* temp = (TH1D*) h1d_jet_pt[0]->Clone();
+  TH1D* temp = (TH1D*) h1d_jet_pt[1]->Clone();
   for (int ipt = 0; ipt < ptbin-2; ipt++)
   {
     int bin_lo = temp->FindBin(pt_lo[ipt]);
