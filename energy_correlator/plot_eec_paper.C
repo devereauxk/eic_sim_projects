@@ -450,8 +450,8 @@ void pt_eta_3by3_hists()
         temp_baseline = (TH1D*) h1d_jet_eec_nuclearrf[0][ieta][ipt]->Clone();
 
         // calculate relative normalization ratio
-        int norm_binrange_lo = temp->FindBin(rl_norm_lo);
-        int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+        norm_binrange_lo = temp->FindBin(rl_norm_lo);
+        norm_binrange_hi = temp->FindBin(rl_norm_hi);
         if (norm_binrange_lo == 0)
         {
           norm_binrange_lo = 1;
@@ -462,7 +462,7 @@ void pt_eta_3by3_hists()
           norm_binrange_lo = temp->GetNbinsX();
           cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
         }
-        double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+        relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
         temp->Scale(relative_normalization);
         temp->Scale(1/temp_baseline->Integral());
 
