@@ -387,17 +387,19 @@ void pt_eta_3by3_hists()
     }
   }
 
-  // 3x3 panel, RAW EEC (used for special ep (K=0) and eAu (K=4) inputs)
+  // 3x3 panel R_L on the x-axis, plotting (alpha_i * K=i) / (int dR_L K=0), NUCLEAR REST FRAME
   for (int ieta = 0; ieta < 3; ieta++)
   {
     for (int ipt = 0; ipt < 3; ipt++)
     {
       mclogxy(cno++);
       {
+        vector<TH1*> hists;
+
         float plot_xrange_lo = 0.05;
         float plot_xrange_hi = 1;
-        float plot_yrange_lo = 1E2;
-        float plot_yrange_hi = 5E6;
+        float plot_yrange_lo = 1E-3;
+        float plot_yrange_hi = 5E-1;
         float legend_x = 0.7;
         float legend_y = 0.2;
 
@@ -408,15 +410,34 @@ void pt_eta_3by3_hists()
         leg->SetMargin(0.1);
 
         TH1D* temp;
+        TH1D* temp_baseline;
 
         // ep, K=0
         temp = (TH1D*) h1d_jet_eec_nuclearrf[0][ieta][ipt]->Clone();
+        temp_baseline = (TH1D*) h1d_jet_eec_nuclearrf[0][ieta][ipt]->Clone();
+
+        // calculate relative normalization ratio
+        int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+        int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+        if (norm_binrange_lo == 0)
+        {
+          norm_binrange_lo = 1;
+          cout<<"bin range lo too low; set to 1"<<endl;
+        }
+        if (norm_binrange_hi > temp->GetNbinsX())
+        {
+          norm_binrange_lo = temp->GetNbinsX();
+          cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+        }
+        double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+        temp->Scale(relative_normalization);
+        temp->Scale(1/temp_baseline->Integral());
 
         // plot histogram
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->GetXaxis()->SetTitle("R_{L}");
-        temp->GetYaxis()->SetTitle("raw EEC");
+        temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
         temp->SetMarkerColor(pt_color[0]);
         temp->SetLineColor(pt_color[0]);
         temp->SetMarkerSize(0.5);
@@ -424,14 +445,32 @@ void pt_eta_3by3_hists()
         temp->Draw("same hist e");
         leg->AddEntry(temp,"e+p, K = 0");
 
-        // eAu, K=0
+        // eAu, K=4
         temp = (TH1D*) h1d_jet_eec_nuclearrf[1][ieta][ipt]->Clone();
+        temp_baseline = (TH1D*) h1d_jet_eec_nuclearrf[0][ieta][ipt]->Clone();
+
+        // calculate relative normalization ratio
+        int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+        int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+        if (norm_binrange_lo == 0)
+        {
+          norm_binrange_lo = 1;
+          cout<<"bin range lo too low; set to 1"<<endl;
+        }
+        if (norm_binrange_hi > temp->GetNbinsX())
+        {
+          norm_binrange_lo = temp->GetNbinsX();
+          cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+        }
+        double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+        temp->Scale(relative_normalization);
+        temp->Scale(1/temp_baseline->Integral());
 
         // plot histogram
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->GetXaxis()->SetTitle("R_{L}");
-        temp->GetYaxis()->SetTitle("raw EEC");
+        temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
         temp->SetMarkerColor(pt_color[1]);
         temp->SetLineColor(pt_color[1]);
         temp->SetMarkerSize(0.5);
@@ -445,12 +484,11 @@ void pt_eta_3by3_hists()
         tl->SetTextAlign(11);
         tl->SetTextSize(0.028);
         tl->SetTextColor(kBlack);
-        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+p,e+Au nuclear rest frame, 4*10^{8} events");
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 4*10^{8} events");
         tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
         tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
 
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_raw_nuclearrf_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
-
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_nuclearrf_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
       }
     }
   }
@@ -1119,6 +1157,22 @@ void power_hists()
 
 void pt_spectra()
 {
+  // average pt calculation for ep
+  TH1D* temp = (TH1D*) h1d_jet_pt[0]->Clone();
+  for (int ipt = 0; ipt < ptbin-2; ipt++)
+  {
+    int bin_lo = temp->FindBin(pt_lo[ipt]);
+    int bin_hi = temp->FindBin(pt_hi[ipt]);
+    double integral = temp->Integral(bin_lo, bin_hi);
+    double sum = 0;
+    for (int ibin = bin_lo; ibin < bin_hi; ibin++)
+    {
+      sum += temp->GetBinCenter(ibin) * temp->GetBinContent(ibin);
+    }
+    double avg = sum / integral;
+    cout << "PT BIN AVERAGE [" << pt_lo[ipt] << "," << pt_hi[ipt] << "] : " << avg << endl;
+  }
+
   // overlay of jet pt distribution for each species, K=4 10x100
   mclogy(cno++);
   {
