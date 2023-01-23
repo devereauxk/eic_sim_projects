@@ -355,8 +355,6 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
             Pz = stod(line[5]);
             Mass = stod(line[6]);
 
-            cout<<"this part runs OMGGGGG "<<endl;
-
             part_rest.SetXYZM(Px, Py, Pz, Mass);
             PseudoJet constituent_rest_frame = PseudoJet(part_rest.Px(),part_rest.Py(),part_rest.Pz(),part_rest.E()); // in original nuclear rest frame
             charged_constituents.push_back(constituent_rest_frame);
