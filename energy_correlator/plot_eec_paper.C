@@ -742,7 +742,7 @@ void nuclei_hists()
 
   // using ep K=0 w/ 2E8 events the baseline
 
-  // with R_L on the x-axis, plotting RAW EEC
+  // with R_L on the x-axis, plotting self-normalized EEC on jet rate == area ONLY for n=1
   mclogxy(cno++);
   {
     float plot_xrange_lo = 0.01;
@@ -763,11 +763,11 @@ void nuclei_hists()
 
     // proton
     temp = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
-    //temp->Add(temp, -1);
+    temp->Scale(1/temp->GetEntries());
+    cout<<"NUMBER JETS IN e+p IN PT: ["<<pt_lo[ptbin_pick]<<","<<pt_hi[ptbin_pick]<<"] ETA: ["<<eta_lo[etabin_pick]<<","<<eta_hi[etabin_pick]<<"] == "<<temp->GetEntries()<<endl;
     temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-    //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     temp->GetXaxis()->SetTitle("R_{L}");
-    temp->GetYaxis()->SetTitle("raw EEC");
+    temp->GetYaxis()->SetTitle("EEC normalized by jet rate");
     temp->SetMarkerColor(pt_color[0]);
     temp->SetLineColor(pt_color[0]);
     temp->SetMarkerSize(0.5);
@@ -779,31 +779,13 @@ void nuclei_hists()
     {
       int ispecies = species_picks[i];
       temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
-
-      // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
-      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
-      if (norm_binrange_lo == 0)
-      {
-        norm_binrange_lo = 1;
-        cout<<"bin range lo too low; set to 1"<<endl;
-      }
-      if (norm_binrange_hi > temp->GetNbinsX())
-      {
-        norm_binrange_lo = temp->GetNbinsX();
-        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
-      }
-      //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-      //temp->Scale(relative_normalization);
-      //temp->Add(temp_baseline, -1);
-      //temp->Scale(1/temp_baseline->Integral());
+      temp->Scale(1/temp->GetEntries());
+      cout<<"NUMBER JETS IN "<<species[ispecies]<<" IN PT: ["<<pt_lo[ptbin_pick]<<","<<pt_hi[ptbin_pick]<<"] ETA: ["<<eta_lo[etabin_pick]<<","<<eta_hi[etabin_pick]<<"] == "<<temp->GetEntries()<<endl;
 
       // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("R_{L}");
-      temp->GetYaxis()->SetTitle("raw EEC");
+      temp->GetYaxis()->SetTitle("EEC normalized by jet rate");
       temp->SetMarkerColor(pt_color[i+1]);
       temp->SetLineColor(pt_color[i+1]);
       temp->SetMarkerSize(0.5);
