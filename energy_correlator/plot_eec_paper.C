@@ -57,7 +57,8 @@ static char* fname_eA_nuclearrf[2] = {(char*) "./eHIJING/ep_10_100_nuclearrf/mer
 
 const char* out_dir = "./paperplots/test/";
 
-TH1D* h1d_jet_pt[speciesnum] = {}; // K=4, 10x100, 2E8 events
+TH1D* h1d_jet_pt[speciesnum] = {};
+TH1D* h1d_jet_eta[speciesnum] = {};
 
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[speciesnum][knum][etabin][ptbin] = {};
@@ -1173,7 +1174,7 @@ void pt_spectra()
     cout << "PT BIN AVERAGE [" << pt_lo[ipt] << "," << pt_hi[ipt] << "] : " << avg << endl;
   }
 
-  // overlay of jet pt distribution for each species, K=4 10x100
+  // overlay of jet pt distribution for each species, K=4 10x100, inclusive on eta
   mclogy(cno++);
   {
     float legend_x = 0.6;
@@ -1203,6 +1204,38 @@ void pt_spectra()
     leg->Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_pt_spectra.pdf\")", cno-1, out_dir) );
+  }
+
+  // overlay of jet eta distribution for each species, K=4 10x100, inclusive on pt
+  mclogy(cno++);
+  {
+    float legend_x = 0.6;
+    float legend_y = 0.6;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.20);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    {
+      temp = (TH1D*) h1d_jet_eta[ispecies]->Clone();
+      temp->GetXaxis()->SetRangeUser(-4,4);
+      temp->GetXaxis()->SetTitle("jet #eta");
+      temp->GetYaxis()->SetTitle("counts");
+      temp->SetMarkerColor(pt_color[ispecies-1]);
+      temp->SetLineColor(pt_color[ispecies-1]);
+      temp->GetXaxis()->SetTitleOffset(1.3);
+      temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->Draw("same hist e");
+      leg->AddEntry(temp,species[ispecies]);
+    }
+    leg->Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eta_spectra.pdf\")", cno-1, out_dir) );
   }
 }
 
