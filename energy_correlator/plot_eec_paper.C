@@ -1219,7 +1219,7 @@ void peak_height_vs_A_isospin()
 
     // get x values
     static double species_logA[speciesnum] = {};
-    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 2; ispecies < speciesnum; ispecies++)
     {
       species_logA[ispecies] = TMath::Log10(species_A[ispecies]);
     }
@@ -1230,7 +1230,7 @@ void peak_height_vs_A_isospin()
 
     TH1D* temp;
     TH1D* temp_baseline;
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    for (int ispecies = 2; ispecies < speciesnum; ispecies++)
     {
       temp = (TH1D*) h1d_jet_eec_isospin[ispecies][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_isospin[0][etabin_pick][ptbin_pick]->Clone();
@@ -1238,7 +1238,7 @@ void peak_height_vs_A_isospin()
       temp_baseline->Scale(1/temp_baseline->GetEntries());
       temp->Add(temp_baseline, -1);
 
-      peak_height_by_A[ispecies] = temp->GetBinContent(temp->FindBin(0.999));
+      peak_height_by_A[ispecies] = TMath::Log10(temp->GetBinContent(temp->FindBin(0.999)));
     }
 
     auto g = new TGraph(speciesnum, species_logA, peak_height_by_A);
@@ -1246,7 +1246,7 @@ void peak_height_vs_A_isospin()
     //g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
     //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
     g->GetXaxis()->SetTitle("log(A)");
-    g->GetYaxis()->SetTitle("self-normalized EEC value (eA - ep)@ R_{L}=1");
+    g->GetYaxis()->SetTitle("log self-normalized EEC value (eA - ep)@ R_{L}=1");
     g->SetMarkerColor(pt_color[0]);
     g->SetLineColor(pt_color[0]);
     g->SetMarkerSize(0.5);
