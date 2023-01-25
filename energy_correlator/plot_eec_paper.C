@@ -1232,7 +1232,7 @@ void peak_height_vs_A_isospin()
     TH1D* temp_baseline;
     for (int i = 0; i < speciesnum-2; i++)
     {
-      temp = (TH1D*) h1d_jet_eec_isospin[ispecies+2][etabin_pick][ptbin_pick]->Clone();
+      temp = (TH1D*) h1d_jet_eec_isospin[i+2][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_isospin[0][etabin_pick][ptbin_pick]->Clone();
       temp->Scale(1/temp->GetEntries());
       temp_baseline->Scale(1/temp_baseline->GetEntries());
