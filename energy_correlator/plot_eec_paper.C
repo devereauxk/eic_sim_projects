@@ -1209,6 +1209,53 @@ void peak_height_vs_A_isospin()
     graph_to_csv("fig5_insert_isospin.csv", g);
   }
 
+  // y-value of eA - ep (each self normalized based on number of jets) vs R_L = 1 vs A^{1/6} of nucleus. Each point is an eA nuclei species
+  mcs(cno++);
+  {
+    float plot_xrange_lo = 0.8;
+    float plot_xrange_hi = 2.7;
+    float plot_yrange_lo = -0.005;
+    float plot_yrange_hi = 0.04;
+
+    // get x values
+    static double species_logA[speciesnum] = {};
+    for (int ispecies = 0; ispecies < speciesnum; ispecies++)
+    {
+      species_logA[ispecies] = TMath::Log10(species_A[ispecies]);
+    }
+
+    // get y values
+    double peak_height_by_A[speciesnum] = {};
+    peak_height_by_A[0] = 0;
+
+    TH1D* temp;
+    TH1D* temp_baseline;
+    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    {
+      temp = (TH1D*) h1d_jet_eec_isospin[ispecies][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_isospin[0][etabin_pick][ptbin_pick]->Clone();
+      temp->Scale(1/temp->GetEntries());
+      temp_baseline->Scale(1/temp_baseline->GetEntries());
+      temp->Add(temp_baseline, -1);
+
+      peak_height_by_A[ispecies] = temp->GetBinContent(temp->FindBin(0.999));
+    }
+
+    auto g = new TGraph(speciesnum, species_logA, peak_height_by_A);
+
+    //g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+    g->GetXaxis()->SetTitle("log(A)");
+    g->GetYaxis()->SetTitle("self-normalized EEC value (eA - ep)@ R_{L}=1");
+    g->SetMarkerColor(pt_color[0]);
+    g->SetLineColor(pt_color[0]);
+    g->SetMarkerSize(0.5);
+    g->SetMarkerStyle(21);
+    g->Draw("");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_height_by_logA_isospin_selfnormdiff.pdf\")", cno-1, out_dir) );
+  }
+
 }
 
 void Q2_x_panel()
