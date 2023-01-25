@@ -826,7 +826,7 @@ void nuclei_hists()
   }
 
   // with R_L*sqrt(pT) on the x-axis, plotting self-normalized EEC on jet rate == area ONLY for n=1 - ep case
-  mclogxy(cno++);
+  mclogx(cno++);
   {
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
