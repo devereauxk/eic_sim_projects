@@ -502,87 +502,6 @@ void pt_bin_side_by_side()
   int etabin_pick = 2;
   int k_pick = 2;
 
-  // using ep K=0 w/ 2E8 events the baseline
-
-  // with R_L on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
-  /*
-  mclogx(cno++);
-  {
-    float plot_xrange_lo = 5E-2;
-    float plot_xrange_hi = 1;
-    float plot_yrange_lo = -0.015;
-    float plot_yrange_hi = 0.08; //0.04;
-    float legend_x = 0.22;
-    float legend_y = 0.6;
-
-    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.028);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.1);
-
-    TH1D* temp;
-    TH1D* temp_baseline;
-
-    for (int ipt = 0; ipt < ptbin-2; ipt++)
-    {
-      temp = (TH1D*) h1d_jet_eec[species_pick][k_pick][etabin_pick][ipt]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ipt]->Clone();
-
-      // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(rl_norm_lo);
-      int norm_binrange_hi = temp->FindBin(rl_norm_hi);
-      if (norm_binrange_lo == 0)
-      {
-        norm_binrange_lo = 1;
-        cout<<"bin range lo too low; set to 1"<<endl;
-      }
-      if (norm_binrange_hi > temp->GetNbinsX())
-      {
-        norm_binrange_lo = temp->GetNbinsX();
-        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
-      }
-      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-      temp->Scale(relative_normalization);
-      temp->Add(temp_baseline, -1);
-      temp->Scale(1/temp_baseline->Integral());
-
-      for (int i = 0; i < temp->GetNbinsX(); i++)
-      {
-        cout<<temp->GetBinError(i)<<" ";
-      }
-      cout<<endl;
-
-      // plot
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      temp->GetXaxis()->SetTitle("R_{L}");
-      temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[ipt]);
-      temp->SetLineColor(pt_color[ipt]);
-      //temp->SetMarkerSize(0.5);
-      //temp->SetMarkerStyle(21);
-      temp->Draw("same hist e");
-      leg->AddEntry(temp,Form("p_{T} #in [%.1f, %.1f)",pt_lo[ipt],pt_hi[ipt]));
-    }
-    leg->Draw("same");
-
-    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
-    l1.SetLineStyle(7);
-    l1.SetLineColor(kGray+2);
-    l1.Draw("same");
-
-    TLatex* tl = new TLatex();
-    tl->SetTextAlign(11);
-    tl->SetTextSize(0.028);
-    tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,Form("eHIJING, %s @ 10+100 GeV, 4*10^{8} events", species[species_pick]));
-    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
-
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rl.pdf\")", cno-1, out_dir) );
-  }
-  */
-
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
   mclogx(cno++);
   {
@@ -740,78 +659,6 @@ void nuclei_hists()
   const int nspecies_picks = 8;
   static int species_picks[nspecies_picks] = {1, 2, 3, 4, 5, 6, 7, 8};
 
-  // using ep K=0 w/ 2E8 events the baseline
-
-  // with R_L on the x-axis, plotting self-normalized EEC on jet rate == area ONLY for n=1
-  mclogxy(cno++);
-  {
-    float plot_xrange_lo = 0.01;
-    float plot_xrange_hi = 1;
-    float plot_yrange_lo = -0.015;
-    float plot_yrange_hi = 0.08; //0.04;
-    float legend_x = 0.22;
-    float legend_y = 0.5;
-
-    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.2);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.028);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.1);
-
-    TH1D* temp;
-    TH1D* temp_baseline;
-
-    // proton
-    temp = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
-    temp->Scale(1/temp->GetEntries());
-    cout<<"NUMBER JETS IN e+p IN PT: ["<<pt_lo[ptbin_pick]<<","<<pt_hi[ptbin_pick]<<"] ETA: ["<<eta_lo[etabin_pick]<<","<<eta_hi[etabin_pick]<<"] == "<<temp->GetEntries()<<endl;
-    temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-    temp->GetXaxis()->SetTitle("R_{L}");
-    temp->GetYaxis()->SetTitle("EEC normalized by jet rate");
-    temp->SetMarkerColor(pt_color[0]);
-    temp->SetLineColor(pt_color[0]);
-    temp->SetMarkerSize(0.5);
-    temp->SetMarkerStyle(21);
-    temp->Draw("same hist");
-    leg->AddEntry(temp,"e+p");
-
-    for (int i = 0; i < nspecies_picks; i++)
-    {
-      int ispecies = species_picks[i];
-      temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp->Scale(1/temp->GetEntries());
-      cout<<"NUMBER JETS IN "<<species[ispecies]<<" IN PT: ["<<pt_lo[ptbin_pick]<<","<<pt_hi[ptbin_pick]<<"] ETA: ["<<eta_lo[etabin_pick]<<","<<eta_hi[etabin_pick]<<"] == "<<temp->GetEntries()<<endl;
-
-      // plot
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetXaxis()->SetTitle("R_{L}");
-      temp->GetYaxis()->SetTitle("EEC normalized by jet rate");
-      temp->SetMarkerColor(pt_color[i+1]);
-      temp->SetLineColor(pt_color[i+1]);
-      temp->SetMarkerSize(0.5);
-      temp->SetMarkerStyle(21);
-      temp->Draw("same hist");
-      leg->AddEntry(temp,Form("%s",species[ispecies]));
-    }
-    leg->Draw("same");
-
-    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
-    l1.SetLineStyle(7);
-    l1.SetLineColor(kGray+2);
-    l1.Draw("same");
-
-    TLatex* tl = new TLatex();
-    tl->SetTextAlign(11);
-    tl->SetTextSize(0.028);
-    tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 4*10^{8} events");
-    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
-    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
-
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_raw_by_nuclei.pdf\")", cno-1, out_dir) );
-
-  }
-
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
@@ -908,18 +755,17 @@ void nuclei_hists()
     hists_to_csv("fig5.csv", hists);
   }
 
-  /*
-  // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i) / (int R_L K=0)
+  // with R_L on the x-axis, plotting self-normalized EEC on jet rate == area ONLY for n=1
   mclogxy(cno++);
   {
-    float plot_xrange_lo = 1E-1;
-    float plot_xrange_hi = 5;
-    float plot_yrange_lo = 1E-3;
-    float plot_yrange_hi = 5E-1;
-    float legend_x = 0.7;
-    float legend_y = 0.2;
+    float plot_xrange_lo = 0.01;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.08; //0.04;
+    float legend_x = 0.22;
+    float legend_y = 0.5;
 
-    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.2);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.028);
     leg->SetFillStyle(0);
@@ -928,42 +774,44 @@ void nuclei_hists()
     TH1D* temp;
     TH1D* temp_baseline;
 
-    for (int ispecies = 1; ispecies < speciesnum; ispecies++)
+    // proton
+    temp = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
+    temp->Scale(1/temp->GetEntries());
+    cout<<"NUMBER JETS IN e+p IN PT: ["<<pt_lo[ptbin_pick]<<","<<pt_hi[ptbin_pick]<<"] ETA: ["<<eta_lo[etabin_pick]<<","<<eta_hi[etabin_pick]<<"] == "<<temp->GetEntries()<<endl;
+    temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    temp->GetXaxis()->SetTitle("R_{L}");
+    temp->GetYaxis()->SetTitle("EEC normalized by jet rate");
+    temp->SetMarkerColor(pt_color[0]);
+    temp->SetLineColor(pt_color[0]);
+    temp->SetMarkerSize(0.5);
+    temp->SetMarkerStyle(21);
+    temp->Draw("same hist");
+    leg->AddEntry(temp,"e+p");
+
+    for (int i = 0; i < nspecies_picks; i++)
     {
-      temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
+      int ispecies = species_picks[i];
+      temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
+      temp->Scale(1/temp->GetEntries());
+      cout<<"NUMBER JETS IN "<<species[ispecies]<<" IN PT: ["<<pt_lo[ptbin_pick]<<","<<pt_hi[ptbin_pick]<<"] ETA: ["<<eta_lo[etabin_pick]<<","<<eta_hi[etabin_pick]<<"] == "<<temp->GetEntries()<<endl;
 
-      // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
-      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
-      if (norm_binrange_lo == 0)
-      {
-        norm_binrange_lo = 1;
-        cout<<"bin range lo too low; set to 1"<<endl;
-      }
-      if (norm_binrange_hi > temp->GetNbinsX())
-      {
-        norm_binrange_lo = temp->GetNbinsX();
-        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
-      }
-      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-      temp->Scale(relative_normalization);
-      temp->Scale(1/temp_baseline->Integral());
-
-      // plot histogram
+      // plot
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
-      temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on)");
-      temp->SetMarkerColor(pt_color[ispecies]);
-      temp->SetLineColor(pt_color[ispecies]);
+      temp->GetXaxis()->SetTitle("R_{L}");
+      temp->GetYaxis()->SetTitle("EEC normalized by jet rate");
+      temp->SetMarkerColor(pt_color[i+1]);
+      temp->SetLineColor(pt_color[i+1]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
       temp->Draw("same hist");
-      leg->AddEntry(temp,Form("%s, K = %i",species[ispecies], k[k_pick]));
+      leg->AddEntry(temp,Form("%s",species[ispecies]));
     }
-
     leg->Draw("same");
+
+    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
 
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
@@ -973,9 +821,80 @@ void nuclei_hists()
     tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_by_nuclei.pdf\")", cno-1, out_dir) );
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_selfnorm_by_nuclei.pdf\")", cno-1, out_dir) );
+
   }
-  */
+
+  // with R_L*sqrt(pT) on the x-axis, plotting self-normalized EEC on jet rate == area ONLY for n=1 - ep case
+  mclogxy(cno++);
+  {
+    float plot_xrange_lo = 1E-1;
+    float plot_xrange_hi = 5;
+    float plot_yrange_lo = -0.015;
+    float plot_yrange_hi = 0.08; //0.04;
+    float legend_x = 0.22;
+    float legend_y = 0.5;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.2);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+    TH1D* temp_baseline;
+
+    // proton
+    temp = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
+    temp->Add(temp,-1);
+    temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+    temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
+    temp->GetYaxis()->SetTitle("EEC self-normalized by jet rate (eA - ep)");
+    temp->SetMarkerColor(pt_color[0]);
+    temp->SetLineColor(pt_color[0]);
+    temp->SetMarkerSize(0.5);
+    temp->SetMarkerStyle(21);
+    temp->Draw("same hist");
+    leg->AddEntry(temp,"e+p");
+
+    for (int i = 0; i < nspecies_picks; i++)
+    {
+      int ispecies = species_picks[i];
+      temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
+      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
+      temp->Scale(1/temp->GetEntries());
+      temp_baseline->Scale(1/temp_baseline->GetEntries());
+      temp->Add(temp_baseline, -1);
+
+      // plot
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
+      temp->GetYaxis()->SetTitle("EEC self-normalized by jet rate (eA - ep)");
+      temp->SetMarkerColor(pt_color[i+1]);
+      temp->SetLineColor(pt_color[i+1]);
+      temp->SetMarkerSize(0.5);
+      temp->SetMarkerStyle(21);
+      temp->Draw("same hist");
+      leg->AddEntry(temp,Form("%s",species[ispecies]));
+    }
+    leg->Draw("same");
+
+    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
+    l1.SetLineStyle(7);
+    l1.SetLineColor(kGray+2);
+    l1.Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.028);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 4*10^{8} events");
+    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
+    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_selfnormdiff_by_nuclei.pdf\")", cno-1, out_dir) );
+
+  }
 
 }
 
@@ -1061,81 +980,6 @@ void power_hists()
 
     hists_to_csv("fig4.csv", hists);
   }
-
-  // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
-  /*
-  mclogx(cno++);
-  {
-    float plot_xrange_lo = 1E-1;
-    float plot_xrange_hi = 5;
-    float plot_yrange_lo = -0.025; //-0.015;
-    float plot_yrange_hi = 0.08; // 0.04;
-    float legend_x = 0.22;
-    float legend_y = 0.6;
-
-    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.028);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.1);
-
-    TH1D* temp;
-    TH1D* temp_baseline;
-
-    for (int ipower = 0; ipower < pownum; ipower++)
-    {
-      temp = (TH1D*) h1d_jet_eec_rlsqrtpt_eAu_by_power[ipower][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt_ep_by_power[ipower][etabin_pick][ptbin_pick]->Clone();
-
-      // calculate relative normalization ratio
-      int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
-      int norm_binrange_hi = temp->FindBin(rlsqrtpt_norm_hi);
-      if (norm_binrange_lo == 0)
-      {
-        norm_binrange_lo = 1;
-        cout<<"bin range lo too low; set to 1"<<endl;
-      }
-      if (norm_binrange_hi > temp->GetNbinsX())
-      {
-        norm_binrange_lo = temp->GetNbinsX();
-        cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
-      }
-      double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-      temp->Scale(relative_normalization);
-      temp->Add(temp_baseline, -1);
-      temp->Scale(1/temp_baseline->Integral());
-
-      // plot
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
-      temp->GetYaxis()->SetTitle("normalized EEC (rel. norm. * on - off)");
-      temp->SetMarkerColor(pt_color[ipower]);
-      temp->SetLineColor(pt_color[ipower]);
-      temp->SetMarkerSize(0.5);
-      temp->SetMarkerStyle(21);
-      temp->Draw("same hist");
-      leg->AddEntry(temp,Form("power = %.1f", power[ipower]));
-    }
-    leg->Draw("same");
-
-    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
-    l1.SetLineStyle(7);
-    l1.SetLineColor(kGray+2);
-    l1.Draw("same");
-
-    TLatex* tl = new TLatex();
-    tl->SetTextAlign(11);
-    tl->SetTextSize(0.028);
-    tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au, 4*10^{8} events");
-    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
-    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
-
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_by_pow_ratio.pdf\")", cno-1, out_dir) );
-
-  }
-  */
 }
 
 void pt_spectra()
