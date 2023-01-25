@@ -1210,6 +1210,7 @@ void peak_height_vs_A_isospin()
   }
 
   // y-value of eA - ep (each self normalized based on number of jets) vs R_L = 1 vs A^{1/6} of nucleus. Each point is an eA nuclei species
+  // no ep or eD shown
   mcs(cno++);
   {
     float plot_xrange_lo = 0.8;
@@ -1225,23 +1226,22 @@ void peak_height_vs_A_isospin()
     }
 
     // get y values
-    double peak_height_by_A[speciesnum] = {};
-    peak_height_by_A[0] = 0;
+    double peak_height_by_A[speciesnum-2] = {};
 
     TH1D* temp;
     TH1D* temp_baseline;
-    for (int ispecies = 2; ispecies < speciesnum; ispecies++)
+    for (int i = 0; i < speciesnum-2; i++)
     {
-      temp = (TH1D*) h1d_jet_eec_isospin[ispecies][etabin_pick][ptbin_pick]->Clone();
+      temp = (TH1D*) h1d_jet_eec_isospin[ispecies+2][etabin_pick][ptbin_pick]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_isospin[0][etabin_pick][ptbin_pick]->Clone();
       temp->Scale(1/temp->GetEntries());
       temp_baseline->Scale(1/temp_baseline->GetEntries());
       temp->Add(temp_baseline, -1);
 
-      peak_height_by_A[ispecies] = TMath::Log10(temp->GetBinContent(temp->FindBin(0.999)));
+      peak_height_by_A[i] = TMath::Log10(temp->GetBinContent(temp->FindBin(0.999)));
     }
 
-    auto g = new TGraph(speciesnum, species_logA, peak_height_by_A);
+    auto g = new TGraph(speciesnum-2, species_logA, peak_height_by_A);
 
     //g->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
     //g->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
