@@ -1219,10 +1219,10 @@ void peak_height_vs_A_isospin()
     float plot_yrange_hi = 0.04;
 
     // get x values
-    static double species_logA[speciesnum] = {};
-    for (int ispecies = 2; ispecies < speciesnum; ispecies++)
+    static double species_logA[speciesnum-2] = {};
+    for (int i = 0; i < speciesnum-2; i++)
     {
-      species_logA[ispecies] = TMath::Log10(species_A[ispecies]);
+      species_logA[i] = TMath::Log10(species_A[i+2]);
     }
 
     // get y values
