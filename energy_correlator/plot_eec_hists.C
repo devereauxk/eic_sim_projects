@@ -128,7 +128,7 @@ void overlay_hists(const char* out_dir)
   {
     mclogxy(cno++);
     {
-      float plot_xrange_lo = 1E-2;
+      float plot_xrange_lo = 5E-2;
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 1E-5;
       float plot_yrange_hi = 5E-1;
