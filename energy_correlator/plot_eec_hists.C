@@ -148,7 +148,7 @@ void overlay_hists(const char* out_dir)
         temp->SetLineColor(pt_color[ipt]);
         temp->SetMarkerSize(0.5);
         temp->SetMarkerStyle(21);
-        temp>Draw("same hist e");
+        temp->Draw("same hist e");
         leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
       }
       leg->Draw("same");
