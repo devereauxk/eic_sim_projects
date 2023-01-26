@@ -142,14 +142,14 @@ void overlay_hists(const char* out_dir)
       for (int ipt = 0; ipt < ptbin-1; ipt++)
       {
         TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
-        temp[ieta][ipt]->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         //h1d_jet_eec[ieta][ipt]->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-        temp[ieta][ipt]->SetMarkerColor(pt_color[ipt]);
-        temp[ieta][ipt]->SetLineColor(pt_color[ipt]);
-        temp[ieta][ipt]->SetMarkerSize(0.5);
-        temp[ieta][ipt]->SetMarkerStyle(21);
-        temp[ieta][ipt]->Draw("same hist e");
-        leg->AddEntry(temp[ieta][ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+        temp->SetMarkerColor(pt_color[ipt]);
+        temp->SetLineColor(pt_color[ipt]);
+        temp->SetMarkerSize(0.5);
+        temp->SetMarkerStyle(21);
+        temp>Draw("same hist e");
+        leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
       }
       leg->Draw("same");
 
