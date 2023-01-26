@@ -156,6 +156,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     if (!flag_direct) continue; // only process direct processes
     */
 
+    // Q2-cut
+    if (event->GetQ2() < 10) continue;
+
     // particle enumeration, addition to jet reco setup, and total pt calculation
     erhic::ParticleMC* particle;
     vector<PseudoJet> jet_constits;
