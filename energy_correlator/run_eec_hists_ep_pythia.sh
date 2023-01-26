@@ -1,6 +1,6 @@
 #!/bin/bash
 IN_DIR=/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB
-OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/ep_10_100_Q2x_pythia8
+OUT_DIR=/eic/u/kdevereaux/work/energy_correlator/eHIJING/ep_10_100_pythia8
 
 if [ -z "$1" ]
 then
@@ -21,11 +21,8 @@ DIR=`printf "%04d" $INPUT`
 mkdir $DIR
 
 ln -s $IN_DIR/ep_minbias_highQ2_${INPUT}.root
-ln -s /eic/u/kdevereaux/work/energy_correlator/Q2_x.C
+ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
 mkdir $OUT_DIR
 
-root -l -b -q "Q2_x.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_Q2_x_${INPUT}.root\", 1)"
-
-#root -l -q "Q2_x.C(\"/eic/u/kdevereaux/work/reconstruction/ep_10_100/outfiles/ep_1.root\",\"./test.root\", 0)"
-#root -l -b -q "Q2_x.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB/ep_minbias_highQ2_1.root\",\"./hepmc_test.root\", 1)"
+root -l -b -q "eec_hists.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131.56, 100, 0, 0.5, 0)"
