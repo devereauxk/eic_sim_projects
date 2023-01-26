@@ -26,3 +26,5 @@ ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 mkdir $OUT_DIR
 
 root -l -b -q "eec_hists.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131.56, 100, 0, 0.5, 0)"
+
+#root -l -b -q "eec_hists.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB/ep_minbias_highQ2_1.root\",\"./pythia8test.root\", -1, 2131.56, 100, 0, 0.5, 0)"
