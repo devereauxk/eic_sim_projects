@@ -143,6 +143,7 @@ void overlay_hists(const char* out_dir)
       {
         TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
         temp->Scale(1/temp->GetEntries());
+        cout<<"NUMBER JETS IN PT: ["<<pt_lo[ipt]<<","<<pt_hi[ipt]<<"] ETA: ["<<eta_lo[ieta]<<","<<eta_hi[ieta]<<"] == "<<temp->GetEntries()<<endl;
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         //h1d_jet_eec[ieta][ipt]->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->SetMarkerColor(pt_color[ipt]);
