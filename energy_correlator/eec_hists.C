@@ -118,7 +118,8 @@ class Correlator_Builder
     }
 };
 
-void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, int gen_type = 0)
+void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, int gen_type = 0,
+    int boost = 0, double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0)
 {
   //Event Class
   erhic::EventHepMC *event(NULL); //pythia8
@@ -136,25 +137,27 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
   //Access event Branch
   tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
+  // boost calculation (used iff boost == 1)
+  // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
+  TLorentzVector part;
+  TLorentzVector Ei, Ef, Pf;
+  Ei.SetXYZM(0, 0, -proj_rest_e, Me);
+  Pf.SetXYZM(0, 0, targ_lab_e * targ_A[targ_species], targ_m[targ_species]);
+  TVector3 boost_vec = Pf.BoostVector();
+  Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
+  cout<<"projectile in lab frame: (should be what you expect)"<<endl;
+  Ef.Print();
+  cout<<"target in lab frame: (should be what you expect)"<<endl;
+  Pf.Print();
+
+  Double_t Px, Py, Pz, Mass;
+
   //Loop Over Events
   for(Int_t ievt = 0; ievt < nevt; ievt++)
   {
     tree->GetEntry(ievt);
 
     if (ievt%1000==0) cout<<"Processing event = "<<ievt<<"/"<<nevt<<endl;
-
-    /*
-    //Write Out Q2
-    double Q2 = event->GetQ2(); //Can also do event->QSquared
-    // printf("For Event %d, Q^2 = %.3f GeV^2!\n",ievt,Q2);
-
-    // process cuts
-    bool flag_direct = false;
-    if (event->GetProcess()==99) flag_direct = true;
-    if (event->GetProcess()==131 || event->GetProcess()==132) flag_direct = true;
-    if (event->GetProcess()==135 || event->GetProcess()==136) flag_direct = true;
-    if (!flag_direct) continue; // only process direct processes
-    */
 
     // Q2-cut
     if (event->GetQ2() < 10) continue;
@@ -166,10 +169,20 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     {
       particle = event->GetTrack(ipart);
 
+      // get particle kinematics
+      Px = particle->GetPx();
+      Py = particle->GetPy();
+      Pz = particle->GetPz();
+      Mass = particle->GetM();
+      part.SetXYZM(Px, Py, Pz, Mass);
+
+      // apply boost, if required. boosted according to proj_rest_e, targ_lab_e, targ_species
+      if (boost == 1) part.Boost(boost_vec);
+
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
-        PseudoJet constit = PseudoJet(particle->GetPx(),particle->GetPy(),particle->GetPz(),particle->GetE());
+        PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(ipart);
         jet_constits.push_back(constit);
       }
@@ -217,7 +230,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 }
 
 void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
-    double eec_weight_power = 1, int in_lab_frame = 0)
+    double eec_weight_power = 1)
 {
   // csv must be in the following format - eHIJING standard
   // each particle has the line
@@ -332,8 +345,6 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
 
-      // TODO for calculation in nuclear rest frame, boost constituents here
-
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
       vector<PseudoJet> constituents = jets[ijet].constituents();
@@ -348,6 +359,9 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
         //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
         if (Charge != 0)
         {
+          charged_constituents.push_back(constituents[iconstit]);
+
+          /* defunct boost back to target/nuclear rest frame
           if (in_lab_frame == 0)
           {
             charged_constituents.push_back(constituents[iconstit]); // keep in lab frame
@@ -363,6 +377,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
             PseudoJet constituent_rest_frame = PseudoJet(part_rest.Px(),part_rest.Py(),part_rest.Pz(),part_rest.E()); // in original nuclear rest frame
             charged_constituents.push_back(constituent_rest_frame);
           }
+          */
         }
       }
 
@@ -384,14 +399,14 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
 void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1,
-    int in_lab_frame = 0)
+    int boost = 0)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
   // all energies positive and in GeV units
   // only for e+A collsions, specify A with targ_species, =0 for p, =1 for Au
-  // in_lab_frame = 0 for dist12 calculation in lab frame, =1 for dist12 calculation in nuclear rest frame
   // gen_type = 0 for pythia6, =-1 for pyhtia8, =1 or anything for eHIJING (DIFFERENT FROM Q2_x.C settings)
+  // boost = 0, do not apply boost =1 apply boost according to targ_lab_e and targ_species
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
@@ -439,8 +454,8 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
 
   // reads file and fills in jet_constits
-  if (gen_type == 0 || gen_type == -1) read_root(inFile, eec_weight_power, gen_type); // assumes lab frame, pythia6 (EventPythia) or pythia8 (EventHepMC)
-  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power, in_lab_frame); // assumes target frame, eHIJING
+  if (gen_type == 0 || gen_type == -1) read_root(inFile, eec_weight_power, gen_type, boost, proj_rest_e, targ_lab_e, targ_species); // pythia6 (EventPythia) or pythia8 (EventHepMC), boosts acording to boost variable
+  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power); // eHIJING, assumes target frame and boosts to EIC
   cout<<"@kdebug last"<<endl;
 
   // write out histograms
