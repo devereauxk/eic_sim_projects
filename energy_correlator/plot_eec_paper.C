@@ -616,13 +616,13 @@ void baseline_comparison()
         temp = (TH1D*) h1d_jet_eec_baseline[species_picks[ispecies]][etabin_pick][ipt]->Clone();
 
         // calculate relative normalization ratio
-        temp->Scale(1/temp->Integral());
+        temp->Scale(1/temp->GetEntries());
 
         hists.push_back(temp);
 
         // plot histogram
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->GetXaxis()->SetTitle("R_{L}");
         temp->GetYaxis()->SetTitle("normalized EEC");
         temp->SetMarkerColor(pt_color[ispecies]);

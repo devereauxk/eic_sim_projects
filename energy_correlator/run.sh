@@ -27,3 +27,5 @@ root -l -q "plot_eec_hists.C(\"./eHIJING/eAu_1E8_K0_condor_v2/merged.root\", \".
 root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_K0/merged.root\", \"./eHIJING/ep_10_100_K0/\")"
 
 root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_pythia8/merged.root\", \"./eHIJING/ep_10_100_pythia8/\")"
+
+root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_pythia8_ft/merged.root\", \"./eHIJING/ep_10_100_pythia8/\")"
