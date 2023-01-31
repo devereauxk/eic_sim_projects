@@ -616,7 +616,7 @@ void baseline_comparison()
         temp = (TH1D*) h1d_jet_eec_baseline[species_picks[ispecies]][etabin_pick][ipt]->Clone();
 
         // calculate relative normalization ratio
-        //temp->Scale(1/temp->Integral());
+        temp->Scale(1/temp->Integral());
 
         hists.push_back(temp);
 
