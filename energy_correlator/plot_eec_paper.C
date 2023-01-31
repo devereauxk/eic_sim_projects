@@ -76,7 +76,7 @@ TH1D* h1d_jet_eec_nuclearrf[2][etabin][ptbin] = {};
 
 TH1D* h1d_jet_eec_baseline[speciesnum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.2; // 0.05 //0.08;
+const float rl_norm_hi = 0.3; // 0.05 //0.08;
 const float rl_norm_lo = 1E-3;
 
 const float rlsqrtpt_norm_hi = rl_norm_hi * sqrt(20); //1;
