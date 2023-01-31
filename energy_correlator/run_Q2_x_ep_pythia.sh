@@ -27,4 +27,4 @@ mkdir $OUT_DIR
 
 root -l -b -q "Q2_x.C(\"hepmcout-${INPUT}.root\",\"$OUT_DIR/hists_Q2_x_${INPUT}.root\", 1, 2131, 100, 0, 1)"
 
-root -l -b -q "Q2_x.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_ft_MB/hepmcout-1.root\",\"temp.root\", 1, 2131, 100, 0, 1)"
+#root -l -b -q "Q2_x.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_ft_MB/hepmcout-1.root\",\"temp.root\", 1, 2131, 100, 0, 1)"
