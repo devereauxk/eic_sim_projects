@@ -32,7 +32,8 @@ static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 
 TH2D* h2d_Q2_x[etabin][ptbin] = {};
 
-void read_root(const char* inFile = "merged.root", int gen_type = 0)
+void read_root(const char* inFile = "merged.root", int gen_type = 0,
+    int boost = 0, double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0)
 {
   //Event Class
   erhic::EventHepMC *event(NULL);
@@ -50,6 +51,21 @@ void read_root(const char* inFile = "merged.root", int gen_type = 0)
   //Access event Branch
   tree->SetBranchAddress("event",&event); //Note &event, even with event being a pointer
 
+  // boost calculation (used iff boost == 1)
+  // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
+  TLorentzVector part;
+  TLorentzVector Ei, Ef, Pf;
+  Ei.SetXYZM(0, 0, -proj_rest_e, Me);
+  Pf.SetXYZM(0, 0, targ_lab_e * targ_A[targ_species], targ_m[targ_species]);
+  TVector3 boost_vec = Pf.BoostVector();
+  Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
+  cout<<"projectile in lab frame: (should be what you expect)"<<endl;
+  Ef.Print();
+  cout<<"target in lab frame: (should be what you expect)"<<endl;
+  Pf.Print();
+
+  Double_t Px, Py, Pz, Mass;
+
   int total_jets = 0;
 
   //Loop Over Events
@@ -59,21 +75,10 @@ void read_root(const char* inFile = "merged.root", int gen_type = 0)
 
     if (ievt%1000==0) cout<<"Processing event = "<<ievt<<"/"<<nevt<<endl;
 
+    if (event->GetQ2() < 10) continue;
+
     double xB = event->GetX();
     double Q2 = event->GetQ2();
-
-    /*
-    //Write Out Q2
-    double Q2 = event->GetQ2(); //Can also do event->QSquared
-    // printf("For Event %d, Q^2 = %.3f GeV^2!\n",ievt,Q2);
-
-    // process cuts
-    bool flag_direct = false;
-    if (event->GetProcess()==99) flag_direct = true;
-    if (event->GetProcess()==131 || event->GetProcess()==132) flag_direct = true;
-    if (event->GetProcess()==135 || event->GetProcess()==136) flag_direct = true;
-    if (!flag_direct) continue; // only process direct processes
-    */
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     erhic::ParticleMC* particle;
@@ -82,10 +87,20 @@ void read_root(const char* inFile = "merged.root", int gen_type = 0)
     {
       particle = event->GetTrack(ipart);
 
+      // get particle kinematics
+      Px = particle->GetPx();
+      Py = particle->GetPy();
+      Pz = particle->GetPz();
+      Mass = particle->GetM();
+      part.SetXYZM(Px, Py, Pz, Mass);
+
+      // apply boost, if required. boosted according to proj_rest_e, targ_lab_e, targ_species
+      if (boost == 1) part.Boost(boost_vec);
+
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
-        PseudoJet constit = PseudoJet(particle->GetPx(),particle->GetPy(),particle->GetPz(),particle->GetE());
+        PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(ipart);
         jet_constits.push_back(constit);
       }
@@ -272,8 +287,9 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
 
 void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", int gen_type = 2,
-    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0)
+    double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, int boost = 0)
 {
+  // boost behavior same as detailed in eec_hists.C
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
@@ -314,7 +330,7 @@ void Q2_x(const char* inFile = "merged.root", const char* outFile = "hists_eec.r
   }
 
   // reads file
-  if (gen_type <= 1) read_root(inFile, gen_type); // assumes lab frame, pythia6 (EventPythia) or pythia8 (EventHepMC)
+  if (gen_type <= 1) read_root(inFile, gen_type, boost, proj_rest_e, targ_lab_e, targ_species); // assumes lab frame, pythia6 (EventPythia) or pythia8 (EventHepMC)
   else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species); // assumes target frame, eHIJING
   cout<<"@kdebug last"<<endl;
 
