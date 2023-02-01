@@ -51,7 +51,7 @@ static char* fname_eA_isospin[speciesnum] {(char*)"./eHIJING/ep_10_100_K0_pow05/
 static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"}; // all cases are K=0, 2E8 events
 static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are K=4, 2E8 events
 
-static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_Q2x_pythia8_ft/merged.root";
+static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_pythia8_ft/merged.root";
 
 static char* fname_eA_nuclearrf[2] = {(char*) "./eHIJING/ep_10_100_nuclearrf/merged.root", (char*) "./eHIJING/eAu_10_100_nuclearrf/merged.root"}; // data analyzed with pow=0.5 in the nuclear rest frane
 
