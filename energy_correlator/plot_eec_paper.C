@@ -57,7 +57,7 @@ static char* fname_eA_nuclearrf[2] = {(char*) "./eHIJING/ep_10_100_nuclearrf/mer
 
 const char* out_dir = "./paperplots/test/";
 
-TH1D* h1d_jet_pt[speciesnum] = {};
+//TH1D* h1d_jet_pt[speciesnum] = {};
 TH1D* h1d_jet_eta[speciesnum] = {};
 
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
@@ -1324,8 +1324,8 @@ void plot_eec_paper()
 
         if (k[ik] == 4)
         {
-          h1d_jet_pt[ispecies] = (TH1D*) fin->Get("h1d_jet_pt");
-          h1d_jet_pt[ispecies]->SetName(Form("h1d_jet_pt_%d", ispecies));
+          //h1d_jet_pt[ispecies] = (TH1D*) fin->Get("h1d_jet_pt");
+          //h1d_jet_pt[ispecies]->SetName(Form("h1d_jet_pt_%d", ispecies));
 
           h1d_jet_eta[ispecies] = (TH1D*) fin->Get("h1d_jet_eta");
           h1d_jet_eta[ispecies]->SetName(Form("h1d_jet_eta_%d", ispecies));
@@ -1487,7 +1487,7 @@ void plot_eec_paper()
 
   power_hists();
 
-  pt_spectra();
+  //pt_spectra();
 
   peak_height_vs_A();
 
