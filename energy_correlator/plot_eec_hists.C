@@ -8,12 +8,12 @@ static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
 static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
 const int pt_color[ptbin] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed};
 
-const int etabin = 4; // inclusive on last bin, inclusive on lower limit, exclusive on upper
-static double eta_lo[etabin] = {-3.5, -1, 1, -3.5};
-static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
+const int etabin = 6; // inclusive on last bin, inclusive on lower limit, exclusive on upper
+static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
+static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
-TH1D* h1d_jet_pt = NULL;
+TH1D* h1d_jet_pt[etabin] = {};
 TH1D* h1d_jet_eta = NULL;
 
 TH1D* h1d_jet_eec[etabin][ptbin] = {};
@@ -31,14 +31,17 @@ void individual_hists(const char* out_dir)
   // 1d jet pt histogram
   mclogy(cno++);
   {
-    h1d_jet_pt->Draw("same");
+    for (int ieta = 0; ieta < etabin; ieta++)
+    {
+      h1d_jet_pt[ieta]->Draw("same");
 
-    h1d_jet_pt->GetXaxis()->SetRangeUser(0,70);
-    h1d_jet_pt->GetXaxis()->SetTitle("jet p_{T} [GeV]");
-    h1d_jet_pt->GetYaxis()->SetTitle("counts");
-    h1d_jet_pt->GetXaxis()->SetTitleOffset(1.3);
-    h1d_jet_pt->GetYaxis()->SetTitleOffset(1.5);
-    h1d_jet_pt->Draw("same hist e");
+      h1d_jet_pt[ieta]->GetXaxis()->SetRangeUser(0,70);
+      h1d_jet_pt[ieta]->GetXaxis()->SetTitle("jet p_{T} [GeV]");
+      h1d_jet_pt[ieta]->GetYaxis()->SetTitle("counts");
+      h1d_jet_pt[ieta]->GetXaxis()->SetTitleOffset(1.3);
+      h1d_jet_pt[ieta]->GetYaxis()->SetTitleOffset(1.5);
+      h1d_jet_pt[ieta]->Draw("same hist e");
+    }
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_pt.pdf\")", cno-1, out_dir) );
   }
@@ -48,7 +51,7 @@ void individual_hists(const char* out_dir)
   {
     TH1D* temp = (TH1D*) h1d_jet_pt->Clone("temp");
     temp->Scale(1/temp->GetEntries());
-    
+
     temp->Draw("same");
 
     temp->GetXaxis()->SetRangeUser(0,70);
@@ -583,13 +586,14 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   // load histograms
   TFile* fin = new TFile(fin_name, "READ");
 
-  h1d_jet_pt = (TH1D*) fin->Get("h1d_jet_pt");
-  h1d_jet_pt->SetName("h1d_jet_pt");
   h1d_jet_eta = (TH1D*) fin->Get("h1d_jet_eta");
   h1d_jet_eta->SetName("h1d_jet_eta");
 
   for (int ieta = 0; ieta < etabin; ieta++)
   {
+    h1d_jet_pt[ieta] = (TH1D*) fin->Get(Form("h1d_jet_pt_%d", ieta));
+    h1d_jet_pt[ieta]->SetName(Form("h1d_jet_pt_%d", ieta));
+
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
       // raw data histogram
