@@ -366,8 +366,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
       // jet histograms filled on inclusive jet information
-      h1d_jet_pt->Fill(jets[ijet].pt());
-      //h1d_jet_eta->Fill(jets[ijet].eta());
+      //h1d_jet_pt->Fill(jets[ijet].pt());
+      h1d_jet_eta->Fill(jets[ijet].eta());
 
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
