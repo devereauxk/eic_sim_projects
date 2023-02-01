@@ -49,17 +49,28 @@ void individual_hists(const char* out_dir)
   // 1d jet pt histogram normalized by number of jets, inclusive on eta
   mclogy(cno++);
   {
-    TH1D* temp = (TH1D*) h1d_jet_pt->Clone("temp");
-    temp->Scale(1/temp->GetEntries());
+    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.025);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
 
-    temp->Draw("same");
+    for (int ieta = 0; ieta < etabin; ieta++)
+    {
+      TH1D* temp = (TH1D*) h1d_jet_pt[ieta]->Clone("temp");
+      temp->Scale(1/temp->GetEntries());
 
-    temp->GetXaxis()->SetRangeUser(0,70);
-    temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
-    temp->GetYaxis()->SetTitle("counts");
-    temp->GetXaxis()->SetTitleOffset(1.3);
-    temp->GetYaxis()->SetTitleOffset(1.5);
-    temp->Draw("same hist e");
+      temp->Draw("same");
+
+      temp->GetXaxis()->SetRangeUser(0,70);
+      temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
+      temp->GetYaxis()->SetTitle("counts");
+      temp->GetXaxis()->SetTitleOffset(1.3);
+      temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->Draw("same hist e");
+      leg->AddEntry(temp,Form("%1.1f < eta < %1.1f",eta_lo[ieta],eta_hi[ieta]));
+    }
+    leg->Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_pt_selfnorm.pdf\")", cno-1, out_dir) );
   }
