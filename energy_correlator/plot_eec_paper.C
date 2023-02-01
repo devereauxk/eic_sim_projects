@@ -57,7 +57,7 @@ static char* fname_eA_nuclearrf[2] = {(char*) "./eHIJING/ep_10_100_nuclearrf/mer
 
 const char* out_dir = "./paperplots/test/";
 
-//TH1D* h1d_jet_pt[speciesnum] = {};
+TH1D* h1d_jet_pt[speciesnum] = {};
 TH1D* h1d_jet_eta[speciesnum] = {};
 
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
