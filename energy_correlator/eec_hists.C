@@ -32,7 +32,7 @@ static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 
 TH1D* h1d_jet_eec[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
-TH1D* h1d_jet_pt[etabin] = NULL;
+TH1D* h1d_jet_pt[etabin] = {};
 TH1D* h1d_jet_eta = NULL;
 TH1D* h1d_jet_multiplicity[etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity_charged[etabin][ptbin] = {};
