@@ -28,6 +28,12 @@ static int cno = 0;
 
 void individual_hists(const char* out_dir)
 {
+  TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+  leg->SetBorderSize(0);
+  leg->SetTextSize(0.025);
+  leg->SetFillStyle(0);
+  leg->SetMargin(0.1);
+  
   // 1d jet pt histogram
   mclogy(cno++);
   {
@@ -41,7 +47,9 @@ void individual_hists(const char* out_dir)
       h1d_jet_pt[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_jet_pt[ieta]->GetYaxis()->SetTitleOffset(1.5);
       h1d_jet_pt[ieta]->Draw("same hist e");
+      leg->AddEntry(h1d_jet_pt[ieta],Form("%1.1f < eta < %1.1f",eta_lo[ieta],eta_hi[ieta]));
     }
+    leg->Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_pt.pdf\")", cno-1, out_dir) );
   }
