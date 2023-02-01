@@ -227,7 +227,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // jet histograms filled on inclusive jet information
       for (int ieta = 0; ieta < etabin; ieta++)
       {
-        if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].ieta() < eta_hi[ieta])
+        if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].eta() < eta_hi[ieta])
         {
           h1d_jet_pt[ieta]->Fill(jets[ijet].pt());
         }
@@ -367,8 +367,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     {
       // jet histograms filled on inclusive jet information
       h1d_jet_pt->Fill(jets[ijet].pt());
-      h1d_jet_eta->Fill(jets[ijet].eta());
-      //cout<<"jet pt:"<<jets[ijet].pt()<<" jet eta:"<<jets[ijet].eta()<<endl;
+      //h1d_jet_eta->Fill(jets[ijet].eta());
 
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
@@ -443,8 +442,8 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   // compute log bins for Q2-x
   // xbins correspond to xB
-  double xmin = 1E-6;
-  double xmax = 1;
+  xmin = 1E-6;
+  xmax = 1;
   int xnbins = 50;
   Double_t xlbins[xnbins+1];
   double xbinwidth = (log10(xmax) - log10(xmin)) / xnbins;
