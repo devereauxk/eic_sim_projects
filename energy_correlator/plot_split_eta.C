@@ -188,7 +188,7 @@ void pt_eta_3by3_hists()
 }
 
 
-void plot_eec_paper()
+void plot_split_eta()
 {
 
   mcs(-1);
