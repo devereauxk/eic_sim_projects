@@ -259,7 +259,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 }
 
 void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
-    double eec_weight_power = 1)
+    double eec_weight_power = 1, int calc_Q2x = 0)
 {
   // csv must be in the following format - eHIJING standard
   // each particle has the line
@@ -305,7 +305,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
   // initialize particle level variables
   Int_t Id;
-  Double_t Charge, Px, Py, Pz, Mass;
+  Double_t Charge, Px, Py, Pz, Mass, Q2, xB;
 
   // number of lines
   int iline = 0;
@@ -337,6 +337,11 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       Py = stod(line[4]);
       Pz = stod(line[5]);
       Mass = stod(line[6]);
+      if (calc_Q2x == 1)
+      {
+        Q2 = stod(line[7]);
+        xB = stod(line[8]);
+      }
 
       //cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
 
@@ -401,7 +406,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
             h1d_jet_multiplicity[ieta][ipt]->Fill(constituents.size());
             h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
 
-            //h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+            if (calc_Q2x == 1) h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
           }
         }
       }
@@ -427,7 +432,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
 void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1,
-    int boost = 0)
+    int boost = 0, int calc_Q2x = 0)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
@@ -435,6 +440,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // only for e+A collsions, specify A with targ_species, =0 for p, =1 for Au
   // gen_type = 0 for pythia6, =-1 for pyhtia8, =1 or anything for eHIJING (DIFFERENT FROM Q2_x.C settings)
   // boost = 0, do not apply boost =1 apply boost according to targ_lab_e and targ_species
+  // calc_Q2x = 1 fills Q2x histogram (eHIJING must have Q2 and x printout), =0 doesn't filled
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
@@ -523,7 +529,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   // reads file and fills in jet_constits
   if (gen_type == 0 || gen_type == -1) read_root(inFile, eec_weight_power, gen_type, boost, proj_rest_e, targ_lab_e, targ_species); // pythia6 (EventPythia) or pythia8 (EventHepMC), boosts acording to boost variable
-  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power); // eHIJING, assumes target frame and boosts to EIC
+  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power, calc_Q2x); // eHIJING, assumes target frame and boosts to EIC
   cout<<"@kdebug last"<<endl;
 
   // write out histograms
