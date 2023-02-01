@@ -301,6 +301,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   cout<<"target in lab frame: (should be what you expect)"<<endl;
   Pf.Print();
 
+  int total_jets = 0;
+
   // initialize particle level variables
   Int_t Id;
   Double_t Charge, Px, Py, Pz, Mass;
@@ -365,12 +367,10 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
-      // jet histograms filled on inclusive jet information
-      //h1d_jet_pt->Fill(jets[ijet].pt());
-      h1d_jet_eta->Fill(jets[ijet].eta());
-
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+
+      total_jets++;
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
@@ -387,6 +387,26 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
         if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
+      // jet histograms filled on inclusive jet information
+      for (int ieta = 0; ieta < etabin; ieta++)
+      {
+        if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].eta() < eta_hi[ieta])
+        {
+          h1d_jet_pt[ieta]->Fill(jets[ijet].pt());
+        }
+        for (int ipt = 0; ipt < ptbin; ipt++)
+        {
+          if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
+          {
+            h1d_jet_multiplicity[ieta][ipt]->Fill(constituents.size());
+            h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
+
+            //h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+          }
+        }
+      }
+      h1d_jet_eta->Fill(jets[ijet].eta());
+
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
@@ -397,6 +417,8 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
     }
 
   }
+
+  cout<<"total num jets = "<<total_jets<<endl;
 
   fin.close();
 
