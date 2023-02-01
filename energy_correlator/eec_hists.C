@@ -32,8 +32,11 @@ static double eta_hi[etabin] = {-1, 1, 3.5, 3.5};
 
 TH1D* h1d_jet_eec[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
-TH1D* h1d_jet_pt = NULL;
+TH1D* h1d_jet_pt[etabin] = NULL;
 TH1D* h1d_jet_eta = NULL;
+TH1D* h1d_jet_multiplicity[etabin][ptbin] = {};
+TH1D* h1d_jet_multiplicity_charged[etabin][ptbin] = {};
+TH2D* h2d_Q2_x[etabin][ptbin] = {};
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -150,7 +153,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
   cout<<"target in lab frame: (should be what you expect)"<<endl;
   Pf.Print();
 
-  Double_t Px, Py, Pz, Mass;
+  Double_t Px, Py, Pz, Mass, Q2, xB;
+
+  int total_jets = 0;
 
   //Loop Over Events
   for(Int_t ievt = 0; ievt < nevt; ievt++)
@@ -161,6 +166,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
     // Q2-cut
     if (event->GetQ2() < 10) continue;
+
+    Q2 = event->GetQ2();
+    xB = event->GetX();
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     erhic::ParticleMC* particle;
@@ -197,12 +205,10 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     // jet processing
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
-      // jet histograms filled on inclusive jet information
-      h1d_jet_pt->Fill(jets[ijet].pt());
-      h1d_jet_eta->Fill(jets[ijet].eta());
-
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
       if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+
+      total_jets++;
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
@@ -218,6 +224,26 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
+      // jet histograms filled on inclusive jet information
+      for (int ieta = 0; ieta < etabin; ieta++)
+      {
+        if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].ieta() < eta_hi[ieta])
+        {
+          h1d_jet_pt[ieta]->Fill(jets[ijet].pt());
+        }
+        for (int ipt = 0; ipt < ptbin; ipt++)
+        {
+          if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
+          {
+            h1d_jet_multiplicity[ieta][ipt]->Fill(constituents.size());
+            h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
+
+            h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+          }
+        }
+      }
+      h1d_jet_eta->Fill(jets[ijet].eta());
+
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
@@ -227,6 +253,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     }
 
   }
+
+  cout<<"total num jets = "<<total_jets<<endl;
+
 }
 
 void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
@@ -267,7 +296,6 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
   Pf.SetXYZM(0, 0, targ_lab_e * targ_A[targ_species], targ_m[targ_species]);
   TVector3 boost_vec = Pf.BoostVector();
   Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
-
   cout<<"projectile in lab frame: (should be what you expect)"<<endl;
   Ef.Print();
   cout<<"target in lab frame: (should be what you expect)"<<endl;
@@ -357,28 +385,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
         vector<string> line = content[il];
         Charge = stod(line[2]);
         //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
-        if (Charge != 0)
-        {
-          charged_constituents.push_back(constituents[iconstit]);
-
-          /* defunct boost back to target/nuclear rest frame
-          if (in_lab_frame == 0)
-          {
-            charged_constituents.push_back(constituents[iconstit]); // keep in lab frame
-          }
-          else if (in_lab_frame == 1) // boost back charged constituent to nuclear rest frane
-          {
-            Px = stod(line[3]);
-            Py = stod(line[4]);
-            Pz = stod(line[5]);
-            Mass = stod(line[6]);
-
-            part_rest.SetXYZM(Px, Py, Pz, Mass);
-            PseudoJet constituent_rest_frame = PseudoJet(part_rest.Px(),part_rest.Py(),part_rest.Pz(),part_rest.E()); // in original nuclear rest frame
-            charged_constituents.push_back(constituent_rest_frame);
-          }
-          */
-        }
+        if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
       if (charged_constituents.size() < 1) continue;
@@ -434,9 +441,35 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     lbins_rlsqrtpt[i] = TMath::Power(10, log10(xmin) + binwidth * i);
   }
 
+  // compute log bins for Q2-x
+  // xbins correspond to xB
+  double xmin = 1E-6;
+  double xmax = 1;
+  int xnbins = 50;
+  Double_t xlbins[xnbins+1];
+  double xbinwidth = (log10(xmax) - log10(xmin)) / xnbins;
+  for (int i = 0; i < xnbins+1; i++)
+  {
+    xlbins[i] = TMath::Power(10, log10(xmin) + xbinwidth * i);
+  }
+
+  // ybins correspond to Q2
+  double ymin = 1;
+  double ymax = 1E4;
+  int ynbins = 50;
+  Double_t ylbins[ynbins+1];
+  double ybinwidth = (log10(ymax) - log10(ymin)) / ynbins;
+  for (int i = 0; i < ynbins+1; i++)
+  {
+    ylbins[i] = TMath::Power(10, log10(ymin) + ybinwidth * i);
+  }
+
   // histogram definitions
-  h1d_jet_pt = new TH1D("h1d_jet_pt","jet pt",800,0,800);
-  h1d_jet_pt->Sumw2();
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    h1d_jet_pt[ieta] = new TH1D(Form("h1d_jet_pt_%d", ieta),"jet pt",800,0,800);
+    h1d_jet_pt[ieta]->Sumw2();
+  }
   h1d_jet_eta = new TH1D("h1d_jet_eta", "jet eta",800,-5,5);
   h1d_jet_eta->Sumw2();
 
@@ -449,6 +482,20 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
       h1d_jet_eec_rlsqrtpt[ieta][ipt] = new TH1D(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt),"jet eec rlsqrtpt",50,lbins_rlsqrtpt);
       h1d_jet_eec_rlsqrtpt[ieta][ipt]->Sumw2();
+
+      h1d_jet_multiplicity[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt), "jet multiplicity", 50, 0, 50);
+      h1d_jet_multiplicity[ieta][ipt]->Sumw2();
+
+      h1d_jet_multiplicity_charged[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt), "jet charged multiplicity", 50, 0, 50);
+      h1d_jet_multiplicity_charged[ieta][ipt]->Sumw2();
+    }
+  }
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < ptbin; ipt++)
+    {
+      h2d_Q2_x[ieta][ipt] = new TH2D(Form("h2d_Q2_x_%d_%d", ieta, ipt),"Q2_x",50,xlbins,50,ylbins);
+      h2d_Q2_x[ieta][ipt]->Sumw2();
     }
   }
 
@@ -461,8 +508,11 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // write out histograms
   TFile* fout = new TFile(outFile,"recreate");
   fout->Write();
-  h1d_jet_pt->Write();
-  cout<<"h1d_jet_pt entries:"<<h1d_jet_pt->GetEntries()<<endl;
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    h1d_jet_pt[ieta]->Write();
+    cout<<"h1d_jet_pt_"<<ieta<<" entries:"<<h1d_jet_pt[ieta]->GetEntries()<<endl;
+  }
   h1d_jet_eta->Write();
   cout<<"h1d_jet_eta entries:"<<h1d_jet_eta->GetEntries()<<endl;
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -474,6 +524,14 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
       h1d_jet_eec_rlsqrtpt[ieta][ipt]->Write();
       cout<<"h1d_jet_eec_rlsqrtpt_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_eec_rlsqrtpt[ieta][ipt]->GetEntries()<<endl;
+
+      h1d_jet_multiplicity[ieta][ipt]->Write();
+      cout<<"h1d_jet_multiplicity_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_multiplicity[ieta][ipt]->GetEntries()<<endl;
+      h1d_jet_multiplicity_charged[ieta][ipt]->Write();
+      cout<<"h1d_jet_multiplicity_charged_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_multiplicity_charged[ieta][ipt]->GetEntries()<<endl;
+
+      h2d_Q2_x[ieta][ipt]->Write();
+      cout<<"h2d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
     }
   }
 
