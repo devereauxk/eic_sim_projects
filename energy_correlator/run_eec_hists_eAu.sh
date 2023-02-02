@@ -25,7 +25,6 @@ ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
 mkdir $OUT_DIR
 
-#root -l -b -q "eec_hists.C(\"eAu_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 1, 0.5)"
 root -l -b -q "eec_hists.C(\"eAu_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 1, 0.5, 1, 0)"
 
 # 10 on 100: 2147.95 GeV
