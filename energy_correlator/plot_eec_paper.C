@@ -1292,7 +1292,7 @@ void plot_eec_paper()
             h1d_jet_eec_rlsqrtpt[ispecies][ik][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
             h1d_jet_eec_rlsqrtpt[ispecies][ik][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_%d_%d_%d", ieta, ipt, ispecies, ik));
 
-            if ((ispecies == 0 && k[ik] == 0) || (ispecies != 0 && k[ik] == 4))
+            if ((ispecies == 0 && k[ik] == 0) || (ispecies != 7 && k[ik] == 4))
             {
               try {
                 h1d_jet_multiplicity[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt));
