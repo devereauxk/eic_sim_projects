@@ -258,7 +258,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
 }
 
-void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
+void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
     double eec_weight_power = 1, int calc_Q2x = 0)
 {
   // csv must be in the following format - eHIJING standard
@@ -290,7 +290,7 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
 
   // boost calculation
   // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
-  TLorentzVector part_rest, part_lab;
+  TLorentzVector part;
   TLorentzVector Ei, Ef, Pf;
   Ei.SetXYZM(0, 0, -proj_rest_e, Me);
   Pf.SetXYZM(0, 0, targ_lab_e * targ_A[targ_species], targ_m[targ_species]);
@@ -346,16 +346,14 @@ void read_csv(const char* inFile = "merged.csv", double proj_rest_e = 10, double
       //cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
 
       // apply boost to particle (boost it into lab frame)
-      part_rest.SetXYZM(Px, Py, Pz, Mass);
-      //part_rest.Print();
-      part_lab = part_rest; part_lab.Boost(boost_vec);
-      //part_lab.Print();
+      part.SetXYZM(Px, Py, Pz, Mass);
+      if (boost == 1) part.Boost(boost_vec);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       //cout<<"part_lab eta:"<<part_lab.Eta()<<endl;
-      if (fabs(part_lab.Eta())<3.5 && Id!=11)
+      if (fabs(part.Eta())<3.5 && Id!=11)
       {
-        PseudoJet constit = PseudoJet(part_lab.Px(),part_lab.Py(),part_lab.Pz(),part_lab.E());
+        PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(iline);
         jet_constits.push_back(constit);
       }
@@ -529,7 +527,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   // reads file and fills in jet_constits
   if (gen_type == 0 || gen_type == -1) read_root(inFile, eec_weight_power, gen_type, boost, proj_rest_e, targ_lab_e, targ_species); // pythia6 (EventPythia) or pythia8 (EventHepMC), boosts acording to boost variable
-  else read_csv(inFile, proj_rest_e, targ_lab_e, targ_species, eec_weight_power, calc_Q2x); // eHIJING, assumes target frame and boosts to EIC
+  else read_csv(inFile, boost, proj_rest_e, targ_lab_e, targ_species, eec_weight_power, calc_Q2x); // eHIJING, assumes target frame and boosts to EIC
   cout<<"@kdebug last"<<endl;
 
   // write out histograms
