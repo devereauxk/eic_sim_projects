@@ -1207,12 +1207,12 @@ void multiplicity()
   // plots species picks for th
   mclogy(cno++);
   {
-    float plot_xrange_lo = 0.05;
-    float plot_xrange_hi = 1;
-    float plot_yrange_lo = 5E-3;
-    float plot_yrange_hi = 5E-1;
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 50;
+    float plot_yrange_lo = 0.3;
+    float plot_yrange_hi = 1E5;
     float legend_x = 0.7;
-    float legend_y = 0.2;
+    float legend_y = 0.6;
 
     TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
     leg->SetBorderSize(0);
@@ -1227,8 +1227,8 @@ void multiplicity()
       temp = (TH1D*) h1d_jet_multiplicity[species_picks[ispecies]][etabin_pick][ptbin_pick]->Clone();
 
       // plot histogram
-      //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetXaxis()->SetTitle("N");
       temp->GetYaxis()->SetTitle("count of jets w/ multiplicity N");
       temp->SetMarkerColor(pt_color[ispecies]);
