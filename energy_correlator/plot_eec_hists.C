@@ -653,8 +653,14 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
   for (int ieta = 0; ieta < etabin; ieta++)
   {
+    int make_pt_plots = 1;
+    try {
     h1d_jet_pt[ieta] = (TH1D*) fin->Get(Form("h1d_jet_pt_%d", ieta));
     h1d_jet_pt[ieta]->SetName(Form("h1d_jet_pt_%d", ieta));
+  } catch {
+    make_pt_plots = 0;
+    cout << " jet pt plots not made "<< endl;
+  }
 
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
@@ -672,7 +678,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   }
 
   // print individual 2D histograms
-  individual_hists(out_dir);
+  if (make_pt_plots == 1) individual_hists(out_dir);
 
   // print overlay hists for: pt
   overlay_hists(out_dir);
