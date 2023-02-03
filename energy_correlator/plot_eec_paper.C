@@ -72,8 +72,8 @@ TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
 
 TH1D* h1d_jet_eec_baseline[speciesnum][etabin][ptbin] = {};
 
-TH1D* h1d_jet_multiplicity[ispecies][ieta][ipt] = {};
-TH1D* h1d_jet_multiplicity_charged[ispecies][ieta][ipt] = {};
+TH1D* h1d_jet_multiplicity[speciesnum][etabin][ptbin] = {};
+TH1D* h1d_jet_multiplicity_charged[speciesnum][etabin][ptbin] = {};
 
 const float rl_norm_hi = 0.2; // 0.3 used for 3by3 top left and second col //0.08;
 const float rl_norm_lo = 1E-3;
@@ -1436,6 +1436,6 @@ void plot_eec_paper()
 
   Q2_x_panel();
 
-  multiplicity()
+  multiplicity();
 
 }
