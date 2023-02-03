@@ -1204,7 +1204,7 @@ void multiplicity()
   const int nspecies_picks = 2;
   static int species_picks[nspecies_picks] = {0, 7};
 
-  // plots species picks for th
+  // multiplicity spectra of jet particles
   mclogy(cno++);
   {
     float plot_xrange_lo = 0;
@@ -1250,6 +1250,54 @@ void multiplicity()
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_multiplicity.pdf\")", cno-1, out_dir) );
+  }
+
+  // multiplicity spectra of charged jet particles
+  mclogy(cno++);
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 50;
+    float plot_yrange_lo = 0.3;
+    float plot_yrange_hi = 1E5;
+    float legend_x = 0.7;
+    float legend_y = 0.6;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+
+    for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
+    {
+      temp = (TH1D*) h1d_jet_multiplicity_charged[species_picks[ispecies]][etabin_pick][ptbin_pick]->Clone();
+
+      // plot histogram
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetXaxis()->SetTitle("N");
+      temp->GetYaxis()->SetTitle("count of jets w/ multiplicity N");
+      temp->SetMarkerColor(pt_color[ispecies]);
+      temp->SetLineColor(pt_color[ispecies]);
+      temp->SetMarkerSize(0.5);
+      temp->SetMarkerStyle(21);
+      temp->Draw("same hist e");
+      leg->AddEntry(temp,Form("%s",species[species_picks[ispecies]]));
+    }
+
+    leg->Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.028);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 4*10^{8} events");
+    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
+    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_multiplicity_charged.pdf\")", cno-1, out_dir) );
   }
 
 }
