@@ -1226,7 +1226,7 @@ void multiplicity()
     {
       temp = (TH1D*) h1d_jet_multiplicity[species_picks[ispecies]][etabin_pick][ptbin_pick]->Clone();
 
-      cout<<"distribution avg for total jet multiplicity in "<<species[species_pick[ispecies]]<<" : "<<temp->GetMean()<<endl;
+      cout<<"distribution avg for total jet multiplicity in "<<species[species_picks[ispecies]]<<" : "<<temp->GetMean()<<endl;
 
       // plot histogram
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -1276,7 +1276,7 @@ void multiplicity()
     {
       temp = (TH1D*) h1d_jet_multiplicity_charged[species_picks[ispecies]][etabin_pick][ptbin_pick]->Clone();
 
-      cout<<"distribution avg for charged jet multiplicity in "<<species[species_pick[ispecies]]<<" : "<<temp->GetMean()<<endl;
+      cout<<"distribution avg for charged jet multiplicity in "<<species[species_picks[ispecies]]<<" : "<<temp->GetMean()<<endl;
 
       // plot histogram
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
