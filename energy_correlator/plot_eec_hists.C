@@ -651,13 +651,13 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   h1d_jet_eta = (TH1D*) fin->Get("h1d_jet_eta");
   h1d_jet_eta->SetName("h1d_jet_eta");
 
+  int make_pt_plots = 1;
   for (int ieta = 0; ieta < etabin; ieta++)
   {
-    int make_pt_plots = 1;
     try {
     h1d_jet_pt[ieta] = (TH1D*) fin->Get(Form("h1d_jet_pt_%d", ieta));
     h1d_jet_pt[ieta]->SetName(Form("h1d_jet_pt_%d", ieta));
-  } catch {
+  } catch (...) {
     make_pt_plots = 0;
     cout << " jet pt plots not made "<< endl;
   }
