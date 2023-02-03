@@ -710,7 +710,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
         // raw data histograms
         h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
         h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
-      } catch {
+      } catch(...) {
         cout<<  "no Q2x histogram found "<<endl;
       }
 
