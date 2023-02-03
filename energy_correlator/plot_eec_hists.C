@@ -708,9 +708,9 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
     ratio_hists(out_dir);
   }
 
-  for (int ieta = 0; ieta < etabin; ieta++)
+  for (int ieta = 0; ieta < 3; ieta++)
   {
-    for (int ipt = 0; ipt < ptbin; ipt++)
+    for (int ipt = 0; ipt < 3; ipt++)
     {
       try {
         // raw data histograms
