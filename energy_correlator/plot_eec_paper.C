@@ -1294,13 +1294,14 @@ void plot_eec_paper()
 
             if ((ispecies == 0 && k[ik] == 0) || (ispecies != 0 && k[ik] == 4))
             {
-              try
-              {
+              try {
                 h1d_jet_multiplicity[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt));
                 h1d_jet_multiplicity[ispecies][ieta][ipt]->SetName(Form("h1d_jet_multiplicity_%d_%d_%d", ieta, ipt, ispecies));
 
                 h1d_jet_multiplicity_charged[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt));
                 h1d_jet_multiplicity_charged[ispecies][ieta][ipt]->SetName(Form("h1d_jet_multiplicity_charged_%d_%d_%d", ieta, ipt, ispecies));
+              } catch (...) {
+                cout<<"no multiplicity histograms for " <<species[ispecies]<<" with K = "<<k[ik]<<endl;
               }
             }
           }
