@@ -24,6 +24,8 @@ TH1D* h1d_jet_eec_baseline_norm[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_baseline[etabin][ptbin] = {};
 
+TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
+
 static int cno = 0;
 
 void individual_hists(const char* out_dir)
@@ -33,7 +35,7 @@ void individual_hists(const char* out_dir)
   leg->SetTextSize(0.025);
   leg->SetFillStyle(0);
   leg->SetMargin(0.1);
-  
+
   // 1d jet pt histogram
   mclogy(cno++);
   {
@@ -595,6 +597,47 @@ void ratio_hists(const char* out_dir)
 
 }
 
+void Q2_x_panel()
+{
+
+  float plot_xrange_lo = 0.8;
+  float plot_xrange_hi = 2.7;
+  float plot_yrange_lo = -0.005;
+  float plot_yrange_hi = 0.04;
+  float plot_zrange_lo = 0;
+  float plot_zrange_hi = 750E3;
+
+  for (int ieta = 0; ieta < 3; ieta++)
+  {
+    for (int ipt = 0; ipt < 3; ipt++)
+    {
+      mclogxyz(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+      {
+        TH2D* temp = (TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone();
+
+        // plot
+        //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+        temp->GetXaxis()->SetTitle("x_{B}");
+        temp->GetYaxis()->SetTitle("Q^{2} (GeV^{2})");
+        temp->Draw("colz");
+
+        TLatex* tl = new TLatex();
+        tl->SetTextAlign(11);
+        tl->SetTextSize(0.028);
+        tl->SetTextColor(kBlack);
+        tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+p, 4*10^{8} events");
+        tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+        tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ipt],pt_hi[ipt]));
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_Q2_x_%i_%i.pdf\")", cno-1, out_dir, ieta, ipt) );
+      }
+    }
+  }
+
+}
+
 
 void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./", int make_ratios = 0, const char* fin_name_baseline = "")
 {
@@ -658,5 +701,20 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
     ratio_hists(out_dir);
   }
+
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < ptbin; ipt++)
+    {
+      try
+      {
+        // raw data histograms
+        h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+        h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      }
+    }
+  }
+
+  Q2_x_panel();
 
 }

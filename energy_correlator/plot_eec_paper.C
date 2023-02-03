@@ -72,6 +72,9 @@ TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
 
 TH1D* h1d_jet_eec_baseline[speciesnum][etabin][ptbin] = {};
 
+TH1D* h1d_jet_multiplicity[ispecies][ieta][ipt] = {};
+TH1D* h1d_jet_multiplicity_charged[ispecies][ieta][ipt] = {};
+
 const float rl_norm_hi = 0.2; // 0.3 used for 3by3 top left and second col //0.08;
 const float rl_norm_lo = 1E-3;
 
@@ -1194,6 +1197,63 @@ void Q2_x_panel()
 
 }
 
+void multiplicity()
+{
+  int etabin_pick = 2;
+  int ptbin_pick = 2;
+  const int nspecies_picks = 2;
+  static int species_picks[nspecies_picks] = {0, 7};
+
+  // plots species picks for th
+  mclogy(cno++);
+  {
+    float plot_xrange_lo = 0.05;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = 5E-3;
+    float plot_yrange_hi = 5E-1;
+    float legend_x = 0.7;
+    float legend_y = 0.2;
+
+    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.15);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.028);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+
+    for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
+    {
+      temp = (TH1D*) h1d_jet_multiplicity[species_picks[ispecies]][etabin_pick][ptbin_pick]->Clone();
+
+      // plot histogram
+      //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetXaxis()->SetTitle("N");
+      temp->GetYaxis()->SetTitle("count of jets w/ multiplicity N");
+      temp->SetMarkerColor(pt_color[ispecies]);
+      temp->SetLineColor(pt_color[ispecies]);
+      temp->SetMarkerSize(0.5);
+      temp->SetMarkerStyle(21);
+      temp->Draw("same hist e");
+      leg->AddEntry(temp,Form("%s",species[species_picks[ispecies]]));
+    }
+
+    leg->Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.028);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+Au @ 10+100 GeV, 4*10^{8} events");
+    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
+    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_multiplicity.pdf\")", cno-1, out_dir) );
+  }
+
+}
+
 void plot_eec_paper()
 {
 
@@ -1231,6 +1291,18 @@ void plot_eec_paper()
 
             h1d_jet_eec_rlsqrtpt[ispecies][ik][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
             h1d_jet_eec_rlsqrtpt[ispecies][ik][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_%d_%d_%d", ieta, ipt, ispecies, ik));
+
+            if ((ispecies == 0 && k[ik] == 0) || (ispecies != 0 && k[ik] == 4))
+            {
+              try
+              {
+                h1d_jet_multiplicity[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt));
+                h1d_jet_multiplicity[ispecies][ieta][ipt]->SetName(Form("h1d_jet_multiplicity_%d_%d_%d", ieta, ipt, ispecies));
+
+                h1d_jet_multiplicity_charged[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt));
+                h1d_jet_multiplicity_charged[ispecies][ieta][ipt]->SetName(Form("h1d_jet_multiplicity_charged_%d_%d_%d", ieta, ipt, ispecies));
+              }
+            }
           }
         }
         cout<<fin_name<<" loaded!"<<endl;
@@ -1362,5 +1434,7 @@ void plot_eec_paper()
   peak_height_vs_A_isospin();
 
   Q2_x_panel();
+
+  multiplicity()
 
 }
