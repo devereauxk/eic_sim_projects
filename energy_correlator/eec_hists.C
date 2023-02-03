@@ -230,17 +230,19 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].eta() < eta_hi[ieta])
         {
           h1d_jet_pt[ieta]->Fill(jets[ijet].pt());
-        }
-        for (int ipt = 0; ipt < ptbin; ipt++)
-        {
-          if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
-          {
-            h1d_jet_multiplicity[ieta][ipt]->Fill(constituents.size());
-            h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
 
-            h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+          for (int ipt = 0; ipt < ptbin; ipt++)
+          {
+            if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
+            {
+              h1d_jet_multiplicity[ieta][ipt]->Fill(constituents.size());
+              h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
+
+              h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+            }
           }
         }
+
       }
       h1d_jet_eta->Fill(jets[ijet].eta());
 
@@ -396,17 +398,19 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
         if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].eta() < eta_hi[ieta])
         {
           h1d_jet_pt[ieta]->Fill(jets[ijet].pt());
-        }
-        for (int ipt = 0; ipt < ptbin; ipt++)
-        {
-          if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
-          {
-            h1d_jet_multiplicity[ieta][ipt]->Fill(constituents.size());
-            h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
 
-            if (calc_Q2x == 1) h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+          for (int ipt = 0; ipt < ptbin; ipt++)
+          {
+            if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
+            {
+              h1d_jet_multiplicity[ieta][ipt]->Fill(constituents.size());
+              h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
+
+              if (calc_Q2x == 1) h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+            }
           }
         }
+        
       }
       h1d_jet_eta->Fill(jets[ijet].eta());
 
