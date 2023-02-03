@@ -597,7 +597,7 @@ void ratio_hists(const char* out_dir)
 
 }
 
-void Q2_x_panel()
+void Q2_x_panel(const char* out_dir)
 {
 
   float plot_xrange_lo = 0.8;
@@ -706,15 +706,17 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      try
-      {
+      try {
         // raw data histograms
         h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
         h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      } catch {
+        cout<<  "no Q2x histogram found "<<endl;
       }
+
     }
   }
 
-  Q2_x_panel();
+  Q2_x_panel(out_dir);
 
 }
