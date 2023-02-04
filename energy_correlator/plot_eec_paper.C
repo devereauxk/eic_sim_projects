@@ -1257,6 +1257,8 @@ void multiplicity()
   // multiplicity spectra of charged jet particles
   mclogy(cno++);
   {
+    vector<TH1*> hists;
+
     float plot_xrange_lo = 0;
     float plot_xrange_hi = 50;
     float plot_yrange_lo = 0.3;
@@ -1277,6 +1279,8 @@ void multiplicity()
       temp = (TH1D*) h1d_jet_multiplicity_charged[species_picks[ispecies]][etabin_pick][ptbin_pick]->Clone();
 
       cout<<"distribution avg for charged jet multiplicity in "<<species[species_picks[ispecies]]<<" : "<<temp->GetMean()<<endl;
+
+      hists.push_back(temp);
 
       // plot histogram
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -1302,6 +1306,8 @@ void multiplicity()
     tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_multiplicity_charged.pdf\")", cno-1, out_dir) );
+
+    hists_to_csv("multiplicity_charged.csv", hists);
   }
 
 }
