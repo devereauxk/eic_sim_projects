@@ -1441,7 +1441,7 @@ void plot_eec_paper()
   fin_name = fname_ep_Q2_x;
   fin = new TFile(fin_name, "READ");
   try {
-    h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", 0, 0));
+    h2d_jet_Q2_x[0][0] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", 0, 0));
   } catch (...) {
     skip = 1;
   }
