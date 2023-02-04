@@ -1437,16 +1437,25 @@ void plot_eec_paper()
     cout<<fin_name<<" loaded!"<<endl;
   }
 
+  int skip = 0;
   fin_name = fname_ep_Q2_x;
   fin = new TFile(fin_name, "READ");
+  try {
+    h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", 0, 0));
+  } catch (...) {
+    skip = 1;
+  }
 
-  for (int ieta = 0; ieta < etabin; ieta++)
+  if (skip != 1)
   {
-    for (int ipt = 0; ipt < ptbin; ipt++)
+    for (int ieta = 0; ieta < etabin; ieta++)
     {
-      // raw data histograms
-      h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
-      h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      for (int ipt = 0; ipt < ptbin; ipt++)
+      {
+        // raw data histograms
+        h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+        h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      }
     }
   }
 
@@ -1496,7 +1505,7 @@ void plot_eec_paper()
 
   peak_height_vs_A_isospin();
 
-  Q2_x_panel();
+  //Q2_x_panel();
 
   multiplicity();
 
