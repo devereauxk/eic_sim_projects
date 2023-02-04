@@ -1344,11 +1344,15 @@ void plot_eec_paper()
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
             // raw data histograms
+            try {
             h1d_jet_eec[ispecies][ik][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_%d_%d", ieta, ipt));
             h1d_jet_eec[ispecies][ik][ieta][ipt]->SetName(Form("h1d_jet_eec_%d_%d_%d_%d", ieta, ipt, ispecies, ik));
 
             h1d_jet_eec_rlsqrtpt[ispecies][ik][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
             h1d_jet_eec_rlsqrtpt[ispecies][ik][ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_%d_%d_%d", ieta, ipt, ispecies, ik));
+          } catch (...) {
+            cout<<"couldn't find file for "<<species[ispecies]<<" with K = "<<k[ik]<<endl;
+          }
 
             if ((ispecies == 0 && k[ik] == 0) || (ispecies == 7 && k[ik] == 4))
             {
@@ -1480,7 +1484,7 @@ void plot_eec_paper()
 
   pt_bin_side_by_side();
 
-  baseline_comparison();
+  //baseline_comparison();
 
   nuclei_hists();
 
