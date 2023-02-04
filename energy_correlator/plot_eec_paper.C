@@ -51,7 +51,7 @@ static char* fname_eA_isospin[speciesnum] {(char*)"./eHIJING/ep_10_100_K0_pow05/
 static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"}; // all cases are K=0, 2E8 events
 static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are K=4, 2E8 events
 
-static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_pythia8_ft/merged.root";
+static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_Q2x_pythia8/merged.root";
 
 const char* out_dir = "./paperplots/test/";
 
@@ -1437,25 +1437,17 @@ void plot_eec_paper()
     cout<<fin_name<<" loaded!"<<endl;
   }
 
-  int skip = 0;
+
   fin_name = fname_ep_Q2_x;
   fin = new TFile(fin_name, "READ");
-  try {
-    h2d_jet_Q2_x[0][0] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", 0, 0));
-  } catch (...) {
-    skip = 1;
-  }
 
-  if (skip != 1)
+  for (int ieta = 0; ieta < etabin; ieta++)
   {
-    for (int ieta = 0; ieta < etabin; ieta++)
+    for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      for (int ipt = 0; ipt < ptbin; ipt++)
-      {
-        // raw data histograms
-        h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
-        h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
-      }
+      // raw data histograms
+      h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
     }
   }
 
