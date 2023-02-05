@@ -30,7 +30,7 @@ root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_K0_pow05/merged.root\", \"./e
 
 root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_pythia8/merged.root\", \"./eHIJING/ep_10_100_pythia8/\")"
 
-root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_pythia8_ft/merged.root\", \"./eHIJING/ep_10_100_pythia8_ft/\")"
+root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_pythia8_ft_boosted/merged.root\", \"./eHIJING/ep_10_100_pythia8_ft_boosted/\")"
 
 root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_pythia8_ft_noboost/merged.root\", \"./eHIJING/ep_10_100_pythia8_ft_noboost/\")"
 

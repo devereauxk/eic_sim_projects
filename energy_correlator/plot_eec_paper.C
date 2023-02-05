@@ -1202,7 +1202,7 @@ void multiplicity()
   int etabin_pick = 2;
   int ptbin_pick = 2;
   const int nspecies_picks = 2;
-  static int species_picks[nspecies_picks] = {0, 7};
+  static int species_picks[nspecies_picks] = {0, 4, 5, 6, 7};
 
   // multiplicity spectra of jet particles
   mclogy(cno++);
@@ -1354,7 +1354,7 @@ void plot_eec_paper()
             cout<<"couldn't find file for "<<species[ispecies]<<" with K = "<<k[ik]<<endl;
           }
 
-            if ((ispecies == 0 && k[ik] == 0) || (ispecies == 7 && k[ik] == 4))
+            if ((ispecies == 0 && k[ik] == 0) || ((ispecies == 7 || ispecies == 4 || ispecies == 5 || ispecies == 6) && k[ik] == 4))
             {
               try {
                 h1d_jet_multiplicity[ispecies][ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt));
