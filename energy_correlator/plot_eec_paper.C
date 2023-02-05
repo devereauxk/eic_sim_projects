@@ -1201,7 +1201,7 @@ void multiplicity()
 {
   int etabin_pick = 2;
   int ptbin_pick = 2;
-  const int nspecies_picks = 2;
+  const int nspecies_picks = 5;
   static int species_picks[nspecies_picks] = {0, 4, 5, 6, 7};
 
   // multiplicity spectra of jet particles
