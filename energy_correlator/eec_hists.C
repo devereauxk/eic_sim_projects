@@ -38,6 +38,11 @@ TH1D* h1d_jet_multiplicity[etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity_charged[etabin][ptbin] = {};
 TH2D* h2d_Q2_x[etabin][ptbin] = {};
 
+// debugging histograms
+TH1D* h1d_part_pt[etabin] = {};
+TH1D* h1d_part_eta[ptbin] = {};
+TH1D* h1d_part_mult = NULL;
+
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
   float dphiabs = fabs(p0.phi() - p1.phi());
@@ -153,7 +158,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
   cout<<"target in lab frame: (should be what you expect)"<<endl;
   Pf.Print();
 
-  Double_t Px, Py, Pz, Mass, Q2, xB, charge;
+  Double_t Px, Py, Pz, Mass, Q2, xB, charge, Pt, Eta, Mult;
 
   int total_jets = 0;
 
@@ -169,6 +174,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
     Q2 = event->GetQ2();
     xB = event->GetX();
+
+    Mult = event->GetNTracks();
+    h1d_part_mult->Fill(Mult);
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     erhic::ParticleMC* particle;
@@ -190,6 +198,18 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
+        // debug histograms
+        Pt = part.Pt();
+        Eta = part.Eta();
+        for (int ipt = 0; ipt < ptbin; ipt++)
+        {
+          if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ipt]->Fill(Eta);
+        }
+        for (int ieta = 0; ieta < etabin; ieta++)
+        {
+          if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
+        }
+
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(ipart);
         jet_constits.push_back(constit);
@@ -308,7 +328,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
   // initialize particle level variables
   Int_t Id;
-  Double_t Charge, Px, Py, Pz, Mass, Q2, xB;
+  Double_t Charge, Px, Py, Pz, Mass, Q2, xB, Pt, Eta, Mult;
 
   // number of lines
   int iline = 0;
@@ -329,8 +349,11 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
     vector<PseudoJet> jet_constits;
 
     // loop over particles with this event number
+    Mult = 0;
     while (iline < nlines && stoi(content[iline][0]) == ievt)
     {
+      Mult++;
+
       // read content for this line, make type conversions
       vector<string> line;
       line = content[iline];
@@ -356,6 +379,18 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       //cout<<"part_lab eta:"<<part_lab.Eta()<<endl;
       if (fabs(part.Eta())<3.5 && Id!=11)
       {
+        // debug histograms
+        Pt = part.Pt();
+        Eta = part.Eta();
+        for (int ipt = 0; ipt < ptbin; ipt++)
+        {
+          if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ipt]->Fill(Eta);
+        }
+        for (int ieta = 0; ieta < etabin; ieta++)
+        {
+          if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
+        }
+
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(iline);
         jet_constits.push_back(constit);
@@ -363,6 +398,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
       iline++;
     }
+    h1d_part_mult->Fill(Mult);
 
     // jet reconstruction
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
@@ -499,7 +535,18 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   {
     h1d_jet_pt[ieta] = new TH1D(Form("h1d_jet_pt_%d", ieta),"jet pt",800,0,800);
     h1d_jet_pt[ieta]->Sumw2();
+
+    h1d_part_pt[ieta] = new TH1D(Form("h1d_part_pt_%d", ieta),"particle pt",400,0,100);
+    h1d_part_pt[ieta]->Sumw2();
   }
+  for (int ipt = 0; ipt < ptbin; ipt++)
+  {
+    h1d_part_eta[ipt] = new TH1D(Form("h1d_part_eta_%d", ipt),"particle eta",800,-5,5);
+    h1d_part_eta[ipt]->Sumw2();
+  }
+  h1d_part_mult = new TH1D("h1d_part_mult", "event particle multiplicity",200,0,200);
+  h1d_part_mult->Sumw2();
+
   h1d_jet_eta = new TH1D("h1d_jet_eta", "jet eta",800,-5,5);
   h1d_jet_eta->Sumw2();
 
@@ -542,7 +589,14 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   {
     h1d_jet_pt[ieta]->Write();
     cout<<"h1d_jet_pt_"<<ieta<<" entries:"<<h1d_jet_pt[ieta]->GetEntries()<<endl;
+
+    h1d_part_pt[ieta]->Write();
   }
+  for (int ipt = 0; ipt < ptbin; ptbin++)
+  {
+    h1d_part_eta[ipt]->Write();
+  }
+  h1d_part_mult->Write();
   h1d_jet_eta->Write();
   cout<<"h1d_jet_eta entries:"<<h1d_jet_eta->GetEntries()<<endl;
   for (int ieta = 0; ieta < etabin; ieta++)
