@@ -153,7 +153,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
   cout<<"target in lab frame: (should be what you expect)"<<endl;
   Pf.Print();
 
-  Double_t Px, Py, Pz, Mass, Q2, xB;
+  Double_t Px, Py, Pz, Mass, Q2, xB, charge;
 
   int total_jets = 0;
 
@@ -192,7 +192,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
-        constit.set_user_index(ipart);
+
+        charge = particle->Id().Info()->Charge();
+        if (charge != 0) constit.set_user_index(1);
+        else constit.set_user_index(0);
+
         jet_constits.push_back(constit);
       }
 
@@ -219,10 +223,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       {
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
 
-        int ip = constituents[iconstit].user_index();
-        float charge = event->GetTrack(ip)->Id().Info()->Charge();
+        int charge_flag = constituents[iconstit].user_index();
+        //float charge = event->GetTrack(ip)->Id().Info()->Charge();
         //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
-        if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
+        //if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
+        if (charge_flag != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
       // jet histograms filled on inclusive jet information
