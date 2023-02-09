@@ -188,15 +188,10 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (boost == 1) part.Boost(boost_vec);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      //if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
-      if (fabs(particle->GetEta())<3.5 && particle->Id()!=11)
+      if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
-
-        charge = particle->Id().Info()->Charge();
-        if (charge != 0) constit.set_user_index(1);
-        else constit.set_user_index(0);
-
+        constit.set_user_index(ipart);
         jet_constits.push_back(constit);
       }
 
@@ -223,11 +218,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       {
         if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
 
-        int charge_flag = constituents[iconstit].user_index();
-        //float charge = event->GetTrack(ip)->Id().Info()->Charge();
+        int ip = constituents[iconstit].user_index();
+        float charge = event->GetTrack(ip)->Id().Info()->Charge();
         //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" track pt:"<<event->GetTrack(ip)->GetPt()<<" charge:"<<charge<<endl;
-        //if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
-        if (charge_flag != 0) charged_constituents.push_back(constituents[iconstit]);
+        if (charge != 0) charged_constituents.push_back(constituents[iconstit]);
+        //if (charge_flag != 0) charged_constituents.push_back(constituents[iconstit]);
       }
 
       // jet histograms filled on inclusive jet information
