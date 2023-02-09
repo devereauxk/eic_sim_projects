@@ -592,7 +592,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
     h1d_part_pt[ieta]->Write();
   }
-  for (int ipt = 0; ipt < ptbin; ptbin++)
+  for (int ipt = 0; ipt < ptbin; ipt++)
   {
     h1d_part_eta[ipt]->Write();
   }
