@@ -363,14 +363,10 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       Py = stod(line[4]);
       Pz = stod(line[5]);
       Mass = stod(line[6]);
-
-      cout<<"runs1"<<endl;
       if (calc_Q2x == 1)
       {
-        cout<<"runs2"<<endl;
         Q2 = stod(line[7]);
         xB = stod(line[8]);
-        cout<<"runs3"<<endl;
       }
 
       //cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
