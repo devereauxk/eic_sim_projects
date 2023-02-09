@@ -188,7 +188,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (boost == 1) part.Boost(boost_vec);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
+      //if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
+      if (fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(ipart);
@@ -410,7 +411,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
             }
           }
         }
-        
+
       }
       h1d_jet_eta->Fill(jets[ijet].eta());
 
