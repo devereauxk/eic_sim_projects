@@ -369,16 +369,22 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
         xB = stod(line[8]);
       }
 
+      cout<<"runs1"<<endl;
+
       //cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
 
       // apply boost to particle (boost it into lab frame)
       part.SetXYZM(Px, Py, Pz, Mass);
       if (boost == 1) part.Boost(boost_vec);
 
+      cout<<"runs2"<<endl;
+
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       //cout<<"part_lab eta:"<<part_lab.Eta()<<endl;
       if (fabs(part.Eta())<3.5 && Id!=11)
       {
+        cout<<"runs3"<<endl;
+
         // debug histograms
         Pt = part.Pt();
         Eta = part.Eta();
@@ -395,6 +401,8 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
         constit.set_user_index(iline);
         jet_constits.push_back(constit);
       }
+
+      cout<<"runs4"<<endl;
 
       iline++;
     }
