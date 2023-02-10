@@ -647,7 +647,7 @@ void particle_hists(const char* out_dir)
   // 1d particle pt histogram
   mclogy(cno++);
   {
-    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    TLegend* leg = new TLegend(0.51,0.7,0.81,0.82);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.025);
     leg->SetFillStyle(0);
@@ -662,7 +662,7 @@ void particle_hists(const char* out_dir)
 
       temp->Draw("same");
 
-      temp->GetXaxis()->SetRangeUser(0,70);
+      temp->GetXaxis()->SetRangeUser(0,25);
       temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
@@ -678,7 +678,7 @@ void particle_hists(const char* out_dir)
   // 1d particle eta histogram
   mclogy(cno++);
   {
-    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    TLegend* leg = new TLegend(0.51,0.7,0.81,0.82);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.025);
     leg->SetFillStyle(0);
@@ -699,7 +699,7 @@ void particle_hists(const char* out_dir)
       temp->GetXaxis()->SetTitleOffset(1.3);
       temp->GetYaxis()->SetTitleOffset(1.5);
       temp->Draw("same hist e");
-      leg->AddEntry(temp,Form("%1.1f < eta < %1.1f",pt_lo[ipt],pt_hi[ipt]));
+      leg->AddEntry(temp,Form("%1.1f < pt < %1.1f",pt_lo[ipt],pt_hi[ipt]));
     }
     leg->Draw("same");
 

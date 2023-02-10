@@ -175,8 +175,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     Q2 = event->GetQ2();
     xB = event->GetX();
 
-    Mult = event->GetNTracks();
-    h1d_part_mult->Fill(Mult);
+    Mult = 0;
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     erhic::ParticleMC* particle;
@@ -184,6 +183,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
     {
       particle = event->GetTrack(ipart);
+
+      if (particle->GetStatus()==1) Mult++;
 
       // get particle kinematics
       Px = particle->GetPx();
@@ -216,6 +217,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
 
     }
+    h1d_part_mult->Fill(Mult);
 
     // jet reconstruction
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
