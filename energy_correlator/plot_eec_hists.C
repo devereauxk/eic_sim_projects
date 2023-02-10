@@ -32,6 +32,27 @@ TH1D* h1d_part_mult = NULL;
 
 static int cno = 0;
 
+void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
+{
+   ofstream outfile;
+   outfile.open(Form("%s", outfile_name));
+
+   int n = hists[0]->GetNbinsX();
+
+   for (int i = 1; i <= n; i++) // loop over lines
+   {
+     outfile << hists[0]->GetBinCenter(i) << "," << hists[0]->GetBinWidth(i);
+
+     for (int ihist = 0; ihist < hists.size(); ihist++)
+     {
+       outfile << "," << hists[ihist]->GetBinContent(i) << "," << hists[ihist]->GetBinError(i);
+     }
+     outfile << "\n";
+
+   }
+   outfile.close();
+}
+
 void individual_hists(const char* out_dir)
 {
   TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
@@ -647,6 +668,8 @@ void particle_hists(const char* out_dir)
   // 1d particle pt histogram
   mclogy(cno++);
   {
+    vector<TH1D*> hists;
+
     TLegend* leg = new TLegend(0.51,0.7,0.81,0.82);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.025);
@@ -658,7 +681,7 @@ void particle_hists(const char* out_dir)
     for (int ieta = 0; ieta < 3; ieta++)
     {
       temp = (TH1D*) h1d_part_pt[ieta]->Clone("temp");
-      temp->Scale(1/temp->GetEntries());
+      hists.push_back(temp);
 
       temp->Draw("same");
 
@@ -673,11 +696,15 @@ void particle_hists(const char* out_dir)
     leg->Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_part_pt.pdf\")", cno-1, out_dir) );
+
+    hists_to_csv(Form("%spt.csv", out_dir), hists);
   }
 
   // 1d particle eta histogram
   mclogy(cno++);
   {
+    vector<TH1D*> hists;
+
     TLegend* leg = new TLegend(0.51,0.7,0.81,0.82);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.025);
@@ -686,10 +713,10 @@ void particle_hists(const char* out_dir)
 
     TH1D* temp;
 
-    for (int ipt = 0; ipt < 1; ipt++)
+    for (int ipt = 0; ipt < 3; ipt++)
     {
       temp = (TH1D*) h1d_part_eta[ipt]->Clone("temp");
-      temp->Scale(1/temp->GetEntries());
+      hists.push_back(temp);
 
       temp->Draw("same");
 
@@ -704,13 +731,17 @@ void particle_hists(const char* out_dir)
     leg->Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_part_eta.pdf\")", cno-1, out_dir) );
+
+    hists_to_csv(Form("%seta.csv", out_dir), hists);
   }
 
   // 1d event multiplicity histogram
   mclogy(cno++);
   {
+    vector<TH1D*> hists;
+
     TH1D* temp = (TH1D*) h1d_part_mult->Clone("temp");
-    temp->Scale(1/temp->GetEntries());
+    hists.push_back(temp);
 
     temp->Draw("same");
 
@@ -722,6 +753,8 @@ void particle_hists(const char* out_dir)
     temp->Draw("same hist e");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_part_mult.pdf\")", cno-1, out_dir) );
+
+    hists_to_csv(Form("%spt.csv", out_dir), hists);
   }
 
 }
