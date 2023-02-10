@@ -754,7 +754,7 @@ void particle_hists(const char* out_dir)
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_part_mult.pdf\")", cno-1, out_dir) );
 
-    hists_to_csv(Form("%spt.csv", out_dir), hists);
+    hists_to_csv(Form("%smult.csv", out_dir), hists);
   }
 
 }
