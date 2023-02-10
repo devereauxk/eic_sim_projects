@@ -727,7 +727,7 @@ void particle_hists(const char* out_dir)
 }
 
 
-void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./", int make_ratios = 0, const char* fin_name_baseline = "")
+void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./", int make_ratios = 0, const char* fin_name_baseline = "", int make_part_plots = 1)
 {
   // if make_ratios == 1, uses fin_name_baseline to calculate ratios as baseline, else no ratios calculated
 
