@@ -686,7 +686,7 @@ void particle_hists(const char* out_dir)
 
     TH1D* temp;
 
-    for (int ipt = 1; ipt < 2; ipt++)
+    for (int ipt = 0; ipt < 1; ipt++)
     {
       temp = (TH1D*) h1d_part_eta[ipt]->Clone("temp");
       temp->Scale(1/temp->GetEntries());
