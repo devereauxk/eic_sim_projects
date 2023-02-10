@@ -668,7 +668,7 @@ void particle_hists(const char* out_dir)
   // 1d particle pt histogram
   mclogy(cno++);
   {
-    vector<TH1D*> hists;
+    vector<TH1*> hists;
 
     TLegend* leg = new TLegend(0.51,0.7,0.81,0.82);
     leg->SetBorderSize(0);
@@ -703,7 +703,7 @@ void particle_hists(const char* out_dir)
   // 1d particle eta histogram
   mclogy(cno++);
   {
-    vector<TH1D*> hists;
+    vector<TH1*> hists;
 
     TLegend* leg = new TLegend(0.51,0.7,0.81,0.82);
     leg->SetBorderSize(0);
@@ -738,7 +738,7 @@ void particle_hists(const char* out_dir)
   // 1d event multiplicity histogram
   mclogy(cno++);
   {
-    vector<TH1D*> hists;
+    vector<TH1*> hists;
 
     TH1D* temp = (TH1D*) h1d_part_mult->Clone("temp");
     hists.push_back(temp);
