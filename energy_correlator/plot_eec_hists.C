@@ -750,7 +750,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h1d_part_eta[ipt] = (TH1D*) fin->Get(Form("h1d_jet_eta_%d", ipt));
+      h1d_part_eta[ipt] = (TH1D*) fin->Get(Form("h1d_part_eta_%d", ipt));
       h1d_part_eta[ipt]->SetName(Form("h1d_part_eta_%d", ipt));
     }
   }
