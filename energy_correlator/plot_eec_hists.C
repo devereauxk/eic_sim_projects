@@ -26,6 +26,10 @@ TH1D* h1d_jet_eec_rlsqrtpt_baseline[etabin][ptbin] = {};
 
 TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
 
+TH1D* h1d_part_pt[etabin] = {};
+TH1D* h1d_part_eta[ptbin] = {};
+TH1D* h1d_part_mult = NULL;
+
 static int cno = 0;
 
 void individual_hists(const char* out_dir)
@@ -638,6 +642,90 @@ void Q2_x_panel(const char* out_dir)
 
 }
 
+void particle_hists(const char* out_dir)
+{
+  // 1d particle pt histogram
+  mclogy(cno++);
+  {
+    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.025);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+
+    for (int ieta = 0; ieta < 3; ieta++)
+    {
+      temp = (TH1D*) h1d_part_pt[ieta]->Clone("temp");
+      temp->Scale(1/temp->GetEntries());
+
+      temp->Draw("same");
+
+      temp->GetXaxis()->SetRangeUser(0,70);
+      temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
+      temp->GetYaxis()->SetTitle("counts");
+      temp->GetXaxis()->SetTitleOffset(1.3);
+      temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->Draw("same hist e");
+      leg->AddEntry(temp,Form("%1.1f < eta < %1.1f",eta_lo[ieta],eta_hi[ieta]));
+    }
+    leg->Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_part_pt.pdf\")", cno-1, out_dir) );
+  }
+
+  // 1d particle eta histogram
+  mclogy(cno++);
+  {
+    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.025);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    TH1D* temp;
+
+    for (int ipt = 0; ipt < 3; ipt++)
+    {
+      temp = (TH1D*) h1d_part_eta[ipt]->Clone("temp");
+      temp->Scale(1/temp->GetEntries());
+
+      temp->Draw("same");
+
+      temp->GetXaxis()->SetRangeUser(-4,-4);
+      temp->GetXaxis()->SetTitle("#eta");
+      temp->GetYaxis()->SetTitle("counts");
+      temp->GetXaxis()->SetTitleOffset(1.3);
+      temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->Draw("same hist e");
+      leg->AddEntry(temp,Form("%1.1f < eta < %1.1f",pt_lo[ipt],pt_hi[ipt]));
+    }
+    leg->Draw("same");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_part_eta.pdf\")", cno-1, out_dir) );
+  }
+
+  // 1d event multiplicity histogram
+  mclogy(cno++);
+  {
+    TH1D* temp = (TH1D*) h1d_part_mult->Clone("temp");
+    temp->Scale(1/temp->GetEntries());
+
+    temp->Draw("same");
+
+    temp->GetXaxis()->SetRangeUser(0,200);
+    temp->GetXaxis()->SetTitle("event multiplicity");
+    temp->GetYaxis()->SetTitle("counts");
+    temp->GetXaxis()->SetTitleOffset(1.3);
+    temp->GetYaxis()->SetTitleOffset(1.5);
+    temp->Draw("same hist e");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_part_mult.pdf\")", cno-1, out_dir) );
+  }
+
+}
+
 
 void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./", int make_ratios = 0, const char* fin_name_baseline = "")
 {
@@ -651,12 +739,31 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   h1d_jet_eta = (TH1D*) fin->Get("h1d_jet_eta");
   h1d_jet_eta->SetName("h1d_jet_eta");
 
+  int try_load_parteta = 1;
+  try {
+    h1d_part_mult = (TH1D*) fin->Get("h1d_part_mult");
+  } catch (...) {
+    try_load_parteta = 0;
+    cout << "no part mult histogram found" << endl;
+  }
+  if (try_load_parteta == 1)
+  {
+    for (int ipt = 0; ipt < ptbin; ptbin++)
+    {
+      h1d_part_eta[ipt] = (TH1D*) fin->Get(Form("h1d_jet_eta_%d", ipt));
+      h1d_part_eta[ipt]->SetName(Form("h1d_part_eta_%d", ipt));
+    }
+  }
+
   int make_pt_plots = 1;
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     try {
     h1d_jet_pt[ieta] = (TH1D*) fin->Get(Form("h1d_jet_pt_%d", ieta));
     h1d_jet_pt[ieta]->SetName(Form("h1d_jet_pt_%d", ieta));
+
+    h1d_part_pt[ieta] = (TH1D*) fin->Get(Form("h1d_part_pt_%d", ieta));
+    h1d_part_pt[ieta]->SetName(Form("h1d_part_pt_%d", ieta));
   } catch (...) {
     make_pt_plots = 0;
     cout << " jet pt plots not made "<< endl;
@@ -676,6 +783,8 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
       h1d_jet_eec_norm[ieta][ipt]->Scale(1/h1d_jet_eec_norm[ieta][ipt]->Integral()); // normalization
     }
   }
+
+  if (make_part_plots == 1) particle_hists(out_dir);
 
   // print individual 2D histograms
   if (make_pt_plots == 1) individual_hists(out_dir);
