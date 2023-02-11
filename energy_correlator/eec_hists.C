@@ -80,7 +80,7 @@ class Correlator_Builder
       for (int i = 0; i < mult; i++)
       {
         vector<double> inner_list(mult, 0.0);
-        for (int j = i; j < mult; j++)
+        for (int j = 0; j < mult; j++)
         {
           inner_list[j] = calculate_distance(particle_list[i], particle_list[j]);
         }
@@ -90,17 +90,12 @@ class Correlator_Builder
 
     void construct_EEC()
     {
-      int overlap = 0;
       for (int i = 0; i < mult; i++)
       {
-        for (int j = i; j < mult; j++)
+        for (int j = 0; j < mult; j++)
         {
-          double dist12 = pair_list[i][j]; // only thing to change in boost
+          double dist12 = pair_list[i][j]; // no change in boost
           double eec_weight = pow((particle_list[i].pt() * particle_list[j].pt()) / pow(jet_pt, 2), weight_pow);
-
-          if (i == j) overlap++;
-          if (overlap == 0) eec_weight = eec_weight*2;
-          if (overlap > 0) eec_weight = eec_weight*1;
 
           // filling h1d_jet_eec[etabin][ptbin] histograms
           // filing h1d_jet_eec_rlsqrtpt[etabin][ptbin] histograms
@@ -196,10 +191,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // apply boost, if required. boosted according to proj_rest_e, targ_lab_e, targ_species
       if (boost == 1) part.Boost(boost_vec);
 
-      // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
+      // debug histograms
+      if (particle->GetStatus()==1)
       {
-        // debug histograms
         Pt = part.Pt();
         Eta = part.Eta();
         for (int ipt = 0; ipt < ptbin; ipt++)
@@ -210,7 +204,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         {
           if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
         }
+      }
 
+      // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
+      if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
+      {
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(ipart);
         jet_constits.push_back(constit);
@@ -377,23 +375,22 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       part.SetXYZM(Px, Py, Pz, Mass);
       if (boost == 1) part.Boost(boost_vec);
 
+      // debug histograms
+      Pt = part.Pt();
+      Eta = part.Eta();
+      for (int ipt = 0; ipt < ptbin; ipt++)
+      {
+        if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ipt]->Fill(Eta);
+      }
+      for (int ieta = 0; ieta < etabin; ieta++)
+      {
+        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
+      }
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       //cout<<"part_lab eta:"<<part_lab.Eta()<<endl;
       if (fabs(part.Eta())<3.5 && Id!=11)
       {
-        // debug histograms
-        Pt = part.Pt();
-        Eta = part.Eta();
-        for (int ipt = 0; ipt < ptbin; ipt++)
-        {
-          if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ipt]->Fill(Eta);
-        }
-        for (int ieta = 0; ieta < etabin; ieta++)
-        {
-          if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
-        }
-
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(iline);
         jet_constits.push_back(constit);
