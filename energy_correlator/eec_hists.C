@@ -541,7 +541,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   }
   for (int ipt = 0; ipt < ptbin; ipt++)
   {
-    h1d_part_eta[ipt] = new TH1D(Form("h1d_part_eta_%d", ipt),"particle eta",800,-5,5);
+    h1d_part_eta[ipt] = new TH1D(Form("h1d_part_eta_%d", ipt),"particle eta",1600,-15,5);
     h1d_part_eta[ipt]->Sumw2();
   }
   h1d_part_mult = new TH1D("h1d_part_mult", "event particle multiplicity",200,0,200);
