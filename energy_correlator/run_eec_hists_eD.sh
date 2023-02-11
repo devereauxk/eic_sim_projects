@@ -25,4 +25,6 @@ ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
 mkdir $OUT_DIR
 
+#                                                                                                        DOUBLE CHECK THESE
+#                                                                                                        power, boost, Q2x
 root -l -b -q "eec_hists.C(\"eD_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 4, 0.5)"
