@@ -26,6 +26,8 @@ ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
 mkdir $OUT_DIR
 
+#                                                                                                        DOUBLE CHECK THESE
+#                                                                                                        power, boost, Q2x
 root -l -b -q "eec_hists.C(\"hepmcout-${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, 0.5, 0, 1)"
 
 #root -l -b -q "eec_hists.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_ft_MB/hepmcout-1.root\",\"temp.root\", -1, 2131, 100, 0, 0.5, 1, 1)"

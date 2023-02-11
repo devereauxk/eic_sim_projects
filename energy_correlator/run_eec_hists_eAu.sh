@@ -29,6 +29,8 @@ mkdir $OUT_DIR
 #                                                                                                        power, boost, Q2x
 root -l -b -q "eec_hists.C(\"eAu_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 1, 0.5, 1, 0)"
 
+#root -l -b -q "eec_hists.C(\"/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eAu_1E8_K4/eAu_1.dat\",\"temp.root\", 1, 2130.17, 100, 1, 0.5, 1, 0)"
+
 # 10 on 100: 2147.95 GeV
 # root -l -b -q "eec_hists.C(\"eAu_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2147.95, 100, 1, 1)"
 
