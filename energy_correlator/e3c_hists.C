@@ -102,12 +102,12 @@ class Correlator_Builder
           double distjk = pair_list[j][k];
           double distik = pair_list[i][k];
 
-          double Rl = Max(distij, Max(distjk, distik));
-          double Rs = Min(distij, Min(distjk, distik));
-          double Rm = Max(Min(distij, distjk) + Max(Min(distij, distik) + Min(distjk, distik)));
+          double rl = Max(distij, Max(distjk, distik));
+          double rs = Min(distij, Min(distjk, distik));
+          double rm = Max(Min(distij, distjk) + Max(Min(distij, distik) + Min(distjk, distik)));
 
-          double Xi = Rs / Rm;
-          double phi = ASin(Sqrt)
+          double xi = rs / rm;
+          double phi = ASin(sqrt(1 - (pow(rl - rm, 2) / pow(rs, 2))));
 
           double eec_weight = pow((particle_list[i].pt() * particle_list[j].pt() * particle_list[k].pt()) / pow(jet_pt, 3), weight_pow);
 
