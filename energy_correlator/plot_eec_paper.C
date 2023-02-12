@@ -51,9 +51,9 @@ static char* fname_eA_isospin[speciesnum] {(char*)"./eHIJING/ep_10_100_K0_pow05/
 static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"}; // all cases are K=0, 2E8 events
 static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are K=4, 2E8 events
 
-static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_Q2x_pythia8/merged.root";
+static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_K0_boosted/merged.root";
 
-const char* out_dir = "./paperplots/test/";
+const char* out_dir = "./paperplots/";
 
 TH1D* h1d_jet_pt[speciesnum] = {};
 TH1D* h1d_jet_eta[speciesnum] = {};
@@ -1481,7 +1481,7 @@ void plot_eec_paper()
 
   // plot individual panels
 
-  //pt_eta_3by3_hists();
+  pt_eta_3by3_hists();
 
   pt_bin_side_by_side();
 
@@ -1489,16 +1489,16 @@ void plot_eec_paper()
 
   nuclei_hists();
 
-  power_hists();
+  //power_hists();
 
-  //pt_spectra();
+  pt_spectra();
 
   peak_height_vs_A();
 
-  peak_height_vs_A_isospin();
+  //peak_height_vs_A_isospin();
 
-  //Q2_x_panel();
+  Q2_x_panel();
 
-  multiplicity();
+  //multiplicity();
 
 }
