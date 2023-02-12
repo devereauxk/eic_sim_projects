@@ -1481,7 +1481,7 @@ void plot_eec_paper()
 
   // plot individual panels
 
-  pt_eta_3by3_hists();
+  //pt_eta_3by3_hists();
 
   pt_bin_side_by_side();
 
