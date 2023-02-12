@@ -48,8 +48,8 @@ static char* fname_eA_isospin[speciesnum] {(char*)"./eHIJING/ep_10_100_K0_pow05/
   (char*)"./eHIJING/eHe4_10_100_pdf0/merged.root", (char*)"./eHIJING/eC_10_100_pdf0/merged.root", (char*)"./eHIJING/eCa_10_100_pdf0/merged.root",\
   (char*)"./eHIJING/eCu_10_100_pdf0/merged.root", (char*)"./eHIJING/eAu_10_100_pdf0/merged.root", (char*)"./eHIJING/eU_10_100_pdf0/merged.root"};
 
-static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"}; // all cases are K=0, 2E8 events
-static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_10_100_K4_pow05/merged.root", (char*)"./eHIJING/eAu_10_100_K4/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow15/merged.root", (char*)"./eHIJING/eAu_10_100_K4_pow2/merged.root"}; // all cases are K=4, 2E8 events
+static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow1/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"};
+static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_1E8_K4_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow1/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow15/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow2/merged.root"};
 
 static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_K0_boosted/merged.root";
 
