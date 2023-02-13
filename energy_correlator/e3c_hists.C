@@ -30,6 +30,7 @@ const int etabin = 6; // inclusive on last bin, inclusive on lower limit, exclus
 static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 
+// jet level histograms
 TH1D* h1d_jet_eec[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
 TH1D* h1d_jet_pt[etabin] = {};
@@ -38,7 +39,7 @@ TH1D* h1d_jet_multiplicity[etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity_charged[etabin][ptbin] = {};
 TH2D* h2d_Q2_x[etabin][ptbin] = {};
 
-// debugging histograms
+// particle level histograms
 TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
