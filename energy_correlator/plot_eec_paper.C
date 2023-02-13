@@ -1481,7 +1481,7 @@ void plot_eec_paper()
 
   // plot individual panels
 
-  //pt_eta_3by3_hists();
+  pt_eta_3by3_hists();
 
   pt_bin_side_by_side();
 
@@ -1489,9 +1489,9 @@ void plot_eec_paper()
 
   nuclei_hists();
 
-  //power_hists();
+  power_hists();
 
-  pt_spectra();
+  //pt_spectra();
 
   peak_height_vs_A();
 
