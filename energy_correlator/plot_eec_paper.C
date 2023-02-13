@@ -550,7 +550,7 @@ void nuclei_hists()
   int etabin_pick = 2;
   int ptbin_pick = 2;
   const int nspecies_picks = 7;
-  static int species_picks[nspecies_picks] = {2, 3, 4, 5, 6, 7, 8};
+  static int species_picks[nspecies_picks] = {1, 2, 3, 4, 5, 6, 7, 8};
 
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
