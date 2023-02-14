@@ -172,7 +172,7 @@ void Output(Pythia & pythia, std::vector<Particle> & plist, std::ofstream & F){
     double phi = - pGamma.phi();
 
     for (auto & p : plist) {
-        if (p.isFinal() && p.isHadron())
+        if (p.isFinal())
         {
             int id = p.id();
             double charge = p.charge();
@@ -232,7 +232,7 @@ int main(int argc, char *argv[]) {
     {
       nPDFset = 2;
     }
-    nPDFset = 0; // override nPDFset = 0 for isospin study REMEMBER TO CHANGE BACK
+    //nPDFset = 0; // override nPDFset = 0 for isospin study REMEMBER TO CHANGE BACK
 
     // mode=0: higher-twist, in the soft-gluon-emission limit
     // mode=1: generalized higher-twist, in the soft-gluon-emission limit
