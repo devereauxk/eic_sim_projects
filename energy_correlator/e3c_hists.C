@@ -640,10 +640,10 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
       h3d_jet_eec_rl_xi_phi[ieta][ipt]->Write();
-      cout<<"h1d_jet_eec_"<<ieta<<"_"<<ipt<<" entries:"<<h3d_jet_eec_rl_xi_phi[ieta][ipt]->GetEntries()<<endl;
+      cout<<"h3d_jet_eec_rl_xi_phi_"<<ieta<<"_"<<ipt<<" entries:"<<h3d_jet_eec_rl_xi_phi[ieta][ipt]->GetEntries()<<endl;
 
       h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->Write();
-      cout<<"h1d_jet_eec_rlsqrtpt_"<<ieta<<"_"<<ipt<<" entries:"<<h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->GetEntries()<<endl;
+      cout<<"h3d_jet_eec_rlsqrtpt_xi_phi_"<<ieta<<"_"<<ipt<<" entries:"<<h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->GetEntries()<<endl;
 
       h1d_jet_multiplicity[ieta][ipt]->Write();
       cout<<"h1d_jet_multiplicity_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_multiplicity[ieta][ipt]->GetEntries()<<endl;
