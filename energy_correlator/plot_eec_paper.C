@@ -53,7 +53,7 @@ static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_1E8_K4_pow05/me
 
 static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_K0_boosted/merged.root";
 
-const char* out_dir = "./paperplots/even_newer/";
+const char* out_dir = "./paperplots/even_newer/temp/";
 
 TH1D* h1d_jet_pt[speciesnum] = {};
 TH1D* h1d_jet_eta[speciesnum] = {};
@@ -75,7 +75,7 @@ TH1D* h1d_jet_eec_baseline[speciesnum][etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity[speciesnum][etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity_charged[speciesnum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.08; // 0.3 used for 3by3 top left and second col //0.08;
+const float rl_norm_hi = 0.2; // 0.3 used for 3by3 top left and second col //0.08;
 const float rl_norm_lo = 1E-3;
 
 const float rlsqrtpt_norm_hi = rl_norm_hi * sqrt(20); //1;
