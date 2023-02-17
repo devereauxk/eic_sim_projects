@@ -621,22 +621,24 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // write out histograms
   TFile* fout = new TFile(outFile,"recreate");
   fout->Write();
+  
+  for (int ipt = 0; ipt < ptbin; ipt++)
+  {
+    h1d_part_eta[ipt]->Write();
+  }
+
+  h1d_part_mult->Write();
+
+  h1d_jet_eta->Write();
+  cout<<"h1d_jet_eta entries:"<<h1d_jet_eta->GetEntries()<<endl;
+
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     h1d_jet_pt[ieta]->Write();
     cout<<"h1d_jet_pt_"<<ieta<<" entries:"<<h1d_jet_pt[ieta]->GetEntries()<<endl;
 
     h1d_part_pt[ieta]->Write();
-  }
-  for (int ipt = 0; ipt < ptbin; ipt++)
-  {
-    h1d_part_eta[ipt]->Write();
-  }
-  h1d_part_mult->Write();
-  h1d_jet_eta->Write();
-  cout<<"h1d_jet_eta entries:"<<h1d_jet_eta->GetEntries()<<endl;
-  for (int ieta = 0; ieta < etabin; ieta++)
-  {
+
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
       h3d_jet_eec_rl_xi_phi[ieta][ipt]->Write();
