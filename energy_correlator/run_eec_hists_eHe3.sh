@@ -27,4 +27,4 @@ mkdir $OUT_DIR
 
 #                                                                                                        DOUBLE CHECK THESE
 #                                                                                                        power, boost, Q2x
-root -l -b -q "eec_hists.C(\"eHe3_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 7, 0.5, 1, 0)"
+root -l -b -q "eec_hists.C(\"eHe3_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 7, 0.5, 1, 1)"
