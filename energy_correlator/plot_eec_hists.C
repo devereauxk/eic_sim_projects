@@ -720,7 +720,7 @@ void particle_hists(const char* out_dir)
 
       temp->Draw("same");
 
-      temp->GetXaxis()->SetRangeUser(-8,-1);
+      temp->GetXaxis()->SetRangeUser(-5,5);
       temp->GetXaxis()->SetTitle("#eta");
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
