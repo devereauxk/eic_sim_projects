@@ -75,7 +75,7 @@ TH1D* h1d_jet_eec_baseline[speciesnum][etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity[speciesnum][etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity_charged[speciesnum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.2; // 0.3 used for 3by3 top left and second col //0.08;
+const float rl_norm_hi = 0.1; // 0.3 used for 3by3 top left and second col //0.08;
 const float rl_norm_lo = 1E-3;
 
 const float rlsqrtpt_norm_hi = rl_norm_hi * sqrt(20); //1;
