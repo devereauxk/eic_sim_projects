@@ -31,8 +31,8 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 
 // jet level histograms
-TH1D* h1d_jet_eec[etabin][ptbin] = {};
-TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
+TH3D* h3d_jet_eec_rl_xi_phi[etabin][ptbin] = {};
+TH3D* h3d_jet_eec_rlsqrtpt_xi_phi[etabin][ptbin] = {};
 TH1D* h1d_jet_pt[etabin] = {};
 TH1D* h1d_jet_eta = NULL;
 TH1D* h1d_jet_multiplicity[etabin][ptbin] = {};
@@ -98,34 +98,34 @@ class Correlator_Builder
           for (int k = 0; k < mult; k++)
           {
 
-          }
-          double distij = pair_list[i][j];
-          double distjk = pair_list[j][k];
-          double distik = pair_list[i][k];
+            double distij = pair_list[i][j];
+            double distjk = pair_list[j][k];
+            double distik = pair_list[i][k];
 
-          double rl = Max(distij, Max(distjk, distik));
-          double rs = Min(distij, Min(distjk, distik));
-          double rm = Max(Min(distij, distjk) + Max(Min(distij, distik) + Min(distjk, distik)));
+            double rl = Max(distij, Max(distjk, distik));
+            double rs = Min(distij, Min(distjk, distik));
+            double rm = Max(Min(distij, distjk), Max(Min(distij, distik), Min(distjk, distik)));
 
-          double xi = rs / rm;
-          double phi = ASin(sqrt(1 - (pow(rl - rm, 2) / pow(rs, 2))));
+            double xi = rs / rm;
+            double phi = ASin(sqrt(1 - (pow(rl - rm, 2) / pow(rs, 2))));
 
-          double eec_weight = pow((particle_list[i].pt() * particle_list[j].pt() * particle_list[k].pt()) / pow(jet_pt, 3), weight_pow);
+            double eec_weight = pow((particle_list[i].pt() * particle_list[j].pt() * particle_list[k].pt()) / pow(jet_pt, 3), weight_pow);
 
-          // filling h1d_jet_eec[etabin][ptbin] histograms
-          // filing h1d_jet_eec_rlsqrtpt[etabin][ptbin] histograms
-          for (int ieta = 0; ieta < etabin; ieta++)
-          {
-            if (jet_eta >= eta_lo[ieta] && jet_eta < eta_hi[ieta])
+            // filling h1d_jet_eec[etabin][ptbin] histograms
+            // filing h1d_jet_eec_rlsqrtpt[etabin][ptbin] histograms
+            for (int ieta = 0; ieta < etabin; ieta++)
             {
-              for (int ipt = 0; ipt < ptbin; ipt++)
+              if (jet_eta >= eta_lo[ieta] && jet_eta < eta_hi[ieta])
               {
-                if (jet_pt >= pt_lo[ipt] && jet_pt < pt_hi[ipt])
+                for (int ipt = 0; ipt < ptbin; ipt++)
                 {
-                  h1d_jet_eec[ieta][ipt]->Fill(dist12, eec_weight);
+                  if (jet_pt >= pt_lo[ipt] && jet_pt < pt_hi[ipt])
+                  {
+                    h3d_jet_eec_rl_xi_phi[ieta][ipt]->Fill(rl, xi, phi, eec_weight);
 
-                  float rlsqrtpt = dist12 * sqrt(jet_pt);
-                  h1d_jet_eec_rlsqrtpt[ieta][ipt]->Fill(rlsqrtpt, eec_weight);
+                    float rlsqrtpt = dist12 * sqrt(jet_pt);
+                    h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->Fill(rlsqrtpt, xi, phi, eec_weight);
+                  }
                 }
               }
             }
@@ -522,6 +522,26 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     lbins_rlsqrtpt[i] = TMath::Power(10, log10(xmin) + binwidth * i);
   }
 
+  xmin = 0;
+  xmax = 1;
+  nbins = 20;
+  Double_t xibins[nbins+1];
+  binwidth = (xmax - xmin) / nbins;
+  for (int i = 0; i < nbins+1; i++)
+  {
+    xibins[i] = xmin + binwidth * i;
+  }
+
+  xmin = 0;
+  xmax = TMath::Pi() / 2;
+  nbins = 20;
+  Double_t phibins[nbins+1];
+  binwidth = (xmax - xmin) / nbins;
+  for (int i = 0; i < nbins+1; i++)
+  {
+    phibins[i] = xmin + binwidth * i;
+  }
+
   // compute log bins for Q2-x
   // xbins correspond to xB
   xmin = 1E-6;
@@ -569,11 +589,11 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h1d_jet_eec[ieta][ipt] = new TH1D(Form("h1d_jet_eec_%d_%d", ieta, ipt),"jet eec",50,lbins);
-      h1d_jet_eec[ieta][ipt]->Sumw2();
+      h3d_jet_eec_rl_xi_phi[ieta][ipt] = new TH3D(Form("h1d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt),"jet eec rl xi phi",50,lbins,20,xibins,20,phibins);
+      h3d_jet_eec_rl_xi_phi[ieta][ipt]->Sumw2();
 
-      h1d_jet_eec_rlsqrtpt[ieta][ipt] = new TH1D(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt),"jet eec rlsqrtpt",50,lbins_rlsqrtpt);
-      h1d_jet_eec_rlsqrtpt[ieta][ipt]->Sumw2();
+      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = new TH3D(Form("h1d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt),"jet eec rlsqrtpt xi phi",50,lbins_rlsqrtpt,20,xibins,20,phibins);
+      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->Sumw2();
 
       h1d_jet_multiplicity[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt), "jet multiplicity", 50, 0, 50);
       h1d_jet_multiplicity[ieta][ipt]->Sumw2();
@@ -618,11 +638,11 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h1d_jet_eec[ieta][ipt]->Write();
-      cout<<"h1d_jet_eec_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_eec[ieta][ipt]->GetEntries()<<endl;
+      h3d_jet_eec_rl_xi_phi[ieta][ipt]->Write();
+      cout<<"h1d_jet_eec_"<<ieta<<"_"<<ipt<<" entries:"<<h3d_jet_eec_rl_xi_phi[ieta][ipt]->GetEntries()<<endl;
 
-      h1d_jet_eec_rlsqrtpt[ieta][ipt]->Write();
-      cout<<"h1d_jet_eec_rlsqrtpt_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_eec_rlsqrtpt[ieta][ipt]->GetEntries()<<endl;
+      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->Write();
+      cout<<"h1d_jet_eec_rlsqrtpt_"<<ieta<<"_"<<ipt<<" entries:"<<h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->GetEntries()<<endl;
 
       h1d_jet_multiplicity[ieta][ipt]->Write();
       cout<<"h1d_jet_multiplicity_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_jet_multiplicity[ieta][ipt]->GetEntries()<<endl;
