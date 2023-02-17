@@ -21,8 +21,8 @@ echo $INPUT
 DIR=`printf "%04d" $INPUT`
 mkdir $DIR
 
-ln -s $IN_DIR/hepmcout-${INPUT}.root
-#ln -s $IN_DIR/ep_minbias_highQ2_${INPUT}.root
+#ln -s $IN_DIR/hepmcout-${INPUT}.root
+ln -s $IN_DIR/ep_minbias_highQ2_${INPUT}.root
 ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
 
 mkdir $OUT_DIR
