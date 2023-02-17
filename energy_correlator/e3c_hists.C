@@ -124,7 +124,7 @@ class Correlator_Builder
                   {
                     h3d_jet_eec_rl_xi_phi[ieta][ipt]->Fill(rl, xi, phi, eec_weight);
 
-                    float rlsqrtpt = dist12 * sqrt(jet_pt);
+                    float rlsqrtpt = rl * sqrt(jet_pt);
                     h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->Fill(rlsqrtpt, xi, phi, eec_weight);
                   }
                 }
