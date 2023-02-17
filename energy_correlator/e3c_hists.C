@@ -5,6 +5,7 @@ R__LOAD_LIBRARY(libfastjet);
 #include <iostream>
 using namespace fastjet;
 using namespace std;
+using namespace TMath;
 const int verbosity = 0;
 
 const Double_t Mp(0.9383); // in GeV/c^2
