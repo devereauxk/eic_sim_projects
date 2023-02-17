@@ -51,7 +51,7 @@ static char* fname_eA_isospin[speciesnum] {(char*)"./eHIJING/ep_10_100_K0_pow05/
 static char* fname_ep_by_power[pownum] = {(char*)"./eHIJING/ep_10_100_K0_pow05/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow1/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow15/merged.root", (char*)"./eHIJING/ep_10_100_K0_pow2/merged.root"};
 static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_1E8_K4_pow05/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow1/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow15/merged.root", (char*)"./eHIJING/eAu_1E8_K4_pow2/merged.root"};
 
-static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_K0_boosted/merged.root";
+static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_K0/merged.root";
 
 const char* out_dir = "./paperplots/even_newer/temp/";
 
@@ -75,7 +75,7 @@ TH1D* h1d_jet_eec_baseline[speciesnum][etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity[speciesnum][etabin][ptbin] = {};
 TH1D* h1d_jet_multiplicity_charged[speciesnum][etabin][ptbin] = {};
 
-const float rl_norm_hi = 0.1; // 0.3 used for 3by3 top left and second col //0.08;
+const float rl_norm_hi = 0.08; // 0.3 used for 3by3 top left and second col //0.08;
 const float rl_norm_lo = 1E-3;
 
 const float rlsqrtpt_norm_hi = rl_norm_hi * sqrt(20); //1;
