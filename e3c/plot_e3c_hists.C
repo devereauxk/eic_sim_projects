@@ -253,7 +253,7 @@ void overlay_hists(const char* out_dir)
 
       float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
       sliced = (TH3D*) picked->Clone("temp3d");
-      slided->GetXaxis()->SetRange(ibin,ibin);
+      sliced->GetXaxis()->SetRange(ibin,ibin);
       temp = (TH2D*) sliced->Project3D("zy");
       temp->SetName("temp2d");
 
