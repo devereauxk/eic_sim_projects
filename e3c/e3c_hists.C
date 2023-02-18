@@ -590,10 +590,10 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h3d_jet_eec_rl_xi_phi[ieta][ipt] = new TH3D(Form("h1d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt),"jet eec rl xi phi",50,lbins,20,xibins,20,phibins);
+      h3d_jet_eec_rl_xi_phi[ieta][ipt] = new TH3D(Form("h3d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt),"jet eec rl xi phi",50,lbins,20,xibins,20,phibins);
       h3d_jet_eec_rl_xi_phi[ieta][ipt]->Sumw2();
 
-      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = new TH3D(Form("h1d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt),"jet eec rlsqrtpt xi phi",50,lbins_rlsqrtpt,20,xibins,20,phibins);
+      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = new TH3D(Form("h3d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt),"jet eec rlsqrtpt xi phi",50,lbins_rlsqrtpt,20,xibins,20,phibins);
       h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->Sumw2();
 
       h1d_jet_multiplicity[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt), "jet multiplicity", 50, 0, 50);
@@ -621,7 +621,7 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   // write out histograms
   TFile* fout = new TFile(outFile,"recreate");
   fout->Write();
-  
+
   for (int ipt = 0; ipt < ptbin; ipt++)
   {
     h1d_part_eta[ipt]->Write();

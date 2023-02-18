@@ -446,10 +446,10 @@ void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h3d_jet_eec_rl_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h3d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
+      h3d_jet_eec_rl_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h1d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
       h3d_jet_eec_rl_xi_phi[ieta][ipt]->SetName(Form("h3d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
 
-      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h3d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
+      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
       h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->SetName(Form("h3d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
 
       h2d_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
