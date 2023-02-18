@@ -139,7 +139,7 @@ void overlay_hists(const char* out_dir)
       float plot_xrange_lo = 1E-2;
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 1E-5;
-      float plot_yrange_hi = 5E-1
+      float plot_yrange_hi = 5E-1;
 
       TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
       leg->SetBorderSize(0);
@@ -182,7 +182,7 @@ void overlay_hists(const char* out_dir)
       float plot_xrange_lo = 1E-2*sqrt(20);
       float plot_xrange_hi = 1*sqrt(20);
       float plot_yrange_lo = 1E-5;
-      float plot_yrange_hi = 5E-1
+      float plot_yrange_hi = 5E-1;
 
       TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
       leg->SetBorderSize(0);
@@ -222,8 +222,11 @@ void overlay_hists(const char* out_dir)
   int ptbin_pick = 2;
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
-  int norm_binrange_lo = temp->FindBin(rl_range_lo);
-  int norm_binrange_hi = temp->FindBin(rl_range_hi);
+
+  TH3D* picked = h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick]
+  picked->SetName("picked");
+  int norm_binrange_lo = picked->GetXaxis()->FindBin(rl_range_lo);
+  int norm_binrange_hi = picked->GetXaxis()->FindBin(rl_range_hi);
   if (norm_binrange_lo == 0)
   {
     norm_binrange_lo = 1;
@@ -248,9 +251,9 @@ void overlay_hists(const char* out_dir)
       float plot_zrange_lo = 0;
       float plot_zrange_hi = 1;
 
-      float bin_center = h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick]->GetXaxis()->GetBinCenter(ibin);
-      sliced = (TH3D*) h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick]->Clone("temp3d")->GetXaxis()->SetRange(ibin,ibin);
-      temp = (TH2D*) sliced->Project("zy");
+      float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
+      sliced = (TH3D*) picked->Clone("temp3d")->GetXaxis()->SetRange(ibin,ibin);
+      temp = (TH2D*) sliced->Project3D("zy");
       temp->SetName("temp2d");
 
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -290,7 +293,7 @@ void Q2_x_panel(const char* out_dir)
     {
       mclogxyz(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
       {
-        TH2D* temp = (TH2D*) h2d_jet_Q2_x[ieta][ipt]->Clone();
+        TH2D* temp = (TH2D*) h2d_Q2_x[ieta][ipt]->Clone();
 
         // plot
         //temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -442,14 +445,14 @@ void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h3d_jet_eec_rl_xi_phi[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
-      h3d_jet_eec_rl_xi_phi[ieta][ipt]->SetName(Form("h1d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
+      h3d_jet_eec_rl_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h3d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
+      h3d_jet_eec_rl_xi_phi[ieta][ipt]->SetName(Form("h3d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
 
-      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
-      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
+      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h3d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
+      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->SetName(Form("h3d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
 
-      h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
-      h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      h2d_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+      h2d_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
     }
   }
 
