@@ -127,28 +127,11 @@ void individual_hists(const char* out_dir)
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eta.pdf\")", cno-1, out_dir) );
   }
 
-  for (int ieta = 0; ieta < etabin; ieta++)
-  {
-    for (int ipt = 0; ipt < ptbin; ipt++)
-    {
-      mclogxy(cno++);
-      {
-        h1d_jet_eec_norm[ieta][ipt]->GetXaxis()->SetTitle("R_{L}");
-        h1d_jet_eec_norm[ieta][ipt]->GetYaxis()->SetTitle("normalized EEC");
-        h1d_jet_eec_norm[ieta][ipt]->GetXaxis()->SetTitleOffset(1.3);
-        h1d_jet_eec_norm[ieta][ipt]->GetYaxis()->SetTitleOffset(1.5);
-        h1d_jet_eec_norm[ieta][ipt]->Draw("same hist e");
-
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_%d_%d.pdf\")", cno-1, out_dir, ieta, ipt) );
-      }
-    }
-  }
-
 }
 
 void overlay_hists(const char* out_dir)
 {
-  // overlay h1d_jet_eec with pt binnings, one plot per eta binning
+  // overlay h1d_jet_eec_rl_xi_phi projected to 1D h1d_jet_rl, for each eta bin curves for pt
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     mclogxy(cno++);
@@ -156,60 +139,22 @@ void overlay_hists(const char* out_dir)
       float plot_xrange_lo = 1E-2;
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 1E-5;
-      float plot_yrange_hi = 5E-1;
+      float plot_yrange_hi = 5E-1
 
       TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
       leg->SetBorderSize(0);
       leg->SetTextSize(0.025);
       leg->SetFillStyle(0);
       leg->SetMargin(0.1);
+
+      TH1D* temp;
 
       for (int ipt = 0; ipt < ptbin-1; ipt++)
       {
-        h1d_jet_eec_norm[ieta][ipt]->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-        h1d_jet_eec_norm[ieta][ipt]->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-        h1d_jet_eec_norm[ieta][ipt]->SetMarkerColor(pt_color[ipt]);
-        h1d_jet_eec_norm[ieta][ipt]->SetLineColor(pt_color[ipt]);
-        h1d_jet_eec_norm[ieta][ipt]->SetMarkerSize(0.5);
-        h1d_jet_eec_norm[ieta][ipt]->SetMarkerStyle(21);
-        h1d_jet_eec_norm[ieta][ipt]->Draw("same hist e");
-        leg->AddEntry(h1d_jet_eec_norm[ieta][ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
-      }
-      leg->Draw("same");
+        temp = (TH1D*) h3d_jet_eec_rl_xi_phi[ieta][ipt]->ProjectionX("temp");
 
-      TLatex* tl = new TLatex();
-      tl->SetTextAlign(11);
-      tl->SetTextSize(0.025);
-      tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
-
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d.pdf\")", cno-1, out_dir, ieta) );
-    }
-  }
-
-  // overlay h1d_jet_eec with pt binnings, one plot per eta binning
-  for (int ieta = 0; ieta < etabin; ieta++)
-  {
-    mclogxy(cno++);
-    {
-      float plot_xrange_lo = 5E-2;
-      float plot_xrange_hi = 1;
-      float plot_yrange_lo = 1E-5;
-      float plot_yrange_hi = 5E-1;
-
-      TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
-      leg->SetBorderSize(0);
-      leg->SetTextSize(0.025);
-      leg->SetFillStyle(0);
-      leg->SetMargin(0.1);
-
-      for (int ipt = 0; ipt < ptbin-2; ipt++)
-      {
-        TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
-        temp->Scale(1/temp->GetEntries());
-        cout<<"NUMBER JETS IN PT: ["<<pt_lo[ipt]<<","<<pt_hi[ipt]<<"] ETA: ["<<eta_lo[ieta]<<","<<eta_hi[ieta]<<"] == "<<temp->GetEntries()<<endl;
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-        //h1d_jet_eec[ieta][ipt]->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
         temp->SetMarkerSize(0.5);
@@ -225,34 +170,108 @@ void overlay_hists(const char* out_dir)
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_selfnorm_%d.pdf\")", cno-1, out_dir, ieta) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rl_%d.pdf\")", cno-1, out_dir, ieta) );
     }
   }
 
-  // overlay h1d_jet_eec_rlsqrtpt with pt binnings
-  mclogxy(cno++);
+  // overlay h1d_jet_eec_rlsqrtpt_xi_phi projected to 1D h1d_jet_rlsqrtpt, for each eta bin curves for pt
+  for (int ieta = 0; ieta < etabin; ieta++)
   {
-    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.025);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.1);
-
-    for (int ipt = 0; ipt < ptbin-1; ipt++)
+    mclogxy(cno++);
     {
-      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->SetMarkerColor(pt_color[ipt]);
-      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->SetLineColor(pt_color[ipt]);
-      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->SetMarkerSize(0.5);
-      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->SetMarkerStyle(21);
-      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->Draw("hist same");
-      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->GetXaxis()->SetTitle("R_{L} #sqrt{p_{T,jet}}");
-      h1d_jet_eec_rlsqrtpt[etabin-1][ipt]->GetYaxis()->SetTitle("EEC (no normalization)");
-      leg->AddEntry(h1d_jet_eec_rlsqrtpt[etabin-1][ipt],Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
-    }
-    leg->Draw("same");
+      float plot_xrange_lo = 1E-2*sqrt(20);
+      float plot_xrange_hi = 1*sqrt(20);
+      float plot_yrange_lo = 1E-5;
+      float plot_yrange_hi = 5E-1
 
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_overlay.pdf\")", cno-1, out_dir) );
+      TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+      leg->SetBorderSize(0);
+      leg->SetTextSize(0.025);
+      leg->SetFillStyle(0);
+      leg->SetMargin(0.1);
+
+      TH1D* temp;
+
+      for (int ipt = 0; ipt < ptbin-1; ipt++)
+      {
+        temp = (TH1D*) h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->ProjectionX("temp");
+
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->SetMarkerColor(pt_color[ipt]);
+        temp->SetLineColor(pt_color[ipt]);
+        temp->SetMarkerSize(0.5);
+        temp->SetMarkerStyle(21);
+        temp->Draw("same hist e");
+        leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+      }
+      leg->Draw("same");
+
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.025);
+      tl->SetTextColor(kBlack);
+      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_%d.pdf\")", cno-1, out_dir, ieta) );
+    }
   }
+
+  // xi-phi plots for rl bins within range, forward eta, 20-30GeV pt bin
+  int etabin_pick = 2;
+  int ptbin_pick = 2;
+  float rl_range_lo = 1E-2;
+  float rl_range_hi = 1;
+  int norm_binrange_lo = temp->FindBin(rl_range_lo);
+  int norm_binrange_hi = temp->FindBin(rl_range_hi);
+  if (norm_binrange_lo == 0)
+  {
+    norm_binrange_lo = 1;
+    cout<<"bin range lo too low; set to 1"<<endl;
+  }
+  if (norm_binrange_hi > temp->GetNbinsX())
+  {
+    norm_binrange_lo = temp->GetNbinsX();
+    cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+  }
+
+  TH3D* sliced;
+  TH2D* temp;
+  for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
+  {
+    mcs(cno++);
+    {
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 1;
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = TMath::Pi() / 2.0;
+      float plot_zrange_lo = 0;
+      float plot_zrange_hi = 1;
+
+      float bin_center = h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick]->GetXaxis()->GetBinCenter(ibin);
+      sliced = (TH3D*) h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick]->Clone("temp3d")->GetXaxis()->SetRange(ibin,ibin);
+      temp = (TH2D*) sliced->Project("zy");
+      temp->SetName("temp2d");
+
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      //temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+      temp->GetXaxis()->SetTitle("#xi");
+      temp->GetYaxis()->SetTitle("#phi");
+      temp->Draw("colz");
+
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.025);
+      tl->SetTextColor(kBlack);
+      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+      tl->DrawLatexNDC(0.22,0.81,Form("R_{L} #sim %.3f", bin_center));
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_eec_xi_phi_%d.pdf\")", cno-1, out_dir, ibin) );
+    }
+
+  }
+
 }
 
 void Q2_x_panel(const char* out_dir)
@@ -393,7 +412,7 @@ void particle_hists(const char* out_dir)
 }
 
 
-void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./")
+void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir = "./")
 {
   // if make_ratios == 1, uses fin_name_baseline to calculate ratios as baseline, else no ratios calculated
 
