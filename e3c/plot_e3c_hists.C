@@ -223,7 +223,7 @@ void overlay_hists(const char* out_dir)
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
 
-  TH3D* picked = h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick]
+  TH3D* picked = h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick];
   picked->SetName("picked");
   int norm_binrange_lo = picked->GetXaxis()->FindBin(rl_range_lo);
   int norm_binrange_hi = picked->GetXaxis()->FindBin(rl_range_hi);
@@ -232,10 +232,10 @@ void overlay_hists(const char* out_dir)
     norm_binrange_lo = 1;
     cout<<"bin range lo too low; set to 1"<<endl;
   }
-  if (norm_binrange_hi > temp->GetNbinsX())
+  if (norm_binrange_hi > picked->GetNbinsX())
   {
-    norm_binrange_lo = temp->GetNbinsX();
-    cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+    norm_binrange_lo = picked->GetNbinsX();
+    cout<<"bin range hi too high; set to "<<picked->GetNbinsX()<<endl;
   }
 
   TH3D* sliced;
@@ -252,7 +252,8 @@ void overlay_hists(const char* out_dir)
       float plot_zrange_hi = 1;
 
       float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
-      sliced = (TH3D*) picked->Clone("temp3d")->GetXaxis()->SetRange(ibin,ibin);
+      sliced = (TH3D*) picked->Clone("temp3d");
+      slided->GetXaxis()->SetRange(ibin,ibin);
       temp = (TH2D*) sliced->Project3D("zy");
       temp->SetName("temp2d");
 
