@@ -228,9 +228,7 @@ void overlay_hists(const char* out_dir)
   int ptbin_pick = 2;
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
-
   TH3D* picked = h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick];
-  picked->SetName("picked");
   int norm_binrange_lo = picked->GetXaxis()->FindBin(rl_range_lo);
   cout<<"low bin: "<<norm_binrange_lo<<endl;
   int norm_binrange_hi = picked->GetXaxis()->FindBin(rl_range_hi);
@@ -242,7 +240,7 @@ void overlay_hists(const char* out_dir)
   }
   if (norm_binrange_hi > picked->GetNbinsX())
   {
-    norm_binrange_lo = picked->GetNbinsX();
+    norm_binrange_hi = picked->GetNbinsX();
     cout<<"bin range hi too high; set to "<<picked->GetNbinsX()<<endl;
   }
 
