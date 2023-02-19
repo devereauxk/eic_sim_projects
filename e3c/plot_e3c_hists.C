@@ -149,7 +149,7 @@ void overlay_hists(const char* out_dir)
 
       TH1D* temp;
 
-      for (int ipt = 0; ipt < ptbin-1; ipt++)
+      for (int ipt = 0; ipt < ptbin-2; ipt++)
       {
         temp = (TH1D*) h3d_jet_eec_rl_xi_phi[ieta][ipt]->ProjectionX("temp");
 
@@ -192,7 +192,7 @@ void overlay_hists(const char* out_dir)
 
       TH1D* temp;
 
-      for (int ipt = 0; ipt < ptbin-1; ipt++)
+      for (int ipt = 0; ipt < ptbin-2; ipt++)
       {
         temp = (TH1D*) h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->ProjectionX("temp");
 
@@ -226,7 +226,9 @@ void overlay_hists(const char* out_dir)
   TH3D* picked = h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick];
   picked->SetName("picked");
   int norm_binrange_lo = picked->GetXaxis()->FindBin(rl_range_lo);
+  cout<<"low bin: "<<norm_binrange_lo<<endl;
   int norm_binrange_hi = picked->GetXaxis()->FindBin(rl_range_hi);
+  cout<<"high bin: "<<norm_binrange_hi<<endl;
   if (norm_binrange_lo == 0)
   {
     norm_binrange_lo = 1;
@@ -266,10 +268,10 @@ void overlay_hists(const char* out_dir)
 
       TLatex* tl = new TLatex();
       tl->SetTextAlign(11);
-      tl->SetTextSize(0.025);
+      tl->SetTextSize(0.03);
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
-      tl->DrawLatexNDC(0.22,0.81,Form("R_{L} #sim %.3f", bin_center));
+      tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_eec_xi_phi_%d.pdf\")", cno-1, out_dir, ibin) );
     }
