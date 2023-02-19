@@ -159,10 +159,10 @@ void overlay_hists(const char* out_dir)
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
         temp->GetXaxis()->SetTitle("R_{L}");
-        temp->GetYaxis()->SetTitle("EEC");
+        temp->GetYaxis()->SetTitle("normalized EEC");
         temp->SetMarkerSize(0.5);
         temp->SetMarkerStyle(21);
-        temp->Draw("same hist e");
+        temp->Draw("same hist");
         leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
       }
       leg->Draw("same");
@@ -205,10 +205,10 @@ void overlay_hists(const char* out_dir)
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
         temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T}}");
-        temp->GetYaxis()->SetTitle("EEC");
+        temp->GetYaxis()->SetTitle("normalized EEC");
         temp->SetMarkerSize(0.5);
         temp->SetMarkerStyle(21);
-        temp->Draw("same hist e");
+        temp->Draw("hist same");
         leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
       }
       leg->Draw("same");
