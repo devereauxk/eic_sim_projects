@@ -151,12 +151,14 @@ void overlay_hists(const char* out_dir)
 
       for (int ipt = 0; ipt < ptbin-2; ipt++)
       {
-        temp = (TH1D*) h3d_jet_eec_rl_xi_phi[ieta][ipt]->ProjectionX("temp");
+        temp = (TH1D*) h3d_jet_eec_rl_xi_phi[ieta][ipt]->ProjectionX();
 
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
+        temp->GetXaxis()->SetTitle("R_{L}");
+        temp->GetYaxis()->SetTitle("EEC");
         temp->SetMarkerSize(0.5);
         temp->SetMarkerStyle(21);
         temp->Draw("same hist e");

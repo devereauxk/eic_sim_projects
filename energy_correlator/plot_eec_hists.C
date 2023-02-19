@@ -130,6 +130,7 @@ void individual_hists(const char* out_dir)
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eta.pdf\")", cno-1, out_dir) );
   }
 
+  // single eec plots
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
