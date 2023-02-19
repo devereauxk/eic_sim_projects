@@ -152,6 +152,7 @@ void overlay_hists(const char* out_dir)
       for (int ipt = 0; ipt < ptbin-2; ipt++)
       {
         temp = (TH1D*) h3d_jet_eec_rl_xi_phi[ieta][ipt]->ProjectionX();
+        temp->Scale(1/temp->Integral());
 
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
@@ -196,12 +197,15 @@ void overlay_hists(const char* out_dir)
 
       for (int ipt = 0; ipt < ptbin-2; ipt++)
       {
-        temp = (TH1D*) h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->ProjectionX("temp");
+        temp = (TH1D*) h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->ProjectionX();
+        temp->Scale(1/temp->Integral());
 
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
+        temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T}}");
+        temp->GetYaxis()->SetTitle("EEC");
         temp->SetMarkerSize(0.5);
         temp->SetMarkerStyle(21);
         temp->Draw("same hist e");
@@ -259,7 +263,6 @@ void overlay_hists(const char* out_dir)
       sliced = (TH3D*) picked->Clone("temp3d");
       sliced->GetXaxis()->SetRange(ibin,ibin);
       temp = (TH2D*) sliced->Project3D("zy");
-      temp->SetName("temp2d");
 
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
