@@ -248,7 +248,7 @@ void overlay_hists(const char* out_dir)
   TH2D* temp;
   for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
   {
-    mcs(cno++);
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
     {
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 1;
