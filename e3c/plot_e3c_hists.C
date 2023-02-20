@@ -238,9 +238,9 @@ void overlay_hists(const char* out_dir)
     norm_binrange_lo = 1;
     cout<<"bin range lo too low; set to 1"<<endl;
   }
-  if (norm_binrange_hi > picked->GetNbinsX())
+  if (norm_binrange_hi > picked->GetNbinsX()+1)
   {
-    norm_binrange_hi = picked->GetNbinsX();
+    norm_binrange_hi = picked->GetNbinsX()+1;
     cout<<"bin range hi too high; set to "<<picked->GetNbinsX()<<endl;
   }
 
@@ -261,6 +261,7 @@ void overlay_hists(const char* out_dir)
       sliced = (TH3D*) picked->Clone("temp3d");
       sliced->GetXaxis()->SetRange(ibin,ibin);
       temp = (TH2D*) sliced->Project3D("zy");
+      temp->Scale(1/temp->Integral());
 
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
