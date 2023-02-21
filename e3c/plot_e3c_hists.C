@@ -253,7 +253,7 @@ void overlay_hists(const char* out_dir)
       float plot_xrange_lo = 0;
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 0;
-      float plot_yrange_hi = TMath::Pi() / 2.0;
+      float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
       float plot_zrange_lo = 0;
       float plot_zrange_hi = 0.006;
 
@@ -265,7 +265,7 @@ void overlay_hists(const char* out_dir)
 
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      //temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
       temp->GetXaxis()->SetTitle("#xi");
       temp->GetYaxis()->SetTitle("#phi");
       temp->Draw("colz");
