@@ -159,7 +159,7 @@ void overlay_hists(const char* out_dir)
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
         temp->GetXaxis()->SetTitle("R_{L}");
-        temp->GetYaxis()->SetTitle("normalized EEC");
+        temp->GetYaxis()->SetTitle("normalized E3C");
         temp->SetMarkerSize(0.5);
         temp->SetMarkerStyle(21);
         temp->Draw("same hist");
@@ -173,7 +173,7 @@ void overlay_hists(const char* out_dir)
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rl_%d.pdf\")", cno-1, out_dir, ieta) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_e3c_rl_%d.pdf\")", cno-1, out_dir, ieta) );
     }
   }
 
@@ -205,7 +205,7 @@ void overlay_hists(const char* out_dir)
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
         temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T}}");
-        temp->GetYaxis()->SetTitle("normalized EEC");
+        temp->GetYaxis()->SetTitle("normalized E3C");
         temp->SetMarkerSize(0.5);
         temp->SetMarkerStyle(21);
         temp->Draw("hist same");
@@ -219,7 +219,7 @@ void overlay_hists(const char* out_dir)
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_rlsqrtpt_%d.pdf\")", cno-1, out_dir, ieta) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_e3c_rlsqrtpt_%d.pdf\")", cno-1, out_dir, ieta) );
     }
   }
 
@@ -452,10 +452,10 @@ void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h3d_jet_eec_rl_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h3d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
+      h3d_jet_eec_rl_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h1d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
       h3d_jet_eec_rl_xi_phi[ieta][ipt]->SetName(Form("h3d_jet_eec_rl_xi_phi_%d_%d", ieta, ipt));
 
-      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h3d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
+      h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt] = (TH3D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
       h3d_jet_eec_rlsqrtpt_xi_phi[ieta][ipt]->SetName(Form("h3d_jet_eec_rlsqrtpt_xi_phi_%d_%d", ieta, ipt));
 
       h2d_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
