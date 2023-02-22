@@ -1,6 +1,6 @@
 Universe       = vanilla
 Notification   = Never
-Executable     = run_e3c_hists_ep.sh
+Executable     = run_e3c_hists_eAu.sh
 GetEnv         = True
 Input	       = /dev/null
 Arguments      = "$(Process)"
