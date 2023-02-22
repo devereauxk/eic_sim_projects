@@ -250,10 +250,10 @@ void overlay_hists(const char* out_dir)
   {
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
     {
-      float plot_xrange_lo = -0.1;
-      float plot_xrange_hi = 1.1;
-      float plot_yrange_lo = -0.1;
-      float plot_yrange_hi = TMath::Pi() / 2.0 + 0.1;
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 1;
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = 1.5 // TMath::Pi() / 2.0;
       float plot_zrange_lo = 0;
       float plot_zrange_hi = 0.006;
 
