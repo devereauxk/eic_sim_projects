@@ -116,7 +116,7 @@ void e3c_projected_hists()
           double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
           temp->Scale(relative_normalization);
           */
-          temp->Scale(1/temp_baseline->Integral());
+          temp->Scale(1/temp->Integral());
 
           // plot histogram
           temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
