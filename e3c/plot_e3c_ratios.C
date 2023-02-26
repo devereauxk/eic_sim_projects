@@ -97,8 +97,8 @@ void e3c_projected_hists()
         for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
         {
           species_pick = species_picks[ispecies];
-          temp = (TH1D*) h3d_jet_eec_rl_xi_phi[species_pick][ieta][ipt]->ProjectionX();
-          temp_baseline = (TH1D*) h3d_jet_eec_rl_xi_phi[0][ieta][ipt]->ProjectionX();
+          temp = (TH1D*) h3d_jet_eec_rl_xi_phi[species_pick][ieta][ipt]->ProjectionX("temp");
+          temp_baseline = (TH1D*) h3d_jet_eec_rl_xi_phi[0][ieta][ipt]->ProjectionX("temp_baseline");
 
           /*
           int norm_binrange_lo = temp->FindBin(rl_norm_lo);
