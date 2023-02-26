@@ -182,20 +182,20 @@ void xi_phi_ratio_hists()
   TH2D* temp;
   for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
   {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
+    float plot_zrange_lo = -0.1E-3;
+    float plot_zrange_hi = 0.3E-3;
+
+    float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
+    sliced = (TH3D*) picked->Clone("temp3d");
+    sliced->GetXaxis()->SetRange(ibin,ibin);
+    temp = (TH2D*) sliced->Project3D("zy");
+
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
     {
-      float plot_xrange_lo = 0;
-      float plot_xrange_hi = 1;
-      float plot_yrange_lo = 0;
-      float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
-      float plot_zrange_lo = -0.1E-3;
-      float plot_zrange_hi = 0.3E-3;
-
-      float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
-      sliced = (TH3D*) picked->Clone("temp3d");
-      sliced->GetXaxis()->SetRange(ibin,ibin);
-      temp = (TH2D*) sliced->Project3D("zy");
-
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
       temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
@@ -211,6 +211,13 @@ void xi_phi_ratio_hists()
       tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_ratio_%d.pdf\")", cno-1, out_dir, ibin) );
+    }
+
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+    {
+      temp->Draw("SURF2Z");
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_ratio_%d_surface.pdf\")", cno-1, out_dir, ibin) );
     }
 
   }
