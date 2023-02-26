@@ -145,6 +145,78 @@ void e3c_projected_hists()
 
 }
 
+void xi_phi_ratio_hists()
+{
+  int species_pick = 7;
+  int etabin_pick = 2;
+  int ptbin_pick = 1;
+  float rl_range_lo = 1E-2;
+  float rl_range_hi = 1;
+
+  TH3D* picked = h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->Clone();
+  TH3D* baseline = h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->Clone();
+
+  TH1D* picked_x = h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->ProjectionX();
+  TH1D* baseline_x = h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->ProjectionX();
+
+  int norm_binrange_lo = picked_x->FindBin(rl_range_lo);
+  cout<<"low bin: "<<norm_binrange_lo<<endl;
+  int norm_binrange_hi = picked_x->FindBin(rl_range_hi);
+  cout<<"high bin: "<<norm_binrange_hi<<endl;
+  if (norm_binrange_lo == 0)
+  {
+    norm_binrange_lo = 1;
+    cout<<"bin range lo too low; set to 1"<<endl;
+  }
+  if (norm_binrange_hi > picked_x->GetNbinsX()+1)
+  {
+    norm_binrange_hi = picked_x->GetNbinsX()+1;
+    cout<<"bin range hi too high; set to "<<picked_x->GetNbinsX()<<endl;
+  }
+  double relative_normalization =  baseline_x->Integral(norm_binrange_lo,norm_binrange_hi) / picked_x->Integral(norm_binrange_lo,norm_binrange_hi);
+  picked->Scale(relative_normalization);
+  picked->Add(baseline, -1);
+  picked->Scale(1/baseline_x->Integral());
+
+  TH3D* sliced;
+  TH2D* temp;
+  for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
+  {
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+    {
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 1;
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
+      float plot_zrange_lo = 0;
+      float plot_zrange_hi = 0.006;
+
+      float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
+      sliced = (TH3D*) picked->Clone("temp3d");
+      sliced->GetXaxis()->SetRange(ibin,ibin);
+      temp = (TH2D*) sliced->Project3D("zy");
+
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+      temp->GetXaxis()->SetTitle("#xi");
+      temp->GetYaxis()->SetTitle("#phi");
+      temp->Draw("colz");
+
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.03);
+      tl->SetTextColor(kBlack);
+      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+      tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_ratio_%d.pdf\")", cno-1, out_dir, ibin) );
+    }
+
+  }
+
+}
+
 void plot_e3c_ratios()
 {
   // if make_ratios == 1, uses fin_name_baseline to calculate ratios as baseline, else no ratios calculated
@@ -177,6 +249,6 @@ void plot_e3c_ratios()
   // make the plots
   e3c_projected_hists();
 
-  //xi_phi_2d_hists();
+  xi_phi_ratio_hists();
 
 }
