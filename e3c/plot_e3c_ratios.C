@@ -188,8 +188,8 @@ void xi_phi_ratio_hists()
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 0;
       float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
-      float plot_zrange_lo = 0;
-      float plot_zrange_hi = 0.006;
+      float plot_zrange_lo = -0.1E-3;
+      float plot_zrange_hi = 0.3E-3;
 
       float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
       sliced = (TH3D*) picked->Clone("temp3d");
