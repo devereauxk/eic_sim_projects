@@ -78,7 +78,7 @@ void e3c_projected_hists()
     {
       mclogxy(cno++);
       {
-        float plot_xrange_lo = 0.05;
+        float plot_xrange_lo = 1E-2;
         float plot_xrange_hi = 1;
         float plot_yrange_lo = 1E-3;
         float plot_yrange_hi = 5E-1;
@@ -118,7 +118,7 @@ void e3c_projected_hists()
 
           // plot histogram
           temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-          temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+          //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
           temp->GetXaxis()->SetTitle("R_{L}");
           temp->GetYaxis()->SetTitle("E3C normalized at low R_{L}");
           temp->SetMarkerColor(pt_color[ispecies]);
