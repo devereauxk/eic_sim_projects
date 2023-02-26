@@ -198,7 +198,7 @@ void pt_eta_3by3_hists()
     }
     if (norm_binrange_hi > temp->GetNbinsX())
     {
-      norm_binrange_lo = temp->GetNbinsX();
+      norm_binrange_hi = temp->GetNBinsX();
       cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
     }
     double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -235,7 +235,7 @@ void pt_eta_3by3_hists()
       }
       if (norm_binrange_hi > temp->GetNbinsX())
       {
-        norm_binrange_lo = temp->GetNbinsX();
+        norm_binrange_hi = temp->GetNBinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -311,7 +311,7 @@ void pt_eta_3by3_hists()
         }
         if (norm_binrange_hi > temp->GetNbinsX())
         {
-          norm_binrange_lo = temp->GetNbinsX();
+          norm_binrange_hi = temp->GetNBinsX();
           cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
         }
         double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -348,7 +348,7 @@ void pt_eta_3by3_hists()
           }
           if (norm_binrange_hi > temp->GetNbinsX())
           {
-            norm_binrange_lo = temp->GetNbinsX();
+            norm_binrange_hi = temp->GetNBinsX();
             cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
           }
           double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -431,7 +431,7 @@ void pt_bin_side_by_side()
       }
       if (norm_binrange_hi > temp->GetNbinsX())
       {
-        norm_binrange_lo = temp->GetNbinsX();
+        norm_binrange_hi = temp->GetNBinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -606,7 +606,7 @@ void nuclei_hists()
       }
       if (norm_binrange_hi > temp->GetNbinsX())
       {
-        norm_binrange_lo = temp->GetNbinsX();
+        norm_binrange_hi = temp->GetNBinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -834,7 +834,7 @@ void power_hists()
       }
       if (norm_binrange_hi > temp->GetNbinsX())
       {
-        norm_binrange_lo = temp->GetNbinsX();
+        norm_binrange_hi = temp->GetNBinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -1002,7 +1002,7 @@ void peak_height_vs_A()
       }
       if (norm_binrange_hi > temp->GetNbinsX())
       {
-        norm_binrange_lo = temp->GetNbinsX();
+        norm_binrange_hi = temp->GetNBinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -1074,7 +1074,7 @@ void peak_height_vs_A_isospin()
       }
       if (norm_binrange_hi > temp->GetNbinsX())
       {
-        norm_binrange_lo = temp->GetNbinsX();
+        norm_binrange_hi = temp->GetNBinsX();
         cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
       }
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
