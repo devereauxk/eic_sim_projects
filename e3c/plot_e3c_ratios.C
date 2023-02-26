@@ -198,7 +198,7 @@ void xi_phi_ratio_hists()
 
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      //temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
       temp->GetXaxis()->SetTitle("#xi");
       temp->GetYaxis()->SetTitle("#phi");
       temp->Draw("colz");
