@@ -225,7 +225,7 @@ void overlay_hists(const char* out_dir)
 
   // xi-phi plots for rl bins within range, forward eta, 20-30GeV pt bin
   int etabin_pick = 2;
-  int ptbin_pick = 1;
+  int ptbin_pick = 2;
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
   TH3D* picked = h3d_jet_eec_rl_xi_phi[etabin_pick][ptbin_pick];

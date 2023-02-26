@@ -149,7 +149,7 @@ void xi_phi_ratio_hists()
 {
   int species_pick = 7;
   int etabin_pick = 2;
-  int ptbin_pick = 1;
+  int ptbin_pick = 2;
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
 
