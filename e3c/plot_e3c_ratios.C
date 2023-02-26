@@ -99,7 +99,6 @@ void e3c_projected_hists()
           species_pick = species_picks[ispecies];
           temp = (TH1D*) h3d_jet_eec_rl_xi_phi[species_pick][ieta][ipt]->ProjectionX();
 
-          /*
           int norm_binrange_lo = temp->FindBin(rl_norm_lo);
           int norm_binrange_hi = temp->FindBin(rl_norm_hi);
           if (norm_binrange_lo == 0)
@@ -114,8 +113,7 @@ void e3c_projected_hists()
           }
           double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
           temp->Scale(relative_normalization);
-          */
-          temp->Scale(1/temp->Integral());
+          temp->Scale(1/temp_baseline->Integral());
 
           // plot histogram
           temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
