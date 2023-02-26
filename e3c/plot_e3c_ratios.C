@@ -109,7 +109,7 @@ void e3c_projected_hists()
           }
           if (norm_binrange_hi > temp->GetNbinsX())
           {
-            norm_binrange_hi = temp->GetNBinsX();
+            norm_binrange_hi = temp->GetNbinsX();
             cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
           }
           double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
@@ -121,8 +121,8 @@ void e3c_projected_hists()
           temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
           temp->GetXaxis()->SetTitle("R_{L}");
           temp->GetYaxis()->SetTitle("E3C normalized at low R_{L}");
-          temp->SetMarkerColor(pt_color[ik]);
-          temp->SetLineColor(pt_color[ik]);
+          temp->SetMarkerColor(pt_color[ispecies]);
+          temp->SetLineColor(pt_color[ispecies]);
           temp->SetMarkerSize(0.5);
           temp->SetMarkerStyle(21);
           temp->Draw("same hist e");
@@ -176,8 +176,8 @@ void plot_e3c_ratios()
   }
 
   // make the plots
-  e3c_projected_hists(out_dir);
+  e3c_projected_hists();
 
-  //xi_phi_2d_hists(out_dir);
+  //xi_phi_2d_hists();
 
 }
