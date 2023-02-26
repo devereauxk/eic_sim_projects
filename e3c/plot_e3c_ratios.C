@@ -153,8 +153,8 @@ void xi_phi_ratio_hists()
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
 
-  TH3D* picked = h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->Clone();
-  TH3D* baseline = h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->Clone();
+  TH3D* picked = (TH3D*) h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->Clone();
+  TH3D* baseline = (TH3D*) h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->Clone();
 
   TH1D* picked_x = h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->ProjectionX();
   TH1D* baseline_x = h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->ProjectionX();
