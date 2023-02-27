@@ -254,6 +254,7 @@ void xi_phi_ratio_hists()
   }
   double relative_normalization =  baseline_x->Integral(norm_binrange_lo,norm_binrange_hi) / picked_x->Integral(norm_binrange_lo,norm_binrange_hi);
   picked->Scale(relative_normalization);
+  picked->Add(baseline, -1);
   picked->Divide(baseline);
 
   TH3D* sliced;
