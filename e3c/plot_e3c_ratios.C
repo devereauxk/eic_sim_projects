@@ -227,8 +227,8 @@ void xi_phi_difference_hists()
 void xi_phi_ratio_hists()
 {
   int species_pick = 7;
-  int etabin_pick = 1;
-  int ptbin_pick = 2;
+  int etabin_pick = 2;
+  int ptbin_pick = 1;
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
 
@@ -264,8 +264,8 @@ void xi_phi_ratio_hists()
     float plot_xrange_hi = 1;
     float plot_yrange_lo = 0;
     float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
-    float plot_zrange_lo = -0.1E-3;
-    float plot_zrange_hi = 0.3E-3;
+    float plot_zrange_lo = -0.5;
+    float plot_zrange_hi = 2.5;
 
     float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
     sliced = (TH3D*) picked->Clone("temp3d");
@@ -276,7 +276,7 @@ void xi_phi_ratio_hists()
     {
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      //temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
       temp->GetXaxis()->SetTitle("#xi");
       temp->GetYaxis()->SetTitle("#phi");
       temp->Draw("colz");
