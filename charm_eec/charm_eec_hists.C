@@ -232,7 +232,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
   //Loop Over Events
   //for(Int_t ievt = 0; ievt < nevt; ievt++)
-  for(Int_t ievt = 3530; ievt < 3533; ievt++)
+  for(Int_t ievt = 700; ievt < 900; ievt++)
   {
     tree->GetEntry(ievt);
 
@@ -381,7 +381,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
-      if (force_inpair_flag != 0)
+      if (force_inpair_flag == 1)
       {
         Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_part);
         cb.make_pairs();
