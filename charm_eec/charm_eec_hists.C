@@ -232,7 +232,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
   //Loop Over Events
   //for(Int_t ievt = 0; ievt < nevt; ievt++)
-  for(Int_t ievt = 835; ievt < 837; ievt++)
+  for(Int_t ievt = 3530; ievt < 3533; ievt++)
   {
     tree->GetEntry(ievt);
 
@@ -349,7 +349,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         }
         else if (charge != 0) charged_constituents.push_back(constit);
       }
-      
+
       if (verbosity > 0) cout<<endl;
       if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
 
