@@ -131,14 +131,14 @@ class Fixed_Correlator_Builder
   private:
     vector<PseudoJet> particle_list;
     int mult;
-    vector<PsuedoJet> pair_list;
+    vector<PseudoJet> pair_list;
     double jet_pt;
     double jet_eta;
     double weight_pow;
-    PsuedoJet fixed_part;
+    PseudoJet fixed_part;
 
   public:
-    Correlator_Builder(vector<PseudoJet> _particle_list, float _jet_pt, float _jet_eta, double _weight_pow, PsuedoJet _fixed_part)
+    Correlator_Builder(vector<PseudoJet> _particle_list, float _jet_pt, float _jet_eta, double _weight_pow, PseudoJet _fixed_part)
     {
       particle_list = _particle_list;
       mult = particle_list.size();
@@ -316,13 +316,13 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (force_part_injet != 0)
       {
         bool jet_has_part = std::any_of(constituents.begin(), constituents.end(),
-                            [](PsuedoJet constit) { return abs(constit.user_index()) == force_part_injet; });
+                            [](PseudoJet constit) { return abs(constit.user_index()) == force_part_injet; });
         if (!jet_has_part) continue;
       }
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
-      PsuedoJet fixed_part = NULL;
+      PseudoJet fixed_part = NULL;
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
         PseudoJet constit = constituents[iconstit];
