@@ -322,7 +322,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
-      PseudoJet fixed_part = NULL;
+      PseudoJet fixed_part;
       int has_fixed_part = 0;
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
