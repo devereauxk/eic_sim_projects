@@ -245,7 +245,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     // D0 containing cut
     if (force_part_injet != 0)
     {
-      bool event_has_part = std::any_of(event.particles_begin(), event.particles_end(),
+      bool event_has_part = std::any_of(event->particles_begin(), event->particles_end(),
                             [](const erhic::ParticleMC* part) { return abs(part->Id()) == force_part_injet; });
       if (!event_has_part) continue;
     }
