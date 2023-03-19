@@ -346,13 +346,13 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
           fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_injet_flag
           jet_has_fixed_part = 1;
           charged_constituents.push_back(constit);
-          continue;
         }
-
-        if (charge != 0) charged_constituents.push_back(constit);
+        else if (charge != 0) charged_constituents.push_back(constit);
       }
+      
       if (verbosity > 0) cout<<endl;
       if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
+
       // cuts jets not containing at least one force_injet_flag particle, if appropriate
       if (force_injet_flag == 1 && jet_has_fixed_part == 0) continue;
 
