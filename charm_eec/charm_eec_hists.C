@@ -329,8 +329,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
-      PseudoJet fixed_part;
-      int jet_has_fixed_part = 0;
+      vector<PseudoJet> fixed_parts; // collection of all fixed particles which appear in the jet, rare for a jet to have e.x. >1 D0, but it happens
       if (verbosity > 0) cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl<<"constits: ";
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
@@ -343,9 +342,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
         if (abs(pdg_code) == abs(fixed_part_id))
         {
-          fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_injet_flag
-          jet_has_fixed_part = 1;
-          charged_constituents.push_back(constit);
+          fixed_parts.push_back(constit); // add this part to fixed_parts as an occurance of a part with pdg id = fixed_part_id
+          charged_constituents.push_back(constit); // force this part to be included in the charged constituents no matter its charge
         }
         else if (charge != 0) charged_constituents.push_back(constit);
       }
@@ -353,8 +351,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (verbosity > 0) cout<<endl;
       if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
 
-      // cuts jets not containing at least one force_injet_flag particle, if appropriate
-      if (force_injet_flag == 1 && jet_has_fixed_part == 0) continue;
+      // cuts jets not containing at least one fixed_part_id particle, if appropriate
+      if (force_injet_flag == 1 && fixed_parts.size() < 1) continue;
 
       // jet histograms filled on inclusive (or semi-inclusive) jet information
       for (int ieta = 0; ieta < etabin; ieta++)
@@ -383,9 +381,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // eec calculation
       if (force_inpair_flag == 1)
       {
-        Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_part);
-        cb.make_pairs();
-        cb.construct_EEC();
+        for (int ifixed_part = 0; ifixed_part < fixed_parts.size(); ifixed_part++)
+        {
+          Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_parts[i]);
+          cb.make_pairs();
+          cb.construct_EEC();
+        }
       }
       else
       {
