@@ -346,6 +346,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         }
 
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
+        if (verbosity > 0) cout<<"("<<charge<<")";
         if (charge != 0) charged_constituents.push_back(constit);
       }
       if (verbosity > 0) cout<<endl;
