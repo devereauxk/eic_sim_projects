@@ -323,6 +323,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
       PseudoJet fixed_part = NULL;
+      int has_fixed_part = 0;
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
         PseudoJet constit = constituents[iconstit];
@@ -330,13 +331,17 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
         if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
 
-        if (pdg_code == force_part_injet) fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_part_injet
+        if (pdg_code == force_part_injet)
+        {
+          fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_part_injet
+          has_fixed_part = 1;
+        }
 
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
         if (charge != 0) charged_constituents.push_back(constit);
       }
       // cuts jets not containing at least one force_part_injet particle, if appropriate
-      if (force_part_injet != 0 && fixed_part != NULL) continue;
+      if (force_part_injet != 0 && has_fixed_part == 0) continue;
 
       // jet histograms filled on inclusive (or semi-inclusive) jet information
       for (int ieta = 0; ieta < etabin; ieta++)
@@ -363,11 +368,18 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
-      if (force_part_inpair != 0) Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_part);
-      else Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
-
-      cb.make_pairs();
-      cb.construct_EEC();
+      if (force_part_inpair != 0)
+      {
+        Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_part);
+        cb.make_pairs();
+        cb.construct_EEC();
+      }
+      else
+      {
+        Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
+        cb.make_pairs();
+        cb.construct_EEC();
+      }
     }
 
   }
