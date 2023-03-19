@@ -190,9 +190,9 @@ class Fixed_Correlator_Builder
 
 void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, int gen_type = 0,
     int boost = 0, double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
-    int force_part_injet = 0, int force_part_inpair = 0)
+    int force_injet_flag = 0, int force_inpair_flag = 0, int fixed_part_id = 421)
 {
-  if (force_part_inpair != 0) force_part_injet = force_part_inpair;
+  if (force_inpair_flag == 1) force_injet_flag = 1;
 
   TDatabasePDG* pdg_db = TDatabasePDG::Instance();
 
@@ -246,12 +246,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     // skip event if doesn't contain forced_part_injet, if appropriate
     erhic::ParticleMC* particle;
     int has_fixed_part = 0;
-    if (force_part_injet != 0)
+    if (force_injet_flag == 1)
     {
       for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
       {
         particle = event->GetTrack(ipart);
-        if (abs(particle->Id()) == force_part_injet)
+        if (abs(particle->Id()) == fixed_part_id)
         {
           has_fixed_part = 1;
           cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
@@ -296,9 +296,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-
       if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
-          || (force_part_injet != 0 && particle->Id() == force_part_injet) )
+          || (force_injet_flag != 0 && particle->Id() == fixed_part_id) )
       {
         if (has_fixed_part == 1)
         {
@@ -351,9 +350,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
         if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
 
-        if (pdg_code == force_part_injet)
+        if (pdg_code == force_injet_flag)
         {
-          fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_part_injet
+          fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_injet_flag
           cout<<"event "<<ievt<<" has a jet with D0!!!!"<<endl;
           has_fixed_part = 1;
         }
@@ -362,8 +361,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (charge != 0) charged_constituents.push_back(constit);
       }
       cout<<endl;
-      // cuts jets not containing at least one force_part_injet particle, if appropriate
-      if (force_part_injet != 0 && has_fixed_part == 0) continue;
+      // cuts jets not containing at least one force_injet_flag particle, if appropriate
+      if (force_injet_flag != 0 && has_fixed_part == 0) continue;
 
       // jet histograms filled on inclusive (or semi-inclusive) jet information
       for (int ieta = 0; ieta < etabin; ieta++)
@@ -390,7 +389,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (charged_constituents.size() < 1) continue;
 
       // eec calculation
-      if (force_part_inpair != 0)
+      if (force_inpair_flag != 0)
       {
         Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_part);
         cb.make_pairs();
@@ -603,7 +602,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1,
     int boost = 0, int calc_Q2x = 0,
-    int force_part_injet = 0, int force_part_inpair = 0)
+    int force_injet_flag = 0, int force_inpair_flag = 0, int fixed_part_id = 421)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
@@ -612,8 +611,8 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   // gen_type = 0 for pythia6, =-1 for pyhtia8, =1 or anything for eHIJING (DIFFERENT FROM Q2_x.C settings)
   // boost = 0, do not apply boost =1 apply boost according to targ_lab_e and targ_species
   // calc_Q2x = 1 fills Q2x histogram (eHIJING must have Q2 and x printout), =0 doesn't filled
-  // force_part_injet : only considers jets containing particle with pdg id = force_part_injet, =0 no cut
-  // force_part_inpair : EEC calculated only for pair containing particle with pdg id = force_part_inpair, =0 no cut
+  // force_injet_flag=1 only considers jets containing particle with pdg id = fixed_part_id, =0 no cut
+  // force_inpair_flag=1 EEC calculated only for pair containing particle with pdg id = fixed_part_id, =0 no cut
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
@@ -718,7 +717,7 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
 
 
   // reads file and fills in jet_constits
-  if (gen_type == 0 || gen_type == -1) read_root(inFile, eec_weight_power, gen_type, boost, proj_rest_e, targ_lab_e, targ_species, force_part_injet, force_part_inpair); // pythia6 (EventPythia) or pythia8 (EventHepMC), boosts acording to boost variable
+  if (gen_type == 0 || gen_type == -1) read_root(inFile, eec_weight_power, gen_type, boost, proj_rest_e, targ_lab_e, targ_species, force_injet_flag, force_inpair_flag, fixed_part_id); // pythia6 (EventPythia) or pythia8 (EventHepMC), boosts acording to boost variable
   // else read_csv(inFile, boost, proj_rest_e, targ_lab_e, targ_species, eec_weight_power, calc_Q2x); // eHIJING, assumes target frame and boosts to EIC
   cout<<"@kdebug last"<<endl;
 
