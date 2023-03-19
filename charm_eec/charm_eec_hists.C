@@ -230,7 +230,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
   int total_jets = 0;
 
   //Loop Over Events
-  for(Int_t ievt = 0; ievt < nevt; ievt++)
+  //for(Int_t ievt = 0; ievt < nevt; ievt++)
+  for(Int_t ievt = 811; ievt < 815; ievt++)
   {
     tree->GetEntry(ievt);
 
@@ -310,6 +311,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
 
     // jet processing
+    cout<<"event "<<ievt<<" has "<<jets.size()<<" jets";
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
@@ -324,6 +326,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // take only charged constituents for eec calculation
       PseudoJet fixed_part;
       int has_fixed_part = 0;
+      cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits";
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
         PseudoJet constit = constituents[iconstit];
