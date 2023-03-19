@@ -131,7 +131,7 @@ class Fixed_Correlator_Builder
   private:
     vector<PseudoJet> particle_list;
     int mult;
-    vector<PseudoJet> pair_list;
+    vector<double> pair_list;
     double jet_pt;
     double jet_eta;
     double weight_pow;
