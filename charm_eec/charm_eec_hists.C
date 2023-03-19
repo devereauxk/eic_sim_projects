@@ -42,6 +42,8 @@ TH2D* h2d_Q2_x[etabin][ptbin] = {};
 TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
+TH1D* h1d_fixed_event_mult = NULL;
+TH1D* h1d_fixed_jet_mult = NULL;
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -246,7 +248,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
     // skip event if doesn't contain forced_part_injet, if appropriate
     erhic::ParticleMC* particle;
-    int event_has_fixed_part = 0;
+    int event_num_fixed_parts = 0;
     if (force_injet_flag == 1)
     {
       for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
@@ -254,13 +256,14 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         particle = event->GetTrack(ipart);
         if (abs(particle->Id()) == abs(fixed_part_id))
         {
-          event_has_fixed_part = 1;
+          event_num_fixed_parts++;
           if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
           break;
         }
       }
-      if (event_has_fixed_part == 0) continue;
+      if (event_num_fixed_parts == 0) continue;
     }
+    h1d_fixed_event_mult->Fill(event_num_fixed_parts);
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     vector<PseudoJet> jet_constits;
@@ -300,13 +303,13 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
           || (force_injet_flag == 1 && abs(particle->Id()) == abs(fixed_part_id)) )
       {
-        if (event_has_fixed_part == 1 && verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
+        if (event_num_fixed_parts > 0 && verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(particle->Id()); // stores the pdg id of this particle
         jet_constits.push_back(constit);
       }
-      else if (event_has_fixed_part == 1 && verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
+      else if (event_num_fixed_parts > 0 && verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
     }
     h1d_part_mult->Fill(Mult);
 
@@ -347,6 +350,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         }
         else if (charge != 0) charged_constituents.push_back(constit);
       }
+      h1d_fixed_jet_mult->Fill(fixed_parts.size());
 
       if (verbosity > 0) cout<<endl;
       if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
@@ -682,6 +686,12 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   h1d_jet_eta = new TH1D("h1d_jet_eta", "jet eta",800,-5,5);
   h1d_jet_eta->Sumw2();
 
+  h1d_fixed_event_mult = new TH1D("h1d_D0_event_mult", "D0 multiplicity per event",0,0,50);
+  h1d_fixed_event_mult->Sumw2();
+
+  h1d_fixed_jet_mult = new TH1D("h1d_D0_jet_mult", "D0 multiplicity per jet",0,0,50);
+  h1d_fixed_jet_mult->Sumw2();
+
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
@@ -731,6 +741,10 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   h1d_part_mult->Write();
   h1d_jet_eta->Write();
   cout<<"h1d_jet_eta entries:"<<h1d_jet_eta->GetEntries()<<endl;
+  h1d_fixed_event_mult->Write();
+  cout<<"h1d_fixed_event_mult entries:"<<h1d_fixed_event_mult->GetEntries()<<endl;
+  h1d_fixed_jet_mult->Write();
+  cout<<"h1d_fixed_jet_mult entries:"<<h1d_fixed_jet_mult->GetEntries()<<endl;
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
