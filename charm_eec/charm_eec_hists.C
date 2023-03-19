@@ -124,8 +124,9 @@ class Correlator_Builder
 class Fixed_Correlator_Builder
 {
   // similar to Correlator_Builder but only computes EEC with pairs containing fixed_part
-  // it's assumed only one instance of fixed_part occurs in the jet
-  // depending on if fixed_part is charge, it may or may not appear in _particle_list
+  // multiple instances of a fixed_part may occur in particle_list, but correlations will
+  // only be calculated with respect to the specific fixed_part passed to the constructor
+  // it's assumed that fixed_part appears in particle_list
   // this is okay as double counting is meant to happen for this particle
   // we simply replace the appropriate for loops so that 2D -> 1D calculation
   private:
@@ -335,7 +336,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       {
         PseudoJet constit = constituents[iconstit];
         int pdg_code = constit.user_index(); // retrieve stored pdg id of particle
-        if (verbosity > 0) cout<<" "<<pdg_code;
+        Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
+        if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
 
         if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
 
@@ -343,10 +345,10 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         {
           fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_injet_flag
           jet_has_fixed_part = 1;
+          charged_constituents.push_back(constit);
+          continue;
         }
 
-        Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
-        if (verbosity > 0) cout<<"("<<charge<<")";
         if (charge != 0) charged_constituents.push_back(constit);
       }
       if (verbosity > 0) cout<<endl;
