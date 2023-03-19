@@ -245,15 +245,16 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
     // skip event if doesn't contain forced_part_injet, if appropriate
     erhic::ParticleMC* particle;
+    int has_fixed_part = 0;
     if (force_part_injet != 0)
     {
-      int has_fixed_part = 0;
       for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
       {
         particle = event->GetTrack(ipart);
         if (abs(particle->Id()) == force_part_injet)
         {
           has_fixed_part = 1;
+          cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
           break;
         }
       }
@@ -295,12 +296,18 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
+      cout<<"anti-kt input: ";
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
+        if (has_fixed_part == 1)
+        {
+          cout<<" "<<particle->Id();
+        }
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(particle->Id()); // stores the pdg id of this particle
         jet_constits.push_back(constit);
       }
+      cout<<endl;
 
     }
     h1d_part_mult->Fill(Mult);
