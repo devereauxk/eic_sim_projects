@@ -383,7 +383,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       {
         for (int ifixed_part = 0; ifixed_part < fixed_parts.size(); ifixed_part++)
         {
-          Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_parts[i]);
+          Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_parts[ifixed_part]);
           cb.make_pairs();
           cb.construct_EEC();
         }
