@@ -5,7 +5,7 @@ R__LOAD_LIBRARY(libfastjet);
 #include <iostream>
 using namespace fastjet;
 using namespace std;
-const int verbosity = 0;
+const int verbosity = 1;
 
 const Double_t Mp(0.9383); // in GeV/c^2
 const Double_t Me(0.511E-3); // in GeV/c^2
@@ -231,7 +231,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
   //Loop Over Events
   //for(Int_t ievt = 0; ievt < nevt; ievt++)
-  for(Int_t ievt = 811; ievt < 815; ievt++)
+  for(Int_t ievt = 835; ievt < 837; ievt++)
   {
     tree->GetEntry(ievt);
 
