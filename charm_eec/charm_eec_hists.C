@@ -297,7 +297,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
-          || (force_injet_flag != 0 && particle->Id() == fixed_part_id) )
+          || (force_injet_flag == 1 && particle->Id() == fixed_part_id) )
       {
         if (has_fixed_part == 1 && verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
@@ -315,7 +315,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
 
     // jet processing
-    cout<<"event "<<ievt<<" has "<<jets.size()<<" jets"<<endl;
+    if (verbosity > 0) cout<<"event "<<ievt<<" has "<<jets.size()<<" jets"<<endl;
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
@@ -329,7 +329,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
       PseudoJet fixed_part;
-      int has_fixed_part = 0;
+      int jet_has_fixed_part = 0;
       if (verbosity > 0) cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl<<"constits: ";
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
@@ -339,10 +339,10 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
         if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
 
-        if (pdg_code == force_injet_flag)
+        if (pdg_code == fixed_part_id)
         {
           fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_injet_flag
-          has_fixed_part = 1;
+          jet_has_fixed_part = 1;
         }
 
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
@@ -350,7 +350,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
       if (verbosity > 0) cout<<endl;
       // cuts jets not containing at least one force_injet_flag particle, if appropriate
-      if (force_injet_flag != 0 && has_fixed_part == 0) continue;
+      if (force_injet_flag == 1 && has_fixed_part == 0) continue;
 
       // jet histograms filled on inclusive (or semi-inclusive) jet information
       for (int ieta = 0; ieta < etabin; ieta++)
