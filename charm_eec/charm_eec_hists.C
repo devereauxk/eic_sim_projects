@@ -348,7 +348,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
         if (charge != 0) charged_constituents.push_back(constit);
       }
-      if (verbosity > 0) cout<<endl<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
+      if (verbosity > 0) cout<<endl;
+      if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
       // cuts jets not containing at least one force_injet_flag particle, if appropriate
       if (force_injet_flag == 1 && jet_has_fixed_part == 0) continue;
 
