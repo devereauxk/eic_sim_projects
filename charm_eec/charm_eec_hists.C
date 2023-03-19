@@ -327,10 +327,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       PseudoJet fixed_part;
       int has_fixed_part = 0;
       cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl;
+      cout<<"constits: ";
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
         PseudoJet constit = constituents[iconstit];
         int pdg_code = constit.user_index(); // retrieve stored pdg id of particle
+        cout<<" "<<pdg_code;
 
         if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
 
@@ -344,6 +346,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
         if (charge != 0) charged_constituents.push_back(constit);
       }
+      cout<<endl;
       // cuts jets not containing at least one force_part_injet particle, if appropriate
       if (force_part_injet != 0 && has_fixed_part == 0) continue;
 
