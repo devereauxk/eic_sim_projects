@@ -335,9 +335,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       {
         PseudoJet constit = constituents[iconstit];
         int pdg_code = constit.user_index(); // retrieve stored pdg id of particle
-        if (verbosity > 0) cout<<" "<<pdg_code;
 
         if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
+        if (verbosity > 0) cout<<" "<<pdg_code;
 
         if (abs(pdg_code) == abs(fixed_part_id))
         {
