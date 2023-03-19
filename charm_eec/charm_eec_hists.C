@@ -253,7 +253,6 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (abs(particle->Id()) == force_part_injet)
         {
           has_fixed_part = 1;
-          cout<<"event "<<ievt<<" has D0!!!!"<<endl;
           break;
         }
       }
@@ -335,6 +334,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (pdg_code == force_part_injet)
         {
           fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_part_injet
+          cout<<"event "<<ievt<<" has a jet with D0!!!!"<<endl;
           has_fixed_part = 1;
         }
 
