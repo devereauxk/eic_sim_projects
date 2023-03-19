@@ -37,4 +37,4 @@ FORCE_PART_INPAIR=$6
 root -l -b -q "charm_eec_hists.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, $POW, $DO_BOOST, $DO_Q2X, $FORCE_PART_INJET, $FORCE_PART_INPAIR)"
 #root -l -b -q "eec_hists.C(\"hepmcout-${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, 0.5, 1, 1)"
 
-#root -l -b -q "charm_eec_hists.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB/ep_minbias_highQ2_99.root\",\"temp.root\", -1, 2131, 100, 0, 0.5, 0, 1, 421, 421)"
+#root -l -b -q "charm_eec_hists.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB/ep_minbias_highQ2_99.root\",\"temp.root\", -1, 2131, 100, 0, 0.5, 0, 1, 1, 1, 421)"
