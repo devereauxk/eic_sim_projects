@@ -245,7 +245,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
     // skip event if doesn't contain forced_part_injet, if appropriate
     erhic::ParticleMC* particle;
-    int has_fixed_part = 0;
+    int event_has_fixed_part = 0;
     if (force_injet_flag == 1)
     {
       for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
@@ -253,12 +253,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         particle = event->GetTrack(ipart);
         if (abs(particle->Id()) == abs(fixed_part_id))
         {
-          has_fixed_part = 1;
+          event_has_fixed_part = 1;
           if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
           break;
         }
       }
-      if (has_fixed_part == 0) continue;
+      if (event_has_fixed_part == 0) continue;
     }
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
@@ -299,13 +299,13 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
           || (force_injet_flag == 1 && abs(particle->Id()) == abs(fixed_part_id)) )
       {
-        if (has_fixed_part == 1 && verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
+        if (event_has_fixed_part == 1 && verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(particle->Id()); // stores the pdg id of this particle
         jet_constits.push_back(constit);
       }
-      else if (has_fixed_part == 1 && verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
+      else if (event_has_fixed_part == 1 && verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
     }
     h1d_part_mult->Fill(Mult);
 
@@ -350,7 +350,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
       if (verbosity > 0) cout<<endl;
       // cuts jets not containing at least one force_injet_flag particle, if appropriate
-      if (force_injet_flag == 1 && has_fixed_part == 0) continue;
+      if (force_injet_flag == 1 && jet_has_fixed_part == 0) continue;
 
       // jet histograms filled on inclusive (or semi-inclusive) jet information
       for (int ieta = 0; ieta < etabin; ieta++)
