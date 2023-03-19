@@ -5,7 +5,7 @@ R__LOAD_LIBRARY(libfastjet);
 #include <iostream>
 using namespace fastjet;
 using namespace std;
-const int verbosity = 0;
+const int verbosity = 1;
 
 const Double_t Mp(0.9383); // in GeV/c^2
 const Double_t Me(0.511E-3); // in GeV/c^2
@@ -254,7 +254,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (abs(particle->Id()) == fixed_part_id)
         {
           has_fixed_part = 1;
-          cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
+          if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
           break;
         }
       }
@@ -299,23 +299,13 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
           || (force_injet_flag != 0 && particle->Id() == fixed_part_id) )
       {
-        if (has_fixed_part == 1)
-        {
-          cout<<"anti-kt input: "<<particle->Id();
-        }
+        if (has_fixed_part == 1 && verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
+
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(particle->Id()); // stores the pdg id of this particle
         jet_constits.push_back(constit);
       }
-      else
-      {
-        if (has_fixed_part == 1)
-        {
-          cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus();
-        }
-      }
-      cout<<endl;
-
+      else if (has_fixed_part == 1 && verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
     }
     h1d_part_mult->Fill(Mult);
 
@@ -340,27 +330,25 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // take only charged constituents for eec calculation
       PseudoJet fixed_part;
       int has_fixed_part = 0;
-      cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl;
-      cout<<"constits: ";
+      if (verbosity > 0) cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl<<"constits: ";
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
         PseudoJet constit = constituents[iconstit];
         int pdg_code = constit.user_index(); // retrieve stored pdg id of particle
-        cout<<" "<<pdg_code;
+        if (verbosity > 0) cout<<" "<<pdg_code;
 
         if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
 
         if (pdg_code == force_injet_flag)
         {
           fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_injet_flag
-          cout<<"event "<<ievt<<" has a jet with D0!!!!"<<endl;
           has_fixed_part = 1;
         }
 
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
         if (charge != 0) charged_constituents.push_back(constit);
       }
-      cout<<endl;
+      if (verbosity > 0) cout<<endl;
       // cuts jets not containing at least one force_injet_flag particle, if appropriate
       if (force_injet_flag != 0 && has_fixed_part == 0) continue;
 
