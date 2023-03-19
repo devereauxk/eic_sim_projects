@@ -297,8 +297,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
 
-      if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11) )
-//          || (force_part_injet != 0 && particle->Id() == force_part_injet) )
+      if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
+          || (force_part_injet != 0 && particle->Id() == force_part_injet) )
       {
         if (has_fixed_part == 1)
         {
