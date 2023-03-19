@@ -232,7 +232,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
   //Loop Over Events
   //for(Int_t ievt = 0; ievt < nevt; ievt++)
-  for(Int_t ievt = 0; ievt < 4000; ievt++)
+  for(Int_t ievt = 3530; ievt < 3532; ievt++)
   {
     tree->GetEntry(ievt);
 
