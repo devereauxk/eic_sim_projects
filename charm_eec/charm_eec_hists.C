@@ -234,7 +234,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
   {
     tree->GetEntry(ievt);
 
-    if (ievt%1000==0) cout<<"Processing event = "<<ievt<<"/"<<nevt<<endl;
+    if (ievt%10000==0) cout<<"Processing event = "<<ievt<<"/"<<nevt<<endl;
 
     Q2 = event->GetQ2();
     xB = event->GetX();
@@ -253,6 +253,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (abs(particle->Id()) == force_part_injet)
         {
           has_fixed_part = 1;
+          cout<<"event "<<ievt<<" has D0!!!!"<<endl;
           break;
         }
       }
