@@ -296,16 +296,23 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      cout<<"anti-kt input: ";
+
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
       {
         if (has_fixed_part == 1)
         {
-          cout<<" "<<particle->Id();
+          cout<<"anti-kt input: "<<particle->Id();
         }
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(particle->Id()); // stores the pdg id of this particle
         jet_constits.push_back(constit);
+      }
+      else
+      {
+        if (has_fixed_part == 1)
+        {
+          cout<<"not anti-kt input: "<<particle->Id();
+        }
       }
       cout<<endl;
 
