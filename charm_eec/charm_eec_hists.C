@@ -251,7 +251,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
       {
         particle = event->GetTrack(ipart);
-        if (abs(particle->Id()) == fixed_part_id)
+        if (abs(particle->Id()) == abs(fixed_part_id))
         {
           has_fixed_part = 1;
           if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
@@ -297,7 +297,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
-          || (force_injet_flag == 1 && particle->Id() == fixed_part_id) )
+          || (force_injet_flag == 1 && abs(particle->Id()) == abs(fixed_part_id)) )
       {
         if (has_fixed_part == 1 && verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
@@ -339,7 +339,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
         if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
 
-        if (pdg_code == fixed_part_id)
+        if (abs(pdg_code) == abs(fixed_part_id))
         {
           fixed_part = constit; // set fixed_part as the last occurance of fixed particle specified by force_injet_flag
           jet_has_fixed_part = 1;
