@@ -242,16 +242,24 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     // Q2-cut
     if (Q2 < 10) continue;
 
-    // D0 containing cut
+    // skip event if doesn't contain forced_part_injet, if appropriate
+    erhic::ParticleMC* particle;
     if (force_part_injet != 0)
     {
-      bool event_has_part = std::any_of(event->particles_begin(), event->particles_end(),
-                            [](const erhic::ParticleMC* part) { return abs(part->Id()) == force_part_injet; });
-      if (!event_has_part) continue;
+      int has_fixed_part = 0;
+      for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
+      {
+        particle = event->GetTrack(ipart);
+        if (abs(particle->Id()) == force_part_injet)
+        {
+          has_fixed_part = 1;
+          break;
+        }
+      }
+      if (has_fixed_part == 0) continue;
     }
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
-    erhic::ParticleMC* particle;
     vector<PseudoJet> jet_constits;
     Mult = 0;
     for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
@@ -312,14 +320,6 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       vector<PseudoJet> constituents = jets[ijet].constituents();
       vector<PseudoJet> charged_constituents;
 
-
-      if (force_part_injet != 0)
-      {
-        bool jet_has_part = std::any_of(constituents.begin(), constituents.end(),
-                            [](PseudoJet constit) { return abs(constit.user_index()) == force_part_injet; });
-        if (!jet_has_part) continue;
-      }
-
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
       // take only charged constituents for eec calculation
       PseudoJet fixed_part = NULL;
@@ -336,7 +336,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (charge != 0) charged_constituents.push_back(constit);
       }
       // cuts jets not containing at least one force_part_injet particle, if appropriate
-      if (force_part_injet != 0 && fixed_part == NULL) continue;
+      if (force_part_injet != 0 && fixed_part != NULL) continue;
 
       // jet histograms filled on inclusive (or semi-inclusive) jet information
       for (int ieta = 0; ieta < etabin; ieta++)
