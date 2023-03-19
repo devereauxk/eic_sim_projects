@@ -138,7 +138,7 @@ class Fixed_Correlator_Builder
     PseudoJet fixed_part;
 
   public:
-    Correlator_Builder(vector<PseudoJet> _particle_list, float _jet_pt, float _jet_eta, double _weight_pow, PseudoJet _fixed_part)
+    Fixed_Correlator_Builder(vector<PseudoJet> _particle_list, float _jet_pt, float _jet_eta, double _weight_pow, PseudoJet _fixed_part)
     {
       particle_list = _particle_list;
       mult = particle_list.size();
