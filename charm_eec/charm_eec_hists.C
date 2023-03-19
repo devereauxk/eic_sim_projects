@@ -322,7 +322,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
-      //if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
+      if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
 
       total_jets++;
 
