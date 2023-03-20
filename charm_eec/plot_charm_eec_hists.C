@@ -165,45 +165,46 @@ void overlay_hists(const char* out_dir)
   // overlay h1d_jet_eec with pt binnings, one plot per eta binning
   for (int ieta = 0; ieta < etabin; ieta++)
   {
-    mclogx(cno++);
+    TCanvas* canvas = new TCanvas("canvas", "canvas", 0, 0, 400, 400);
+    //canvas->SetLogx();
+    //canvas->SetLogy();
+
+    float plot_xrange_lo = 1E-2;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = 1E-5;
+    float plot_yrange_hi = 0.05; // 5E-1;
+
+    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    leg->SetBorderSize(0);
+    leg->SetTextSize(0.025);
+    leg->SetFillStyle(0);
+    leg->SetMargin(0.1);
+
+    //for (int ipt = 0; ipt < ptbin-1; ipt++)
+    for (int ipt = 2; ipt < 3; ipt++)
     {
-      float plot_xrange_lo = 1E-2;
-      float plot_xrange_hi = 1;
-      float plot_yrange_lo = 1E-5;
-      float plot_yrange_hi = 0.05; // 5E-1;
+      TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
+      temp->Scale(1/temp->GetEntries());
 
-      TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
-      leg->SetBorderSize(0);
-      leg->SetTextSize(0.025);
-      leg->SetFillStyle(0);
-      leg->SetMargin(0.1);
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->SetMarkerColor(pt_color[ipt]);
+      temp->SetLineColor(pt_color[ipt]);
+      temp->SetMarkerSize(0.5);
+      temp->SetMarkerStyle(21);
+      temp->Draw("same hist e1");
 
-      //for (int ipt = 0; ipt < ptbin-1; ipt++)
-      for (int ipt = 2; ipt < 3; ipt++)
-      {
-        TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
-        temp->Scale(1/temp->GetEntries());
-
-        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-        temp->SetMarkerColor(pt_color[ipt]);
-        temp->SetLineColor(pt_color[ipt]);
-        temp->SetMarkerSize(0.5);
-        temp->SetMarkerStyle(21);
-        temp->Draw("same hist e1");
-
-        leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
-      }
-      leg->Draw("same");
-
-      TLatex* tl = new TLatex();
-      tl->SetTextAlign(11);
-      tl->SetTextSize(0.025);
-      tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
-
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d.pdf\")", cno-1, out_dir, ieta) );
+      leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
     }
+    leg->Draw("same");
+
+    TLatex* tl = new TLatex();
+    tl->SetTextAlign(11);
+    tl->SetTextSize(0.025);
+    tl->SetTextColor(kBlack);
+    tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+
+    canvas->SaveAs( Form("%sh1d_jet_eec_overlay_%d.pdf\")", out_dir, ieta) );
   }
 
   // overlay h1d_jet_eec_rlsqrtpt with pt binnings
