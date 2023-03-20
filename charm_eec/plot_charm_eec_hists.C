@@ -170,7 +170,7 @@ void overlay_hists(const char* out_dir)
       float plot_xrange_lo = 1E-2;
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 1E-5;
-      float plot_yrange_hi = 5E-1;
+      float plot_yrange_hi = 0.05; // 5E-1;
 
       TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
       leg->SetBorderSize(0);
@@ -179,7 +179,7 @@ void overlay_hists(const char* out_dir)
       leg->SetMargin(0.1);
 
       //for (int ipt = 0; ipt < ptbin-1; ipt++)
-      for (int ipt = 0; ipt < 1; ipt++)
+      for (int ipt = 2; ipt < 3; ipt++)
       {
         TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
         temp->Scale(1/temp->GetEntries());
