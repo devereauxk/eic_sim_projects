@@ -165,7 +165,7 @@ void overlay_hists(const char* out_dir)
   // overlay h1d_jet_eec with pt binnings, one plot per eta binning
   for (int ieta = 0; ieta < etabin; ieta++)
   {
-    mcs(cno++);
+    mclogx(cno++);
     {
       float plot_xrange_lo = 1E-2;
       float plot_xrange_hi = 1;
