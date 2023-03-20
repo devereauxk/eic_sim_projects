@@ -204,7 +204,7 @@ void overlay_hists(const char* out_dir)
     tl->SetTextColor(kBlack);
     tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
 
-    canvas->SaveAs( Form("%sh1d_jet_eec_overlay_%d.pdf\")", out_dir, ieta) );
+    canvas->SaveAs( Form("%sh1d_jet_eec_overlay_%d.pdf", out_dir, ieta) );
   }
 
   // overlay h1d_jet_eec_rlsqrtpt with pt binnings
