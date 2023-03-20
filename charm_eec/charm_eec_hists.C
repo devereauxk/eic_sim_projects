@@ -257,7 +257,6 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         {
           event_num_fixed_parts++;
           if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
-          break;
         }
       }
       if (event_num_fixed_parts == 0) continue;
@@ -679,16 +678,16 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
     h1d_part_eta[ipt] = new TH1D(Form("h1d_part_eta_%d", ipt),"particle eta",1600,-15,5);
     h1d_part_eta[ipt]->Sumw2();
   }
-  h1d_part_mult = new TH1D("h1d_part_mult", "event particle multiplicity",200,0,200);
+  h1d_part_mult = new TH1D("h1d_part_mult", "event particle multiplicity",200,-0.5,199.5);
   h1d_part_mult->Sumw2();
 
   h1d_jet_eta = new TH1D("h1d_jet_eta", "jet eta",800,-5,5);
   h1d_jet_eta->Sumw2();
 
-  h1d_fixed_event_mult = new TH1D("h1d_fixed_event_mult", "D0 multiplicity per event",50,0,50);
+  h1d_fixed_event_mult = new TH1D("h1d_fixed_event_mult", "D0 multiplicity per event",50,-0.5,49.5);
   h1d_fixed_event_mult->Sumw2();
 
-  h1d_fixed_jet_mult = new TH1D("h1d_fixed_jet_mult", "D0 multiplicity per jet",50,0,50);
+  h1d_fixed_jet_mult = new TH1D("h1d_fixed_jet_mult", "D0 multiplicity per jet",50,-0.5,49.5);
   h1d_fixed_jet_mult->Sumw2();
 
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -701,10 +700,10 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
       h1d_jet_eec_rlsqrtpt[ieta][ipt] = new TH1D(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt),"jet eec rlsqrtpt",50,lbins_rlsqrtpt);
       h1d_jet_eec_rlsqrtpt[ieta][ipt]->Sumw2();
 
-      h1d_jet_multiplicity[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt), "jet multiplicity", 50, 0, 50);
+      h1d_jet_multiplicity[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt), "jet multiplicity", 50, -0.5, 49.5);
       h1d_jet_multiplicity[ieta][ipt]->Sumw2();
 
-      h1d_jet_multiplicity_charged[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt), "jet charged multiplicity", 50, 0, 50);
+      h1d_jet_multiplicity_charged[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt), "jet charged multiplicity", 50, -0.5, 49.5);
       h1d_jet_multiplicity_charged[ieta][ipt]->Sumw2();
     }
   }

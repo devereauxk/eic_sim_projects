@@ -680,7 +680,7 @@ void Q2_x_panel(const char* out_dir)
 void particle_hists(const char* out_dir)
 {
   // 1d particle pt histogram
-  mclogxy(cno++);
+  mclogy(cno++);
   {
     vector<TH1*> hists;
 
@@ -699,8 +699,8 @@ void particle_hists(const char* out_dir)
 
       temp->Draw("same");
 
-      temp->GetXaxis()->SetRangeUser(0.9,25);
-      temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
+      temp->GetXaxis()->SetRangeUser(0,25);
+      temp->GetXaxis()->SetTitle("p_{T} [GeV]");
       temp->GetYaxis()->SetRangeUser(1,1.3*h1d_part_pt[3]->GetMaximum());
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
