@@ -166,8 +166,8 @@ void overlay_hists(const char* out_dir)
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     TCanvas* canvas = new TCanvas("canvas", "canvas", 0, 0, 400, 400);
-    //canvas->SetLogx();
-    //canvas->SetLogy();
+    canvas->SetLogx();
+    canvas->SetLogy();
 
     float plot_xrange_lo = 1E-2;
     float plot_xrange_hi = 1;
