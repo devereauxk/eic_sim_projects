@@ -6,12 +6,12 @@ using namespace std;
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
 static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
-const int pt_color[ptbin] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed};
+const int pt_color[9] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1, kAzure+7, kViolet+7, kBlack};
 
 const int etabin = 6; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
-const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
+const int eta_color[9] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1, kAzure+7, kViolet+7, kBlack};
 
 TH1D* h1d_jet_pt[etabin] = {};
 TH1D* h1d_jet_eta = NULL;
@@ -57,7 +57,7 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 
 void individual_hists(const char* out_dir)
 {
-  TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+  TLegend* leg = new TLegend(0.61,0.7,0.91,0.82);
   leg->SetBorderSize(0);
   leg->SetTextSize(0.025);
   leg->SetFillStyle(0);
@@ -70,8 +70,9 @@ void individual_hists(const char* out_dir)
     {
       h1d_jet_pt[ieta]->Draw("same");
 
-      h1d_jet_pt[ieta]->GetXaxis()->SetRangeUser(0,70);
+      h1d_jet_pt[ieta]->GetXaxis()->SetRangeUser(0,40);
       h1d_jet_pt[ieta]->GetXaxis()->SetTitle("jet p_{T} [GeV]");
+      h1d_jet_pt[ieta]->GetYaxis()->SetRangeUser(0,1.3*h1d_jet_pt[ieta]->GetMaximum())
       h1d_jet_pt[ieta]->GetYaxis()->SetTitle("counts");
       h1d_jet_pt[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_jet_pt[ieta]->GetYaxis()->SetTitleOffset(1.5);
@@ -101,7 +102,7 @@ void individual_hists(const char* out_dir)
 
       temp->Draw("same");
 
-      temp->GetXaxis()->SetRangeUser(0,70);
+      temp->GetXaxis()->SetRangeUser(0,40);
       temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
@@ -703,6 +704,8 @@ void particle_hists(const char* out_dir)
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
       temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->SetMarkerColor(eta_color[ieta]);
+      temp->SetLineColor(eta_color[ieta]);
       temp->Draw("same hist e");
       leg->AddEntry(temp,Form("%1.1f < eta < %1.1f",eta_lo[ieta],eta_hi[ieta]));
     }
@@ -738,6 +741,8 @@ void particle_hists(const char* out_dir)
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
       temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->SetMarkerColor(pt_color[ipt]);
+      temp->SetLineColor(pt_color[ipt]);
       temp->Draw("same hist e");
       leg->AddEntry(temp,Form("%1.1f < pt < %1.1f",pt_lo[ipt],pt_hi[ipt]));
     }
@@ -758,7 +763,7 @@ void particle_hists(const char* out_dir)
 
     temp->Draw("same");
 
-    temp->GetXaxis()->SetRangeUser(0,200);
+    temp->GetXaxis()->SetRangeUser(0,120);
     temp->GetXaxis()->SetTitle("event multiplicity");
     temp->GetYaxis()->SetTitle("counts");
     temp->GetXaxis()->SetTitleOffset(1.3);
@@ -768,6 +773,42 @@ void particle_hists(const char* out_dir)
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_part_mult.pdf\")", cno-1, out_dir) );
 
     hists_to_csv(Form("%smult.csv", out_dir), hists);
+  }
+
+  // 1d D0 multiplicity per event histogram
+  mclogy(cno++);
+  {
+
+    TH1D* temp = (TH1D*) h1d_fixed_event_mult->Clone("temp");
+
+    temp->Draw("same");
+
+    temp->GetXaxis()->SetRangeUser(0,10);
+    temp->GetXaxis()->SetTitle("D0 event multiplicity");
+    temp->GetYaxis()->SetTitle("counts");
+    temp->GetXaxis()->SetTitleOffset(1.3);
+    temp->GetYaxis()->SetTitleOffset(1.5);
+    temp->Draw("same hist e");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_D0_inevent_mult.pdf\")", cno-1, out_dir) );
+  }
+
+  // 1d D0 multiplicity per event histogram
+  mclogy(cno++);
+  {
+
+    TH1D* temp = (TH1D*) h1d_fixed_jet_mult->Clone("temp");
+
+    temp->Draw("same");
+
+    temp->GetXaxis()->SetRangeUser(0,10);
+    temp->GetXaxis()->SetTitle("D0 jet multiplicity");
+    temp->GetYaxis()->SetTitle("counts");
+    temp->GetXaxis()->SetTitleOffset(1.3);
+    temp->GetYaxis()->SetTitleOffset(1.5);
+    temp->Draw("same hist e");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_D0_injet_mult.pdf\")", cno-1, out_dir) );
   }
 
 }
