@@ -72,7 +72,7 @@ void individual_hists(const char* out_dir)
 
       h1d_jet_pt[ieta]->GetXaxis()->SetRangeUser(0,40);
       h1d_jet_pt[ieta]->GetXaxis()->SetTitle("jet p_{T} [GeV]");
-      h1d_jet_pt[ieta]->GetYaxis()->SetRangeUser(0,1.3*h1d_jet_pt[ieta]->GetMaximum())
+      h1d_jet_pt[ieta]->GetYaxis()->SetRangeUser(0,1.3*h1d_jet_pt[ieta]->GetMaximum());
       h1d_jet_pt[ieta]->GetYaxis()->SetTitle("counts");
       h1d_jet_pt[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_jet_pt[ieta]->GetYaxis()->SetTitleOffset(1.5);
