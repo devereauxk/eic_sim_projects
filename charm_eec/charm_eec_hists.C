@@ -685,10 +685,10 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   h1d_jet_eta = new TH1D("h1d_jet_eta", "jet eta",800,-5,5);
   h1d_jet_eta->Sumw2();
 
-  h1d_fixed_event_mult = new TH1D("h1d_D0_event_mult", "D0 multiplicity per event",50,0,50);
+  h1d_fixed_event_mult = new TH1D("h1d_fixed_event_mult", "D0 multiplicity per event",50,0,50);
   h1d_fixed_event_mult->Sumw2();
 
-  h1d_fixed_jet_mult = new TH1D("h1d_D0_jet_mult", "D0 multiplicity per jet",50,0,50);
+  h1d_fixed_jet_mult = new TH1D("h1d_fixed_jet_mult", "D0 multiplicity per jet",50,0,50);
   h1d_fixed_jet_mult->Sumw2();
 
   for (int ieta = 0; ieta < etabin; ieta++)
