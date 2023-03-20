@@ -75,6 +75,8 @@ void individual_hists(const char* out_dir)
       h1d_jet_pt[ieta]->GetYaxis()->SetTitle("counts");
       h1d_jet_pt[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_jet_pt[ieta]->GetYaxis()->SetTitleOffset(1.5);
+      h1d_jet_pt[ieta]->SetMarkerColor(eta_color[ieta]);
+      h1d_jet_pt[ieta]->SetLineColor(eta_color[ieta]);
       h1d_jet_pt[ieta]->Draw("same hist e");
       leg->AddEntry(h1d_jet_pt[ieta],Form("%1.1f < eta < %1.1f",eta_lo[ieta],eta_hi[ieta]));
     }
@@ -104,6 +106,8 @@ void individual_hists(const char* out_dir)
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
       temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->SetMarkerColor(eta_color[ieta]);
+      temp->SetLineColor(eta_color[ieta]);
       temp->Draw("same hist e");
       leg->AddEntry(temp,Form("%1.1f < eta < %1.1f",eta_lo[ieta],eta_hi[ieta]));
     }
