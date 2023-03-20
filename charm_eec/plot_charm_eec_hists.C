@@ -66,13 +66,13 @@ void individual_hists(const char* out_dir)
   // 1d jet pt histogram
   mclogy(cno++);
   {
-    for (int ieta = 0; ieta < etabin; ieta++)
+    for (int ieta = 0; ieta < 3; ieta++)
     {
       h1d_jet_pt[ieta]->Draw("same");
 
       h1d_jet_pt[ieta]->GetXaxis()->SetRangeUser(0,40);
       h1d_jet_pt[ieta]->GetXaxis()->SetTitle("jet p_{T} [GeV]");
-      h1d_jet_pt[ieta]->GetYaxis()->SetRangeUser(1,1.3*h1d_jet_pt[ieta]->GetMaximum());
+      h1d_jet_pt[ieta]->GetYaxis()->SetRangeUser(1,1.3*h1d_jet_pt[3]->GetMaximum());
       h1d_jet_pt[ieta]->GetYaxis()->SetTitle("counts");
       h1d_jet_pt[ieta]->GetXaxis()->SetTitleOffset(1.3);
       h1d_jet_pt[ieta]->GetYaxis()->SetTitleOffset(1.5);
@@ -89,7 +89,7 @@ void individual_hists(const char* out_dir)
   // 1d jet pt histogram normalized by number of jets, inclusive on eta
   mclogy(cno++);
   {
-    TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+    TLegend* leg = new TLegend(0.61,0.7,0.91,0.82);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.025);
     leg->SetFillStyle(0);
@@ -699,8 +699,9 @@ void particle_hists(const char* out_dir)
 
       temp->Draw("same");
 
-      temp->GetXaxis()->SetRangeUser(0,25);
+      temp->GetXaxis()->SetRangeUser(1,25);
       temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
+      temp->GetYaxis()-SetRangeUser(1,1.3*h1d_part_pt[3]->GetMaximum());
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
       temp->GetYaxis()->SetTitleOffset(1.5);
