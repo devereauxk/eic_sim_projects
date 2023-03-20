@@ -699,9 +699,9 @@ void particle_hists(const char* out_dir)
 
       temp->Draw("same");
 
-      temp->GetXaxis()->SetRangeUser(1,25);
+      temp->GetXaxis()->SetRangeUser(0,25);
       temp->GetXaxis()->SetTitle("jet p_{T} [GeV]");
-      temp->GetYaxis()-SetRangeUser(1,1.3*h1d_part_pt[3]->GetMaximum());
+      temp->GetYaxis()->SetRangeUser(1,1.3*h1d_part_pt[3]->GetMaximum());
       temp->GetYaxis()->SetTitle("counts");
       temp->GetXaxis()->SetTitleOffset(1.3);
       temp->GetYaxis()->SetTitleOffset(1.5);
