@@ -174,11 +174,13 @@ void overlay_hists(const char* out_dir)
     float plot_yrange_lo = 1E-5;
     float plot_yrange_hi = 0.05; // 5E-1;
 
+    /*
     TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
     leg->SetBorderSize(0);
     leg->SetTextSize(0.025);
     leg->SetFillStyle(0);
     leg->SetMargin(0.1);
+    */
 
     //for (int ipt = 0; ipt < ptbin-1; ipt++)
     for (int ipt = 2; ipt < 3; ipt++)
@@ -192,17 +194,19 @@ void overlay_hists(const char* out_dir)
       temp->SetLineColor(pt_color[ipt]);
       temp->SetMarkerSize(0.5);
       temp->SetMarkerStyle(21);
-      temp->Draw("same hist e1");
+      temp->Draw("e1");
 
-      leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+      //leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
     }
-    leg->Draw("same");
+    //leg->Draw("same");
 
+    /*
     TLatex* tl = new TLatex();
     tl->SetTextAlign(11);
     tl->SetTextSize(0.025);
     tl->SetTextColor(kBlack);
     tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+    */
 
     canvas->SaveAs( Form("%sh1d_jet_eec_overlay_%d.pdf", out_dir, ieta) );
   }
