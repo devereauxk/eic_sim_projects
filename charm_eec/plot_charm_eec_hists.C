@@ -162,19 +162,19 @@ void individual_hists(const char* out_dir)
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      TH1D* temp = h1d_jet_multiplicity[ieta][ipt]->Clone("temp");
+      TH1D* temp = (TH1D*) h1d_jet_multiplicity[ieta][ipt]->Clone("temp");
       hists.push_back(temp);
     }
   }
   hists_to_csv( Form("%sjet_multiplicity.csv", out_dir), hists);
 
   // jet charged particle multiplicity plot, printing out csv with the format [ieta][ipt] = [0][0], [0][1], [0][2], ... [1][0], ...
-  vector<TH1*> hists;
+  hists.clear();
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      TH1D* temp = h1d_jet_multiplicity_charged[ieta][ipt]->Clone("temp");
+      TH1D* temp = (TH1D*) h1d_jet_multiplicity_charged[ieta][ipt]->Clone("temp");
       hists.push_back(temp);
     }
   }
