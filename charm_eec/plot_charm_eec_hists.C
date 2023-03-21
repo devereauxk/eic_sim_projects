@@ -165,7 +165,7 @@ void individual_hists(const char* out_dir)
 
     temp->Draw("same");
 
-    temp->GetXaxis()->SetRangeUser(0,10);
+    temp->GetXaxis()->SetRangeUser(0,100);
     temp->GetXaxis()->SetTitle("jet multiplicity");
     temp->GetYaxis()->SetTitle("counts");
     temp->GetXaxis()->SetTitleOffset(1.3);
