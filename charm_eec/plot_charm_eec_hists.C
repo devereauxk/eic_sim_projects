@@ -156,9 +156,9 @@ void individual_hists(const char* out_dir)
     }
   }
 
-  // jet inclusive multiplicity plot, printing out csv with the format [ieta][ipt] = [0][0], [0][1], [0][2], ... [1][0], ...
-  int etabin_pick = 2;
-  int ptbin_pick = 2;
+  // jet inclusive and charged multiplicity plots
+  int etabin_pick = 4;
+  int ptbin_pick = 3;
   mclogy(cno++);
   {
     TH1D* temp = (TH1D*) h1d_jet_multiplicity[etabin_pick][ptbin_pick]->Clone("temp");
@@ -173,6 +173,21 @@ void individual_hists(const char* out_dir)
     temp->Draw("same hist e");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_mult.pdf\")", cno-1, out_dir) );
+  }
+  mclogy(cno++);
+  {
+    TH1D* temp = (TH1D*) h1d_jet_multiplicity_charged[etabin_pick][ptbin_pick]->Clone("temp");
+
+    temp->Draw("same");
+
+    temp->GetXaxis()->SetRangeUser(0,100);
+    temp->GetXaxis()->SetTitle("jet charged multiplicity");
+    temp->GetYaxis()->SetTitle("counts");
+    temp->GetXaxis()->SetTitleOffset(1.3);
+    temp->GetYaxis()->SetTitleOffset(1.5);
+    temp->Draw("same hist e");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_mult_charged.pdf\")", cno-1, out_dir) );
   }
 
 }
