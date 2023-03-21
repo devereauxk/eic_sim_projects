@@ -157,8 +157,8 @@ void individual_hists(const char* out_dir)
   }
 
   // jet inclusive and charged multiplicity plots
-  int etabin_pick = 4;
-  int ptbin_pick = 3;
+  int etabin_pick = 3;
+  int ptbin_pick = 4;
   mclogy(cno++);
   {
     TH1D* temp = (TH1D*) h1d_jet_multiplicity[etabin_pick][ptbin_pick]->Clone("temp");
