@@ -244,6 +244,8 @@ void ratio_hists(const char* out_dir)
   {
     mclogxy(cno++);
     {
+      vector<TH1*> hists;
+
       float plot_xrange_lo = 1E-2;
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 0.4;
@@ -258,7 +260,7 @@ void ratio_hists(const char* out_dir)
       for (int ipt = 0; ipt < ptbin-2; ipt++)
       {
         TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
-        TH1D* temp_baseline = (TH1D*) h1d_jet_eec_baseline[ieta][pt]->Clone("temp baseline");
+        TH1D* temp_baseline = (TH1D*) h1d_jet_eec_baseline[ieta][ipt]->Clone("temp baseline");
 
         // calculate relative normalization ratio
         int norm_binrange_lo = temp->FindBin(rl_norm_lo);
