@@ -310,6 +310,7 @@ void ratio_hists(const char* out_dir)
   }
 
   // ratio hists for h1d_jet_eec, one plot per eta binning
+  /*
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     mclogxy(cno++);
@@ -358,6 +359,7 @@ void ratio_hists(const char* out_dir)
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_ratio_%d.pdf\")", cno-1, out_dir, ieta) );
     }
   }
+  */
 
   // ratio hists for h1d_jet_eec, (on - off) / int dR_L off, only calculated for inclusive eta bin (etabin-1)
   mclogx(cno++);
