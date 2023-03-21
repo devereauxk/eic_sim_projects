@@ -180,7 +180,7 @@ void overlay_hists(const char* out_dir)
       leg->SetFillStyle(0);
       leg->SetMargin(0.1);
 
-      for (int ipt = 0; ipt < ptbin-1; ipt++)
+      for (int ipt = 0; ipt < ptbin-2; ipt++)
       {
         TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
         temp->Scale(1/temp->Integral());
