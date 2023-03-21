@@ -167,7 +167,7 @@ void overlay_hists(const char* out_dir)
   {
     mclogxy(cno++);
     {
-      vector<TH1D*> hists;
+      vector<TH1*> hists;
 
       float plot_xrange_lo = 1E-2;
       float plot_xrange_hi = 1;
