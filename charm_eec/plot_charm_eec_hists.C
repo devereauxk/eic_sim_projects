@@ -237,6 +237,76 @@ void overlay_hists(const char* out_dir)
 
 void ratio_hists(const char* out_dir)
 {
+  // this eec relatively normalized to ratio
+  float rl_norm_lo = 1E-3;
+  float rl_norm_hi = 0.08; // same as eec paper
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    mclogxy(cno++);
+    {
+      float plot_xrange_lo = 1E-2;
+      float plot_xrange_hi = 1;
+      float plot_yrange_lo = 0.4;
+      float plot_yrange_hi = 2.5;
+
+      TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
+      leg->SetBorderSize(0);
+      leg->SetTextSize(0.025);
+      leg->SetFillStyle(0);
+      leg->SetMargin(0.1);
+
+      for (int ipt = 0; ipt < ptbin-2; ipt++)
+      {
+        TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
+        TH1D* temp_baseline = (TH1D*) h1d_jet_eec_baseline[ieta][pt]->Clone("temp baseline");
+
+        // calculate relative normalization ratio
+        int norm_binrange_lo = temp->FindBin(rl_norm_lo);
+        int norm_binrange_hi = temp->FindBin(rl_norm_hi);
+        if (norm_binrange_lo == 0)
+        {
+          norm_binrange_lo = 1;
+          cout<<"bin range lo too low; set to 1"<<endl;
+        }
+        if (norm_binrange_hi > temp->GetNbinsX())
+        {
+          norm_binrange_hi = temp->GetNBinsX();
+          cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
+        }
+        double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+        temp->Scale(relative_normalization);
+        temp->Scale(1/temp_baseline->Integral());
+
+        hists.push_back(temp);
+
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->SetMarkerColor(pt_color[ipt]);
+        temp->SetLineColor(pt_color[ipt]);
+        temp->SetMarkerSize(0.5);
+        temp->SetMarkerStyle(21);
+        temp->Draw("same hist");
+
+        leg->AddEntry(temp,Form("%.1f GeV < p_{T} < %.1f GeV",pt_lo[ipt],pt_hi[ipt]));
+      }
+      leg->Draw("same");
+
+      TLine l1(plot_xrange_lo,1,plot_xrange_hi,1);
+      l1.SetLineStyle(7);
+      l1.SetLineColor(kGray+2);
+      l1.Draw("same");
+
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.025);
+      tl->SetTextColor(kBlack);
+      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_relnormed_%d.pdf\")", cno-1, out_dir, ieta) );
+      hists_to_csv(Form("%seec_overlay_relnormed_%d.csv", out_dir, ieta), hists);
+    }
+  }
+
   // ratio hists for h1d_jet_eec, one plot per eta binning
   for (int ieta = 0; ieta < etabin; ieta++)
   {
@@ -740,7 +810,6 @@ void particle_hists(const char* out_dir)
   }
 
   // 1d D0 multiplicity per event histogram
-  /*
   mclogy(cno++);
   {
 
@@ -775,7 +844,6 @@ void particle_hists(const char* out_dir)
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_D0_injet_mult.pdf\")", cno-1, out_dir) );
   }
-  */
 
 }
 
@@ -793,8 +861,8 @@ void plot_charm_eec_hists(const char* fin_name = "hists_eec.root", const char* o
   h1d_jet_eta->SetName("h1d_jet_eta");
 
   h1d_part_mult = (TH1D*) fin->Get("h1d_part_mult");
-  //h1d_fixed_event_mult = (TH1D*) fin->Get("h1d_fixed_event_mult");
-  //h1d_fixed_jet_mult = (TH1D*) fin->Get("h1d_fixed_jet_mult");
+  h1d_fixed_event_mult = (TH1D*) fin->Get("h1d_fixed_event_mult");
+  h1d_fixed_jet_mult = (TH1D*) fin->Get("h1d_fixed_jet_mult");
 
   for (int ipt = 0; ipt < ptbin; ipt++)
   {
@@ -851,10 +919,6 @@ void plot_charm_eec_hists(const char* fin_name = "hists_eec.root", const char* o
 
         h1d_jet_eec_rlsqrtpt_baseline[ieta][ipt] = (TH1D*) fin_baseline->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
         h1d_jet_eec_rlsqrtpt_baseline[ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_%d_baseline", ieta, ipt));
-
-        // normalized histogram
-        h1d_jet_eec_baseline_norm[ieta][ipt] = (TH1D*) h1d_jet_eec_baseline[ieta][ipt]->Clone(Form("h1d_jet_eec_%d_%d_norm", ieta, ipt));
-        h1d_jet_eec_baseline_norm[ieta][ipt]->Scale(1/h1d_jet_eec_baseline_norm[ieta][ipt]->Integral()); // normalization
       }
     }
 
