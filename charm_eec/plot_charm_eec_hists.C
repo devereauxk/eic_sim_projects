@@ -157,29 +157,23 @@ void individual_hists(const char* out_dir)
   }
 
   // jet inclusive multiplicity plot, printing out csv with the format [ieta][ipt] = [0][0], [0][1], [0][2], ... [1][0], ...
-  vector<TH1*> hists;
-  for (int ieta = 0; ieta < etabin; ieta++)
+  int etabin_pick = 2;
+  int ptbin_pick = 2;
+  mclogy(cno++)
   {
-    for (int ipt = 0; ipt < ptbin; ipt++)
-    {
-      TH1D* temp = (TH1D*) h1d_jet_multiplicity[ieta][ipt]->Clone("temp");
-      hists.push_back(temp);
-    }
-  }
-  hists_to_csv( Form("%sjet_multiplicity.csv", out_dir), hists);
+    TH1D* temp = (TH1D*) h1d_jet_multiplicity[etabin_pick][ptbin_pick]->Clone("temp");
 
-  // jet charged particle multiplicity plot, printing out csv with the format [ieta][ipt] = [0][0], [0][1], [0][2], ... [1][0], ...
-  hists.clear();
-  for (int ieta = 0; ieta < etabin; ieta++)
-  {
-    for (int ipt = 0; ipt < ptbin; ipt++)
-    {
-      TH1D* temp = (TH1D*) h1d_jet_multiplicity_charged[ieta][ipt]->Clone("temp");
-      hists.push_back(temp);
-    }
-  }
-  hists_to_csv( Form("%sjet_multiplicity_charged.csv", out_dir), hists);
+    temp->Draw("same");
 
+    temp->GetXaxis()->SetRangeUser(0,10);
+    temp->GetXaxis()->SetTitle("jet multiplicity");
+    temp->GetYaxis()->SetTitle("counts");
+    temp->GetXaxis()->SetTitleOffset(1.3);
+    temp->GetYaxis()->SetTitleOffset(1.5);
+    temp->Draw("same hist e");
+
+    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_mult.pdf\")", cno-1, out_dir) );
+  }
 
 }
 
