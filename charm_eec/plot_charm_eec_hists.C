@@ -740,6 +740,7 @@ void particle_hists(const char* out_dir)
   }
 
   // 1d D0 multiplicity per event histogram
+  /*
   mclogy(cno++);
   {
 
@@ -774,6 +775,7 @@ void particle_hists(const char* out_dir)
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_D0_injet_mult.pdf\")", cno-1, out_dir) );
   }
+  */
 
 }
 
@@ -791,8 +793,8 @@ void plot_charm_eec_hists(const char* fin_name = "hists_eec.root", const char* o
   h1d_jet_eta->SetName("h1d_jet_eta");
 
   h1d_part_mult = (TH1D*) fin->Get("h1d_part_mult");
-  h1d_fixed_event_mult = (TH1D*) fin->Get("h1d_fixed_event_mult");
-  h1d_fixed_jet_mult = (TH1D*) fin->Get("h1d_fixed_jet_mult");
+  //h1d_fixed_event_mult = (TH1D*) fin->Get("h1d_fixed_event_mult");
+  //h1d_fixed_jet_mult = (TH1D*) fin->Get("h1d_fixed_jet_mult");
 
   for (int ipt = 0; ipt < ptbin; ipt++)
   {
