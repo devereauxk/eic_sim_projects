@@ -183,10 +183,11 @@ void overlay_hists(const char* out_dir)
       for (int ipt = 0; ipt < ptbin-1; ipt++)
       {
         TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
+        temp->Scale(1/temp->Integral());
         hists.push_back(temp);
 
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
         temp->SetMarkerSize(0.5);
