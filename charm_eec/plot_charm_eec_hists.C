@@ -186,7 +186,7 @@ void overlay_hists(const char* out_dir)
         hists.push_back(temp);
 
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        //temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
         temp->SetMarkerColor(pt_color[ipt]);
         temp->SetLineColor(pt_color[ipt]);
         temp->SetMarkerSize(0.5);
@@ -204,7 +204,7 @@ void overlay_hists(const char* out_dir)
       tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_%d.pdf\")", cno-1, out_dir, ieta) );
-      hists_to_csv(Form("%seec_overlay.csv", out_dir), hists);
+      hists_to_csv(Form("%seec_overlay_%d.csv", out_dir, ieta), hists);
     }
   }
 
