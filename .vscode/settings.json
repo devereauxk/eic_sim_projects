@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "plot_charm_eec_hists.C": "cpp"
+        "plot_charm_eec_hists.C": "cpp",
+        "charm_eec_hists.C": "cpp"
     }
 }

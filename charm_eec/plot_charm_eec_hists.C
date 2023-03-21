@@ -17,13 +17,11 @@ TH1D* h1d_jet_pt[etabin] = {};
 TH1D* h1d_jet_eta = NULL;
 
 TH1D* h1d_jet_eec[etabin][ptbin] = {};
-TH1D* h1d_jet_eec_norm[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_baseline[etabin][ptbin] = {};
-TH1D* h1d_jet_eec_baseline_norm[etabin][ptbin] = {};
-
 TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
 TH1D* h1d_jet_eec_rlsqrtpt_baseline[etabin][ptbin] = {};
-
+TH1D* h1d_jet_multiplicity[etabin][ptbin] = {};
+TH1D* h1d_jet_multiplicity_charged[etabin][ptbin] = {};
 TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
 
 TH1D* h1d_part_pt[etabin] = {};
@@ -157,6 +155,31 @@ void individual_hists(const char* out_dir)
       }
     }
   }
+
+  // jet inclusive multiplicity plot, printing out csv with the format [ieta][ipt] = [0][0], [0][1], [0][2], ... [1][0], ...
+  vector<TH1*> hists;
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < ptbin; ipt++)
+    {
+      TH1D* temp = h1d_jet_multiplicity[ieta][ipt]->Clone("temp");
+      hists.push_back(temp);
+    }
+  }
+  hists_to_csv( Form("%sjet_multiplicity.csv", out_dir), hists);
+
+  // jet charged particle multiplicity plot, printing out csv with the format [ieta][ipt] = [0][0], [0][1], [0][2], ... [1][0], ...
+  vector<TH1*> hists;
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < ptbin; ipt++)
+    {
+      TH1D* temp = h1d_jet_multiplicity_charged[ieta][ipt]->Clone("temp");
+      hists.push_back(temp);
+    }
+  }
+  hists_to_csv( Form("%sjet_multiplicity_charged.csv", out_dir), hists);
+
 
 }
 
@@ -890,6 +913,12 @@ void plot_charm_eec_hists(const char* fin_name = "hists_eec.root", const char* o
 
       h1d_jet_eec_rlsqrtpt[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
       h1d_jet_eec_rlsqrtpt[ieta][ipt]->SetName(Form("h1d_jet_eec_rlsqrtpt_%d_%d", ieta, ipt));
+
+      h1d_jet_multiplicity[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt));
+      h1d_jet_multiplicity[ieta][ipt]->SetName(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt));
+
+      h1d_jet_multiplicity_charged[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_charged%d_%d", ieta, ipt));
+      h1d_jet_multiplicity_charged[ieta][ipt]->SetName(Form("h1d_jet_multiplicity_charged%d_%d", ieta, ipt));
 
       h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
       h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
