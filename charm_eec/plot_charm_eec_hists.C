@@ -917,8 +917,8 @@ void plot_charm_eec_hists(const char* fin_name = "hists_eec.root", const char* o
       h1d_jet_multiplicity[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt));
       h1d_jet_multiplicity[ieta][ipt]->SetName(Form("h1d_jet_multiplicity_%d_%d", ieta, ipt));
 
-      h1d_jet_multiplicity_charged[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_charged%d_%d", ieta, ipt));
-      h1d_jet_multiplicity_charged[ieta][ipt]->SetName(Form("h1d_jet_multiplicity_charged%d_%d", ieta, ipt));
+      h1d_jet_multiplicity_charged[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt));
+      h1d_jet_multiplicity_charged[ieta][ipt]->SetName(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt));
 
       h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
       h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
