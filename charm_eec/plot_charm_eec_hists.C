@@ -159,7 +159,7 @@ void individual_hists(const char* out_dir)
   // jet inclusive multiplicity plot, printing out csv with the format [ieta][ipt] = [0][0], [0][1], [0][2], ... [1][0], ...
   int etabin_pick = 2;
   int ptbin_pick = 2;
-  mclogy(cno++)
+  mclogy(cno++);
   {
     TH1D* temp = (TH1D*) h1d_jet_multiplicity[etabin_pick][ptbin_pick]->Clone("temp");
 
