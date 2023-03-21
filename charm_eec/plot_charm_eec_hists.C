@@ -272,7 +272,7 @@ void ratio_hists(const char* out_dir)
         }
         if (norm_binrange_hi > temp->GetNbinsX())
         {
-          norm_binrange_hi = temp->GetNBinsX();
+          norm_binrange_hi = temp->GetNbinsX();
           cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
         }
         double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
