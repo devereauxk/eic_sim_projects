@@ -337,7 +337,6 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       vector<PseudoJet> constituents = jets[ijet].constituents();
       vector<PseudoJet> charged_constituents;
-      if (verbosity > 0) cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl<<"constits: ";
 
       // find all fixed parts in jet
       // collection of all fixed particles which appear in the jet, rare for a jet to have e.x. >1 D0, but it happens
@@ -345,7 +344,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       for (int ifixed = 0; ifixed < fixed_part_candidates.size(); ifixed++)
       {
         // check if this candidate fixed particle is in the jet
-        if (fixed_part_candidates[ifixed].delta_R(jets[ijet]) <= 1) fixed_parts.push_back(fixed_part_candidates[ifixed]);        
+        if (fixed_part_candidates[ifixed].delta_R(jets[ijet]) <= 1.0)
+        {
+          fixed_parts.push_back(fixed_part_candidates[ifixed]);
+          charged_constituents.push_back(fixed_part_candidates[ifixed]); // adds in D0 for processing
+        }
       }
       h1d_fixed_jet_mult->Fill(fixed_parts.size());
       
@@ -354,6 +357,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // take only charged constituents for eec calculation
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
+      // cuts out all particles which are daughters of any of the fixed particles in the jet
+      if (verbosity > 0) cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl<<"constits: ";
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
         PseudoJet constit = constituents[iconstit];
@@ -365,9 +370,15 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pdg id
 
-        if (charge != 0 && constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5)
+        if (charge != 0 && constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5) // charge and kinematic cut
         {
-          charged_constituents.push_back(constit);
+          int daugher_of_fixed_flag = 0;
+          for (int ifixed = 0; ifixed < fixed_parts.size(); ifixed++) // check constit is not daughter of a fixed part in jet
+          {
+            int fixed_index = fixed_parts[ifixed].user_index();
+            if (constit_as_particle->GetParentIndex() == fixed_index) daughter_of_fixed_flag = 1;
+          }
+          if (daugher_of_fixed_flag == 0) charged_constituents.push_back(constit);
           if (verbosity > 0) cout<<":passes";
         }
       }
@@ -384,41 +395,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         cb.construct_EEC();
       
       } else {
-        // for each fixed particle, determine appropriate constituents with which to calculate eec, then calculate it
         for (int ifixed = 0; ifixed < fixed_parts.size(); ifixed++)
         {
-          vector<PseudoJet> filtered_charged_constituents;
-
-          int fixed_index = fixed_parts[ifixed].user_index();
-
-          // go through charged constituents and discard those that decay from the given fixed particle
-          // cuts on constituents that are daughter particles of this fixed particle
-          for (unsigned iconstit = 0; iconstit < charged_constituents.size(); iconstit++)
-          {
-            PseudoJet constit = charged_constituents[iconstit];
-            
-            int constit_index = constit.user_index();
-            erhic::ParticleMC* constit_as_particle = event->GetTrack(constit_index);
-
-            if (constit_as_particle->GetParentIndex() != fixed_index)
-            {
-              filtered_charged_constituents.push_back(constit);
-              if (verbosity > 0) cout<<":passes";
-            }
-          }
-
-          // force the fixed part to be included in the filtered charged constituents no matter its charge
-          filtered_charged_constituents.push_back(fixed_parts[ifixed]);
-
-          if (verbosity > 0) cout<<endl;
-          if (verbosity > 0) cout<<"total filtered charge constits after cuts: "<<filtered_charged_constituents.size()<<endl;
-
-          if (filtered_charged_constituents.size() < 1) continue;
-
-          Fixed_Correlator_Builder cb(filtered_charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_parts[ifixed]);
+          Fixed_Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_parts[ifixed]);
           cb.make_pairs();
           cb.construct_EEC();
-        
         }
       }
 
