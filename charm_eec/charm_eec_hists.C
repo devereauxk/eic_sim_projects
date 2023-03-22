@@ -372,13 +372,13 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
         if (charge != 0 && constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5) // charge and kinematic cut
         {
-          int daugher_of_fixed_flag = 0;
+          int daughter_of_fixed_flag = 0;
           for (int ifixed = 0; ifixed < fixed_parts.size(); ifixed++) // check constit is not daughter of a fixed part in jet
           {
             int fixed_index = fixed_parts[ifixed].user_index();
             if (constit_as_particle->GetParentIndex() == fixed_index) daughter_of_fixed_flag = 1;
           }
-          if (daugher_of_fixed_flag == 0) charged_constituents.push_back(constit);
+          if (daughter_of_fixed_flag == 0) charged_constituents.push_back(constit);
           if (verbosity > 0) cout<<":passes";
         }
       }
