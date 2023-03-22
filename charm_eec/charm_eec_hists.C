@@ -193,7 +193,7 @@ class Fixed_Correlator_Builder
 
 void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, int gen_type = 0,
     int boost = 0, double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
-    int force_injet_flag = 0, int force_inpair_flag = 0, int fixed_part_id = 421)
+    int force_injet_flag = 1, int force_inpair_flag = 0, int fixed_part_id = 421)
 {
   if (force_inpair_flag == 1) force_injet_flag = 1;
 
@@ -245,26 +245,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     // Q2-cut
     if (Q2 < 10) continue;
 
-    // skip event if doesn't contain forced_part_injet, if appropriate
-    erhic::ParticleMC* particle;
-    int event_num_fixed_parts = 0;
-    if (force_injet_flag == 1)
-    {
-      for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
-      {
-        particle = event->GetTrack(ipart);
-        if (abs(particle->Id()) == abs(fixed_part_id))
-        {
-          event_num_fixed_parts++;
-          if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
-        }
-      }
-      if (event_num_fixed_parts == 0) continue;
-    }
-    h1d_fixed_event_mult->Fill(event_num_fixed_parts);
-
     // particle enumeration, addition to jet reco setup, and total pt calculation
+    // also finds list of fixed particles that appear in event
+    erhic::ParticleMC* particle;
     vector<PseudoJet> jet_constits;
+    vector<PseudoJet> fixed_part_candidates;
+    int event_num_fixed_parts = 0;
     Mult = 0;
     for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
     {
@@ -297,19 +283,35 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         }
       }
 
-      // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      if ( (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
-          || (force_injet_flag == 1 && abs(particle->Id()) == abs(fixed_part_id)) )
+      // checks if particle is fixed_particle, if so and passes kinematic cuts, adds it to fixed_part_candidates
+      if (abs(particle->Id()) == abs(fixed_part_id) && particle->pt() => 0.5 && fabs(particle->eta()) <= 3.5)
       {
-        if (event_num_fixed_parts > 0 && verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
+        // particle as a PseudoJet
+        PseudoJet candidate = PseudoJet(particle.Px(),particle.Py(),particle.Pz(),particle.E());
+        candidate.set_user_index(ipart); // stores the index of this particle in event, used to determine mothership/daughtership
+        fixed_part_candidate.push_back(candidate);
+
+        event_num_fixed_parts++;
+        if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
+      }
+
+      // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
+      if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
+      {
+        if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
-        constit.set_user_index(particle->Id()); // stores the pdg id of this particle
+        constit.set_user_index(ipart); // stores the index of this particle in event
         jet_constits.push_back(constit);
       }
-      else if (event_num_fixed_parts > 0 && verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
+      else if (verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
     }
+
+    // skip event if doesn't contain forced_part_injet
+    if (event_num_fixed_parts == 0) continue;
+
     h1d_part_mult->Fill(Mult);
+    h1d_fixed_event_mult->Fill(event_num_fixed_parts);
 
     // jet reconstruction
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
@@ -326,37 +328,100 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       total_jets++;
 
       vector<PseudoJet> constituents = jets[ijet].constituents();
-      vector<PseudoJet> charged_constituents;
-
-      // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
-      // take only charged constituents for eec calculation
-      vector<PseudoJet> fixed_parts; // collection of all fixed particles which appear in the jet, rare for a jet to have e.x. >1 D0, but it happens
       if (verbosity > 0) cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl<<"constits: ";
-      for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
+
+      // find all fixed parts in jet
+      // collection of all fixed particles which appear in the jet, rare for a jet to have e.x. >1 D0, but it happens
+      vector<PseudoJet> fixed_parts; 
+      for (int ifixed = 0; ifixed < fixed_part_candidates.size(); ifixed)
       {
-        PseudoJet constit = constituents[iconstit];
-        int pdg_code = constit.user_index(); // retrieve stored pdg id of particle
-        Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pd gid
-        if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
-
-        if (constit.pt() < 0.5 || fabs(constit.eta()) > 3.5) continue;
-
-        if (abs(pdg_code) == abs(fixed_part_id))
-        {
-          fixed_parts.push_back(constit); // add this part to fixed_parts as an occurance of a part with pdg id = fixed_part_id
-          charged_constituents.push_back(constit); // force this part to be included in the charged constituents no matter its charge
-        }
-        else if (charge != 0) charged_constituents.push_back(constit);
+        // check if this candidate fixed particle is in the jet
+        if (calculate_distance(fixed_part_candidates[ifixed], jets[ijet]) <= 1) fixed_parts.push_back(fixed_part_candidates[ifixed]);        
       }
       h1d_fixed_jet_mult->Fill(fixed_parts.size());
+      
+      // if no such fixed particle exists, try next jet
+      if (fixed_parts.size() < 1) continue;
 
-      if (verbosity > 0) cout<<endl;
-      if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
+      // either calculated EEC in jet with all pairs or only pairing with fixed_parts
+      if (force_inpair_flag == 0)
+      {
+        vector<PseudoJet> charged_constituents;
 
-      // cuts jets not containing at least one fixed_part_id particle, if appropriate
-      if (force_injet_flag == 1 && fixed_parts.size() < 1) continue;
+        // take only charged constituents for eec calculation
+        // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
+        for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
+        {
+          PseudoJet constit = constituents[iconstit];
+          if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
+
+          int constit_index = constit.user_index();
+          erhic::ParticleMC* constit_as_particle = event->GetTrack(constit_index);
+          int pdg_code = constit_as_particle->Id(); // retrieve stored pdg id of particle
+          Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pdg id
+
+          if (charge != 0 && constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5)
+          {
+            charged_constituents.push_back(constit);
+            if (verbosity > 0) cout<<":passes";
+          }
+        }
+
+        if (verbosity > 0) cout<<endl;
+        if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
+
+        if (charged_constituents.size() < 1) continue;
+
+        Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
+        cb.make_pairs();
+        cb.construct_EEC();
+      
+      } else {
+        // for each fixed particle, determine appropriate constituents with which to calculate eec, then calculate it
+        for (int ifixed = 0; ifixed < fixed_parts.size(); ifixed++)
+        {
+          vector<PseudoJet> charged_constituents;
+
+          int fixed_index = fixed_parts[ifixed].user_index();
+
+          // take only charged constituents for eec calculation
+          // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
+          // cuts on constituents that are daughter particles of this fixed particle
+          for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
+          {
+            PseudoJet constit = constituents[iconstit];
+            if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
+
+            int constit_index = constit.user_index();
+            erhic::ParticleMC* constit_as_particle = event->GetTrack(constit_index);
+            int pdg_code = constit_as_particle->Id(); // retrieve stored pdg id of particle
+            Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pdg id
+
+            if (charge != 0 && constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5
+                  && constit_as_particle->mother1() != fixed_index && constit_as_particle->mother2() != fixed_index)
+            {
+              charged_constituents.push_back(constit);
+              if (verbosity > 0) cout<<":passes";
+            }
+          }
+
+          // force the fixed part to be included in the charged constituents no matter its charge
+          charged_constituents.push_back(fixed_parts[ifixed]);
+
+          if (verbosity > 0) cout<<endl;
+          if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
+
+          if (charged_constituents.size() < 1) continue;
+
+          Fixed_Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_parts[ifixed_part]);
+          cb.make_pairs();
+          cb.construct_EEC();
+        
+        }
+      }
 
       // jet histograms filled on inclusive (or semi-inclusive) jet information
+      // only if this jet containes a fixed particle with good kinematics in a jet
       for (int ieta = 0; ieta < etabin; ieta++)
       {
         if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].eta() < eta_hi[ieta])
@@ -374,230 +439,19 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
             }
           }
         }
-
       }
       h1d_jet_eta->Fill(jets[ijet].eta());
 
-      if (charged_constituents.size() < 1) continue;
-
-      // eec calculation
-      if (force_inpair_flag == 1)
-      {
-        for (int ifixed_part = 0; ifixed_part < fixed_parts.size(); ifixed_part++)
-        {
-          Fixed_Correlator_Builder cb(charged_constituents,jets[ijet].pt(), jets[ijet].eta(), eec_weight_power, fixed_parts[ifixed_part]);
-          cb.make_pairs();
-          cb.construct_EEC();
-        }
-      }
-      else
-      {
-        Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
-        cb.make_pairs();
-        cb.construct_EEC();
-      }
     }
-
   }
 
   cout<<"total num jets = "<<total_jets<<endl;
-
 }
-
-/*
-void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
-    double eec_weight_power = 1, int calc_Q2x = 0)
-{
-  // csv must be in the following format - eHIJING standard
-  // each particle has the line
-  // F << evtn << "," << p.id() << "," << p.charge() << ","
-  // << p.px() << "," << p.py() << "," << p.pz() << "," << p.m() << std::endl;
-
-  // set up file and content vector
-  fstream fin;
-  fin.open(inFile, ios::in);
-  vector<vector<string>> content;
-  string line_str, element_str;
-
-  // read in file, write to content 2D vector
-  // note all elements of 2D vector are strings
-  cout<<"reading in file..."<<endl;
-  while (getline(fin, line_str)) // iterate over lines
-  {
-    stringstream str(line_str);
-
-    vector<string> line;
-    while (getline(str, element_str, ',')) // iterate over elements in line
-    {
-      line.push_back(element_str);
-    }
-    content.push_back(line);
-  }
-  cout<<"file read"<<endl;
-
-  // boost calculation
-  // calculation forces target to be 100 Gev proton, electron projectile has whatever energy neccesary to satisfy this
-  TLorentzVector part;
-  TLorentzVector Ei, Ef, Pf;
-  Ei.SetXYZM(0, 0, -proj_rest_e, Me);
-  Pf.SetXYZM(0, 0, targ_lab_e * targ_A[targ_species], targ_m[targ_species]);
-  TVector3 boost_vec = Pf.BoostVector();
-  Ef = Ei; Ef.Boost(boost_vec); // electron 4-vector after boost (in lab frame)
-  cout<<"projectile in lab frame: (should be what you expect)"<<endl;
-  Ef.Print();
-  cout<<"target in lab frame: (should be what you expect)"<<endl;
-  Pf.Print();
-
-  int total_jets = 0;
-
-  // initialize particle level variables
-  Int_t Id;
-  Double_t Charge, Px, Py, Pz, Mass, Q2, xB, Pt, Eta, Mult;
-
-  // number of lines
-  int iline = 0;
-  int nlines = content.size();
-  int ievt;
-
-  // loop over lines
-  while (iline < nlines)
-  {
-    try {
-      ievt = stoi(content[iline][0]); // get event number for this new event
-    } catch (invalid_argument& e) {
-      cout<<"@kdebug -1.5"<<endl;
-      break;
-    }
-    if (ievt%10000==0) cout<<"Processing event = "<<ievt<<endl;
-
-    vector<PseudoJet> jet_constits;
-
-    // loop over particles with this event number
-    Mult = 0;
-    while (iline < nlines && stoi(content[iline][0]) == ievt)
-    {
-      Mult++;
-
-      // read content for this line, make type conversions
-      vector<string> line;
-      line = content[iline];
-      Id = stoi(line[1]);
-      Charge = stod(line[2]);
-      Px = stod(line[3]);
-      Py = stod(line[4]);
-      Pz = stod(line[5]);
-      Mass = stod(line[6]);
-      if (calc_Q2x == 1)
-      {
-        Q2 = stod(line[7]);
-        xB = stod(line[8]);
-      }
-
-      //cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
-
-      // apply boost to particle (boost it into lab frame)
-      part.SetXYZM(Px, Py, Pz, Mass);
-      if (boost == 1) part.Boost(boost_vec);
-
-      // debug histograms
-      Pt = part.Pt();
-      Eta = part.Eta();
-      for (int ipt = 0; ipt < ptbin; ipt++)
-      {
-        if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ipt]->Fill(Eta);
-      }
-      for (int ieta = 0; ieta < etabin; ieta++)
-      {
-        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
-      }
-
-      // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      //cout<<"part_lab eta:"<<part_lab.Eta()<<endl;
-      if (fabs(part.Eta())<3.5 && Id!=11)
-      {
-        PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
-        constit.set_user_index(iline);
-        jet_constits.push_back(constit);
-      }
-
-      iline++;
-    }
-    h1d_part_mult->Fill(Mult);
-
-    // jet reconstruction
-    JetDefinition R1jetdef(antikt_algorithm, 1.0);
-    ClusterSequence cs(jet_constits, R1jetdef);
-    vector<PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
-    //cout<<"n jets:"<<jets.size()<<endl;
-
-    // jet processing
-    for (unsigned ijet = 0; ijet < jets.size(); ijet++)
-    {
-      // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
-      if (jets[ijet].pt() < 5 || fabs(jets[ijet].eta()) > 2.5) continue;
-
-      total_jets++;
-
-      // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
-      // take only charged constituents for eec calculation
-      vector<PseudoJet> constituents = jets[ijet].constituents();
-      vector<PseudoJet> charged_constituents;
-      for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
-      {
-        if (constituents[iconstit].pt() < 0.5 || fabs(constituents[iconstit].eta()) > 3.5) continue;
-
-        int il = constituents[iconstit].user_index();
-        vector<string> line = content[il];
-        Charge = stod(line[2]);
-        //cout<<"constituent pt:"<<constituents[iconstit].pt()<<" charge:"<<Charge<<endl;
-        if (Charge != 0) charged_constituents.push_back(constituents[iconstit]);
-      }
-
-      // jet histograms filled on inclusive jet information
-      for (int ieta = 0; ieta < etabin; ieta++)
-      {
-        if (jets[ijet].eta() >= eta_lo[ieta] && jets[ijet].eta() < eta_hi[ieta])
-        {
-          h1d_jet_pt[ieta]->Fill(jets[ijet].pt());
-
-          for (int ipt = 0; ipt < ptbin; ipt++)
-          {
-            if (jets[ijet].pt() >= pt_lo[ipt] && jets[ijet].pt() < pt_hi[ipt])
-            {
-              h1d_jet_multiplicity[ieta][ipt]->Fill(constituents.size());
-              h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
-
-              if (calc_Q2x == 1) h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
-            }
-          }
-        }
-
-      }
-      h1d_jet_eta->Fill(jets[ijet].eta());
-
-      if (charged_constituents.size() < 1) continue;
-
-      // eec calculation
-      Correlator_Builder cb(charged_constituents, jets[ijet].pt(), jets[ijet].eta(), eec_weight_power);
-      cb.make_pairs();
-      cb.construct_EEC();
-
-    }
-
-  }
-
-  cout<<"total num jets = "<<total_jets<<endl;
-
-  fin.close();
-
-}
-*/
-
 
 void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1,
     int boost = 0, int calc_Q2x = 0,
-    int force_injet_flag = 0, int force_inpair_flag = 0, int fixed_part_id = 421)
+    int force_injet_flag = 1, int force_inpair_flag = 0, int fixed_part_id = 421)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
@@ -606,8 +460,11 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   // gen_type = 0 for pythia6, =-1 for pyhtia8, =1 or anything for eHIJING (DIFFERENT FROM Q2_x.C settings)
   // boost = 0, do not apply boost =1 apply boost according to targ_lab_e and targ_species
   // calc_Q2x = 1 fills Q2x histogram (eHIJING must have Q2 and x printout), =0 doesn't filled
-  // force_injet_flag=1 only considers jets containing particle with pdg id = fixed_part_id, =0 no cut
+  // force_injet_flag=1 only considers jets containing particle with pdg id = fixed_part_id, =0 no cut FORCED TO BE 1 NOW
   // force_inpair_flag=1 EEC calculated only for pair containing particle with pdg id = fixed_part_id, =0 no cut
+
+  // force force_injet_flag to be true
+  force_injet_flag = 1;
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
