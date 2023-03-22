@@ -287,7 +287,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       if (abs(particle->Id()) == abs(fixed_part_id) && particle->pt() => 0.5 && fabs(particle->eta()) <= 3.5)
       {
         // particle as a PseudoJet
-        PseudoJet candidate = PseudoJet(particle.Px(),particle.Py(),particle.Pz(),particle.E());
+        PseudoJet candidate = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         candidate.set_user_index(ipart); // stores the index of this particle in event, used to determine mothership/daughtership
         fixed_part_candidate.push_back(candidate);
 
