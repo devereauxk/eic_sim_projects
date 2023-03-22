@@ -311,13 +311,13 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(part.Eta()) <= 3.5 && particle->Id()!=11)
       {
-        if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
+        if (verbosity > 0 && event_num_fixed_parts > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(ipart); // stores the index of this particle in event
         jet_constits.push_back(constit);
       }
-      else if (verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
+      else if (verbosity > 0 && event_num_fixed_parts > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
     }
     h1d_part_mult->Fill(Mult);
 
