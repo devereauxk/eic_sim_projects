@@ -334,7 +334,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       // find all fixed parts in jet
       // collection of all fixed particles which appear in the jet, rare for a jet to have e.x. >1 D0, but it happens
       vector<PseudoJet> fixed_parts; 
-      for (int ifixed = 0; ifixed < fixed_part_candidates.size(); ifixed)
+      for (int ifixed = 0; ifixed < fixed_part_candidates.size(); ifixed++)
       {
         // check if this candidate fixed particle is in the jet
         if (calculate_distance(fixed_part_candidates[ifixed], jets[ijet]) <= 1) fixed_parts.push_back(fixed_part_candidates[ifixed]);        
