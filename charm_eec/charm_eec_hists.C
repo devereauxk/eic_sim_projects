@@ -284,7 +284,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
 
       // checks if particle is fixed_particle, if so and passes kinematic cuts, adds it to fixed_part_candidates
-      if (abs(particle->Id()) == abs(fixed_part_id) && part->Pt() => 0.5 && fabs(part->Eta()) <= 3.5)
+      if (abs(particle->Id()) == abs(fixed_part_id) && part.Pt() => 0.5 && fabs(part.Eta()) <= 3.5)
       {
         // particle as a PseudoJet
         PseudoJet candidate = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
@@ -296,7 +296,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      if (particle->GetStatus()==1 && fabs(part->Eta()) <= 3.5 && particle->Id()!=11)
+      if (particle->GetStatus()==1 && fabs(part.Eta()) <= 3.5 && particle.Id()!=11)
       {
         if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
