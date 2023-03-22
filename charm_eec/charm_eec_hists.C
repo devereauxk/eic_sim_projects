@@ -257,9 +257,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
       }
     }
-    h1d_fixed_event_mult->Fill(event_num_fixed_parts);
-    // skip event if doesn't contain forced_part_injet
+    // skip event if doesn't contain a D0
     if (event_num_fixed_parts == 0) continue;
+    h1d_fixed_event_mult->Fill(event_num_fixed_parts);
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     // also finds list of fixed particles that appear in event
@@ -345,12 +345,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       for (int ifixed = 0; ifixed < fixed_part_candidates.size(); ifixed++)
       {
         // check if this candidate fixed particle is in the jet
-        if (calculate_distance(fixed_part_candidates[ifixed], jets[ijet]) <= 1) fixed_parts.push_back(fixed_part_candidates[ifixed]);        
+        if (fixed_part_candidates[ifixed].delta_R(jets[ijet]) <= 1) fixed_parts.push_back(fixed_part_candidates[ifixed]);        
       }
       h1d_fixed_jet_mult->Fill(fixed_parts.size());
       
       // if no such fixed particle exists, try next jet
-      if (fixed_parts.size() < 1) continue;//
+      if (fixed_parts.size() < 1) continue;
 
       // take only charged constituents for eec calculation
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
