@@ -289,14 +289,14 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         // particle as a PseudoJet
         PseudoJet candidate = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         candidate.set_user_index(ipart); // stores the index of this particle in event, used to determine mothership/daughtership
-        fixed_part_candidate.push_back(candidate);
+        fixed_part_candidates.push_back(candidate);
 
         event_num_fixed_parts++;
         if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
       }
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      if (particle->GetStatus()==1 && fabs(part.Eta()) <= 3.5 && particle.Id()!=11)
+      if (particle->GetStatus()==1 && fabs(part.Eta()) <= 3.5 && particle->Id()!=11)
       {
         if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
@@ -353,11 +353,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
         {
           PseudoJet constit = constituents[iconstit];
-          if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
 
           int constit_index = constit.user_index();
           erhic::ParticleMC* constit_as_particle = event->GetTrack(constit_index);
           int pdg_code = constit_as_particle->Id(); // retrieve stored pdg id of particle
+          if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
+
           Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pdg id
 
           if (charge != 0 && constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5)
@@ -390,11 +391,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
           for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
           {
             PseudoJet constit = constituents[iconstit];
-            if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
-
+            
             int constit_index = constit.user_index();
             erhic::ParticleMC* constit_as_particle = event->GetTrack(constit_index);
             int pdg_code = constit_as_particle->Id(); // retrieve stored pdg id of particle
+            if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
+
             Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pdg id
 
             if (charge != 0 && constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5
