@@ -245,12 +245,26 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     // Q2-cut
     if (Q2 < 10) continue;
 
+    // first skims to see if there is a D0
+    erhic::ParticleMC* particle;
+    int event_num_fixed_parts = 0;
+    for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
+    {
+      particle = event->GetTrack(ipart);
+      if (abs(particle->Id()) == abs(fixed_part_id))
+      {
+        event_num_fixed_parts++;
+        if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
+      }
+    }
+    h1d_fixed_event_mult->Fill(event_num_fixed_parts);
+    // skip event if doesn't contain forced_part_injet
+    if (event_num_fixed_parts == 0) continue;
+
     // particle enumeration, addition to jet reco setup, and total pt calculation
     // also finds list of fixed particles that appear in event
-    erhic::ParticleMC* particle;
     vector<PseudoJet> jet_constits;
     vector<PseudoJet> fixed_part_candidates;
-    int event_num_fixed_parts = 0;
     Mult = 0;
     for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
     {
@@ -291,7 +305,6 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         candidate.set_user_index(ipart); // stores the index of this particle in event, used to determine mothership/daughtership
         fixed_part_candidates.push_back(candidate);
 
-        event_num_fixed_parts++;
         if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
       }
 
@@ -306,12 +319,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
       else if (verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
     }
-
-    // skip event if doesn't contain forced_part_injet
-    if (event_num_fixed_parts == 0) continue;
-
     h1d_part_mult->Fill(Mult);
-    h1d_fixed_event_mult->Fill(event_num_fixed_parts);
 
     // jet reconstruction
     JetDefinition R1jetdef(antikt_algorithm, 1.0);
@@ -342,7 +350,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       h1d_fixed_jet_mult->Fill(fixed_parts.size());
       
       // if no such fixed particle exists, try next jet
-      if (fixed_parts.size() < 1) continue;
+      if (fixed_parts.size() < 1) continue;//
 
       // take only charged constituents for eec calculation
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
