@@ -391,8 +391,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
             
             int constit_index = constit.user_index();
             erhic::ParticleMC* constit_as_particle = event->GetTrack(constit_index);
+            vector<int> constit_mothers = constit_as_particle->motherList();
 
-            if (constit_as_particle->mother1() != fixed_index && constit_as_particle->mother2() != fixed_index)
+            if (find(begin(constit_mothers), end(constit_mothers), fixed_index) != end(constit_mothers))
             {
               filtered_charged_constituents.push_back(constit);
               if (verbosity > 0) cout<<":passes";
