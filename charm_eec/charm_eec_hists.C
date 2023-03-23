@@ -321,7 +321,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
-        constit.set_user_index(ipart); // stores the index of this particle in event
+        constit.set_user_index(particle->Id()); // stores the pdg code of this particle
         jet_constits.push_back(constit);
       }
       else if (verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
@@ -356,12 +356,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       {
         PseudoJet constit = constituents[iconstit];
 
-        int constit_index = constit.user_index();
-        erhic::ParticleMC* constit_as_particle = event->GetTrack(constit_index);
-        int pdg_code = constit_as_particle->Id(); // retrieve stored pdg id of particle
-        if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
-
+        int pdg_code = constit.user_index(); // retrieve stored pdg id of particle
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pdg id
+        if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
 
         if ((constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5)
             && (charge != 0 || abs(pdg_code) == abs(fixed_part_id))) // charge and kinematic cut
