@@ -55,7 +55,11 @@ bool is_daughter_of_any(vector<erhic::ParticleMC*> candidate_parent, erhic::Part
 {
   for (int i = 0 ; i < candidate_parent.size(); i++)
   {
-    if (is_daughter(candidate_parent[i], daughter)) return true;
+    if (is_daughter(candidate_parent[i], daughter))
+    {
+      if (verbosity > 0) cout<<"particle below has parent D0 at index: "<<candidate_parent[i]->GetIndex()<<endl;
+      return true;
+    }
   }
   return false;
 }
@@ -271,7 +275,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       {
         all_fixed.push_back(particle);
         event_num_fixed_parts++;
-        if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
+        if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!! at index "<<particle->GetIndex()<<endl;
       }
     }
     // skip event if doesn't contain a D0
@@ -370,6 +374,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
       if (verbosity > 0) cout<<"\ntotal charge constits after cuts: "<<charged_constituents.size()
                              <<"\nnumber D0s this jet: "<<fixed_parts.size()<<endl;
+      h1d_fixed_jet_mult->Fill(fixed_parts.size());
+
       // try next jet if no D0 or no charged constituents
       if (charged_constituents.size() < 1) continue;
       if (fixed_parts.size() < 1) continue;
