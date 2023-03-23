@@ -262,7 +262,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
     // first skims to see if there is a D0
     erhic::ParticleMC* particle;
-    vector<erhic::ParticleMC> all_fixed;
+    vector<erhic::ParticleMC*> all_fixed;
     int event_num_fixed_parts = 0;
     for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
     {
