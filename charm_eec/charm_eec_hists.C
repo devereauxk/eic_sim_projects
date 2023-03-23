@@ -45,6 +45,21 @@ TH1D* h1d_part_mult = NULL;
 TH1D* h1d_fixed_event_mult = NULL;
 TH1D* h1d_fixed_jet_mult = NULL;
 
+bool is_daughter(erhic::ParticleMC* parent, erhic::ParticleMC* candidate_daughter)
+{
+  return (candidate_daughter->GetIndex() >= parent->GetChild1Index()
+    && candidate_daughter->GetIndex() <= parent->GetChildNIndex());
+}
+
+bool is_daughter_of_any(vector<erhic::ParticleMC*> candidate_parent, erhic::ParticleMC* daughter)
+{
+  for (int i = 0 ; i < candidate_parent.size(); i++)
+  {
+    if (is_daughter(candidate_parent[i], daughter)) return true;
+  }
+  return false;
+}
+
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
   float dphiabs = fabs(p0.phi() - p1.phi());
@@ -247,12 +262,14 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
     // first skims to see if there is a D0
     erhic::ParticleMC* particle;
+    vector<erhic::ParticleMC> all_fixed;
     int event_num_fixed_parts = 0;
     for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
     {
       particle = event->GetTrack(ipart);
       if (abs(particle->Id()) == abs(fixed_part_id))
       {
+        all_fixed.push_back(particle);
         event_num_fixed_parts++;
         if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
       }
@@ -264,7 +281,6 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     // also finds list of fixed particles that appear in event
     vector<PseudoJet> jet_constits;
-    vector<PseudoJet> fixed_part_candidates;
     Mult = 0;
     for (int ipart = 0; ipart < event->GetNTracks(); ++ipart)
     {
@@ -297,27 +313,17 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         }
       }
 
-      // checks if particle is fixed_particle, if so and passes kinematic cuts, adds it to fixed_part_candidates
-      if (abs(particle->Id()) == abs(fixed_part_id) && part.Pt() >= 0.5 && fabs(part.Eta()) <= 3.5)
-      {
-        // particle as a PseudoJet
-        PseudoJet candidate = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
-        candidate.set_user_index(ipart); // stores the index of this particle in event, used to determine mothership/daughtership
-        fixed_part_candidates.push_back(candidate);
-
-        if (verbosity > 0) cout<<"event "<<ievt<<" has a D0!!!!"<<endl;
-      }
-
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
-      if (particle->GetStatus()==1 && fabs(part.Eta()) <= 3.5 && particle->Id()!=11)
+      if (fabs(part.Eta()) <= 3.5 && (abs(particle->Id()) == abs(fixed_part_id))
+            || (particle->GetStatus()==1 && particle->Id()!=11 && !is_daughter_of_any(all_fixed)))
       {
-        if (verbosity > 0 && event_num_fixed_parts > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
+        if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         constit.set_user_index(ipart); // stores the index of this particle in event
         jet_constits.push_back(constit);
       }
-      else if (verbosity > 0 && event_num_fixed_parts > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
+      else if (verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
     }
     h1d_part_mult->Fill(Mult);
 
@@ -328,6 +334,9 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
     // jet processing
     if (verbosity > 0) cout<<"event "<<ievt<<" has "<<jets.size()<<" jets"<<endl;
+    vector<PseudoJet> constituents;
+    vector<PseudoJet> charged_constituents;
+    vector<PseudoJet> fixed_parts;
     for (unsigned ijet = 0; ijet < jets.size(); ijet++)
     {
       // cuts on jet kinematics, require jet_pt >= 5GeV, |jet_eta| <= 2.5
@@ -335,29 +344,12 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       total_jets++;
 
-      vector<PseudoJet> constituents = jets[ijet].constituents();
-      vector<PseudoJet> charged_constituents;
-
-      // find all fixed parts in jet
-      // collection of all fixed particles which appear in the jet, rare for a jet to have e.x. >1 D0, but it happens
-      vector<PseudoJet> fixed_parts; 
-      for (int ifixed = 0; ifixed < fixed_part_candidates.size(); ifixed++)
-      {
-        // check if this candidate fixed particle is in the jet
-        if (fixed_part_candidates[ifixed].delta_R(jets[ijet]) <= 1.0)
-        {
-          fixed_parts.push_back(fixed_part_candidates[ifixed]);
-          charged_constituents.push_back(fixed_part_candidates[ifixed]); // adds in D0 for processing
-        }
-      }
-      h1d_fixed_jet_mult->Fill(fixed_parts.size());
-      
-      // if no such fixed particle exists, try next jet
-      if (fixed_parts.size() < 1) continue;
+      constituents = jets[ijet].constituents();
+      charged_constituents.clear();
+      fixed_parts.clear();
 
       // take only charged constituents for eec calculation
       // cuts on jet constituent kinematics, require consitituents_pt >= 0.5GeV, |consitituents_eta| <= 3.5
-      // cuts out all particles which are daughters of any of the fixed particles in the jet
       if (verbosity > 0) cout<<"jet "<<ijet<<" has "<<constituents.size()<<" constits"<<endl<<"constits: ";
       for (unsigned iconstit = 0; iconstit < constituents.size(); iconstit++)
       {
@@ -370,20 +362,13 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
         Double_t charge = pdg_db->GetParticle(pdg_code)->Charge(); // get charge of particle given pdg id
 
-        if (charge != 0 && constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5) // charge and kinematic cut
+        if (constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5)
+            && (charge != 0 || abs(pdg_code) == abs(fixed_part_id)) // charge and kinematic cut
         {
-          int daughter_of_fixed_flag = 0;
-          /*
-          for (int ifixed = 0; ifixed < fixed_parts.size(); ifixed++) // check constit is not daughter of a fixed part in jet
-          {
-            int fixed_index = fixed_parts[ifixed].user_index();
-            if (constit_as_particle->GetParentIndex() == fixed_index) daughter_of_fixed_flag = 1;
-          }
-          */
-          if (daughter_of_fixed_flag == 0) charged_constituents.push_back(constit);
-          if (verbosity > 0 && daughter_of_fixed_flag != 0) cout<<":daughter";
-          else if (verbosity > 0) cout<<":passes";
-        }
+          charged_costituents.push_back(constit);
+          if (abs(pdg_code) == abs(fixed_part_id)) fixed_parts.push_back(constit);
+          if (verbosity > 0) cout<<":passed";
+        } 
       }
       if (verbosity > 0) cout<<endl;
       if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
