@@ -248,7 +248,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
   int total_jets = 0;
 
   //Loop Over Events
-  for(Int_t ievt = 800; ievt < 900; ievt++)
+  for(Int_t ievt = 800; ievt < 8000; ievt++)
   {
     tree->GetEntry(ievt);
 
