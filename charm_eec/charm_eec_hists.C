@@ -371,10 +371,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
           if (verbosity > 0) cout<<":passed";
         } 
       }
-      if (verbosity > 0) cout<<endl;
-      if (verbosity > 0) cout<<"total charge constits after cuts: "<<charged_constituents.size()<<endl;
-
+      if (verbosity > 0) cout<<"\ntotal charge constits after cuts: "<<charged_constituents.size()
+                             <<"\nnumber D0s this jet: "<<fixed_parts.size()<<endl;
+      // try next jet if no D0 or no charged constituents
       if (charged_constituents.size() < 1) continue;
+      if (fixed_parts.size() < 1) continue;
 
       // either calculated EEC in jet with all pairs or only pairing with fixed_parts
       if (force_inpair_flag == 0)
