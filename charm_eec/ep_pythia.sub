@@ -4,7 +4,7 @@ Executable     = hists_ep_pythia.sh
 GetEnv         = True
 Input	       = /dev/null
 #                               pow      boost to lab    Q2-x distros    force fixed part in jet     " in pair    fixed id
-Arguments      = " $(Process)   0.5      0               1               1                            1           421           "
+Arguments      = " $(Process)   0.5      0               1               1                            0           421           "
 Output         = jobout/epjob.out.$(Process)
 Error          = jobout/epjob.err.$(Process)
 Log            = jobout/epjob.log.$(Process)
