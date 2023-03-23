@@ -1,7 +1,7 @@
 #!/bin/bash
 #IN_DIR=/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_ft_MB
 IN_DIR=/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB
-OUT_DIR=/eic/u/kdevereaux/work/charm_eec/analysis/ep_10_100_pythia8_D0injet
+OUT_DIR=/eic/u/kdevereaux/work/charm_eec/analysis/ep_10_100_pythia8_D0inpair
 
 if [ -z "$1" ]
 then
