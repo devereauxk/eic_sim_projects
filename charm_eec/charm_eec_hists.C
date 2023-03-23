@@ -279,7 +279,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
     }
     // skip event if doesn't contain a D0
-    if (event_num_fixed_parts == 0) continue;
+    if (force_injet_flag == 1 && event_num_fixed_parts == 0) continue;
     h1d_fixed_event_mult->Fill(event_num_fixed_parts);
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
@@ -319,7 +319,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (fabs(part.Eta()) <= 3.5
-            && (abs(particle->Id()) == abs(fixed_part_id)
+            && ((force_injet_flag == 1 && abs(particle->Id()) == abs(fixed_part_id))
               || (particle->GetStatus()==1 && particle->Id()!=11 && !is_daughter_of_any(all_fixed, particle))))
       {
         if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
@@ -365,10 +365,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
 
         if ((constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5)
-            && (charge != 0 || abs(pdg_code) == abs(fixed_part_id))) // charge and kinematic cut
+            && (charge != 0
+              || (force_injet_flag == 1 && abs(pdg_code) == abs(fixed_part_id)))) // charge and kinematic cut
         {
           charged_constituents.push_back(constit);
-          if (abs(pdg_code) == abs(fixed_part_id)) fixed_parts.push_back(constit);
+          if (force_injet_flag == 1 && abs(pdg_code) == abs(fixed_part_id)) fixed_parts.push_back(constit);
           if (verbosity > 0) cout<<":passed";
         } 
       }
@@ -378,7 +379,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // try next jet if no D0 or no charged constituents
       if (charged_constituents.size() < 1) continue;
-      if (fixed_parts.size() < 1) continue;
+      if (force_injet_flag == 1 && fixed_parts.size() < 1) continue;
 
       // either calculated EEC in jet with all pairs or only pairing with fixed_parts
       if (force_inpair_flag == 0)
@@ -436,11 +437,8 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   // gen_type = 0 for pythia6, =-1 for pyhtia8, =1 or anything for eHIJING (DIFFERENT FROM Q2_x.C settings)
   // boost = 0, do not apply boost =1 apply boost according to targ_lab_e and targ_species
   // calc_Q2x = 1 fills Q2x histogram (eHIJING must have Q2 and x printout), =0 doesn't filled
-  // force_injet_flag=1 only considers jets containing particle with pdg id = fixed_part_id, =0 no cut FORCED TO BE 1 NOW
+  // force_injet_flag=1 only considers jets containing particle with pdg id = fixed_part_id, =0 no cut
   // force_inpair_flag=1 EEC calculated only for pair containing particle with pdg id = fixed_part_id, =0 no cut
-
-  // force force_injet_flag to be true
-  force_injet_flag = 1;
 
   cout << "Generator Type: ";
   if (gen_type==0) cout << "Pythia6" << endl;
