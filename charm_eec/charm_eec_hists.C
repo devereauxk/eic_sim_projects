@@ -319,7 +319,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (fabs(part.Eta()) <= 3.5
-            && ((force_injet_flag == 1 && abs(particle->Id()) == abs(fixed_part_id))
+            && (abs(particle->Id()) == abs(fixed_part_id)
               || (particle->GetStatus()==1 && particle->Id()!=11 && !is_daughter_of_any(all_fixed, particle))))
       {
         if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
@@ -365,11 +365,10 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         if (verbosity > 0) cout<<" "<<pdg_code<<"("<<charge<<")";
 
         if ((constit.pt() >= 0.5 && fabs(constit.eta()) <= 3.5)
-            && (charge != 0
-              || (force_injet_flag == 1 && abs(pdg_code) == abs(fixed_part_id)))) // charge and kinematic cut
+            && (charge != 0 || abs(pdg_code) == abs(fixed_part_id))) // charge and kinematic cut
         {
           charged_constituents.push_back(constit);
-          if (force_injet_flag == 1 && abs(pdg_code) == abs(fixed_part_id)) fixed_parts.push_back(constit);
+          if (abs(pdg_code) == abs(fixed_part_id)) fixed_parts.push_back(constit);
           if (verbosity > 0) cout<<":passed";
         } 
       }
