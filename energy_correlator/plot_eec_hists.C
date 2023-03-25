@@ -196,6 +196,8 @@ void overlay_hists(const char* out_dir)
   {
     mclogxy(cno++);
     {
+      vector<TH1*> hists;
+
       float plot_xrange_lo = 5E-2;
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 1E-5;
@@ -210,7 +212,9 @@ void overlay_hists(const char* out_dir)
       for (int ipt = 0; ipt < ptbin-2; ipt++)
       {
         TH1D* temp = (TH1D*) h1d_jet_eec[ieta][ipt]->Clone("temp");
-        temp->Scale(1/temp->GetEntries());
+        temp->Scale(1/temp->Integral());
+        hists.push_back(temp);
+
         cout<<"NUMBER JETS IN PT: ["<<pt_lo[ipt]<<","<<pt_hi[ipt]<<"] ETA: ["<<eta_lo[ieta]<<","<<eta_hi[ieta]<<"] == "<<temp->GetEntries()<<endl;
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
         //h1d_jet_eec[ieta][ipt]->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
@@ -230,6 +234,7 @@ void overlay_hists(const char* out_dir)
       tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %0.1f)",eta_lo[ieta],eta_hi[ieta]));
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_overlay_selfnorm_%d.pdf\")", cno-1, out_dir, ieta) );
+      hists_to_csv(Form("%seec_overlay_%d.csv", out_dir, ieta), hists);
     }
   }
 
