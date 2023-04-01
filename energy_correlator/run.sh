@@ -37,3 +37,5 @@ root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_pythia8_ft_noboost/merged.roo
 root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_K0_noboost/merged.root\", \"./eHIJING/ep_10_100_K0_noboost/\")"
 
 root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_K0_boosted/merged.root\", \"./eHIJING/ep_10_100_K0_boosted/\")"
+
+root -l -q "plot_eec_hists.C(\"./eHIJING/ep_10_100_K0_pow1/merged.root\", \"./eHIJING/ep_10_100_K0_pow1/\")"
