@@ -3,8 +3,8 @@ Notification   = Never
 Executable     = hists_ep_pythia.sh
 GetEnv         = True
 Input	       = /dev/null
-#                               pow    boost to lab    Q2-x distros    force in jet     " in pair    fixed id   output directory
-Arguments      = " $(Process)   1      0               1               0                0            421        /eic/u/kdevereaux/work/charm_eec/analysis/ep_10_100_pythia8_pow1_inclusive   "
+#                               pow    boost to lab    force in jet     " in pair    fixed id   output directory
+Arguments      = " $(Process)   1      0               0                0            421        /eic/u/kdevereaux/work/charm_eec/analysis/ep_10_100_pythia8_pow1_inclusive   "
 Output         = jobout/epjob.out.$(Process)
 Error          = jobout/epjob.err.$(Process)
 Log            = jobout/epjob.log.$(Process)

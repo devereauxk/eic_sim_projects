@@ -24,19 +24,18 @@ mkdir $DIR
 ln -s $IN_DIR/ep_minbias_highQ2_${INPUT}.root
 ln -s /eic/u/kdevereaux/work/charm_eec/charm_eec_hists.C
 
-mkdir $OUT_DIR
-
 POW=$2
 DO_BOOST=$3
-DO_Q2X=$4
-DO_FORCE_INJET=$5
-DO_FORCE_INPAIR=$6
-FIXED_ID=$7
-OUT_DIR=$8
+DO_FORCE_INJET=$4
+DO_FORCE_INPAIR=$5
+FIXED_ID=$6
+OUT_DIR=$7
+
+mkdir $OUT_DIR
 
 #                                                                                                        DOUBLE CHECK THESE
 #                                                                                                                            pow,boost,Q2x,jet,pair
-root -l -b -q "charm_eec_hists.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, $POW, $DO_BOOST, $DO_Q2X, $DO_FORCE_INJET, $DO_FORCE_INPAIR, $FIXED_ID)"
+root -l -b -q "charm_eec_hists.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, $POW, $DO_BOOST, 1, $DO_FORCE_INJET, $DO_FORCE_INPAIR, $FIXED_ID)"
 #root -l -b -q "eec_hists.C(\"hepmcout-${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, 0.5, 1, 1)"
 
 #root -l -b -q "charm_eec_hists.C(\"/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB/ep_minbias_highQ2_99.root\",\"temp.root\", -1, 2131, 100, 0, 0.5, 0, 1, 1, 1, 421)"
