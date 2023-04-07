@@ -41,6 +41,6 @@ echo ""
 
 #Move output files and cleanup
 echo "Cleaning Up..."
-mv -v hempmcout.root ${WORKING_DIR}/outfiles/hempmcout_${INPUT}.root
+mv -v hepmcout.root ${WORKING_DIR}/outfiles/hepmcout_${INPUT}.root
 mv -v DIS_18275.log ${WORKING_DIR}/logfiles/DIS_18275_${INPUT}.log
 echo "DONE!!!"
