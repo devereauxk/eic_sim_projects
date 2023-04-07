@@ -39,7 +39,7 @@ int main()
   double eProton   = 275.;
   double eElectron = 18.;
   double Q2min     = 10.0;
-  int    nEvent    = 10000;
+  int    nEvent    = 400000;
 
   // Generator. Shorthand for event.
   Pythia pythia;
