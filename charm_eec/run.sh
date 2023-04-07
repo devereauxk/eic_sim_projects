@@ -1,14 +1,8 @@
 
-DIR=./analysis/ep_10_100_pythia8_pow1_D0injet
+DATA_DIR=../pythia8/ep_18_275/outfiles
+ANALYSIS_DIR=./analysis/ep_18_275
 
-rm $DIR/merged.root
-hadd -j $DIR/merged.root $DIR/*.root
-root -l -q "plot_charm_eec_hists.C(\"$DIR/merged.root\", \"$DIR/\")"
-
-DIR=./analysis/ep_10_100_pythia8_pow1_inclusive
-
-rm $DIR/merged.root
-hadd -j $DIR/merged.root $DIR/*.root
-root -l -q "plot_charm_eec_hists.C(\"$DIR/merged.root\", \"$DIR/\")"
-
-DIR=./analysis/ep_10_100_pythia8_pow1_D0injet
+mkdir $ANALYSIS_DIR
+rm $DATA_DIR/merged.root
+hadd -j $DATA_DIR/merged.root $DATA_DIR/*.root
+root -l -q "plot_charm_eec_hists.C(\"$DATA_DIR/merged.root\", \"$ANALYSIS_DIR/\")"
