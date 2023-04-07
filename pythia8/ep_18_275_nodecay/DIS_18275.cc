@@ -93,6 +93,25 @@ int main()
   pythia.readString("PartonLevel:FSR = on");
   pythia.readString("PromptPhoton:all = off");
 
+  // turn off charm hadron decays
+  pythia.readString("411:mayDecay = no");
+  pythia.readString("421:mayDecay = no");
+  pythia.readString("10411:mayDecay = no");
+  pythia.readString("10421:mayDecay = no");
+  pythia.readString("413:mayDecay = no");
+  pythia.readString("423:mayDecay = no");
+  pythia.readString("10413:mayDecay = no");
+  pythia.readString("10423:mayDecay = no");
+  pythia.readString("20413:mayDecay = no");
+  pythia.readString("20423:mayDecay = no");
+  pythia.readString("415:mayDecay = no");
+  pythia.readString("425:mayDecay = no");
+  pythia.readString("431:mayDecay = no");
+  pythia.readString("433:mayDecay = no");
+  pythia.readString("10433:mayDecay = no");
+  pythia.readString("20433:mayDecay = no");
+  pythia.readString("435:mayDecay = no");
+
   // Initialize.
   pythia.init();
 
