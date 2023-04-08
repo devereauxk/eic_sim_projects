@@ -38,4 +38,4 @@ mkdir $OUT_DIR
 #                                                                                                                            pow,boost,Q2x,jet,pair
 root -l -b -q "charm_eec_hists.C(\"hepmcout_${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, $POW, $DO_BOOST, 1, $DO_FORCE_INJET, $DO_FORCE_INPAIR, $FIXED_ID)"
 
-root -l -b -q "charm_eec_hists.C(\"/eic/u/kdevereaux/work/pythia8/ep_18_275_nodecay/outfiles/hepmcout_1.root\",\"temp.root\", -1, 2131, 100, 0, 1, 0, 1, 1, 0, 421)"
+#root -l -b -q "charm_eec_hists.C(\"/eic/u/kdevereaux/work/pythia8/ep_18_275_nodecay/outfiles/hepmcout_1.root\",\"temp.root\", -1, 2131, 100, 0, 1, 0, 1, 1, 0, 421)"
