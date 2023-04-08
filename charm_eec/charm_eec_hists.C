@@ -43,7 +43,7 @@ TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
 TH1D* h1d_fixed_event_mult = NULL;
-TH1D* h1d_fixed_jet_mult[etabin][ptbin] = NULL;
+TH1D* h1d_fixed_jet_mult[etabin][ptbin] = {};
 
 bool is_daughter(erhic::ParticleMC* parent, erhic::ParticleMC* candidate_daughter)
 {
@@ -374,7 +374,6 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
       if (verbosity > 0) cout<<"\ntotal charge constits after cuts: "<<charged_constituents.size()
                              <<"\nnumber D0s this jet: "<<fixed_parts.size()<<endl;
-      h1d_fixed_jet_mult->Fill(fixed_parts.size());
 
       // try next jet if no D0 or no charged constituents
       if (charged_constituents.size() < 1) continue;
@@ -412,6 +411,8 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
               h1d_jet_multiplicity_charged[ieta][ipt]->Fill(charged_constituents.size());
 
               h2d_Q2_x[ieta][ipt]->Fill(xB, Q2);
+
+              h1d_fixed_jet_mult[ieta][ipt]->Fill(fixed_parts.size());
             }
           }
         }
