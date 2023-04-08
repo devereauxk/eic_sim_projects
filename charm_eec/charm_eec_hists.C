@@ -43,7 +43,7 @@ TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
 TH1D* h1d_fixed_event_mult = NULL;
-TH1D* h1d_fixed_jet_mult = NULL;
+TH1D* h1d_fixed_jet_mult[etabin][ptbin] = NULL;
 
 bool is_daughter(erhic::ParticleMC* parent, erhic::ParticleMC* candidate_daughter)
 {
@@ -517,9 +517,6 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   h1d_fixed_event_mult = new TH1D("h1d_fixed_event_mult", "D0 multiplicity per event",50,-0.5,49.5);
   h1d_fixed_event_mult->Sumw2();
 
-  h1d_fixed_jet_mult = new TH1D("h1d_fixed_jet_mult", "D0 multiplicity per jet",50,-0.5,49.5);
-  h1d_fixed_jet_mult->Sumw2();
-
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
@@ -535,6 +532,9 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
 
       h1d_jet_multiplicity_charged[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt), "jet charged multiplicity", 50, -0.5, 49.5);
       h1d_jet_multiplicity_charged[ieta][ipt]->Sumw2();
+
+      h1d_fixed_jet_mult[ieta][ipt] = new TH1D(Form("h1d_fixed_jet_mult_%d_%d", ieta, ipt), "D0 multiplicity per jet",50,-0.5,49.5);
+      h1d_fixed_jet_mult[ieta][ipt]->Sumw2();
     }
   }
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -571,8 +571,6 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   cout<<"h1d_jet_eta entries:"<<h1d_jet_eta->GetEntries()<<endl;
   h1d_fixed_event_mult->Write();
   cout<<"h1d_fixed_event_mult entries:"<<h1d_fixed_event_mult->GetEntries()<<endl;
-  h1d_fixed_jet_mult->Write();
-  cout<<"h1d_fixed_jet_mult entries:"<<h1d_fixed_jet_mult->GetEntries()<<endl;
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
@@ -590,6 +588,9 @@ void charm_eec_hists(const char* inFile = "merged.root", const char* outFile = "
 
       h2d_Q2_x[ieta][ipt]->Write();
       cout<<"h2d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
+
+      h1d_fixed_jet_mult[ieta][ipt]->Write();
+      cout<<"h1d_fixed_jet_mult_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_fixed_jet_mult[ieta][ipt]->GetEntries()<<endl;
     }
   }
 
