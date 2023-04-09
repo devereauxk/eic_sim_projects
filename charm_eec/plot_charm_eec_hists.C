@@ -28,7 +28,7 @@ TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
 TH1D* h1d_fixed_event_mult = NULL;
-TH1D* h1d_fixed_jet_mult = NULL;
+TH1D* h1d_fixed_jet_mult[etabin][ptbin] = NULL;
 
 static int cno = 0;
 
@@ -863,22 +863,24 @@ void particle_hists(const char* out_dir)
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_D0_inevent_mult.pdf\")", cno-1, out_dir) );
   }
 
-  // 1d D0 multiplicity per event histogram
-  mclogy(cno++);
+  // 1d D0 multiplicity per jet histogram, binned by eta
+  for (int ieta = 0; ieta < etabin; ieta++)
   {
+    mclogy(cno++);
+    {
+      TH1D* temp = (TH1D*) h1d_fixed_jet_mult[ieta][4]->Clone("temp");
 
-    TH1D* temp = (TH1D*) h1d_fixed_jet_mult->Clone("temp");
+      temp->Draw("same");
 
-    temp->Draw("same");
+      temp->GetXaxis()->SetRangeUser(0,10);
+      temp->GetXaxis()->SetTitle("D0 jet multiplicity");
+      temp->GetYaxis()->SetTitle("counts");
+      temp->GetXaxis()->SetTitleOffset(1.3);
+      temp->GetYaxis()->SetTitleOffset(1.5);
+      temp->Draw("same hist e");
 
-    temp->GetXaxis()->SetRangeUser(0,10);
-    temp->GetXaxis()->SetTitle("D0 jet multiplicity");
-    temp->GetYaxis()->SetTitle("counts");
-    temp->GetXaxis()->SetTitleOffset(1.3);
-    temp->GetYaxis()->SetTitleOffset(1.5);
-    temp->Draw("same hist e");
-
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_D0_injet_mult.pdf\")", cno-1, out_dir) );
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_D0_injet_mult_%d.pdf\")", cno-1, out_dir, ieta) );
+    }
   }
 
 }
@@ -898,7 +900,6 @@ void plot_charm_eec_hists(const char* fin_name = "hists_eec.root", const char* o
 
   h1d_part_mult = (TH1D*) fin->Get("h1d_part_mult");
   h1d_fixed_event_mult = (TH1D*) fin->Get("h1d_fixed_event_mult");
-  h1d_fixed_jet_mult = (TH1D*) fin->Get("h1d_fixed_jet_mult");
 
   for (int ipt = 0; ipt < ptbin; ipt++)
   {
@@ -931,6 +932,9 @@ void plot_charm_eec_hists(const char* fin_name = "hists_eec.root", const char* o
 
       h2d_jet_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
       h2d_jet_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
+
+      h1d_fixed_jet_mult[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_fixed_jet_mult_%d_%d", ieta, ipt));
+      h1d_fixed_jet_mult[ieta][ipt]->SetName(Form("h1d_fixed_jet_mult_%d_%d", ieta, ipt));
     }
   }
 
