@@ -28,7 +28,7 @@ TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
 TH1D* h1d_fixed_event_mult = NULL;
-TH1D* h1d_fixed_jet_mult[etabin][ptbin] = NULL;
+TH1D* h1d_fixed_jet_mult[etabin][ptbin] = {};
 
 static int cno = 0;
 
