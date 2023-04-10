@@ -1,5 +1,5 @@
 
-DIR=./analysis/ep_18_275_nodecay_pow1_D0inpair
+DIR=./analysis/ep_18_275_nodecay_pow1_Lcinjet
 
 rm $DIR/merged.root
 hadd $DIR/merged.root $DIR/*.root
