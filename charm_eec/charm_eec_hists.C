@@ -318,9 +318,10 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       }
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
+      bool is_a_daughter_flag = is_daughter_of_any(all_fixed, particle)
       if (fabs(part.Eta()) <= 3.5
             && (abs(particle->Id()) == abs(fixed_part_id)
-              || (particle->GetStatus()==1 && particle->Id()!=11 && !is_daughter_of_any(all_fixed, particle))))
+              || (particle->GetStatus()==1 && particle->Id()!=11 && !is_a_daughter_flag)))
       {
         if (verbosity > 0) cout<<"anti-kt input: "<<particle->Id()<<endl;
 
@@ -331,7 +332,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
       else if (verbosity > 0)
       {
         cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus();
-        if (is_daughter_of_any(all_fixed, particle)) cout<<" (daughter)";
+        if (is_a_daughter_flag) cout<<" (daughter)";
         cout<<endl;
       }
     }
