@@ -328,7 +328,11 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
         constit.set_user_index(particle->Id()); // stores the pdg code of this particle
         jet_constits.push_back(constit);
       }
-      else if (verbosity > 0) cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus()<<endl;
+      else if (verbosity > 0)
+      {
+        cout<<"not anti-kt input: "<<particle->Id()<<" status code: "<<particle->GetStatus();
+        if (is_daughter_of_any(all_fixed, particle)) cout<<" (daughter)";
+        cout<<endl;
     }
     h1d_part_mult->Fill(Mult);
 
