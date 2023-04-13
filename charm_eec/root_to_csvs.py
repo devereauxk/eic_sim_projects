@@ -1,6 +1,7 @@
 import ROOT
 import numpy as np
 import csv
+import sys
 
 ptbin = 5; # inclusive on last bin, inclusive on lower limit, exclusive on upper
 pt_lo = [5, 10, 20, 40, 5]
@@ -33,7 +34,10 @@ def hists_to_csv(outfile_name, hists):
       writer.writerow(this_row)
     
 
-def root_to_csvs(infile="merged.root", outdir="./"):
+def __main__(infile="merged.root", outdir="./"):
+  infile = sys.argv[1]
+  outdir = sys.argv[2]
+
   fin = ROOT.TFile(infile)
   
   # convert each histogram to csv
