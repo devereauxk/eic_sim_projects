@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #-----#-----#----#----#----#----#----#----#----#
 
-WORKING_DIR=/eic/u/kdevereaux/work/pythia8/ep_18_275_nodecay
+WORKING_DIR=/eic/u/kdevereaux/work/pythia8/ep_18_275_nodecay_onlyD0
 
 if [ -z "$1" ]
 then
