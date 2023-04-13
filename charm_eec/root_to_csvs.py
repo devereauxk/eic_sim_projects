@@ -35,9 +35,8 @@ def hists_to_csv(outfile_name, hists):
     
 
 def root_to_csvs(infile="merged.root", outdir="./"):
-  infile = sys.argv[1]
-  outdir = sys.argv[2]
-
+  print(infile)
+  print(outdir)
   fin = ROOT.TFile(infile)
   
   # convert each histogram to csv
@@ -52,4 +51,4 @@ def root_to_csvs(infile="merged.root", outdir="./"):
     hists_to_csv(output_path, hists_this_eta)
 
 if __name__ == "__main__":
-  root_to_csvs()
+  root_to_csvs(sys.argv[1], sys.argv[2])
