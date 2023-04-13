@@ -28,8 +28,8 @@ def hists_to_csv(outfile_name, hists):
 
       this_row = [bin_center, bin_width]
       for ihist in range(len(hists)):
-        this_row.append(hists[i].GetBinContent(i))
-        this_row.append(hists[i].GetBinError(i))
+        this_row.append(hists[ihist].GetBinContent(i))
+        this_row.append(hists[ihist].GetBinError(i))
 
       writer.writerow(this_row)
     
