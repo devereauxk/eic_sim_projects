@@ -45,7 +45,7 @@ def root_to_csvs(infile="merged.root", outdir="./"):
   for ieta in range(3):
     hists_this_eta = []
     for ipt in range(3):
-      hist = fin.Get("h1d_jet_eec" + str(ieta) + "_" + str(ipt))
+      hist = fin.Get("h1d_jet_eec_" + str(ieta) + "_" + str(ipt))
       hists_this_eta.append(hist)
     output_path = outdir + "eec_overlay_" + str(ieta) + ".csv"
     hists_to_csv(output_path, hists_this_eta)
