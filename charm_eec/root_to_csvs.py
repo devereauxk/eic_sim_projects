@@ -34,7 +34,7 @@ def hists_to_csv(outfile_name, hists):
       writer.writerow(this_row)
     
 
-def __main__(infile="merged.root", outdir="./"):
+def root_to_csvs(infile="merged.root", outdir="./"):
   infile = sys.argv[1]
   outdir = sys.argv[2]
 
@@ -50,3 +50,6 @@ def __main__(infile="merged.root", outdir="./"):
       hists_this_eta.append(hist)
     output_path = outdir + "eec_overlay_" + str(ieta) + ".csv"
     hists_to_csv(output_path, hists_this_eta)
+
+if __name__ == "__main__":
+  root_to_csvs()
