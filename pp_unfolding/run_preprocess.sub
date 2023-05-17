@@ -8,4 +8,4 @@ Arguments      = " $(Process)   /eic/u/kdevereaux/work/pythia8/ep_18_275_nodecay
 Output         = jobout/eecjob.out.$(Process)
 Error          = jobout/eecjob.err.$(Process)
 Log            = jobout/eecjob.log.$(Process)
-Queue 1
+Queue 1000

@@ -110,7 +110,7 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
   int total_jets = 0;
 
   //Loop Over Events
-  for(Int_t ievt = 0; ievt < 1000; ievt++)
+  for(Int_t ievt = 0; ievt < nevt; ievt++)
   {
     tree->GetEntry(ievt);
 
