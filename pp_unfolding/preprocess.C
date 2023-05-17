@@ -11,7 +11,7 @@ Double_t energy_weight;
 Double_t R_L;
 Double_t jet_pt;
 
-TTree* preprocessed;
+TTree preprocessed("preprocessed", "preprocessed");
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -89,11 +89,9 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
   if (gen_type==1) cout << "Pythia8" << endl;
 
   // TTree definition
-  TTree* preprocessed("preprocessed", "preprocessed");
-
-  preprocessed->Branch("energy_weight", &energy_weight, "energy_weight/D");
-  preprocessed->Branch("R_L", &R_L, "R_L/D");
-  preprocessed->Branch("jet_pt", &jet_pt, "jet_pt/D");
+  preprocessed.Branch("energy_weight", &energy_weight, "energy_weight/D");
+  preprocessed.Branch("R_L", &R_L, "R_L/D");
+  preprocessed.Branch("jet_pt", &jet_pt, "jet_pt/D");
 
   // reads file and fills in TTree
   erhic::EventHepMC *event(NULL); //pythia8
