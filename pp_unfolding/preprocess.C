@@ -184,12 +184,8 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
   cout << "Generator Type: ";
   if (gen_type==1) cout << "Pythia8" << endl;
 
-  // create output file
-  TFile* fout = new TFile(outFile,"recreate");
-
   // TTree definition
   TTree preprocessed("preprocessed", "preprocessed");
-  preprocessed.SetDirectory(outFile);
 
   preprocessed.Branch("energy weight", &energy_weight, "energy_weight/D");
   preprocessed.Branch("R_L", &R_L, "R_L/D");
@@ -197,6 +193,9 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
 
   // reads file and fills in TTree
   read_root(inFile, eec_weight_power);
+
+  // create output file
+  TFile* fout = new TFile(outFile,"recreate");
 
   // write TTree and file
   preprocessed.Write();
