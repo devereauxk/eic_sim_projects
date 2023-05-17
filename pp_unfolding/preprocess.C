@@ -76,8 +76,26 @@ class Correlator_Builder
     }
 };
 
-void read_root(const char* inFile = "merged.root", double eec_weight_power = 1)
+
+void preprocess(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", int gen_type = 1, double eec_weight_power = 1)
 {
+  // inFile assumed to contain data whether (measured or generated) in the lab frame, i.e. requiring no boosting
+  // outfile produced contains a table in the form of a TTree with three columns (energy weight, RL, jet pT)
+  // intended to be used by a MultiFold/OmniFold framework to unfold the data and produce a detector-corrected
+  // EEC measurement
+  // as of now only supports PYTHIA8 generated data
+
+  cout << "Generator Type: ";
+  if (gen_type==1) cout << "Pythia8" << endl;
+
+  // TTree definition
+  TTree preprocessed("preprocessed", "preprocessed");
+
+  preprocessed.Branch("energy_weight", &energy_weight, "energy_weight/D");
+  preprocessed.Branch("R_L", &R_L, "R_L/D");
+  preprocessed.Branch("jet_pt", &jet_pt, "jet_pt/D");
+
+  // reads file and fills in TTree
   erhic::EventHepMC *event(NULL); //pythia8
 
   TFile *f = new TFile(inFile);
@@ -171,31 +189,6 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1)
   cout<<"total num jets = "<<total_jets<<endl;
   cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
   f->Close();
-
-}
-
-
-void preprocess(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", int gen_type = 1, double eec_weight_power = 1)
-{
-  // inFile assumed to contain data whether (measured or generated) in the lab frame, i.e. requiring no boosting
-  // outfile produced contains a table in the form of a TTree with three columns (energy weight, RL, jet pT)
-  // intended to be used by a MultiFold/OmniFold framework to unfold the data and produce a detector-corrected
-  // EEC measurement
-  // as of now only supports PYTHIA8 generated data
-
-  cout << "Generator Type: ";
-  if (gen_type==1) cout << "Pythia8" << endl;
-
-  // TTree definition
-  TTree preprocessed("preprocessed", "preprocessed");
-
-  preprocessed.Branch("energy_weight", &energy_weight, "energy_weight/D");
-  preprocessed.Branch("R_L", &R_L, "R_L/D");
-  preprocessed.Branch("jet_pt", &jet_pt, "jet_pt/D");
-
-  // reads file and fills in TTree
-  read_root(inFile, eec_weight_power);
-  cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
 
   // create output file
   TFile* fout = new TFile(outFile,"recreate");
