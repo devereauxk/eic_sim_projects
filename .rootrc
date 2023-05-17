@@ -1,0 +1,12 @@
+# Path used by dynamic loader to find shared libraries
+*.Root.DynamicPath:    	.:/cvmfs/eic.opensciencegrid.org/x8664_sl7/MCEG/releases/env/dev/root6/lib
+
+# Activate memory statistics
+Rint.Root.MemStat:       1
+Rint.Load:               ~/aliasesForRoot/rootalias.C
+Rint.Logon:              ~/aliasesForRoot/rootlogon.C
+Rint.Logoff:             ~/aliasesForRoot/rootlogoff.C
+
+Rint.Canvas.MoveOpaque:  false
+Rint.Canvas.HighLightColor: 5
+
