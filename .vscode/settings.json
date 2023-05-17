@@ -7,6 +7,9 @@
         "make_tree.C": "cpp",
         "eec_hists.C": "cpp",
         "plot_charm_eec_hists copy.C": "cpp",
-        "charm_eec_hists copy.C": "cpp"
+        "charm_eec_hists copy.C": "cpp",
+        "plot_histogram.C": "cpp",
+        "preprocessing.C": "cpp",
+        "preprocess.C": "cpp"
     }
 }
