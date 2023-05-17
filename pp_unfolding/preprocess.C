@@ -11,11 +11,7 @@ Double_t energy_weight;
 Double_t R_L;
 Double_t jet_pt;
 
-TTree preprocessed("preprocessed", "preprocessed");
-
-preprocessed.Branch("energy weight", &energy_weight, "energy_weight/D");
-preprocessed.Branch("R_L", &R_L, "R_L/D");
-preprocessed.Branch("jet_pt", &jet_pt, "jet_pt/D");
+TTree preprocessed;
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -73,7 +69,7 @@ class Correlator_Builder
           // filling TTree
           energy_weight = eec_weight;
           R_L = dist12;
-          tree.Fill();
+          preprocessed.Fill();
         }
       }
     }
@@ -108,6 +104,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1)
     if (event->GetQ2() < 10) continue;
 
     TLorentzVector part;
+    Double_t Px, Py, Pz, Mass;
 
     // particle enumeration, addition to jet reco setup, and total pt calculation
     erhic::ParticleMC* particle;
@@ -189,7 +186,12 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
   // create output file
   TFile* fout = new TFile(outFile,"recreate");
 
-  // TTree definition is at top of file
+  // TTree definition
+  TTree preprocessed("preprocessed", "preprocessed");
+
+  preprocessed.Branch("energy weight", &energy_weight, "energy_weight/D");
+  preprocessed.Branch("R_L", &R_L, "R_L/D");
+  preprocessed.Branch("jet_pt", &jet_pt, "jet_pt/D");
 
   // reads file and fills in TTree
   read_root(inFile, eec_weight_power);
