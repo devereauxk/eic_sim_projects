@@ -70,7 +70,7 @@ class Correlator_Builder
           energy_weight = eec_weight;
           R_L = dist12;
           preprocessed.Fill();
-          cout<<"fills"<<endl;
+          cout<<preprocessed->GetEntries()<<endl;
         }
       }
     }
@@ -202,5 +202,7 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
   preprocessed.Write();
   fout->Write();
   fout->Close();
+  
+  cout<<"preprocessed entries: "<<preprocessed->GetEntries()<<endl;
 
 }
