@@ -28,4 +28,4 @@ ln -s /eic/u/kdevereaux/work/pp_unfolding/preprocess.C
 mkdir $OUT_DIR
 
 #                                                                                         DOUBLE CHECK THESE
-root -l -b -q "preprocess.C(\"hepmcout_${INPUT}.root\",\"$OUT_DIR/eec_${INPUT}.root\", $IN_DIR, $OUT_DIR, $POW)"
+root -l -b -q "preprocess.C(\"hepmcout_${INPUT}.root\",\"$OUT_DIR/eec_${INPUT}.root\", $POW)"

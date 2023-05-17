@@ -5,7 +5,7 @@ GetEnv         = True
 Input	       = /dev/null
 #                               input directory                                                     output directory                                    pow
 Arguments      = " $(Process)   /eic/u/kdevereaux/work/pythia8/ep_18_275_nodecay_onlyD0/outfiles    /eic/u/kdevereaux/work/pp_unfolding/test            2 "
-Output         = jobout/epjob.out.$(Process)
-Error          = jobout/epjob.err.$(Process)
-Log            = jobout/epjob.log.$(Process)
+Output         = jobout/eecjob.out.$(Process)
+Error          = jobout/eecjob.err.$(Process)
+Log            = jobout/eecjob.log.$(Process)
 Queue 1
