@@ -11,7 +11,7 @@ Double_t energy_weight;
 Double_t R_L;
 Double_t jet_pt;
 
-TTree preprocessed;
+TTree* preprocessed;
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -69,8 +69,8 @@ class Correlator_Builder
           // filling TTree
           energy_weight = eec_weight;
           R_L = dist12;
-          preprocessed.Fill();
-          cout<<preprocessed.GetEntries()<<endl;
+          preprocessed->Fill();
+          cout<<preprocessed->GetEntries()<<endl;
         }
       }
     }
@@ -89,11 +89,11 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
   if (gen_type==1) cout << "Pythia8" << endl;
 
   // TTree definition
-  TTree preprocessed("preprocessed", "preprocessed");
+  TTree* preprocessed("preprocessed", "preprocessed");
 
-  preprocessed.Branch("energy_weight", &energy_weight, "energy_weight/D");
-  preprocessed.Branch("R_L", &R_L, "R_L/D");
-  preprocessed.Branch("jet_pt", &jet_pt, "jet_pt/D");
+  preprocessed->Branch("energy_weight", &energy_weight, "energy_weight/D");
+  preprocessed->Branch("R_L", &R_L, "R_L/D");
+  preprocessed->Branch("jet_pt", &jet_pt, "jet_pt/D");
 
   // reads file and fills in TTree
   erhic::EventHepMC *event(NULL); //pythia8
@@ -186,18 +186,19 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
 
   }
 
+  cout<<"preprocessed entries: "<<preprocessed->GetEntries()<<endl;
   cout<<"total num jets = "<<total_jets<<endl;
-  cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
   f->Close();
+  cout<<"preprocessed entries: "<<preprocessed->GetEntries()<<endl;
 
   // create output file
   TFile* fout = new TFile(outFile,"recreate");
 
   // write TTree and file
-  preprocessed.Write();
+  preprocessed->Write();
   fout->Write();
   fout->Close();
   
-  cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
+  cout<<"preprocessed entries: "<<preprocessed->GetEntries()<<endl;
 
 }
