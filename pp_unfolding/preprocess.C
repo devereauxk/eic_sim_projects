@@ -198,7 +198,7 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
 
   // write TTree and file
   
-  preprocessed->Write();
+  preprocessed.Write();
   fout->Write();
   fout->Close();
 
