@@ -69,8 +69,8 @@ class Correlator_Builder
           // filling TTree
           energy_weight = eec_weight;
           R_L = dist12;
-          preprocessed->Fill();
-          cout<<preprocessed->GetEntries()<<endl;
+          preprocessed.Fill();
+          cout<<preprocessed.GetEntries()<<endl;
         }
       }
     }
@@ -184,19 +184,19 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
 
   }
 
-  cout<<"preprocessed entries: "<<preprocessed->GetEntries()<<endl;
+  cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
   cout<<"total num jets = "<<total_jets<<endl;
   f->Close();
-  cout<<"preprocessed entries: "<<preprocessed->GetEntries()<<endl;
+  cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
 
   // create output file
   TFile* fout = new TFile(outFile,"recreate");
 
   // write TTree and file
-  preprocessed->Write();
+  preprocessed.Write();
   fout->Write();
   fout->Close();
   
-  cout<<"preprocessed entries: "<<preprocessed->GetEntries()<<endl;
+  cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
 
 }
