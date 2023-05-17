@@ -189,6 +189,7 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
 
   // TTree definition
   TTree preprocessed("preprocessed", "preprocessed");
+  preprocessed.SetDirectory(outFile);
 
   preprocessed.Branch("energy weight", &energy_weight, "energy_weight/D");
   preprocessed.Branch("R_L", &R_L, "R_L/D");
@@ -198,7 +199,6 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
   read_root(inFile, eec_weight_power);
 
   // write TTree and file
-  
   preprocessed.Write();
   fout->Write();
   fout->Close();
