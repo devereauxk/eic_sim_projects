@@ -169,6 +169,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1)
   }
 
   cout<<"total num jets = "<<total_jets<<endl;
+  cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
   f->Close();
 
 }
@@ -194,6 +195,7 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
 
   // reads file and fills in TTree
   read_root(inFile, eec_weight_power);
+  cout<<"preprocessed entries: "<<preprocessed.GetEntries()<<endl;
 
   // create output file
   TFile* fout = new TFile(outFile,"recreate");
