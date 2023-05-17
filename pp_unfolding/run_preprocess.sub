@@ -1,0 +1,11 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = hists_ep_pythia.sh
+GetEnv         = True
+Input	       = /dev/null
+#                               input directory                                                     output directory                                    pow
+Arguments      = " $(Process)   /eic/u/kdevereaux/work/pythia8/ep_18_275_nodecay_onlyD0/outfiles    /eic/u/kdevereaux/work/pp_unfolding/test            2 "
+Output         = jobout/epjob.out.$(Process)
+Error          = jobout/epjob.err.$(Process)
+Log            = jobout/epjob.log.$(Process)
+Queue 1
