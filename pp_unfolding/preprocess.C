@@ -70,6 +70,7 @@ class Correlator_Builder
           energy_weight = eec_weight;
           R_L = dist12;
           preprocessed.Fill();
+          cout<<"fills"<<endl;
         }
       }
     }
