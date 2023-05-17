@@ -168,6 +168,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1)
   }
 
   cout<<"total num jets = "<<total_jets<<endl;
+  f->Close();
 
 }
 
