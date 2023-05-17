@@ -1,6 +1,6 @@
 Universe       = vanilla
 Notification   = Never
-Executable     = hists_ep_pythia.sh
+Executable     = run_preprocess.sh
 GetEnv         = True
 Input	       = /dev/null
 #                               input directory                                                     output directory                                    pow
