@@ -94,7 +94,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1)
   int total_jets = 0;
 
   //Loop Over Events
-  for(Int_t ievt = 0; ievt < nevt; ievt++)
+  for(Int_t ievt = 0; ievt < 1000; ievt++)
   {
     tree->GetEntry(ievt);
 
@@ -187,7 +187,7 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
   // TTree definition
   TTree preprocessed("preprocessed", "preprocessed");
 
-  preprocessed.Branch("energy weight", &energy_weight, "energy_weight/D");
+  preprocessed.Branch("energy_weight", &energy_weight, "energy_weight/D");
   preprocessed.Branch("R_L", &R_L, "R_L/D");
   preprocessed.Branch("jet_pt", &jet_pt, "jet_pt/D");
 
