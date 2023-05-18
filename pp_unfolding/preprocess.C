@@ -156,9 +156,12 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
       // smear, if desired
       if (do_smear == 1)
       {
-        
+        // throw out track with probability = 5%
+        if (randGen.Uniform(0.0, 1.0) <= 0.05) continue;
+
+        // smear track Pt and Pz with resolution 1%
+        part = smear(part, 0.01);
       }
-      part = smear(part);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
