@@ -7,6 +7,8 @@ using namespace fastjet;
 using namespace std;
 const int verbosity = 0;
 
+TRandom3 randGen(0);
+
 Double_t energy_weight;
 Double_t R_L;
 Double_t jet_pt;
@@ -75,8 +77,23 @@ class Correlator_Builder
     }
 };
 
+TLorentzVector smear(TLorentzVector part, Double_t track_resolution=0.01)
+{
+  Double_t mean = 0.0;
 
-void preprocess(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", int gen_type = 1, double eec_weight_power = 1)
+  Double_t Pt = part.GetPt() * (1 + randGen.Gaus(mean, sigma));
+  Double_t Pz = part.GetPz() * (1 + randGen.Gaus(mean, sigma));
+  Double_t E = TMath::Sqrt(part.M2() + pow(Pt, 2) + pow(Pz, 2));
+  Double_t Eta = 0.5 * TMath::Log((E + Pz) / (E - Pz));
+
+  part.SetPtEtaPhiM(Pt, Eta, part.Phi(), E);
+  part.SetPz(Pz);
+
+  return part;
+}
+
+
+void preprocess(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", int gen_type = 1, double eec_weight_power = 1, int do_smear=0)
 {
   // inFile assumed to contain data whether (measured or generated) in the lab frame, i.e. requiring no boosting
   // outfile produced contains a table in the form of a TTree with three columns (energy weight, RL, jet pT)
@@ -135,6 +152,13 @@ void preprocess(const char* inFile = "merged.root", const char* outFile = "hists
       Pz = particle->GetPz();
       Mass = particle->GetM();
       part.SetXYZM(Px, Py, Pz, Mass);
+
+      // smear, if desired
+      if (do_smear == 1)
+      {
+        
+      }
+      part = smear(part);
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
       if (particle->GetStatus()==1 && fabs(particle->GetEta())<3.5 && particle->Id()!=11)
