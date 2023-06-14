@@ -10,6 +10,7 @@
         "charm_eec_hists copy.C": "cpp",
         "plot_histogram.C": "cpp",
         "preprocessing.C": "cpp",
-        "preprocess.C": "cpp"
+        "preprocess.C": "cpp",
+        "calc_proj_energy.C": "cpp"
     }
 }
