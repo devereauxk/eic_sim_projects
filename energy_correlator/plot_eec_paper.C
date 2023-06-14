@@ -351,9 +351,9 @@ void pt_eta_3by3_hists()
             norm_binrange_hi = temp->GetNbinsX();
             cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
           }
-          double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-          temp->Scale(relative_normalization);
-          temp->Scale(1/temp_baseline->Integral());
+          //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+          //temp->Scale(relative_normalization);
+          //temp->Scale(1/temp_baseline->Integral());
 
           hists.push_back(temp);
 
