@@ -315,8 +315,8 @@ void pt_eta_3by3_hists()
           cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
         }
         //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-        //temp->Scale(relative_normalization);
-        //temp->Scale(1/temp_baseline->Integral());
+        temp->Scale(relative_normalization);
+        temp->Scale(1/temp_baseline->Integral());
 
         // plot histogram
         temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
@@ -352,8 +352,8 @@ void pt_eta_3by3_hists()
             cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
           }
           //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
-          //temp->Scale(relative_normalization);
-          //temp->Scale(1/temp_baseline->Integral());
+          temp->Scale(relative_normalization);
+          temp->Scale(1/temp_baseline->Integral());
 
           hists.push_back(temp);
 
@@ -395,6 +395,7 @@ void pt_bin_side_by_side()
   int etabin_pick = 2;
   int k_pick = 2;
 
+  // fig 3
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int dR_L K=0), pt binnings for eAu forward eta selection
   mclogx(cno++);
   {
@@ -437,7 +438,7 @@ void pt_bin_side_by_side()
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
-      temp->Scale(1/temp_baseline->Integral());
+      temp->Divide(temp_baseline); // temp->Scale(1/temp_baseline->Integral());
 
       hists.push_back(temp);
 
@@ -552,6 +553,7 @@ void nuclei_hists()
   const int nspecies_picks = 8;
   static int species_picks[nspecies_picks] = {1, 2, 3, 4, 5, 6, 7, 8};
 
+  // fig 5
   // with R_L*sqrt(pt) on the x-axis, plotting (alpha_i * K=i - K=0) / (int R_L K=0)
   mclogx(cno++);
   {
@@ -612,7 +614,7 @@ void nuclei_hists()
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
-      temp->Scale(1/temp_baseline->Integral());
+      temp->Divide(temp_baseline); //temp->Scale(1/temp_baseline->Integral());
 
       hists.push_back(temp);
 
@@ -1312,6 +1314,33 @@ void multiplicity()
 
 }
 
+void no_norm()
+{
+  mclogxy(cno++);
+  {
+    int etabin_pick = 2;
+    int k_pick = 2;
+
+    vector<TH1*> hists;
+
+    TH1D* temp;
+
+    // ep, K=0
+    temp = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
+    hists.push_back(temp);
+
+    // eAu, K=0
+    temp = (TH1D*) h1d_jet_eec[7][0][etabin_pick][ptbin_pick]->Clone();
+    hists.push_back(temp)
+
+    // eAu, K=4
+    temp = (TH1D*) h1d_jet_eec[7][2][etabin_pick][ptbin_pick]->Clone();
+    hists.push_back(temp)
+
+    hists_to_csv("no_norm.csv", hists);
+  }
+}
+
 void plot_eec_paper()
 {
 
@@ -1500,5 +1529,7 @@ void plot_eec_paper()
   Q2_x_panel();
 
   //multiplicity();
+
+  no_norm();
 
 }
