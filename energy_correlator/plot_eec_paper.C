@@ -1316,6 +1316,7 @@ void multiplicity()
 
 void no_norm()
 {
+  /*
   mclogxy(cno++);
   {
     int etabin_pick = 2;
@@ -1339,6 +1340,7 @@ void no_norm()
 
     hists_to_csv("no_norm.csv", hists);
   }
+  */
 }
 
 void plot_eec_paper()
