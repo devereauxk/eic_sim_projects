@@ -314,7 +314,7 @@ void pt_eta_3by3_hists()
           norm_binrange_hi = temp->GetNbinsX();
           cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
         }
-        //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+        double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
         temp->Scale(relative_normalization);
         temp->Scale(1/temp_baseline->Integral());
 
@@ -351,7 +351,7 @@ void pt_eta_3by3_hists()
             norm_binrange_hi = temp->GetNbinsX();
             cout<<"bin range hi too high; set to "<<temp->GetNbinsX()<<endl;
           }
-          //double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
+          double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
           temp->Scale(relative_normalization);
           temp->Scale(1/temp_baseline->Integral());
 
@@ -1319,7 +1319,7 @@ void no_norm()
   mclogxy(cno++);
   {
     int etabin_pick = 2;
-    int k_pick = 2;
+    int ptbin_pick = 2;
 
     vector<TH1*> hists;
 
@@ -1331,11 +1331,11 @@ void no_norm()
 
     // eAu, K=0
     temp = (TH1D*) h1d_jet_eec[7][0][etabin_pick][ptbin_pick]->Clone();
-    hists.push_back(temp)
+    hists.push_back(temp);
 
     // eAu, K=4
     temp = (TH1D*) h1d_jet_eec[7][2][etabin_pick][ptbin_pick]->Clone();
-    hists.push_back(temp)
+    hists.push_back(temp);
 
     hists_to_csv("no_norm.csv", hists);
   }
