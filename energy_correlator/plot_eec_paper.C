@@ -53,7 +53,7 @@ static char* fname_eAu_by_power[pownum] = {(char*)"./eHIJING/eAu_1E8_K4_pow05/me
 
 static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_K0/merged.root";
 
-const char* out_dir = "./paperplots/even_newer/temp/";
+const char* out_dir = "./paperplots/even_newer/";
 
 TH1D* h1d_jet_pt[speciesnum] = {};
 TH1D* h1d_jet_eta[speciesnum] = {};
