@@ -324,7 +324,7 @@ void Modified_FF::sample_FF_partons(Event & event){
     double nu = pGamma.e();
     double W2 = (pProton + pGamma).m2Calc();
     auto & hardP = event[5];
-
+    
     // Use fixed coupling at Qs of this event for anything medium-induced below Qs
     double kt2max_now = event.SeparationScale();
     double alpha_fix = EHIJING::alphas(kt2max_now);
@@ -356,17 +356,15 @@ void Modified_FF::sample_FF_partons(Event & event){
 	int Ncolls = ts.size();
         if (Ncolls==0) continue;
 
-
+     
 	double vx = p.px()/p.e(), vy = p.py()/p.e(), vz = p.pz()/p.e();
-        double L = eHIJING_Geometry.compute_L(event.Rx(), event.Ry(), event.Rz(),
-                                              vx, vy, vz);
-        double TA = eHIJING_Geometry.compute_TA(event.Rx(), event.Ry(), event.Rz(),
-                                                vx, vy, vz);
+        double L = eHIJING_Geometry.compute_L(event.Rx(), event.Ry(), event.Rz(), vx, vy, vz);
+        double TA = eHIJING_Geometry.compute_TA(event.Rx(), event.Ry(), event.Rz(), vx, vy, vz);
 
 	double sumq2 = 0.; // useful quantity for H-T approach
         for (int i=0; i<Ncolls; i++) sumq2 += qt2s[i];
         if (sumq2<1e-9) continue; // negelect too soft momentum kicks
-
+	   
 
           // tauf ordered fragmentation gluon
 	  // A very large cut off, since the LPM effect will effective regulate the tauf divergence
@@ -529,18 +527,21 @@ void Modified_FF::sample_FF_partons(Event & event){
               p.e(std::sqrt(p.pAbs2()+p.m2()));
               kmu.e(std::sqrt(kmu.pAbs2()));
 
-	      // the gluon can continue to collide
-
+	      // the gluon can continue to collide 
+               
 	      std::vector<double> g_qt2s, g_ts, g_phis;
-              Coll.sample_all_qt2(21, kmu.e(), L, TA,
-			          xB, Q20, g_qt2s, g_ts, g_phis);
+              double R0sq = event.Rx()*event.Rx() + event.Ry()*event.Ry() + event.Rz()*event.Rz();
+              double V2 = vx*vx+vy*vy+vz*vz;
+              double TwoRdotV = 2*(event.Rx()*vx + event.Ry()*vy + event.Rz()*vz);
+              Coll.sample_all_qt2(21, kmu.e(), L, TA, xB, Q20, {R0sq, V2, TwoRdotV, A},
+                                  g_qt2s, g_ts, g_phis);
               Vec4 Qtot{0.,0.,0.,0.};
 	      double e0 = kmu.e();
 	      for (int ig=0; ig<g_ts.size(); ig++){
 		 double qt = std::sqrt(g_qt2s[ig]);
                  double phi = g_phis[ig];
 		 Vec4 qmu{qt*std::cos(phi), qt*std::sin(phi), -qt*qt/4./e0, 0.0};
-                 Qtot = Qtot + qmu;
+                 Qtot = Qtot + qmu; 
 	      }
 	      Qtot.rot(kmu.theta(), 0.);
               Qtot.rot(0., kmu.phi());
@@ -552,8 +553,8 @@ void Modified_FF::sample_FF_partons(Event & event){
               // first, the spliting process
               int k_col, k_acol;
               // if the gluon forms inside the nuclei,
-	      // we consider it will lose color correlation with the original parton,
-	      // and form a new string with beam remnant
+	      // we consider it will lose color correlation with the original parton, 
+	      // and form a new string with beam remnant 
               {
                   Particle gluon = Particle(21, 201, i, 0, 0, 0,
                                   event.nextColTag(), event.nextColTag(),
@@ -610,13 +611,13 @@ void Modified_FF::sample_FF_partons(Event & event){
           }
           // Now handles recoil and remannts
           // if there are radiations, recoil goes to radiations
-          // else: goes to the hard quark
+          // else: goes to the hard quark 
 	  int Nrad = frag_gluons.size();
                for (int j=0; j<Ncolls; j++){
                    double qT = std::sqrt(qt2s[j]), phiq = phis[j];
                    double qx = qT*std::cos(phiq);
                    double qy = qT*std::sin(phiq);
-                   double qz = -qT*qT/4./p.e();
+                   double qz = -qT*qT/4./p.e();   
                    Vec4 qmu{qx, qy, qz, 0};
                    qmu.rot(p.theta(), 0.);
                    qmu.rot(0., p.phi());
@@ -704,7 +705,7 @@ void Modified_FF::sample_FF_partons(Event & event){
            for (auto & p : recoil_remnants) new_particles.push_back(p);
         }
 
-
+        
         for (auto & p : new_particles)
             event.append(p.id(), 201, p.col(), p.acol(),
                          p.px(), p.py(), p.pz(), p.e(), p.m());
