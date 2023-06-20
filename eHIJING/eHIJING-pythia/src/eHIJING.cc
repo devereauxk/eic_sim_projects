@@ -25,16 +25,16 @@ const double mu = 0.25; // [GeV]
 const double mu2 = std::pow(mu, 2); // GeV^2
 // minimum and maximum nuclear thickness function
 // for tabulation
-const double TAmin = 0.1/5.068/5.068;
-const double TAmax = 2.8/5.068/5.068;
+const double TAmin = 0.1/5.076/5.076;
+const double TAmax = 2.8/5.076/5.076;
 // The b parameter for 3-flavor QCD
 // b0 = 11 - 2/3*Nf
 const double b0 = 9./2.;
 const double twoPioverb0 = 2.*M_PI/b0;
 const double piCAoverdA = M_PI * CA / dA;
 const double Mproton = 0.938;
-const double rho0 = 0.17/std::pow(5.068,3);
-const double r0 = 1.12*5.068;
+const double rho0 = 0.17/std::pow(5.076,3);
+const double r0 = 1.12*5.076;
 // coupling in eHIJING
 double alphas(double Q2){
     double Q2overmu2 = Q2/mu2;
@@ -154,19 +154,9 @@ double MultipleCollision::compute_Qs2(double TA, double xB, double Q2){
 }
 
 // Sample all elastic collisio, without radiation, ordered from high scale to low
-double RealisticDensityProfile(double r, int A){
-    double RA = EHIJING::r0*std::pow(A, 1./3.);
-    double a0 = 0.5*5.068;
-    // Woods Saxon profile
-    double F = 1./(1.+std::exp((r-RA)/a0));
-    double F0 = 1./(1.+std::exp(-RA/a0));
-    // Normalize the profile to unity at r=0 (tiny effect when RA>>a0).
-    return F/F0;
-}
 int MultipleCollision::sample_all_qt2(int pid, double E, double L, double Thickness, double xB, double Q2,
-                                      std::vector<double> GeoInfo,
-		                     std::vector<double> & q2_list, std::vector<double> & t_list,
-		                     std::vector<double> & phi_list) {
+                             std::vector<double> & q2_list, std::vector<double> & t_list,
+                             std::vector<double> & phi_list) {
     q2_list.clear();
     t_list.clear();
     phi_list.clear();
@@ -180,10 +170,6 @@ int MultipleCollision::sample_all_qt2(int pid, double E, double L, double Thickn
     double q2min = .01*EHIJING::mu2;
     double q2 = q2max;
     double t0 = EHIJING::r0; // exlucde double scattering on the same nucleon
-    double R0sq = GeoInfo[0]; 
-    double V2 = GeoInfo[1];
-    double TwoR0dotV = GeoInfo[2];
-    double A = GeoInfo[3];
     if (L<t0) return q2_list.size();
     while (q2 > q2min) {
         // sample the next hard multiple collision
@@ -192,12 +178,9 @@ int MultipleCollision::sample_all_qt2(int pid, double E, double L, double Thickn
 	q2 = q2 * std::pow(1.0 + (lambdaG_-1.)*lnr*q2/tildeTA*std::pow(xg, -lambdaG_),
                                    1./(lambdaG_-1.));
         double t = t0 + flat_gen(gen)*(L-t0);
-        double Rdistance = std::sqrt(R0sq + V2*t*t + TwoR0dotV*t);
-	double DensityProfielRejection = RealisticDensityProfile(Rdistance, A);
-        if ( flat_gen(gen) < std::pow(1.-xg, powerG_) * (q2/(q2+qs2)) * DensityProfielRejection ) {
+        if ( flat_gen(gen) < std::pow(1.-xg, powerG_) * (q2/(q2+qs2)) ) {
 	    // correct for the gluon distribtuion at large xg,
 	    // and the screening effect
-            // and any deviation from a constant nucleon density
             q2_list.push_back(q2);
             t_list.push_back(t);
             phi_list.push_back(2.*M_PI*flat_gen(gen));

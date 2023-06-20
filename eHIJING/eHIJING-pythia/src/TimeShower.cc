@@ -2212,11 +2212,7 @@ void TimeShower::pT2nextQCD(double pT2begDip, double pT2sel,
     if (!p.collset()) { // set multiple collisions only once
         p.ResetMultipleCollision();
         std::vector<double> qt2s, ts, phis;
-
-        double R0sq = event.Rx()*event.Rx() + event.Ry()*event.Ry() + event.Rz()*event.Rz();
-        double V2 = vx*vx+vy*vy+vz*vz;
-        double TwoRdotV = 2*(event.Rx()*vx + event.Ry()*vy + event.Rz()*vz);
-	eHIJING_Gen->MultipleCollision::sample_all_qt2(p.idAbs(), pinA.e(), L, Thickness, xB, Q20,  {R0sq, V2, TwoRdotV, AtomicNumber},
+	eHIJING_Gen->MultipleCollision::sample_all_qt2(p.idAbs(), pinA.e(), L, Thickness, xB, Q20, 
 			                               qt2s, ts, phis);
         p.AddMultipleCollision(ts, qt2s, phis);
     }

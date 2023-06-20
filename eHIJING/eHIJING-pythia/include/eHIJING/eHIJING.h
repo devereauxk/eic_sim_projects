@@ -182,7 +182,7 @@ public:
       return CF/CA*Qs2(TA, xB, Q2)/TA;
   };
   // Sample pure multiple collisions
-  int sample_all_qt2(int pid, double E, double L, double thickness, double xB, double Q2, std::vector<double> GeoInfo,
+  int sample_all_qt2(int pid, double E, double L, double thickness, double xB, double Q2,
                       std::vector<double> & q2_list, std::vector<double> & t_list,
                      std::vector<double> & phi_list);
 };
