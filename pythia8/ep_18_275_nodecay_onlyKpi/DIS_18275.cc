@@ -96,7 +96,7 @@ int main()
   // turn off only D0 -> K pi channel
   // this is channel 16, channel numbers can be found with the following commands
   // TDatabasePDG* pdg_db = TDatabasePDG::Instance(); auto* part = pdg_db->GetParticle(421); part->Print();
-  // pythia.readString("421:16:bRatio = 0.0");
+  pythia.readString("421:16:bRatio = 0.0");
 
   // turn off charm meson decays
   //pythia.readString("421:mayDecay = no");
