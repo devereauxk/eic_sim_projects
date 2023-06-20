@@ -145,9 +145,6 @@ int main()
   pythia.readString("4434:mayDecay = no");
   pythia.readString("4444:mayDecay = no");
   */
-}
-
-/*
 
   // Initialize.
   pythia.init();
@@ -182,4 +179,4 @@ int main()
   // Done.
   return 0;
 }
-*/
+
