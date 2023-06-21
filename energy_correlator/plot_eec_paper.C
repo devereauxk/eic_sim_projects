@@ -333,7 +333,7 @@ void pt_eta_3by3_hists()
         hists.push_back(temp);
 
         // eAu, K=ik
-        for (int ik = 1; ik < knum; ik++)
+        for (int ik = 0; ik < knum; ik++)
         {
           temp = (TH1D*) h1d_jet_eec[species_pick][ik][ieta][ipt]->Clone();
           temp_baseline = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
