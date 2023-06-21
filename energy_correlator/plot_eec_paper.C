@@ -400,6 +400,8 @@ void pt_bin_side_by_side()
   mclogx(cno++);
   {
     vector<TH1*> hists;
+    vector<TH1*> fig3;
+    vector<TH1*> fig3_baseline;
 
     float plot_xrange_lo = 1E-1;
     float plot_xrange_hi = 5;
@@ -421,6 +423,8 @@ void pt_bin_side_by_side()
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[species_pick][k_pick][etabin_pick][ipt]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ipt]->Clone();
+      fig3.push_back(temp);
+      fig3_baseline.push_back(temp_baseline);
 
       // calculate relative normalization ratio
       int norm_binrange_lo = temp->FindBin(rlsqrtpt_norm_lo);
@@ -439,6 +443,7 @@ void pt_bin_side_by_side()
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
       temp->Divide(temp_baseline);
+      
       //temp->Scale(1/temp_baseline->Integral());
 
       hists.push_back(temp);
