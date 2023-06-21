@@ -423,7 +423,9 @@ void pt_bin_side_by_side()
     {
       temp = (TH1D*) h1d_jet_eec_rlsqrtpt[species_pick][k_pick][etabin_pick][ipt]->Clone();
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ipt]->Clone();
+      cout<<temp->Print()<<" bin 27 content: "<<temp->GetBinContent(27)<<cout;
       fig3.push_back(temp);
+      cout<<temp_baseline->Print()<<" baseline bin 27 content: "<<temp_baseline->GetBinContent(27)<<cout;
       fig3_baseline.push_back(temp_baseline);
 
       // calculate relative normalization ratio
