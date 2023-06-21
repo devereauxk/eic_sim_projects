@@ -294,7 +294,36 @@ void pt_eta_3by3_hists()
         }
         hists_to_csv(Form("raw_eec_%i_%i.csv", ieta, ipt), hists);
       }
-      
+
+    }
+  }
+
+  // 3x3 panel, raw_eec csv output, normalized by jet rate
+  // only dividing by area when n=1
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < 3; ipt++)
+    {
+      mclogxy(cno++);
+      {
+        vector<TH1*> hists;
+        TH1D* temp;
+
+        // ep, K=0
+        temp = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
+        temp->Scale(1/temp->GetEntries());
+        hists.push_back(temp);
+
+        // eAu, K=ik
+        for (int ik = 0; ik < knum; ik++)
+        {
+          temp = (TH1D*) h1d_jet_eec[species_pick][ik][ieta][ipt]->Clone();
+          temp->Scale(1/temp->GetEntries());
+          hists.push_back(temp);
+        }
+        hists_to_csv(Form("raw_eec_by_jet_rate_%i_%i.csv", ieta, ipt), hists);
+      }
+
     }
   }
 
