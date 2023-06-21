@@ -477,6 +477,8 @@ void pt_bin_side_by_side()
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_eAu_pt_rlsqrtpt.pdf\")", cno-1, out_dir) );
 
     hists_to_csv("fig3.csv", hists);
+    hists_to_csv("fig3_central.csv", fig3);
+    hists_to_csv("fig3_baseline.csv", fig3_baseline);
   }
 
 }
