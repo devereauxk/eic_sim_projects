@@ -425,7 +425,7 @@ void pt_bin_side_by_side()
       temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ipt]->Clone();
       temp->Print();
       cout<<" bin 27 content: "<<temp->GetBinContent(27)<<endl;
-      fig3.push_back(temp);
+      fig3.push_back((TH1D*) temp->Clone());
       temp_baseline->Print();
       cout<<" baseline bin 27 content: "<<temp_baseline->GetBinContent(27)<<endl;
       fig3_baseline.push_back(temp_baseline);
