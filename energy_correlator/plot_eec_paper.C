@@ -438,8 +438,8 @@ void pt_bin_side_by_side()
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
-      //temp->Divide(temp_baseline);
-      temp->Scale(1/temp_baseline->Integral());
+      temp->Divide(temp_baseline);
+      //temp->Scale(1/temp_baseline->Integral());
 
       hists.push_back(temp);
 
@@ -615,8 +615,8 @@ void nuclei_hists()
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
-      //temp->Divide(temp_baseline);
-      temp->Scale(1/temp_baseline->Integral());
+      temp->Divide(temp_baseline);
+      //temp->Scale(1/temp_baseline->Integral());
 
       hists.push_back(temp);
 
@@ -1013,8 +1013,8 @@ void peak_height_vs_A()
       double relative_normalization =  temp_baseline->Integral(norm_binrange_lo,norm_binrange_hi) / temp->Integral(norm_binrange_lo,norm_binrange_hi);
       temp->Scale(relative_normalization);
       temp->Add(temp_baseline, -1);
-      //temp->Divide(temp_baseline);
-      temp->Scale(1/temp_baseline->Integral());
+      temp->Divide(temp_baseline);
+      //temp->Scale(1/temp_baseline->Integral());
 
       peak_height_by_A[ispecies] = temp->GetBinContent(temp->FindBin(0.999));
     }
