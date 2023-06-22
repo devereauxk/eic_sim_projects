@@ -1,12 +1,12 @@
 # PYTHIA configuration file.
-# Generated on Fri Sep 30 17:02:38 EDT 2022 with the user supplied options:
-# --prefix=/eic/u/kdevereaux/work/eHIJING/local
+# Generated on Fri Sep 30 17:38:45 EDT 2022 with the user supplied options:
+# --prefix=/eic/u/kdevereaux/eHIJING/local
 
 # Install directory prefixes.
-PREFIX_BIN=/eic/u/kdevereaux/work/eHIJING/local/bin
-PREFIX_INCLUDE=/eic/u/kdevereaux/work/eHIJING/local/include
-PREFIX_LIB=/eic/u/kdevereaux/work/eHIJING/local/lib
-PREFIX_SHARE=/eic/u/kdevereaux/work/eHIJING/local/share/Pythia8
+PREFIX_BIN=/eic/u/kdevereaux/eHIJING/local/bin
+PREFIX_INCLUDE=/eic/u/kdevereaux/eHIJING/local/include
+PREFIX_LIB=/eic/u/kdevereaux/eHIJING/local/lib
+PREFIX_SHARE=/eic/u/kdevereaux/eHIJING/local/share/Pythia8
 
 # Compilation flags (see ./configure --help for further documentation).
 ENABLE_SHARED=false
