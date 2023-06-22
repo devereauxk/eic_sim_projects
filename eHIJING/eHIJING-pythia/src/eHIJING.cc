@@ -163,8 +163,9 @@ double RealisticDensityProfile(double r, int A){
     // Normalize the profile to unity at r=0 (tiny effect when RA>>a0).
     return F/F0;
 }
+
 int MultipleCollision::sample_all_qt2(int pid, double E, double L, double Thickness, double xB, double Q2,
-                                      std::vector<double> GeoInfo,
+                             std::vector<double> GeoInfo,
 		                     std::vector<double> & q2_list, std::vector<double> & t_list,
 		                     std::vector<double> & phi_list) {
     q2_list.clear();
