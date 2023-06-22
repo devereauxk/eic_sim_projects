@@ -11,6 +11,7 @@
         "plot_histogram.C": "cpp",
         "preprocessing.C": "cpp",
         "preprocess.C": "cpp",
-        "calc_proj_energy.C": "cpp"
+        "calc_proj_energy.C": "cpp",
+        "e3c_hists.C": "cpp"
     }
 }
