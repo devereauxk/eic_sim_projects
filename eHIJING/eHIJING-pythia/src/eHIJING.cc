@@ -153,7 +153,7 @@ double MultipleCollision::compute_Qs2(double TA, double xB, double Q2){
     }
 }
 
-// Sample all elastic collisio, without radiation, ordered from high scale to low
+// Sample all elastic collisions, without radiation, ordered from high scale to low
 double RealisticDensityProfile(double r, int A){
     double RA = EHIJING::r0*std::pow(A, 1./3.);
     double a0 = 0.5*5.068;
