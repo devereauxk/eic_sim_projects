@@ -233,79 +233,73 @@ void xi_phi_ratio_hists(int num_species_pick, int denom_species_pick)
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
 
-  for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
+  TH3D* picked = (TH3D*) h3d_jet_eec_rl_xi_phi[num_species_pick][etabin_pick][ptbin_pick]->Clone();
+  TH3D* baseline = (TH3D*) h3d_jet_eec_rl_xi_phi[denom_species_pick][etabin_pick][ptbin_pick]->Clone();
+
+  TH1D* picked_x = h3d_jet_eec_rl_xi_phi[num_species_pick][etabin_pick][ptbin_pick]->ProjectionX();
+  TH1D* baseline_x = h3d_jet_eec_rl_xi_phi[denom_species_pick][etabin_pick][ptbin_pick]->ProjectionX();
+
+  int norm_binrange_lo = picked_x->FindBin(rl_range_lo);
+  cout<<"low bin: "<<norm_binrange_lo<<endl;
+  int norm_binrange_hi = picked_x->FindBin(rl_range_hi);
+  cout<<"high bin: "<<norm_binrange_hi<<endl;
+  if (norm_binrange_lo == 0)
   {
-    int species_pick = species_picks[ispecies];
+    norm_binrange_lo = 1;
+    cout<<"bin range lo too low; set to 1"<<endl;
+  }
+  if (norm_binrange_hi > picked_x->GetNbinsX()+1)
+  {
+    norm_binrange_hi = picked_x->GetNbinsX()+1;
+    cout<<"bin range hi too high; set to "<<picked_x->GetNbinsX()<<endl;
+  }
+  double relative_normalization =  baseline_x->Integral(norm_binrange_lo,norm_binrange_hi) / picked_x->Integral(norm_binrange_lo,norm_binrange_hi);
+  picked->Scale(relative_normalization);
+  picked->Add(baseline, -1);
+  picked->Divide(baseline);
 
-    TH3D* picked = (TH3D*) h3d_jet_eec_rl_xi_phi[num_species_pick][etabin_pick][ptbin_pick]->Clone();
-    TH3D* baseline = (TH3D*) h3d_jet_eec_rl_xi_phi[denom_species_pick][etabin_pick][ptbin_pick]->Clone();
+  TH3D* sliced;
+  TH2D* temp;
+  for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
+  {
+    float plot_xrange_lo = 0;
+    float plot_xrange_hi = 1;
+    float plot_yrange_lo = 0;
+    float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
+    float plot_zrange_lo = -0.5;
+    float plot_zrange_hi = 1.5;
 
-    TH1D* picked_x = h3d_jet_eec_rl_xi_phi[num_species_pick][etabin_pick][ptbin_pick]->ProjectionX();
-    TH1D* baseline_x = h3d_jet_eec_rl_xi_phi[denom_species_pick][etabin_pick][ptbin_pick]->ProjectionX();
+    float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
+    sliced = (TH3D*) picked->Clone("temp3d");
+    sliced->GetXaxis()->SetRange(ibin,ibin);
+    temp = (TH2D*) sliced->Project3D("zy");
 
-    int norm_binrange_lo = picked_x->FindBin(rl_range_lo);
-    cout<<"low bin: "<<norm_binrange_lo<<endl;
-    int norm_binrange_hi = picked_x->FindBin(rl_range_hi);
-    cout<<"high bin: "<<norm_binrange_hi<<endl;
-    if (norm_binrange_lo == 0)
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
     {
-      norm_binrange_lo = 1;
-      cout<<"bin range lo too low; set to 1"<<endl;
+      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+      temp->GetXaxis()->SetTitle("#xi");
+      temp->GetYaxis()->SetTitle("#phi");
+      temp->Draw("colz");
+
+      TLatex* tl = new TLatex();
+      tl->SetTextAlign(11);
+      tl->SetTextSize(0.03);
+      tl->SetTextColor(kBlack);
+      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+      tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
+      tl->DrawLatexNDC(0.22,0.78,species[species_pick]);
+      tl->DrawLatexNDC(0.22,0.78,Form("%s / %s",species[num_species_pick], species[denom_species_pick]));
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d-ratio-%d_%d.pdf\")", cno-1, out_dir, num_species_pick, denom_species_pick, ibin) );
     }
-    if (norm_binrange_hi > picked_x->GetNbinsX()+1)
+
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
     {
-      norm_binrange_hi = picked_x->GetNbinsX()+1;
-      cout<<"bin range hi too high; set to "<<picked_x->GetNbinsX()<<endl;
-    }
-    double relative_normalization =  baseline_x->Integral(norm_binrange_lo,norm_binrange_hi) / picked_x->Integral(norm_binrange_lo,norm_binrange_hi);
-    picked->Scale(relative_normalization);
-    picked->Add(baseline, -1);
-    picked->Divide(baseline);
+      temp->Draw("SURF2Z");
 
-    TH3D* sliced;
-    TH2D* temp;
-    for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
-    {
-      float plot_xrange_lo = 0;
-      float plot_xrange_hi = 1;
-      float plot_yrange_lo = 0;
-      float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
-      float plot_zrange_lo = -0.5;
-      float plot_zrange_hi = 1.5;
-
-      float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
-      sliced = (TH3D*) picked->Clone("temp3d");
-      sliced->GetXaxis()->SetRange(ibin,ibin);
-      temp = (TH2D*) sliced->Project3D("zy");
-
-      mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
-      {
-        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-        temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
-        temp->GetXaxis()->SetTitle("#xi");
-        temp->GetYaxis()->SetTitle("#phi");
-        temp->Draw("colz");
-
-        TLatex* tl = new TLatex();
-        tl->SetTextAlign(11);
-        tl->SetTextSize(0.03);
-        tl->SetTextColor(kBlack);
-        tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
-        tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
-        tl->DrawLatexNDC(0.22,0.78,species[species_pick]);
-        tl->DrawLatexNDC(0.22,0.78,Form("%s / %s",species[num_species_pick], species[denom_species_pick]));
-
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d-ratio-%d_%d.pdf\")", cno-1, out_dir, num_species_pick, denom_species_pick, ibin) );
-      }
-
-      mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
-      {
-        temp->Draw("SURF2Z");
-
-        gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d-ratio-%d_%d_surface.pdf\")", cno-1, out_dir, num_species_pick, denom_species_pick, ibin) );
-      }
-
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d-ratio-%d_%d_surface.pdf\")", cno-1, out_dir, num_species_pick, denom_species_pick, ibin) );
     }
 
   }
