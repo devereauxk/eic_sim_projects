@@ -14,11 +14,11 @@ static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
 const int speciesnum = 10;
-static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+He-3", (char*)"e+He-4", (char*)"e+C", (char*)"e+Ca", (char*)"e+Cu", (char*)"e+Au", (char*)"e+Au (w/ density profile)", (char*)"e+U"};
-static int species_A[speciesnum] = {1, 2, 3, 4, 12, 40, 64, 197, 238};
+static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+He-3", (char*)"e+He-4", (char*)"e+C", (char*)"e+Ca", (char*)"e+Cu", (char*)"e+Au", (char*)"e+U", (char*)"e+Au (w/ density profile)"};
+static int species_A[speciesnum] = {1, 2, 3, 4, 12, 40, 64, 197, 238, 197};
 
 static char* fname_eA[speciesnum] = {(char*)"./analysis/ep_10_100_K0_pow05/merged.root", (char*)"", (char*)"", (char*)"", (char*)"", (char*)"", (char*)"", \
-  (char*)"./analysis/eAu_1E8_K4_pow05/merged.root", (char*)"./analysis/eAu_10_100_K4_density/merged.root", (char*)""};
+  (char*)"./analysis/eAu_1E8_K4_pow05/merged.root", (char*)"", (char*)"./analysis/eAu_10_100_K4_density/merged.root",};
 
 const char* out_dir = "./paperplots/";
 
@@ -69,7 +69,7 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 void e3c_projected_hists()
 {
   const int nspecies_picks = 2;
-  static int species_picks[nspecies_picks] = {0, 7};
+  static int species_picks[nspecies_picks] = {0, 7, 9};
 
   // 3x3 panel
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -147,77 +147,86 @@ void e3c_projected_hists()
 
 void xi_phi_difference_hists()
 {
-  int species_pick = 7;
+  //int species_pick = 7;
+  int nspecies_picks = 2;
+  static int species_picks[nspecies_picks] = {7, 9};
   int etabin_pick = 2;
   int ptbin_pick = 1;
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
 
-  TH3D* picked = (TH3D*) h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->Clone();
-  TH3D* baseline = (TH3D*) h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->Clone();
-
-  TH1D* picked_x = h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->ProjectionX();
-  TH1D* baseline_x = h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->ProjectionX();
-
-  int norm_binrange_lo = picked_x->FindBin(rl_range_lo);
-  cout<<"low bin: "<<norm_binrange_lo<<endl;
-  int norm_binrange_hi = picked_x->FindBin(rl_range_hi);
-  cout<<"high bin: "<<norm_binrange_hi<<endl;
-  if (norm_binrange_lo == 0)
+  for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
   {
-    norm_binrange_lo = 1;
-    cout<<"bin range lo too low; set to 1"<<endl;
-  }
-  if (norm_binrange_hi > picked_x->GetNbinsX()+1)
-  {
-    norm_binrange_hi = picked_x->GetNbinsX()+1;
-    cout<<"bin range hi too high; set to "<<picked_x->GetNbinsX()<<endl;
-  }
-  double relative_normalization =  baseline_x->Integral(norm_binrange_lo,norm_binrange_hi) / picked_x->Integral(norm_binrange_lo,norm_binrange_hi);
-  picked->Scale(relative_normalization);
-  picked->Add(baseline, -1);
-  picked->Scale(1/baseline_x->Integral());
+    int species_pick = species_picks[ispecies];
 
-  TH3D* sliced;
-  TH2D* temp;
-  for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
-  {
-    float plot_xrange_lo = 0;
-    float plot_xrange_hi = 1;
-    float plot_yrange_lo = 0;
-    float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
-    float plot_zrange_lo = -0.1E-3;
-    float plot_zrange_hi = 0.3E-3;
+    TH3D* picked = (TH3D*) h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->Clone();
+    TH3D* baseline = (TH3D*) h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->Clone();
 
-    float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
-    sliced = (TH3D*) picked->Clone("temp3d");
-    sliced->GetXaxis()->SetRange(ibin,ibin);
-    temp = (TH2D*) sliced->Project3D("zy");
+    TH1D* picked_x = h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->ProjectionX();
+    TH1D* baseline_x = h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->ProjectionX();
 
-    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+    int norm_binrange_lo = picked_x->FindBin(rl_range_lo);
+    cout<<"low bin: "<<norm_binrange_lo<<endl;
+    int norm_binrange_hi = picked_x->FindBin(rl_range_hi);
+    cout<<"high bin: "<<norm_binrange_hi<<endl;
+    if (norm_binrange_lo == 0)
     {
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
-      temp->GetXaxis()->SetTitle("#xi");
-      temp->GetYaxis()->SetTitle("#phi");
-      temp->Draw("colz");
-
-      TLatex* tl = new TLatex();
-      tl->SetTextAlign(11);
-      tl->SetTextSize(0.03);
-      tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
-      tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
-
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_diff_%d.pdf\")", cno-1, out_dir, ibin) );
+      norm_binrange_lo = 1;
+      cout<<"bin range lo too low; set to 1"<<endl;
     }
-
-    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+    if (norm_binrange_hi > picked_x->GetNbinsX()+1)
     {
-      temp->Draw("SURF2Z");
+      norm_binrange_hi = picked_x->GetNbinsX()+1;
+      cout<<"bin range hi too high; set to "<<picked_x->GetNbinsX()<<endl;
+    }
+    double relative_normalization =  baseline_x->Integral(norm_binrange_lo,norm_binrange_hi) / picked_x->Integral(norm_binrange_lo,norm_binrange_hi);
+    picked->Scale(relative_normalization);
+    picked->Add(baseline, -1);
+    picked->Scale(1/baseline_x->Integral());
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_diff_%d_surface.pdf\")", cno-1, out_dir, ibin) );
+    TH3D* sliced;
+    TH2D* temp;
+    for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
+    {
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 1;
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
+      float plot_zrange_lo = -0.1E-3;
+      float plot_zrange_hi = 0.3E-3;
+
+      float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
+      sliced = (TH3D*) picked->Clone("temp3d");
+      sliced->GetXaxis()->SetRange(ibin,ibin);
+      temp = (TH2D*) sliced->Project3D("zy");
+
+      mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+      {
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+        temp->GetXaxis()->SetTitle("#xi");
+        temp->GetYaxis()->SetTitle("#phi");
+        temp->Draw("colz");
+
+        TLatex* tl = new TLatex();
+        tl->SetTextAlign(11);
+        tl->SetTextSize(0.03);
+        tl->SetTextColor(kBlack);
+        tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+        tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
+        tl->DrawLatexNDC(0.22,0.78,species[species_pick]);
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_diff_species%d_bin%d.pdf\")", cno-1, out_dir, species_pick, ibin) );
+      }
+
+      mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+      {
+        temp->Draw("SURF2Z");
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_diff_species%d_bin%d_surface.pdf\")", cno-1, out_dir, species_pick, ibin) );
+      }
+
     }
 
   }
@@ -226,77 +235,86 @@ void xi_phi_difference_hists()
 
 void xi_phi_ratio_hists()
 {
-  int species_pick = 7;
+  //int species_pick = 7;
+  int nspecies_picks = 2;
+  static int species_picks[nspecies_picks] = {7, 9};
   int etabin_pick = 2;
   int ptbin_pick = 1;
   float rl_range_lo = 1E-2;
   float rl_range_hi = 1;
 
-  TH3D* picked = (TH3D*) h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->Clone();
-  TH3D* baseline = (TH3D*) h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->Clone();
-
-  TH1D* picked_x = h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->ProjectionX();
-  TH1D* baseline_x = h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->ProjectionX();
-
-  int norm_binrange_lo = picked_x->FindBin(rl_range_lo);
-  cout<<"low bin: "<<norm_binrange_lo<<endl;
-  int norm_binrange_hi = picked_x->FindBin(rl_range_hi);
-  cout<<"high bin: "<<norm_binrange_hi<<endl;
-  if (norm_binrange_lo == 0)
+  for (int ispecies = 0; ispecies < nspecies_picks; ispecies++)
   {
-    norm_binrange_lo = 1;
-    cout<<"bin range lo too low; set to 1"<<endl;
-  }
-  if (norm_binrange_hi > picked_x->GetNbinsX()+1)
-  {
-    norm_binrange_hi = picked_x->GetNbinsX()+1;
-    cout<<"bin range hi too high; set to "<<picked_x->GetNbinsX()<<endl;
-  }
-  double relative_normalization =  baseline_x->Integral(norm_binrange_lo,norm_binrange_hi) / picked_x->Integral(norm_binrange_lo,norm_binrange_hi);
-  picked->Scale(relative_normalization);
-  picked->Add(baseline, -1);
-  picked->Divide(baseline);
+    int species_pick = species_picks[ispecies];
 
-  TH3D* sliced;
-  TH2D* temp;
-  for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
-  {
-    float plot_xrange_lo = 0;
-    float plot_xrange_hi = 1;
-    float plot_yrange_lo = 0;
-    float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
-    float plot_zrange_lo = -0.5;
-    float plot_zrange_hi = 1.5;
+    TH3D* picked = (TH3D*) h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->Clone();
+    TH3D* baseline = (TH3D*) h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->Clone();
 
-    float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
-    sliced = (TH3D*) picked->Clone("temp3d");
-    sliced->GetXaxis()->SetRange(ibin,ibin);
-    temp = (TH2D*) sliced->Project3D("zy");
+    TH1D* picked_x = h3d_jet_eec_rl_xi_phi[species_pick][etabin_pick][ptbin_pick]->ProjectionX();
+    TH1D* baseline_x = h3d_jet_eec_rl_xi_phi[0][etabin_pick][ptbin_pick]->ProjectionX();
 
-    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+    int norm_binrange_lo = picked_x->FindBin(rl_range_lo);
+    cout<<"low bin: "<<norm_binrange_lo<<endl;
+    int norm_binrange_hi = picked_x->FindBin(rl_range_hi);
+    cout<<"high bin: "<<norm_binrange_hi<<endl;
+    if (norm_binrange_lo == 0)
     {
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
-      temp->GetXaxis()->SetTitle("#xi");
-      temp->GetYaxis()->SetTitle("#phi");
-      temp->Draw("colz");
-
-      TLatex* tl = new TLatex();
-      tl->SetTextAlign(11);
-      tl->SetTextSize(0.03);
-      tl->SetTextColor(kBlack);
-      tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
-      tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
-
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_ratio_%d.pdf\")", cno-1, out_dir, ibin) );
+      norm_binrange_lo = 1;
+      cout<<"bin range lo too low; set to 1"<<endl;
     }
-
-    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+    if (norm_binrange_hi > picked_x->GetNbinsX()+1)
     {
-      temp->Draw("SURF2Z");
+      norm_binrange_hi = picked_x->GetNbinsX()+1;
+      cout<<"bin range hi too high; set to "<<picked_x->GetNbinsX()<<endl;
+    }
+    double relative_normalization =  baseline_x->Integral(norm_binrange_lo,norm_binrange_hi) / picked_x->Integral(norm_binrange_lo,norm_binrange_hi);
+    picked->Scale(relative_normalization);
+    picked->Add(baseline, -1);
+    picked->Divide(baseline);
 
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_ratio_%d_surface.pdf\")", cno-1, out_dir, ibin) );
+    TH3D* sliced;
+    TH2D* temp;
+    for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
+    {
+      float plot_xrange_lo = 0;
+      float plot_xrange_hi = 1;
+      float plot_yrange_lo = 0;
+      float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
+      float plot_zrange_lo = -0.5;
+      float plot_zrange_hi = 1.5;
+
+      float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
+      sliced = (TH3D*) picked->Clone("temp3d");
+      sliced->GetXaxis()->SetRange(ibin,ibin);
+      temp = (TH2D*) sliced->Project3D("zy");
+
+      mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+      {
+        temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
+        temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+        temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+        temp->GetXaxis()->SetTitle("#xi");
+        temp->GetYaxis()->SetTitle("#phi");
+        temp->Draw("colz");
+
+        TLatex* tl = new TLatex();
+        tl->SetTextAlign(11);
+        tl->SetTextSize(0.03);
+        tl->SetTextColor(kBlack);
+        tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
+        tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
+        tl->DrawLatexNDC(0.22,0.78,species[species_pick]);
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_ratio_species%d_bin%d.pdf\")", cno-1, out_dir, species_pick, ibin) );
+      }
+
+      mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+      {
+        temp->Draw("SURF2Z");
+
+        gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_ratio_species%d_bin%d_surface.pdf\")", cno-1, out_dir, species_pick, ibin) );
+      }
+
     }
 
   }
