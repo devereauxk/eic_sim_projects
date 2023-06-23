@@ -343,4 +343,6 @@ void plot_e3c_ratios()
   xi_phi_ratio_hists(7, 0); // (eAu - ep) / ep, where eAu is without density implementation
   xi_phi_ratio_hists(9, 0); // (eAu - ep) / ep, where eAu is with density implementation
 
+  xi_phi_ratio_hists(9, 7); // (eAu[with density] - eAu[without denisty]) / eAu[without density]
+
 }
