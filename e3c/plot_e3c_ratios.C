@@ -14,11 +14,11 @@ static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
 const int speciesnum = 9;
-static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+He-3", (char*)"e+He-4", (char*)"e+C", (char*)"e+Ca", (char*)"e+Cu", (char*)"e+Au", (char*)"e+Au (with density profile)", (char*)"e+U"};
+static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+He-3", (char*)"e+He-4", (char*)"e+C", (char*)"e+Ca", (char*)"e+Cu", (char*)"e+Au", (char*)"e+Au (w/ density profile)", (char*)"e+U"};
 static int species_A[speciesnum] = {1, 2, 3, 4, 12, 40, 64, 197, 238};
 
 static char* fname_eA[speciesnum] = {(char*)"./analysis/ep_10_100_K0_pow05/merged.root", (char*)"", (char*)"", (char*)"", (char*)"", (char*)"", (char*)"", \
-  (char*)"./analysis/eAu_1E8_K4_pow05/merged.root", (char*)"./analysis/eAu_10_100_K4_density/merged.root" (char*)""};
+  (char*)"./analysis/eAu_1E8_K4_pow05/merged.root", (char*)"./analysis/eAu_10_100_K4_density/merged.root", (char*)""};
 
 const char* out_dir = "./paperplots/";
 
