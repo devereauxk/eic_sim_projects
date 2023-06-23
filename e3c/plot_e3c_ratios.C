@@ -289,7 +289,6 @@ void xi_phi_ratio_hists(int num_species_pick, int denom_species_pick)
       tl->SetTextColor(kBlack);
       tl->DrawLatexNDC(0.22,0.84,Form("#eta #in [%.1f, %.1f), p_{T} #in [%.1f, %.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick],pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
       tl->DrawLatexNDC(0.22,0.81,Form("R_{L} ~ %.3f", bin_center));
-      tl->DrawLatexNDC(0.22,0.78,species[species_pick]);
       tl->DrawLatexNDC(0.22,0.78,Form("%s / %s",species[num_species_pick], species[denom_species_pick]));
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d-ratio-%d_%d.pdf\")", cno-1, out_dir, num_species_pick, denom_species_pick, ibin) );
