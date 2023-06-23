@@ -148,7 +148,7 @@ void e3c_projected_hists()
 void xi_phi_difference_hists()
 {
   //int species_pick = 7;
-  int nspecies_picks = 2;
+  const int nspecies_picks = 2;
   static int species_picks[nspecies_picks] = {7, 9};
   int etabin_pick = 2;
   int ptbin_pick = 1;
@@ -236,7 +236,7 @@ void xi_phi_difference_hists()
 void xi_phi_ratio_hists()
 {
   //int species_pick = 7;
-  int nspecies_picks = 2;
+  const int nspecies_picks = 2;
   static int species_picks[nspecies_picks] = {7, 9};
   int etabin_pick = 2;
   int ptbin_pick = 1;
