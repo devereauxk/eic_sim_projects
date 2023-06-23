@@ -68,7 +68,7 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 
 void e3c_projected_hists()
 {
-  const int nspecies_picks = 2;
+  const int nspecies_picks = 3;
   static int species_picks[nspecies_picks] = {0, 7, 9};
 
   // 3x3 panel
