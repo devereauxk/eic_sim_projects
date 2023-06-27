@@ -55,7 +55,7 @@ static char* fname_ep_Q2_x = "./eHIJING/ep_10_100_K0/merged.root";
 
 const char* out_dir = "./paperplots/even_newer/";
 
-TH1D* h1d_jet_pt[speciesnum] = {};
+TH1D* h1d_jet_pt[speciesnum][knum][etabin] = {};
 TH1D* h1d_jet_eta[speciesnum] = {};
 
 TH1D* h1d_jet_eec[speciesnum][knum][etabin][ptbin] = {};
@@ -272,58 +272,84 @@ void pt_eta_3by3_hists()
     hists_to_csv("fig2.csv", hists);
   }
 
+  // 3x3 panel, raw_eec csv output, normalized by jet rate
+  for (int ieta = 0; ieta < etabin; ieta++)
+  {
+    for (int ipt = 0; ipt < 3; ipt++)
+    {
+      vector<TH1*> hists;
+      TH1D* temp;
+
+      // ep, K=0
+      temp = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
+
+      // calculate normalization factor for this pt bin
+      TH1D* temp_jet_pt = (TH1D*) h1d_jet_pt[0][0][ieta];
+      int norm_binrange_lo = temp_jet_pt->FindBin(pt_lo[ipt]);
+      int norm_binrange_hi = temp_jet_pt->FindBin(pt_hi[ipt]);
+      if (norm_binrange_lo == 0)
+      {
+        norm_binrange_lo = 1;
+        cout<<"bin range lo too low; set to 1"<<endl;
+      }
+      if (norm_binrange_hi > temp_jet_pt->GetNbinsX())
+      {
+        norm_binrange_hi = temp_jet_pt->GetNbinsX();
+        cout<<"bin range hi too high; set to "<<temp_jet_pt->GetNbinsX()<<endl;
+      }
+      double norm_factor = 1 / temp_jet_pt->Integral(norm_binrange_lo, norm_binrange_hi);
+
+      temp->Scale(norm_factor);
+      hists.push_back(temp);
+
+      // eAu, K=ik
+      for (int ik = 0; ik < knum; ik++)
+      {
+        temp = (TH1D*) h1d_jet_eec[species_pick][ik][ieta][ipt]->Clone();
+
+        // calculate normalization factor for this pt bin
+        TH1D* temp_jet_pt = (TH1D*) h1d_jet_pt[7][ik][ieta];
+        int norm_binrange_lo = temp_jet_pt->FindBin(pt_lo[ipt]);
+        int norm_binrange_hi = temp_jet_pt->FindBin(pt_hi[ipt]);
+        if (norm_binrange_lo == 0)
+        {
+          norm_binrange_lo = 1;
+          cout<<"bin range lo too low; set to 1"<<endl;
+        }
+        if (norm_binrange_hi > temp_jet_pt->GetNbinsX())
+        {
+          norm_binrange_hi = temp_jet_pt->GetNbinsX();
+          cout<<"bin range hi too high; set to "<<temp_jet_pt->GetNbinsX()<<endl;
+        }
+        double norm_factor = 1 / temp_jet_pt->Integral(norm_binrange_lo, norm_binrange_hi);
+        
+        temp->Scale(norm_factor);
+        hists.push_back(temp);
+      }
+      hists_to_csv(Form("raw_eec_by_jet_rate_%i_%i.csv", ieta, ipt), hists);
+
+    }
+  }
+
   // 3x3 panel, raw_eec csv output, literally no normalization
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     for (int ipt = 0; ipt < 3; ipt++)
     {
-      mclogxy(cno++);
+      vector<TH1*> hists;
+      TH1D* temp;
+
+      // ep, K=0
+      temp = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
+      hists.push_back(temp);
+
+      // eAu, K=ik
+      for (int ik = 0; ik < knum; ik++)
       {
-        vector<TH1*> hists;
-        TH1D* temp;
-
-        // ep, K=0
-        temp = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
+        temp = (TH1D*) h1d_jet_eec[7][ik][ieta][ipt]->Clone();
         hists.push_back(temp);
-
-        // eAu, K=ik
-        for (int ik = 0; ik < knum; ik++)
-        {
-          temp = (TH1D*) h1d_jet_eec[species_pick][ik][ieta][ipt]->Clone();
-          hists.push_back(temp);
-        }
-        hists_to_csv(Form("raw_eec_%i_%i.csv", ieta, ipt), hists);
       }
-
-    }
-  }
-
-  // 3x3 panel, raw_eec csv output, normalized by jet rate
-  // only dividing by area when n=1
-  for (int ieta = 0; ieta < etabin; ieta++)
-  {
-    for (int ipt = 0; ipt < 3; ipt++)
-    {
-      mclogxy(cno++);
-      {
-        vector<TH1*> hists;
-        TH1D* temp;
-
-        // ep, K=0
-        temp = (TH1D*) h1d_jet_eec[0][0][ieta][ipt]->Clone();
-        temp->Scale(1/temp->GetEntries());
-        hists.push_back(temp);
-
-        // eAu, K=ik
-        for (int ik = 0; ik < knum; ik++)
-        {
-          temp = (TH1D*) h1d_jet_eec[species_pick][ik][ieta][ipt]->Clone();
-          temp->Scale(1/temp->GetEntries());
-          hists.push_back(temp);
-        }
-        hists_to_csv(Form("raw_eec_by_jet_rate_%i_%i.csv", ieta, ipt), hists);
-      }
-
+      hists_to_csv(Form("raw_eec_%i_%i.csv", ieta, ipt), hists);
     }
   }
 
@@ -599,149 +625,6 @@ void nuclei_hists()
     hists_to_csv("fig5.csv", hists);
   }
 
-  // with R_L on the x-axis, plotting self-normalized EEC on jet rate == area ONLY for n=1
-  mclogxy(cno++);
-  {
-    float plot_xrange_lo = 0.01;
-    float plot_xrange_hi = 1;
-    float plot_yrange_lo = -0.015;
-    float plot_yrange_hi = 0.08; //0.04;
-    float legend_x = 0.22;
-    float legend_y = 0.5;
-
-    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.2);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.028);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.1);
-
-    TH1D* temp;
-    TH1D* temp_baseline;
-
-    // proton
-    temp = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
-    temp->Scale(1/temp->GetEntries());
-    cout<<"NUMBER JETS IN e+p IN PT: ["<<pt_lo[ptbin_pick]<<","<<pt_hi[ptbin_pick]<<"] ETA: ["<<eta_lo[etabin_pick]<<","<<eta_hi[etabin_pick]<<"] == "<<temp->GetEntries()<<endl;
-    temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-    temp->GetXaxis()->SetTitle("R_{L}");
-    temp->GetYaxis()->SetTitle("EEC normalized by jet rate");
-    temp->SetMarkerColor(pt_color[0]);
-    temp->SetLineColor(pt_color[0]);
-    temp->SetMarkerSize(0.5);
-    temp->SetMarkerStyle(21);
-    temp->Draw("same hist");
-    leg->AddEntry(temp,"e+p");
-
-    for (int i = 0; i < nspecies_picks; i++)
-    {
-      int ispecies = species_picks[i];
-      temp = (TH1D*) h1d_jet_eec[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp->Scale(1/temp->GetEntries());
-      cout<<"NUMBER JETS IN "<<species[ispecies]<<" IN PT: ["<<pt_lo[ptbin_pick]<<","<<pt_hi[ptbin_pick]<<"] ETA: ["<<eta_lo[etabin_pick]<<","<<eta_hi[etabin_pick]<<"] == "<<temp->GetEntries()<<endl;
-
-      // plot
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetXaxis()->SetTitle("R_{L}");
-      temp->GetYaxis()->SetTitle("EEC normalized by jet rate");
-      temp->SetMarkerColor(pt_color[i+1]);
-      temp->SetLineColor(pt_color[i+1]);
-      temp->SetMarkerSize(0.5);
-      temp->SetMarkerStyle(21);
-      temp->Draw("same hist");
-      leg->AddEntry(temp,Form("%s",species[ispecies]));
-    }
-    leg->Draw("same");
-
-    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
-    l1.SetLineStyle(7);
-    l1.SetLineColor(kGray+2);
-    l1.Draw("same");
-
-    TLatex* tl = new TLatex();
-    tl->SetTextAlign(11);
-    tl->SetTextSize(0.028);
-    tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 4*10^{8} events");
-    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
-    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
-
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_selfnorm_by_nuclei.pdf\")", cno-1, out_dir) );
-
-  }
-
-  // with R_L*sqrt(pT) on the x-axis, plotting self-normalized EEC on jet rate == area ONLY for n=1 - ep case
-  mclogx(cno++);
-  {
-    float plot_xrange_lo = 1E-1;
-    float plot_xrange_hi = 5;
-    float plot_yrange_lo = -0.0025;
-    float plot_yrange_hi = 0.003; //0.04;
-    float legend_x = 0.22;
-    float legend_y = 0.5;
-
-    TLegend* leg = new TLegend(legend_x,legend_y,legend_x+0.3,legend_y+0.2);
-    leg->SetBorderSize(0);
-    leg->SetTextSize(0.028);
-    leg->SetFillStyle(0);
-    leg->SetMargin(0.1);
-
-    TH1D* temp;
-    TH1D* temp_baseline;
-
-    // proton
-    temp = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
-    temp->Add(temp,-1);
-    temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-    temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-    temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
-    temp->GetYaxis()->SetTitle("EEC self-normalized by jet rate (eA - ep)");
-    temp->SetMarkerColor(pt_color[0]);
-    temp->SetLineColor(pt_color[0]);
-    temp->SetMarkerSize(0.5);
-    temp->SetMarkerStyle(21);
-    temp->Draw("same hist");
-    leg->AddEntry(temp,"e+p");
-
-    for (int i = 0; i < nspecies_picks; i++)
-    {
-      int ispecies = species_picks[i];
-      temp = (TH1D*) h1d_jet_eec_rlsqrtpt[ispecies][k_pick][etabin_pick][ptbin_pick]->Clone();
-      temp_baseline = (TH1D*) h1d_jet_eec_rlsqrtpt[0][0][etabin_pick][ptbin_pick]->Clone();
-      temp->Scale(1/temp->GetEntries());
-      temp_baseline->Scale(1/temp_baseline->GetEntries());
-      temp->Add(temp_baseline, -1);
-
-      // plot
-      temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-      temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      temp->GetXaxis()->SetTitle("R_{L}#sqrt{p_{T,jet}}");
-      temp->GetYaxis()->SetTitle("EEC self-normalized by jet rate (eA - ep)");
-      temp->SetMarkerColor(pt_color[i+1]);
-      temp->SetLineColor(pt_color[i+1]);
-      temp->SetMarkerSize(0.5);
-      temp->SetMarkerStyle(21);
-      temp->Draw("same hist");
-      leg->AddEntry(temp,Form("%s",species[ispecies]));
-    }
-    leg->Draw("same");
-
-    TLine l1(plot_xrange_lo,0,plot_xrange_hi,0);
-    l1.SetLineStyle(7);
-    l1.SetLineColor(kGray+2);
-    l1.Draw("same");
-
-    TLatex* tl = new TLatex();
-    tl->SetTextAlign(11);
-    tl->SetTextSize(0.028);
-    tl->SetTextColor(kBlack);
-    tl->DrawLatexNDC(0.22,0.84,"eHIJING, e+A @ 10+100 GeV, 4*10^{8} events");
-    tl->DrawLatexNDC(0.22,0.81,Form("#eta #in [%.1f, %0.1f)",eta_lo[etabin_pick],eta_hi[etabin_pick]));
-    tl->DrawLatexNDC(0.22,0.78,Form("p_{T,jet} #in [%.1f, %0.1f)",pt_lo[ptbin_pick],pt_hi[ptbin_pick]));
-
-    gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eec_selfnormdiff_by_nuclei.pdf\")", cno-1, out_dir) );
-
-  }
-
 }
 
 void power_hists()
@@ -830,6 +713,7 @@ void power_hists()
 
 void pt_spectra()
 {
+  /*
   // average pt calculation for ep
   TH1D* temp = (TH1D*) h1d_jet_pt[1]->Clone();
   for (int ipt = 0; ipt < ptbin-2; ipt++)
@@ -876,7 +760,7 @@ void pt_spectra()
     leg->Draw("same");
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_pt_spectra.pdf\")", cno-1, out_dir) );
-  }
+  }*/
 
   // overlay of jet eta distribution for each species, K=4 10x100, inclusive on pt
   mclogy(cno++);
@@ -909,6 +793,7 @@ void pt_spectra()
 
     gROOT->ProcessLine( Form("cc%d->Print(\"%sh1d_jet_eta_spectra.pdf\")", cno-1, out_dir) );
   }
+  
 }
 
 void peak_height_vs_A()
@@ -1265,33 +1150,6 @@ void multiplicity()
 
 }
 
-void no_norm()
-{
-  mclogxy(cno++);
-  {
-    int etabin_pick = 2;
-    int ptbin_pick = 2;
-
-    vector<TH1*> hists;
-
-    TH1D* temp;
-
-    // ep, K=0
-    temp = (TH1D*) h1d_jet_eec[0][0][etabin_pick][ptbin_pick]->Clone();
-    hists.push_back(temp);
-
-    // eAu, K=0
-    temp = (TH1D*) h1d_jet_eec[7][0][etabin_pick][ptbin_pick]->Clone();
-    hists.push_back(temp);
-
-    // eAu, K=4
-    temp = (TH1D*) h1d_jet_eec[7][2][etabin_pick][ptbin_pick]->Clone();
-    hists.push_back(temp);
-
-    hists_to_csv("no_norm.csv", hists);
-  }
-}
-
 void plot_eec_paper()
 {
 
@@ -1312,15 +1170,19 @@ void plot_eec_paper()
 
         if (k[ik] == 4)
         {
-          //h1d_jet_pt[ispecies] = (TH1D*) fin->Get("h1d_jet_pt");
-          //h1d_jet_pt[ispecies]->SetName(Form("h1d_jet_pt_%d", ispecies));
-
           h1d_jet_eta[ispecies] = (TH1D*) fin->Get("h1d_jet_eta");
           h1d_jet_eta[ispecies]->SetName(Form("h1d_jet_eta_%d", ispecies));
         }
 
         for (int ieta = 0; ieta < etabin; ieta++)
         {
+          try {
+            h1d_jet_pt[ispecies][ik][ieta] = (TH1D*) fin->Get(Form("h1d_jet_pt_%d", ieta));
+            h1d_jet_pt[ispecies][ik][ieta]->SetName(Form("h1d_jet_pt_%d_%d_%d", ispecies, ik, ieta));
+          } catch (...) {
+            cout<<"no jet pt histograms for " <<species[ispecies]<<" with K = "<<k[ik]<<endl;
+          }
+
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
             // raw data histograms
@@ -1480,7 +1342,5 @@ void plot_eec_paper()
   Q2_x_panel();
 
   //multiplicity();
-
-  no_norm();
 
 }
