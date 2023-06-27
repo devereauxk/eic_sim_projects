@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the directory path containing .dat files
-directory="./Events/eAu_1E8_K0_condor"
+directory=$1
 
 # Initialize the sum
 sum=0
