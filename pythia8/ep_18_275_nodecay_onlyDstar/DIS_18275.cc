@@ -98,28 +98,30 @@ int main()
   // TDatabasePDG* pdg_db = TDatabasePDG::Instance();
   // auto* part = pdg_db->GetParticle(421);
   // part->Print();
-  pythia.readString("421:16:bRatio = 0.0");
+  // pythia.readString("421:16:bRatio = 0.0");
 
   // turn off charm meson decays
+  // D0 decay
   //pythia.readString("421:mayDecay = no");
-  /*
-  pythia.readString("411:mayDecay = no");
+  // D* decays
   pythia.readString("10411:mayDecay = no");
   pythia.readString("10421:mayDecay = no");
   pythia.readString("413:mayDecay = no");
   pythia.readString("423:mayDecay = no");
+  pythia.readString("415:mayDecay = no");
+  pythia.readString("425:mayDecay = no");
+  pythia.readString("10431:mayDecay = no");
+  pythia.readString("433:mayDecay = no");
+  pythia.readString("435:mayDecay = no");
+  /*
+  pythia.readString("411:mayDecay = no");
   pythia.readString("10413:mayDecay = no");
   pythia.readString("10423:mayDecay = no");
   pythia.readString("20413:mayDecay = no");
   pythia.readString("20423:mayDecay = no");
-  pythia.readString("415:mayDecay = no");
-  pythia.readString("425:mayDecay = no");
   pythia.readString("431:mayDecay = no");
-  pythia.readString("10431:mayDecay = no");
-  pythia.readString("433:mayDecay = no");
   pythia.readString("10433:mayDecay = no");
   pythia.readString("20433:mayDecay = no");
-  pythia.readString("435:mayDecay = no");
   */
 
   // turn off charm baryon decay
