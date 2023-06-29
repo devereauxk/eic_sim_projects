@@ -252,6 +252,7 @@ void raw_nice_3d_plots(const char* out_dir)
   TH2D* temp;
   for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
   {
+    // raw distribution 2d projection
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
     {
       float plot_xrange_lo = 0;
@@ -265,8 +266,6 @@ void raw_nice_3d_plots(const char* out_dir)
       sliced = (TH3D*) picked->Clone("temp3d");
       sliced->GetXaxis()->SetRange(ibin,ibin);
       temp = (TH2D*) sliced->Project3D("zy");
-      // self-normalization
-      // temp->Scale(1/temp->Integral());
 
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
@@ -285,11 +284,31 @@ void raw_nice_3d_plots(const char* out_dir)
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_eec_xi_phi_%d.pdf\")", cno-1, out_dir, ibin) );
     }
 
+    // raw distribution nice 3d plot
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
     {
       temp->Draw("SURF2Z");
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface.pdf\")", cno-1, out_dir, ibin) );
+    }
+
+    // "modification of uniform distro wrt raw distro"
+    // calculating essentially (1 - raw) / raw 
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
+    {
+      TH2D* temp_for_calc = temp->Clone("temp temp");
+      Int_t nBinsX = temp_for_calc->GetNbinsX();
+      Int_t nBinsY = temp_for_calc->GetNbinsY();
+      for (Int_t iBinX = 1; iBinX <= nBinsX; ++iBinX) {
+        for (Int_t iBinY = 1; iBinY <= nBinsY; ++iBinY) {
+          double original = temp->GetBinContent(iBinX, iBinY);
+          temp_for_calc->SetBinContent(iBinX, iBinY, (1 - original) / original);
+        }
+      }
+
+      temp_for_calc->Draw("SURF2Z");
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3cModUniform_xi_phi_%d_surface.pdf\")", cno-1, out_dir, ibin) );
     }
 
   }
