@@ -302,7 +302,7 @@ void raw_nice_3d_plots(const char* out_dir)
       for (Int_t iBinX = 1; iBinX <= nBinsX; ++iBinX) {
         for (Int_t iBinY = 1; iBinY <= nBinsY; ++iBinY) {
           double original = temp->GetBinContent(iBinX, iBinY);
-          temp_for_calc->SetBinContent(iBinX, iBinY, (1 - original) / original);
+          temp_for_calc->SetBinContent(iBinX, iBinY, 1 / original);
         }
       }
 
