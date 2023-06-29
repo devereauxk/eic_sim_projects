@@ -296,7 +296,7 @@ void raw_nice_3d_plots(const char* out_dir)
     // calculating essentially (1 - raw) / raw 
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
     {
-      TH2D* temp_for_calc = temp->Clone("temp temp");
+      TH2D* temp_for_calc = (TH2D*) temp->Clone("temp temp");
       Int_t nBinsX = temp_for_calc->GetNbinsX();
       Int_t nBinsY = temp_for_calc->GetNbinsY();
       for (Int_t iBinX = 1; iBinX <= nBinsX; ++iBinX) {
