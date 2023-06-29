@@ -14,7 +14,8 @@
         "calc_proj_energy.C": "cpp",
         "e3c_hists.C": "cpp",
         "plot_e3c_hists.C": "cpp",
-        "plot_e3c_ratios.C": "cpp"
+        "plot_e3c_ratios.C": "cpp",
+        "rootalias.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
