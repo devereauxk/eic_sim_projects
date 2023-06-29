@@ -23,8 +23,8 @@ static double targ_A[nspecies] = {1, 197, 12, 64, 2, 40, 238, 3, 4};
 static double targ_m[nspecies] = {Mp, MAu, MCarbon, MCu, Md, MCa, Mu, MHe3, MHe4};
 
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
-static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
-static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
+static double pt_lo[ptbin] = {5, 10, 20, 30, 5};
+static double pt_hi[ptbin] = {10, 20, 30, 40, 60};
 
 const int etabin = 6; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};

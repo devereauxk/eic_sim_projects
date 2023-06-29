@@ -4,8 +4,8 @@ R__LOAD_LIBRARY(libeicsmear);
 using namespace std;
 
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
-static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
-static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
+static double pt_lo[ptbin] = {5, 10, 20, 30, 5};
+static double pt_hi[ptbin] = {10, 20, 30, 40, 60};
 const int pt_color[9] = {kGreen+1, kBlue, kViolet, kOrange+1, kRed, kCyan+1, kAzure+7, kViolet+7, kBlack};
 
 const int etabin = 6; // inclusive on last bin, inclusive on lower limit, exclusive on upper

@@ -15,5 +15,6 @@
         "e3c_hists.C": "cpp",
         "plot_e3c_hists.C": "cpp",
         "plot_e3c_ratios.C": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

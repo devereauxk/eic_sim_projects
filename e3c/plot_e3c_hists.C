@@ -223,6 +223,10 @@ void overlay_hists(const char* out_dir)
     }
   }
 
+}
+
+void raw_nice_3d_plots(const char* out_dir)
+{
   // xi-phi plots for rl bins within range, forward eta, 20-30GeV pt bin
   int etabin_pick = 2;
   int ptbin_pick = 2;
@@ -254,14 +258,15 @@ void overlay_hists(const char* out_dir)
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 0;
       float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
-      float plot_zrange_lo = 0;
-      float plot_zrange_hi = 0.006;
+      //float plot_zrange_lo = 0;
+      //float plot_zrange_hi = 0.006;
 
       float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
       sliced = (TH3D*) picked->Clone("temp3d");
       sliced->GetXaxis()->SetRange(ibin,ibin);
       temp = (TH2D*) sliced->Project3D("zy");
-      temp->Scale(1/temp->Integral());
+      // self-normalization
+      // temp->Scale(1/temp->Integral());
 
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
@@ -280,8 +285,14 @@ void overlay_hists(const char* out_dir)
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_eec_xi_phi_%d.pdf\")", cno-1, out_dir, ibin) );
     }
 
-  }
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
+    {
+      temp->Draw("SURF2Z");
 
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface.pdf\")", cno-1, out_dir, ibin) );
+    }
+
+  }
 }
 
 void Q2_x_panel(const char* out_dir)
@@ -468,6 +479,8 @@ void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   individual_hists(out_dir);
 
   overlay_hists(out_dir);
+
+  raw_nice_3d_plots(out_dir);
 
   Q2_x_panel(out_dir);
 
