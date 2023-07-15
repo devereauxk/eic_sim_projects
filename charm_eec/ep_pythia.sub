@@ -4,7 +4,7 @@ Executable     = hists_ep_pythia.sh
 GetEnv         = True
 Input	       = /dev/null
 #                               pow    boost to lab    force in jet     " in pair    fixed id   input directory                                            output directory
-Arguments      = " $(Process)   1      0               0                0            421       /eic/u/kdevereaux/work/pythia8/ep_27p5_920_onlyDstar/outfiles    /eic/u/kdevereaux/work/charm_eec/analysis/ep_27p920_Dstar_pow1_inclusive "
+Arguments      = " $(Process)   1      0               1                0            421       /eic/u/kdevereaux/work/pythia8/ep_27p5_920_onlyDstar/outfiles    /eic/u/kdevereaux/work/charm_eec/analysis/ep_27p920_Dstar_pow1_D0injet "
 Output         = jobout/epjob.out.$(Process)
 Error          = jobout/epjob.err.$(Process)
 Log            = jobout/epjob.log.$(Process)
