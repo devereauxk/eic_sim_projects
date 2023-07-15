@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_e3c_hists_eU.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eAujob.out.$(Process)
+Error          = jobout/eAujob.err.$(Process)
+Log            = jobout/eAujob.log.$(Process)
+Queue 1000
