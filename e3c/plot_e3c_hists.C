@@ -149,7 +149,7 @@ void overlay_hists(const char* out_dir)
 
       TH1D* temp;
 
-      for (int ipt = 0; ipt < ptbin-2; ipt++)
+      for (int ipt = 0; ipt < ptbin-1; ipt++)
       {
         temp = (TH1D*) h3d_jet_eec_rl_xi_phi[ieta][ipt]->ProjectionX();
         temp->Scale(1/temp->Integral());
