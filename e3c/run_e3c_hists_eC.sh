@@ -27,4 +27,4 @@ mkdir $OUT_DIR
 
 #                                                                                                        DOUBLE CHECK THESE
 #                                                                                                      species, power, boost, Q2x
-root -l -b -q "e3c_hists.C(\"eAu_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.16, 100, 2,       0.5,    1,      1)"
+root -l -b -q "e3c_hists.C(\"eC_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.16, 100, 2,       0.5,    1,      1)"
