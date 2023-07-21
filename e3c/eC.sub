@@ -1,0 +1,10 @@
+Universe       = vanilla
+Notification   = Never
+Executable     = run_e3c_hists_eC.sh
+GetEnv         = True
+Input	       = /dev/null
+Arguments      = "$(Process)"
+Output         = jobout/eCjob.out.$(Process)
+Error          = jobout/eCjob.err.$(Process)
+Log            = jobout/eCjob.log.$(Process)
+Queue 1000
