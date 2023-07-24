@@ -15,7 +15,11 @@
         "e3c_hists.C": "cpp",
         "plot_e3c_hists.C": "cpp",
         "plot_e3c_ratios.C": "cpp",
-        "rootalias.C": "cpp"
+        "rootalias.C": "cpp",
+        "ana_hadron_gen.C": "cpp",
+        "D0_tree_patch.C": "cpp",
+        "signal_extraction.C": "cpp",
+        "D0_mom_INC_diff_gen.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

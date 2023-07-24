@@ -7,3 +7,5 @@ root -l -q "plot_e3c_hists.C(\"./analysis/eAu_1E8_K4_pow05/merged.root\", \"./an
 root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density/merged.root\", \"./analysis/eAu_10_100_K4_density/\")"
 
 root -l -q "plot_e3c_hists.C(\"./analysis/eU_27p5_920_density/merged.root\", \"./analysis/eU_27p5_920_density/\")"
+
+root -l -q "plot_e3c_hists.C(\"./analysis/eC_1E8_K4/merged.root\", \"./analysis/eC_1E8_K4/\")"
