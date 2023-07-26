@@ -80,7 +80,7 @@ void e3c_projected_hists()
       {
         float plot_xrange_lo = 6E-2;
         float plot_xrange_hi = 1;
-        float plot_yrange_lo = 4E-2;
+        float plot_yrange_lo = 4E-3;
         float plot_yrange_hi = 4E-1;
         float legend_x = 0.7;
         float legend_y = 0.2;
