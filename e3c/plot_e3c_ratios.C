@@ -78,7 +78,7 @@ void e3c_projected_hists()
     {
       mclogxy(cno++);
       {
-        float plot_xrange_lo = 1E-1;
+        float plot_xrange_lo = 3E-2;
         float plot_xrange_hi = 1;
         float plot_yrange_lo = 1E-4;
         float plot_yrange_hi = 5E-1;
