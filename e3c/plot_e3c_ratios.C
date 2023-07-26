@@ -68,8 +68,8 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 
 void e3c_projected_hists()
 {
-  const int nspecies_picks = 3;
-  static int species_picks[nspecies_picks] = {0, 7, 9};
+  const int nspecies_picks = 2;// 3;
+  static int species_picks[nspecies_picks] = {0, 7}; // {0, 7, 9};
 
   // 3x3 panel
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -78,7 +78,7 @@ void e3c_projected_hists()
     {
       mclogxy(cno++);
       {
-        float plot_xrange_lo = 1E-2;
+        float plot_xrange_lo = 1E-1;
         float plot_xrange_hi = 1;
         float plot_yrange_lo = 1E-4;
         float plot_yrange_hi = 5E-1;
@@ -117,7 +117,7 @@ void e3c_projected_hists()
 
           // plot histogram
           temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
-          temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+          // temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
           temp->GetXaxis()->SetTitle("R_{L}");
           temp->GetYaxis()->SetTitle("E3C normalized at low R_{L}");
           temp->SetMarkerColor(pt_color[ispecies]);
