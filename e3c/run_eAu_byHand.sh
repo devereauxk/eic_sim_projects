@@ -11,7 +11,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 # Create the output directory if it doesn't exist
 mkdir -p "$OUT_DIR"
 
-for ((INPUT=0; INPUT<=1000; INPUT++))
+for ((INPUT=500; INPUT<=1000; INPUT++))
 do
     echo "processing file: $INPUT"
     
