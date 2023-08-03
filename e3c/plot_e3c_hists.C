@@ -307,7 +307,7 @@ void raw_nice_3d_plots(const char* out_dir)
 
   vector<TH3*> hists;
   hists.push_back(picked);
-  hists_to_csv_3d("3d_hists.csv", hists);
+  hists_to_csv_3d(Form("%s3d_hists.csv", out_dir), hists);
 
   TH3D* sliced;
   TH2D* temp;
