@@ -1,6 +1,6 @@
 #!/bin/bash
 IN_DIR=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eU_10_100_K4_density
-OUT_DIR=/eic/u/kdevereaux/work/e3c/analysis/eU_10_100_K4_density_pow1
+OUT_DIR=/eic/u/kdevereaux/work/e3c/analysis/eU_10_100_K4_density_pow05
 
 if [ -z "$1" ]
 then
@@ -27,4 +27,4 @@ mkdir $OUT_DIR
 
 #                                                                                                        DOUBLE CHECK THESE
 #                                                                                                        power, boost, Q2x
-root -l -b -q "e3c_hists.C(\"eU_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 53883.0, 920, 6, 1, 1, 1)"
+root -l -b -q "e3c_hists.C(\"eU_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.17, 100, 6, 0.5, 1, 1)"
