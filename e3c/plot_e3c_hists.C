@@ -50,6 +50,63 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
    outfile.close();
 }
 
+void hists_to_csv_2d(const char* outfile_name, vector<TH2*> hists)
+{
+  ofstream outfile;
+  outfile.open(Form("%s%s", out_dir, outfile_name));
+
+  int nx = hists[0]->GetNbinsX();
+  int ny = hists[0]->GetNbinsY();
+
+  for (int i = 1; i <= nx; i++) // loop over lines, x axis loop
+  {
+    for (int j = 1; j <= ny; j++) // y axis loop
+    {
+      outfile << hists[0]->GetXaxis()->GetBinCenter(i) << "," << hists[0]->GetXaxis()->GetBinWidth(i) << ",";
+      outfile << hists[0]->GetYaxis()->GetBinCenter(j) << "," << hists[0]->GetYaxis()->GetBinWidth(j);
+
+      for (int ihist = 0; ihist < hists.size(); ihist++)
+      {
+        outfile << "," << hists[ihist]->GetBinContent(i,j) << "," << hists[ihist]->GetBinError(i,j);
+      }
+      outfile << "\n";
+    }
+
+  }
+  outfile.close();
+}
+
+void hists_to_csv_3d(const char* outfile_name, vector<TH3*> hists)
+{
+  ofstream outfile;
+  outfile.open(Form("%s%s", out_dir, outfile_name));
+
+  int nx = hists[0]->GetNbinsX();
+  int ny = hists[0]->GetNbinsY();
+  int nz = hists[0]->GetNbinsZ();
+
+  for (int i = 1; i <= nx; i++) // loop over lines, x axis loop
+  {
+    for (int j = 1; j <= ny; j++) // y axis loop
+    {
+      for (int k = 1; k <= nz; k++)
+      {
+        outfile << hists[0]->GetXaxis()->GetBinCenter(i) << "," << hists[0]->GetXaxis()->GetBinWidth(i) << ",";
+        outfile << hists[0]->GetYaxis()->GetBinCenter(j) << "," << hists[0]->GetYaxis()->GetBinWidth(j) << ",";
+        outfile << hists[0]->GetZaxis()->GetBinCenter(k) << "," << hists[0]->GetZaxis()->GetBinWidth(k);
+
+        for (int ihist = 0; ihist < hists.size(); ihist++)
+        {
+          outfile << "," << hists[ihist]->GetBinContent(i,j,k) << "," << hists[ihist]->GetBinError(i,j,k);
+        }
+        outfile << "\n";
+      }
+    }
+  }
+  
+  outfile.close();
+}
+
 void individual_hists(const char* out_dir)
 {
   TLegend* leg = new TLegend(0.21,0.7,0.51,0.82);
@@ -247,6 +304,10 @@ void raw_nice_3d_plots(const char* out_dir)
     norm_binrange_hi = picked->GetNbinsX()+1;
     cout<<"bin range hi too high; set to "<<picked->GetNbinsX()<<endl;
   }
+
+  vector<TH3*> hists;
+  hists.push_back(picked);
+  hists_to_csv_3d("3d_hists.csv", hists);
 
   TH3D* sliced;
   TH2D* temp;
