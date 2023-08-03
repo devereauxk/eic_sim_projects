@@ -53,7 +53,7 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 void hists_to_csv_2d(const char* outfile_name, vector<TH2*> hists)
 {
   ofstream outfile;
-  outfile.open(Form("%s%s", out_dir, outfile_name));
+  outfile.open(Form("%s", outfile_name));
 
   int nx = hists[0]->GetNbinsX();
   int ny = hists[0]->GetNbinsY();
@@ -79,7 +79,7 @@ void hists_to_csv_2d(const char* outfile_name, vector<TH2*> hists)
 void hists_to_csv_3d(const char* outfile_name, vector<TH3*> hists)
 {
   ofstream outfile;
-  outfile.open(Form("%s%s", out_dir, outfile_name));
+  outfile.open(Form("%s", outfile_name));
 
   int nx = hists[0]->GetNbinsX();
   int ny = hists[0]->GetNbinsY();
