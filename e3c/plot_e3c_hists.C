@@ -309,6 +309,19 @@ void raw_nice_3d_plots(const char* out_dir)
   hists.push_back(picked);
   hists_to_csv_3d(Form("%s3d_hists.csv", out_dir), hists);
 
+  // determine zrange for plotting, looking at RL=40th bin and RL=50th bin...
+  float bin_center = picked->GetXaxis()->GetBinCenter(40);
+  sliced = (TH3D*) picked->Clone("temp3d");
+  sliced->GetXaxis()->SetRange(ibin,ibin);
+  temp = (TH2D*) sliced->Project3D("zy");
+  float plot_zrange_lo = temp->GetMinimum();
+
+  float bin_center = picked->GetXaxis()->GetBinCenter(50);
+  sliced = (TH3D*) picked->Clone("temp3d");
+  sliced->GetXaxis()->SetRange(ibin,ibin);
+  temp = (TH2D*) sliced->Project3D("zy");
+  float plot_zrange_hi = temp->GetMaximum();
+
   TH3D* sliced;
   TH2D* temp;
   for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
@@ -320,8 +333,6 @@ void raw_nice_3d_plots(const char* out_dir)
       float plot_xrange_hi = 1;
       float plot_yrange_lo = 0;
       float plot_yrange_hi = 1.5; // TMath::Pi() / 2.0;
-      float plot_zrange_lo = 0;
-      float plot_zrange_hi = 0.006;
 
       float bin_center = picked->GetXaxis()->GetBinCenter(ibin);
       sliced = (TH3D*) picked->Clone("temp3d");
@@ -330,7 +341,6 @@ void raw_nice_3d_plots(const char* out_dir)
 
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      //temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
       temp->GetXaxis()->SetTitle("#xi");
       temp->GetYaxis()->SetTitle("#phi");
       temp->Draw("colz");
@@ -353,8 +363,20 @@ void raw_nice_3d_plots(const char* out_dir)
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface.pdf\")", cno-1, out_dir, ibin) );
     }
 
+    // raw distribution nice 3d plot, fixed z-axis
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
+    {
+      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+
+      temp->Draw("SURF2Z");
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface_zfixed.pdf\")", cno-1, out_dir, ibin) );
+    }
+
+
     // "modification of uniform distro wrt raw distro"
     // calculating essentially (1 - raw) / raw 
+    """
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
     {
       TH2D* temp_for_calc = (TH2D*) temp->Clone("temp temp");
@@ -371,6 +393,7 @@ void raw_nice_3d_plots(const char* out_dir)
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3cModUniform_xi_phi_%d_surface.pdf\")", cno-1, out_dir, ibin) );
     }
+    """
 
   }
 }
