@@ -386,9 +386,7 @@ void raw_nice_3d_plots(const char* out_dir)
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface_zfixed.pdf\")", cno-1, out_dir, ibin) );
     }
-  }
-
-
+    
     // "modification of uniform distro wrt raw distro"
     // calculating essentially (1 - raw) / raw 
     /*
