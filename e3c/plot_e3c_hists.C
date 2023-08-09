@@ -312,7 +312,7 @@ void raw_nice_3d_plots(const char* out_dir)
   // determine zrange for plotting, looking at RL=40th bin and RL=50th bin...
   sliced = (TH3D*) picked->Clone("temp3d");
   sliced->GetXaxis()->SetRange(40,40);
-  temp = (TH2D*) sliced->Project3D("zy");
+  TH2D* temp = (TH2D*) sliced->Project3D("zy");
   float plot_zrange_lo = temp->GetMinimum();
 
   sliced = (TH3D*) picked->Clone("temp3d");
