@@ -316,12 +316,12 @@ void raw_nice_3d_plots(const char* out_dir)
   sliced = (TH3D*) picked->Clone("temp3d");
   sliced->GetXaxis()->SetRange(40,40);
   temp = (TH2D*) sliced->Project3D("zy");
-  float plot_zrange_lo = temp->GetMinimum();
+  float super_plot_zrange_lo = temp->GetMinimum();
 
   sliced = (TH3D*) picked->Clone("temp3d");
   sliced->GetXaxis()->SetRange(50,50);
   temp = (TH2D*) sliced->Project3D("zy");
-  float plot_zrange_hi = temp->GetMaximum();
+  float super_plot_zrange_hi = temp->GetMaximum();
 
   for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
   {
@@ -338,8 +338,12 @@ void raw_nice_3d_plots(const char* out_dir)
       sliced->GetXaxis()->SetRange(ibin,ibin);
       temp = (TH2D*) sliced->Project3D("zy");
 
+      float plot_zrange_lo = temp->GetMinimum();
+      float plot_zrange_hi = temp->GetMaximum();
+
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
+      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
       temp->GetXaxis()->SetTitle("#xi");
       temp->GetYaxis()->SetTitle("#phi");
       temp->Draw("colz");
@@ -365,7 +369,7 @@ void raw_nice_3d_plots(const char* out_dir)
     // raw distribution nice 3d plot, fixed z-axis
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
     {
-      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+      temp->GetZaxis()->SetRangeUser(super_plot_zrange_lo, super_plot_zrange_hi);
 
       temp->Draw("SURF2Z");
 
