@@ -353,15 +353,24 @@ void raw_nice_3d_plots(const char* out_dir)
   }
 
   // determine zrange for plotting, looking at RL=40th bin and RL=50th bin...
+  int range_lo = 40;
+  int range_hi = 50;
   sliced = (TH3D*) picked->Clone("temp3d");
   sliced->GetXaxis()->SetRange(40,40);
   temp = (TH2D*) sliced->Project3D("zy");
   float super_plot_zrange_lo = temp->GetMinimum();
-
-  sliced = (TH3D*) picked->Clone("temp3d");
-  sliced->GetXaxis()->SetRange(50,50);
-  temp = (TH2D*) sliced->Project3D("zy");
   float super_plot_zrange_hi = temp->GetMaximum();
+  for (int bini = range_lo; bini <= range_hi; bini++)
+  {
+    sliced = (TH3D*) picked->Clone("temp3d");
+    sliced->GetXaxis()->SetRange(bini,bini);
+    temp = (TH2D*) sliced->Project3D("zy");
+    float temp_min = temp->GetMinimum();
+    float temp_max = temp->GetMaximum();
+
+    if (temp_min < super_plot_zrange_lo) super_plot_zrange_lo = temp_min;
+    if (temp_max > super_plot_zrange_hi) super_plot_zrange_hi = temp_max;
+  }
 
   for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
   {
@@ -386,7 +395,7 @@ void raw_nice_3d_plots(const char* out_dir)
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface_zfixed.pdf\")", cno-1, out_dir, ibin) );
     }
-    
+
     // "modification of uniform distro wrt raw distro"
     // calculating essentially (1 - raw) / raw 
     /*
