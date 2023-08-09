@@ -309,10 +309,13 @@ void raw_nice_3d_plots(const char* out_dir)
   hists.push_back(picked);
   hists_to_csv_3d(Form("%s3d_hists.csv", out_dir), hists);
 
+  TH3D* sliced;
+  TH2D* temp;
+
   // determine zrange for plotting, looking at RL=40th bin and RL=50th bin...
   sliced = (TH3D*) picked->Clone("temp3d");
   sliced->GetXaxis()->SetRange(40,40);
-  TH2D* temp = (TH2D*) sliced->Project3D("zy");
+  temp = (TH2D*) sliced->Project3D("zy");
   float plot_zrange_lo = temp->GetMinimum();
 
   sliced = (TH3D*) picked->Clone("temp3d");
@@ -320,8 +323,6 @@ void raw_nice_3d_plots(const char* out_dir)
   temp = (TH2D*) sliced->Project3D("zy");
   float plot_zrange_hi = temp->GetMaximum();
 
-  TH3D* sliced;
-  TH2D* temp;
   for (int ibin = norm_binrange_lo; ibin <= norm_binrange_hi; ibin++)
   {
     // raw distribution 2d projection
