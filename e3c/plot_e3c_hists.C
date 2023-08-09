@@ -338,12 +338,9 @@ void raw_nice_3d_plots(const char* out_dir)
       sliced->GetXaxis()->SetRange(ibin,ibin);
       temp = (TH2D*) sliced->Project3D("zy");
 
-      float plot_zrange_lo = temp->GetMinimum();
-      float plot_zrange_hi = temp->GetMaximum();
-
       temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
       temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
-      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+      
       temp->GetXaxis()->SetTitle("#xi");
       temp->GetYaxis()->SetTitle("#phi");
       temp->Draw("colz");
@@ -361,6 +358,10 @@ void raw_nice_3d_plots(const char* out_dir)
     // raw distribution nice 3d plot
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
     {
+      float plot_zrange_lo = temp->GetMinimum();
+      float plot_zrange_hi = temp->GetMaximum();
+      temp->GetZaxis()->SetRangeUser(plot_zrange_lo, plot_zrange_hi);
+
       temp->Draw("SURF2Z");
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface.pdf\")", cno-1, out_dir, ibin) );
