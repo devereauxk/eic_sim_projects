@@ -355,6 +355,16 @@ void raw_nice_3d_plots(const char* out_dir)
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_eec_xi_phi_%d.pdf\")", cno-1, out_dir, ibin) );
     }
 
+    // raw distribution nice 3d plot, fixed z-axis
+    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
+    {
+      temp->GetZaxis()->SetRangeUser(super_plot_zrange_lo, super_plot_zrange_hi);
+
+      temp->Draw("SURF2Z");
+
+      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface_zfixed.pdf\")", cno-1, out_dir, ibin) );
+    }
+    
     // raw distribution nice 3d plot
     mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
     {
@@ -365,16 +375,6 @@ void raw_nice_3d_plots(const char* out_dir)
       temp->Draw("SURF2Z");
 
       gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface.pdf\")", cno-1, out_dir, ibin) );
-    }
-
-    // raw distribution nice 3d plot, fixed z-axis
-    mcs(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13, -30);
-    {
-      temp->GetZaxis()->SetRangeUser(super_plot_zrange_lo, super_plot_zrange_hi);
-
-      temp->Draw("SURF2Z");
-
-      gROOT->ProcessLine( Form("cc%d->Print(\"%sh2d_jet_e3c_xi_phi_%d_surface_zfixed.pdf\")", cno-1, out_dir, ibin) );
     }
 
 
