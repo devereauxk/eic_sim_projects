@@ -310,15 +310,13 @@ void raw_nice_3d_plots(const char* out_dir)
   hists_to_csv_3d(Form("%s3d_hists.csv", out_dir), hists);
 
   // determine zrange for plotting, looking at RL=40th bin and RL=50th bin...
-  float bin_center = picked->GetXaxis()->GetBinCenter(40);
   sliced = (TH3D*) picked->Clone("temp3d");
-  sliced->GetXaxis()->SetRange(ibin,ibin);
+  sliced->GetXaxis()->SetRange(40,40);
   temp = (TH2D*) sliced->Project3D("zy");
   float plot_zrange_lo = temp->GetMinimum();
 
-  float bin_center = picked->GetXaxis()->GetBinCenter(50);
   sliced = (TH3D*) picked->Clone("temp3d");
-  sliced->GetXaxis()->SetRange(ibin,ibin);
+  sliced->GetXaxis()->SetRange(50,50);
   temp = (TH2D*) sliced->Project3D("zy");
   float plot_zrange_hi = temp->GetMaximum();
 
