@@ -1,6 +1,6 @@
 #!/bin/bash
-IN_DIR=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eC_1E8_K4
-OUT_DIR=/eic/u/kdevereaux/work/e3c/analysis/eC_1E8_K4
+IN_DIR=/eic/u/kdevereaux/work/eHIJING/eHIJING-pythia/eHIJING-examples/Events/eC_10_100_K4_density
+OUT_DIR=/eic/u/kdevereaux/work/e3c/analysis/eC_10_100_K4_density_pow025
 
 if [ -z "$1" ]
 then
@@ -26,5 +26,5 @@ ln -s /eic/u/kdevereaux/work/e3c/e3c_hists.C
 mkdir $OUT_DIR
 
 #                                                                                                        DOUBLE CHECK THESE
-#                                                                                                      species, power, boost, Q2x
-root -l -b -q "e3c_hists.C(\"eC_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.16, 100, 2,       0.5,    1,      1)"
+#                                                                                                    species, power, boost, Q2x
+root -l -b -q "e3c_hists.C(\"eC_${INPUT}.dat\",\"$OUT_DIR/hists_eec_${INPUT}.root\", 1, 2130.16, 100, 2,  0.25,    1,      1)"
