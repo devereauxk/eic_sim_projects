@@ -305,6 +305,10 @@ void raw_nice_3d_plots(const char* out_dir)
     cout<<"bin range hi too high; set to "<<picked->GetNbinsX()<<endl;
   }
 
+  // modify (xi, phui) bin size
+  picked = picked->Rebin3D(1, 2, 2);
+
+  // save raw 3d hist data
   vector<TH3*> hists;
   hists.push_back(picked);
   hists_to_csv_3d(Form("%s3d_hists.csv", out_dir), hists);
