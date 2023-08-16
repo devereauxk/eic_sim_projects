@@ -306,7 +306,7 @@ void raw_nice_3d_plots(const char* out_dir)
   }
 
   // modify (xi, phui) bin size
-  picked = picked->Rebin3D(1, 2, 2);
+  picked = (TH3D*) picked->Rebin3D(1, 2, 2);
 
   // save raw 3d hist data
   vector<TH3*> hists;
