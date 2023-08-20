@@ -119,7 +119,7 @@ void e3c_projected_hists()
           temp->GetXaxis()->SetRangeUser(plot_xrange_lo,plot_xrange_hi);
           temp->GetYaxis()->SetRangeUser(plot_yrange_lo,plot_yrange_hi);
           temp->GetXaxis()->SetTitle("R_{L}");
-          temp->GetYaxis()->SetTitle("E3C normalized at low R_{L}");
+          temp->GetYaxis()->SetTitle("Projected E3C (normalized at low R_{L})");
           temp->SetMarkerColor(pt_color[ispecies]);
           temp->SetLineColor(pt_color[ispecies]);
           temp->SetLineWidth(2);
