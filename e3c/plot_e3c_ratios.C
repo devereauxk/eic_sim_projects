@@ -122,7 +122,8 @@ void e3c_projected_hists()
           temp->GetYaxis()->SetTitle("E3C normalized at low R_{L}");
           temp->SetMarkerColor(pt_color[ispecies]);
           temp->SetLineColor(pt_color[ispecies]);
-          temp->SetMarkerSize(0.5);
+          temp->SetLineWidth(3);
+          temp->SetMarkerSize(4);
           temp->SetMarkerStyle(21);
           temp->Draw("same hist e");
           leg->AddEntry(temp,Form("%s", species[species_pick]));
