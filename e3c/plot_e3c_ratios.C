@@ -13,12 +13,12 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
-const int speciesnum = 10;
-static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+He-3", (char*)"e+He-4", (char*)"e+C", (char*)"e+Ca", (char*)"e+Cu", (char*)"e+Au", (char*)"e+U", (char*)"e+Au (w/ density profile)"};
-static int species_A[speciesnum] = {1, 2, 3, 4, 12, 40, 64, 197, 238, 197};
+const int speciesnum = 9;
+static char* species[speciesnum] = {(char*)"e+p", (char*)"e+D", (char*)"e+He-3", (char*)"e+He-4", (char*)"e+C", (char*)"e+Ca", (char*)"e+Cu", (char*)"e+Au", (char*)"e+U"};
+static int species_A[speciesnum] = {1, 2, 3, 4, 12, 40, 64, 197, 238};
 
-static char* fname_eA[speciesnum] = {(char*)"./analysis/ep_10_100_K0_pow05/merged.root", (char*)"", (char*)"", (char*)"", (char*)"", (char*)"", (char*)"", \
-  (char*)"./analysis/eAu_1E8_K4_pow05/merged.root", (char*)"", (char*)"./analysis/eAu_10_100_K4_density/merged.root",};
+static char* fname_eA[speciesnum] = {(char*)"./analysis/ep_10_100_K0_pow05/merged.root", (char*)"", (char*)"", (char*)"", (char*)"./analysis/eC_10_100_K4_pow05/merged.root", (char*)"", (char*)"", \
+  (char*)"./analysis/eAu_10_100_K4_pow05/merged.root", (char*)""};
 
 const char* out_dir = "./paperplots/";
 
@@ -68,8 +68,8 @@ void hists_to_csv(const char* outfile_name, vector<TH1*> hists)
 
 void e3c_projected_hists()
 {
-  const int nspecies_picks = 2;// 3;
-  static int species_picks[nspecies_picks] = {0, 7}; // {0, 7, 9};
+  const int nspecies_picks = 3;
+  static int species_picks[nspecies_picks] = {0, 4, 7}; // {0, 7, 9};
 
   // 3x3 panel
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -78,10 +78,10 @@ void e3c_projected_hists()
     {
       mclogxy(cno++);
       {
-        float plot_xrange_lo = 6E-2;
+        float plot_xrange_lo = 1E-1;
         float plot_xrange_hi = 1;
-        float plot_yrange_lo = 4E-3;
-        float plot_yrange_hi = 4E-1;
+        float plot_yrange_lo = 1E-2;
+        float plot_yrange_hi = 3E-1;
         float legend_x = 0.7;
         float legend_y = 0.2;
 

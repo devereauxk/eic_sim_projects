@@ -195,7 +195,8 @@ def RL_row(pdf_directory, fixed_option="fixed"):
 all_dirs = [
     "./ep_10_100_K0_density_pow025/", "./ep_10_100_K0_density_pow05/", "./ep_10_100_K0_density_pow1/", "./ep_10_100_K0_density_pow15/",
     "./eC_10_100_K4_density_pow025/", "./eC_10_100_K4_density_pow05/", "./eC_10_100_K4_density_pow1/", "./eC_10_100_K4_density_pow15/",
-    "./eAu_10_100_K4_density_pow025/", "./eAu_10_100_K4_density_pow05/", "./eAu_10_100_K4_density_pow1/", "./eAu_10_100_K4_density_pow15/"#, 
+    "./eAu_10_100_K4_density_pow025/", "./eAu_10_100_K4_density_pow05/", "./eAu_10_100_K4_density_pow1/", "./eAu_10_100_K4_density_pow15/"#,
+    #"./eAu_10_100_K10_density_pow05/", "./eAu_10_100_K10_density_pow15/",
     #"./eU_10_100_K4_density_pow025/", "./eU_10_100_K4_density_pow05/", "./eU_10_100_K4_density_pow1/", "./eU_10_100_K4_density_pow15/"
 ]
 
