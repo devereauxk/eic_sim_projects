@@ -27,6 +27,11 @@ root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_pow15/merged.roo
 root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K10_density_pow05/merged.root\", \"./analysis/eAu_10_100_K10_density_pow05/\")"
 root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K10_density_pow15/merged.root\", \"./analysis/eAu_10_100_K10_density_pow15/\")"
 
+root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow025/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow025/\")"
+root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow05/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow05/\")"
+root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow1/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow1/\")"
+root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow15/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow15/\")"
+
 root -l -q "plot_e3c_hists.C(\"./analysis/eU_10_100_K4_density_pow025/merged.root\", \"./analysis/eU_10_100_K4_density_pow025/\")"
 root -l -q "plot_e3c_hists.C(\"./analysis/eU_10_100_K4_density_pow05/merged.root\", \"./analysis/eU_10_100_K4_density_pow05/\")"
 root -l -q "plot_e3c_hists.C(\"./analysis/eU_10_100_K4_density_pow1/merged.root\", \"./analysis/eU_10_100_K4_density_pow1/\")"

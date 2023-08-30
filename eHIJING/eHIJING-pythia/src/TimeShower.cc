@@ -2231,8 +2231,8 @@ void TimeShower::pT2nextQCD(double pT2begDip, double pT2sel,
     } else if (alphaSorder == 1) {
       // WK> >> this is where the veto program applies
       // to the first order running alpha_s.
-      //if (!eHIJING || dip.pT2 < Qs2 || true) { // original (w/ radiation)
-      if (eHIJING || dip.pT2 < Qs2 || true) {  // removes radiation effects
+      if (!eHIJING || dip.pT2 < Qs2 || true) { // original (w/ radiation)
+      //if (eHIJING || dip.pT2 < Qs2 || true) {  // removes radiation effects
         // This is the original Pythia implementation for LO running alphas
         dip.pT2 = Lambda2 * pow( dip.pT2 / Lambda2,
                                  pow(rndmPtr->flat(), b0 / emitCoefTot) );
@@ -2275,8 +2275,8 @@ void TimeShower::pT2nextQCD(double pT2begDip, double pT2sel,
         // Pick z: either dz/(1-z) or flat dz in vacuum
         // sample z according to 1/(1-z) * (1 + induced(z) )
         if (dip.flavour == 21) {
-          // if (!eHIJING || dip.pT2 < Qs2 || true){  // original (w/ radiation)
-          if (eHIJING || dip.pT2 < Qs2 || true){ // removes radiation effects
+          if (!eHIJING || dip.pT2 < Qs2 || true){  // original (w/ radiation)
+          // if (eHIJING || dip.pT2 < Qs2 || true){ // removes radiation effects
             dip.z = 1. - zMinAbs * pow( 1. / zMinAbs - 1., rndmPtr->flat() );
           }
           else{
