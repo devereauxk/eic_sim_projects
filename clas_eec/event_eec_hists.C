@@ -288,6 +288,12 @@ void event_eec_hists(const char* inFile = "merged.root", const char* outFile = "
   h2d_Q2_x = new TH2D("h2d_Q2_x","Q2_x",50,xlbins,50,ylbins);
   h2d_Q2_x->Sumw2();
 
+  h1d_event_eec = new TH1D("h1d_jet_eec","jet eec",50,lbins);
+  h1d_event_eec->Sumw2();
+
+  h1d_event_eec_rlQ = new TH1D("h1d_jet_eec_rlsqrtpt","jet eec rlsqrtpt",50,lbins_rlQ);
+  h1d_event_eec_rlQ->Sumw2();
+
   // reads file and fills in jet_constits
   read_csv(inFile, boost, proj_rest_e, targ_lab_e, targ_species, eec_weight_power); // eHIJING, assumes target frame and boosts to EIC
   cout<<"@kdebug last"<<endl;
