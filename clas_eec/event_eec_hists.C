@@ -299,7 +299,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   h1d_part_pt->Write();
   h1d_part_eta->Write();
   h1d_part_mult->Write();
-  h1d_Q2_x->Write();
+  h2d_Q2_x->Write();
 
   h1d_event_eec->Write();
   h1d_event_eec_rlQ->Write();
