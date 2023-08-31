@@ -187,14 +187,8 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       // debug histograms
       Pt = part.Pt();
       Eta = part.Eta();
-      for (int ipt = 0; ipt < ptbin; ipt++)
-      {
-        if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ipt]->Fill(Eta);
-      }
-      for (int ieta = 0; ieta < etabin; ieta++)
-      {
-        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
-      }
+      h1d_part_pt->Fill(Pt);
+      h1d_part_eta->Fill(Eta);
 
       // use all charged fsp particles w/ in theta [10,70] region with momentum >= 0.2 GeV/c
       if (part.Theta() > 10 && part.Theta() < 70 && Id!=11 && part.E() >= 0.2 && Charge != 0)
@@ -206,6 +200,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       iline++;
     }
     h1d_part_mult->Fill(Mult);
+    h2d_Q2_x->Fill(Q2, xB);
 
     if (charged_constituents.size() < 1) continue;
 
@@ -290,7 +285,7 @@ void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_
   h1d_part_mult = new TH1D("h1d_part_mult", "event particle multiplicity",200,0,200);
   h1d_part_mult->Sumw2();
 
-  h2d_Q2_x = new TH2D(Form("h2d_Q2_x_%d_%d", ieta, ipt),"Q2_x",50,xlbins,50,ylbins);
+  h2d_Q2_x = new TH2D("h2d_Q2_x","Q2_x",50,xlbins,50,ylbins);
   h2d_Q2_x->Sumw2();
 
   // reads file and fills in jet_constits
