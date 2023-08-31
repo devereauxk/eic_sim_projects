@@ -216,7 +216,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 }
 
 
-void eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
+void event_eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1,
     int boost = 0)
 {
