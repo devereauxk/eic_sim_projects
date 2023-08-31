@@ -87,7 +87,7 @@ class Correlator_Builder
           h1d_event_eec->Fill(dist12, eec_weight);
 
           float rlQ = dist12 * sqrt(Q2);
-          h1d_event_eec_rlsqrtQ2->Fill(rlQ, eec_weight);
+          h1d_event_eec_rlQ->Fill(rlQ, eec_weight);
 
         }
       }
