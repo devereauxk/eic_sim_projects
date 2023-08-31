@@ -19,7 +19,8 @@
         "ana_hadron_gen.C": "cpp",
         "D0_tree_patch.C": "cpp",
         "signal_extraction.C": "cpp",
-        "D0_mom_INC_diff_gen.C": "cpp"
+        "D0_mom_INC_diff_gen.C": "cpp",
+        "event_eec_hists.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
