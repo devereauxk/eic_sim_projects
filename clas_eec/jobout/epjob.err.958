@@ -1,0 +1,7 @@
+mkdir: cannot create directory ‘/eic/u/kdevereaux/work/clas_eec/eHIJING/ep_11_0_K0_pow1’: File exists
+input_line_112:2:2: error: no matching function for call to 'event_eec_hists'
+ event_eec_hists("ep_958.dat","/eic/u/kdevereaux/work/clas_eec/eHIJING/ep_11_0_K0_pow1/hists_eec_958.root", 1, 11, 0, 0, 1, 0, 1) /* '.x' tries to invoke a function with the same name as the macro */
+ ^~~~~~~~~~~~~~~
+/gpfs/mnt/gpfs02/eic/kdevereaux/clas_eec/event_eec_hists.C:220:6: note: candidate function not viable: requires at most 8 arguments, but 9 were provided
+void event_eec_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
+     ^

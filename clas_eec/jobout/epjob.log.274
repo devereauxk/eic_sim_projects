@@ -1,0 +1,29 @@
+000 (375939.274.000) 2023-09-01 21:34:23 Job submitted from host: <130.199.48.114:9618?addrs=130.199.48.114-9618&alias=eic0101.rcf.bnl.gov&noUDP&sock=schedd_5718_c638>
+...
+001 (375939.274.000) 2023-09-01 21:35:06 Job executing on host: <130.199.157.101:9618?addrs=130.199.157.101-9618&alias=spool0333.sdcc.bnl.gov&noUDP&sock=startd_30563_e735>
+...
+006 (375939.274.000) 2023-09-01 21:35:14 Image size of job updated: 38016
+	16  -  MemoryUsage of job (MB)
+	16240  -  ResidentSetSize of job (KB)
+...
+006 (375939.274.000) 2023-09-01 21:36:21 Image size of job updated: 458872
+	23  -  MemoryUsage of job (MB)
+	23552  -  ResidentSetSize of job (KB)
+...
+004 (375939.274.000) 2023-09-01 21:36:22 Job was evicted.
+	(0) CPU times
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :                 1         1 
+	   Disk (KB)            :        2        2   3329043 
+	   Memory (MB)          :       23     1500      1536 
+	   xferslots            :                           0 
+...
+009 (375939.274.000) 2023-09-01 21:36:22 Job was aborted.
+	via condor_rm (by user kdevereaux)
+
+	Job terminated by <130.199.48.114:45787> at 2023-09-02T01:36:21Z (using method 1: DEACTIVATE_CLAIM).
+...
