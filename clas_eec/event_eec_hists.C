@@ -191,8 +191,8 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       h1d_part_eta->Fill(Eta);
 
       // use all charged fsp particles w/ in theta [10,70] region with momentum >= 0.2 GeV/c
-      cout<<"PART (eta, theta, id, E, charge) "<<part.Eta()<<" "<<part.Theta()<<" "<<Id<<" "<<part.E()<<" "<<Charge<<endl;
-      if (part.Theta() > 10 && part.Theta() < 70 && Id!=11 && part.E() >= 0.2 && Charge != 0)
+      //cout<<"PART (eta, theta, id, E, charge) "<<part.Eta()<<" "<<part.Theta()<<" "<<Id<<" "<<part.E()<<" "<<Charge<<endl;
+      if (part.Eta() > -2.4362460 && part.Eta() < -0.3563785 && Id!=11 && part.E() >= 0.2 && Charge != 0)
       {
         PseudoJet constit = PseudoJet(part.Px(),part.Py(),part.Pz(),part.E());
         charged_constituents.push_back(constit);
