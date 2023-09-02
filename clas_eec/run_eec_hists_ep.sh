@@ -22,7 +22,7 @@ DIR=`printf "%04d" $INPUT`
 mkdir $DIR
 
 ln -s $IN_DIR/ep_${INPUT}.dat
-ln -s /eic/u/kdevereaux/work/energy_correlator/eec_hists.C
+ln -s /eic/u/kdevereaux/work/clas_eec/event_eec_hists.C
 
 mkdir $OUT_DIR
 
