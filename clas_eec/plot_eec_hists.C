@@ -53,31 +53,31 @@ void push_to_csvs(const char* out_dir)
   TH1D* temp = (TH1D*) h1d_event_eec->Clone("temp");
   hists.push_back(temp);
   hists_to_csv(Form("%seec.csv", out_dir), hists);
-  hists.clear()
+  hists.clear();
 
   // eec binned in rlQ dist
-  TH1D* temp = (TH1D*) h1d_event_eec_rlQ->Clone("temp");
+  temp = (TH1D*) h1d_event_eec_rlQ->Clone("temp");
   hists.push_back(temp);
   hists_to_csv(Form("%seec_rlQ.csv", out_dir), hists);
-  hists.clear()
+  hists.clear();
 
   // 1d event particle pt histogram
-  TH1D* temp = (TH1D*) h1d_part_pt->Clone("temp");
+  temp = (TH1D*) h1d_part_pt->Clone("temp");
   hists.push_back(temp);
   hists_to_csv(Form("%spt.csv", out_dir), hists);
-  hists.clear()
+  hists.clear();
 
   // 1d event particle eta histogram
-  TH1D* temp = (TH1D*) h1d_part_eta->Clone("temp");
+  temp = (TH1D*) h1d_part_eta->Clone("temp");
   hists.push_back(temp);
   hists_to_csv(Form("%seta.csv", out_dir), hists);
-  hists.clear()
+  hists.clear();
 
   // 1d event multiplicity histogram
-  TH1D* temp = (TH1D*) h1d_part_mult->Clone("temp");
+  temp = (TH1D*) h1d_part_mult->Clone("temp");
   hists.push_back(temp);
   hists_to_csv(Form("%smult.csv", out_dir), hists);
-  hists.clear()
+  hists.clear();
 
 }
 
