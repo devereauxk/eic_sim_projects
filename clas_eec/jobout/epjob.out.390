@@ -1,4 +1,52 @@
 390
 Welcome to the Norbert's ROOT session 
 
-Processing event_eec_hists.C("ep_390.dat","/eic/u/kdevereaux/work/clas_eec/eHIJING/ep_11_0_K0_pow1/hists_eec_390.root", 1, 11, 0, 0, 1, 0, 1)...
+Processing event_eec_hists.C("ep_390.dat","/eic/u/kdevereaux/work/clas_eec/eHIJING/ep_11_0_K0_pow1/hists_eec_390.root", 1, 11, 0, 0, 1, 0)...
+Generator Type: eHIJING
+reading in file...
+file read
+projectile in lab frame: (should be what you expect)
+(x,y,z,t)=(0.000000,0.000000,-11.000000,11.000000) (P,eta,phi,E)=(11.000000,-100000000000.000000,0.000000,11.000000)
+target in lab frame: (should be what you expect)
+(x,y,z,t)=(0.000000,0.000000,0.000000,0.938300) (P,eta,phi,E)=(0.000000,0.000000,0.000000,0.938300)
+Processing event = 0
+Processing event = 10000
+Processing event = 20000
+Processing event = 30000
+Processing event = 40000
+Processing event = 50000
+Processing event = 60000
+Processing event = 70000
+Processing event = 80000
+Processing event = 90000
+Processing event = 100000
+Processing event = 110000
+Processing event = 120000
+Processing event = 130000
+Processing event = 140000
+Processing event = 150000
+Processing event = 160000
+Processing event = 170000
+Processing event = 180000
+Processing event = 190000
+Processing event = 200000
+Processing event = 210000
+Processing event = 220000
+Processing event = 230000
+Processing event = 240000
+Processing event = 250000
+Processing event = 260000
+Processing event = 270000
+Processing event = 280000
+Processing event = 290000
+Processing event = 300000
+Processing event = 310000
+Processing event = 320000
+Processing event = 330000
+Processing event = 340000
+Processing event = 350000
+Processing event = 360000
+Processing event = 370000
+Processing event = 380000
+Processing event = 390000
+@kdebug last
