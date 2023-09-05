@@ -13,8 +13,8 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
-TH1D* h1d_event_eec = NULL;
-TH1D* h1d_event_eec_rlQ = NULL;
+TH1D* h1d_jet_eec = NULL;
+TH1D* h1d_jet_eec_rlQ = NULL;
 TH2D* h2d_Q2_x = NULL;
 
 // debugging histograms
@@ -50,13 +50,13 @@ void push_to_csvs(const char* out_dir)
 
   // eec binned in rl dist
   vector<TH1*> hists;
-  TH1D* temp = (TH1D*) h1d_event_eec->Clone("temp");
+  TH1D* temp = (TH1D*) h1d_jet_eec->Clone("temp");
   hists.push_back(temp);
   hists_to_csv(Form("%seec.csv", out_dir), hists);
   hists.clear();
 
   // eec binned in rlQ dist
-  temp = (TH1D*) h1d_event_eec_rlQ->Clone("temp");
+  temp = (TH1D*) h1d_jet_eec_rlQ->Clone("temp");
   hists.push_back(temp);
   hists_to_csv(Form("%seec_rlQ.csv", out_dir), hists);
   hists.clear();
@@ -88,11 +88,11 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   // load histograms
   TFile* fin = new TFile(fin_name, "READ");
 
-  h1d_event_eec = (TH1D*) fin->Get("h1d_event_eec");
-  h1d_event_eec->SetName("h1d_event_eec");
+  h1d_jet_eec = (TH1D*) fin->Get("h1d_jet_eec");
+  h1d_jet_eec->SetName("h1d_jet_eec");
 
-  h1d_event_eec_rlQ = (TH1D*) fin->Get("h1d_event_eec_rlQ");
-  h1d_event_eec_rlQ->SetName("h1d_event_eec_rlQ");
+  h1d_jet_eec_rlQ = (TH1D*) fin->Get("h1d_jet_eec_rlsqrtpt");
+  h1d_jet_eec_rlQ->SetName("h1d_jet_eec_rlQ");
 
   h1d_part_pt = (TH1D*) fin->Get("h1d_part_pt");
   h1d_part_pt->SetName("h1d_part_pt");
