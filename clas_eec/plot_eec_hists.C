@@ -13,21 +13,13 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
-TH1D* h1d_jet_pt[etabin] = {};
-TH1D* h1d_jet_eta = NULL;
+TH1D* h1d_event_eec = NULL;
+TH1D* h1d_event_eec_rlQ = NULL;
+TH2D* h2d_Q2_x = NULL;
 
-TH1D* h1d_jet_eec[etabin][ptbin] = {};
-TH1D* h1d_jet_eec_norm[etabin][ptbin] = {};
-TH1D* h1d_jet_eec_baseline[etabin][ptbin] = {};
-TH1D* h1d_jet_eec_baseline_norm[etabin][ptbin] = {};
-
-TH1D* h1d_jet_eec_rlsqrtpt[etabin][ptbin] = {};
-TH1D* h1d_jet_eec_rlsqrtpt_baseline[etabin][ptbin] = {};
-
-TH2D* h2d_jet_Q2_x[etabin][ptbin] = {};
-
-TH1D* h1d_part_pt[etabin] = {};
-TH1D* h1d_part_eta[ptbin] = {};
+// debugging histograms
+TH1D* h1d_part_pt = NULL;
+TH1D* h1d_part_eta = NULL;
 TH1D* h1d_part_mult = NULL;
 
 static int cno = 0;
