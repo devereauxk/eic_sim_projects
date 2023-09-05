@@ -103,7 +103,7 @@ void plot_eec_hists(const char* fin_name = "hists_eec.root", const char* out_dir
   h1d_part_mult = (TH1D*) fin->Get("h1d_part_mult");
   h1d_part_mult->SetName("h1d_part_mult");
 
-  push_to_csvs(outdir);
+  push_to_csvs(out_dir);
 
 
 }
