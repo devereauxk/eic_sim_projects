@@ -615,8 +615,8 @@ void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir
       h2d_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
       h2d_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
 
-      h1d_part_energy[ieta][ipt] = (TH1D*) fin->Get(Form("h2d_part_energy_%d_%d", ieta, ipt));
-      h1d_part_energy[ieta][ipt]->SetName(Form("h2d_part_energy_%d_%d", ieta, ipt));
+      h1d_part_energy[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_part_energy_%d_%d", ieta, ipt));
+      h1d_part_energy[ieta][ipt]->SetName(Form("h1d_part_energy_%d_%d", ieta, ipt));
     }
   }
 
