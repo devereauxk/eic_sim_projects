@@ -401,11 +401,14 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       }
       for (int ieta = 0; ieta < etabin; ieta++)
       {
-        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
-
-        for (int ipt = 0; ipt < ptbin; ipt++)
+        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta])
         {
-          if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_energy[ieta][ipt]->Fill(part.E());
+          h1d_part_pt[ieta]->Fill(Pt);
+
+          for (int ipt = 0; ipt < ptbin; ipt++)
+          {
+            if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_energy[ieta][ipt]->Fill(part.E());
+          }
         }
       }
 
