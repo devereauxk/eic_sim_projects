@@ -44,6 +44,7 @@ TH2D* h2d_Q2_x[etabin][ptbin] = {};
 TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
+TH1D* h1d_part_energy[etabin][ptbin] = {};
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -401,6 +402,11 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       for (int ieta = 0; ieta < etabin; ieta++)
       {
         if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta]) h1d_part_pt[ieta]->Fill(Pt);
+
+        for (int ipt = 0; ipt < ptbin; ipt++)
+        {
+          if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ieta][ipt]->Fill(part.E());
+        }
       }
 
       // use all fsp particles w/ < 3.5 eta, not including scattered electron, for jet reconstruction
@@ -601,14 +607,19 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
       h1d_jet_multiplicity_charged[ieta][ipt] = new TH1D(Form("h1d_jet_multiplicity_charged_%d_%d", ieta, ipt), "jet charged multiplicity", 50, 0, 50);
       h1d_jet_multiplicity_charged[ieta][ipt]->Sumw2();
+
+      h2d_Q2_x[ieta][ipt] = new TH2D(Form("h2d_Q2_x_%d_%d", ieta, ipt),"Q2_x",50,xlbins,50,ylbins);
+      h2d_Q2_x[ieta][ipt]->Sumw2();
+
+      h1d_part_energy[ieta][ipt] = new TH1D(Form("h1d_part_energy_%d_%d", ieta, ipt), "part energy",100,50);
+      h1d_part_energy[ieta][ipt]->Sumw2();
     }
   }
   for (int ieta = 0; ieta < etabin; ieta++)
   {
     for (int ipt = 0; ipt < ptbin; ipt++)
     {
-      h2d_Q2_x[ieta][ipt] = new TH2D(Form("h2d_Q2_x_%d_%d", ieta, ipt),"Q2_x",50,xlbins,50,ylbins);
-      h2d_Q2_x[ieta][ipt]->Sumw2();
+      
     }
   }
 
@@ -654,6 +665,8 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
       h2d_Q2_x[ieta][ipt]->Write();
       cout<<"h2d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
+
+      h1d_part_energy[ieta][ipt]->Write();
     }
   }
 
