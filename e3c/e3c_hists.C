@@ -611,7 +611,7 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       h2d_Q2_x[ieta][ipt] = new TH2D(Form("h2d_Q2_x_%d_%d", ieta, ipt),"Q2_x",50,xlbins,50,ylbins);
       h2d_Q2_x[ieta][ipt]->Sumw2();
 
-      h1d_part_energy[ieta][ipt] = new TH1D(Form("h1d_part_energy_%d_%d", ieta, ipt), "part energy",100,50);
+      h1d_part_energy[ieta][ipt] = new TH1D(Form("h1d_part_energy_%d_%d", ieta, ipt), "part energy",100,0,50);
       h1d_part_energy[ieta][ipt]->Sumw2();
     }
   }
