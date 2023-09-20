@@ -405,7 +405,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
         for (int ipt = 0; ipt < ptbin; ipt++)
         {
-          if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ieta][ipt]->Fill(part.E());
+          if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_energy[ieta][ipt]->Fill(part.E());
         }
       }
 
