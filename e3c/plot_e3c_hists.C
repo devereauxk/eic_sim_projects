@@ -538,7 +538,8 @@ void particle_hists(const char* out_dir)
     hists_to_csv(Form("%seta.csv", out_dir), hists);
   }
 
-  hists.clear();
+  vector<TH1*> hists;
+  TH1D* temp;
   // energy spectrum in eta and pt bins
   for (int ieta = 0; ieta < 3; ieta++)
   {
