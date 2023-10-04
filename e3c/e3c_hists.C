@@ -390,7 +390,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       if (boost == 1) part.Boost(boost_vec);
 
       // calculate fractional momentum transfer to hadron, z = E_h / nu, lorentz invariant
-      nu = Q2 / (2 * xB * targ_m[targ_species]);
+      nu = Q2 / (2 * xB * Mp);
       z = part.E() / nu;
 
       // debug histograms
