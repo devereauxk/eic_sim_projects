@@ -408,7 +408,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
-            if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && fabs(part.Eta())<3.5 && Id!=11)
+            if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && Id!=11)
             {
               h1d_part_z[ieta][ipt]->Fill(z);
               //cout<<"(E, nu, z, m, p, pt) : ("<<part.E()<<" "<<nu<<" "<<z<<" "<<Mass<<" "<<part.P()<<" "<<part.Pt()<<")"<<endl;

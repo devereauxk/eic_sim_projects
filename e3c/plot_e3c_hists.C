@@ -26,7 +26,7 @@ TH2D* h2d_Q2_x[etabin][ptbin] = {};
 TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
-TH1D* h1d_part_energy[etabin][ptbin] = {};
+TH1D* h1d_part_z[etabin][ptbin] = {};
 
 static int cno = 0;
 
@@ -545,11 +545,11 @@ void particle_hists(const char* out_dir)
   {
     for (int ipt = 0; ipt < 3; ipt++)
     {
-      temp = (TH1D*) h1d_part_energy[ieta][ipt]->Clone("temp");
+      temp = (TH1D*) h1d_part_z[ieta][ipt]->Clone("temp");
       hists.push_back(temp);
     }
   }
-  hists_to_csv(Form("%senergy.csv", out_dir), hists);
+  hists_to_csv(Form("%sz.csv", out_dir), hists);
 
   // 1d event multiplicity histogram
   mclogy(cno++);
@@ -615,8 +615,8 @@ void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir
       h2d_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
       h2d_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
 
-      h1d_part_energy[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_part_energy_%d_%d", ieta, ipt));
-      h1d_part_energy[ieta][ipt]->SetName(Form("h1d_part_energy_%d_%d", ieta, ipt));
+      h1d_part_z[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_part_z_%d_%d", ieta, ipt));
+      h1d_part_z[ieta][ipt]->SetName(Form("h1d_part_z_%d_%d", ieta, ipt));
     }
   }
 
