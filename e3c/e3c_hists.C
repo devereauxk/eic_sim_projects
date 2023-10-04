@@ -391,8 +391,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
       // calculate fractional momentum transfer to hadron, z = E_h / nu, lorentz invariant
       nu = Q2 / (2 * xB * targ_m[targ_species]);
-      z = part.E() / (1000 * nu);
-      cout<<"(E, nu, z) : ("<<part.E()<<" "<<nu<<" "<<z<<")"<<endl;
+      z = part.E() / nu;
 
       // debug histograms
       Pt = part.Pt();
@@ -409,7 +408,11 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
-            if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_z[ieta][ipt]->Fill(z);
+            if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && fabs(part.Eta())<3.5 && Id!=11)
+            {
+              h1d_part_z[ieta][ipt]->Fill(z);
+              cout<<"(E, nu, z) : ("<<part.E()<<" "<<nu<<" "<<z<<")"<<endl;
+            }
           }
         }
       }
