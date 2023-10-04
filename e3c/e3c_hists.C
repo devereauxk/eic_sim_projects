@@ -44,7 +44,7 @@ TH2D* h2d_Q2_x[etabin][ptbin] = {};
 TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
-TH1D* h1d_part_energy[etabin][ptbin] = {};
+TH1D* h1d_part_z[etabin][ptbin] = {};
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -345,7 +345,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
   // initialize particle level variables
   Int_t Id;
-  Double_t Charge, Px, Py, Pz, Mass, Q2, xB, Pt, Eta, Mult;
+  Double_t Charge, Px, Py, Pz, Mass, Q2, xB, Pt, Eta, Mult, nu, z;
 
   // number of lines
   int iline = 0;
@@ -380,17 +380,18 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       Py = stod(line[4]);
       Pz = stod(line[5]);
       Mass = stod(line[6]);
-      if (calc_Q2x == 1)
-      {
-        Q2 = stod(line[7]);
-        xB = stod(line[8]);
-      }
+      Q2 = stod(line[7]);
+      xB = stod(line[8]);
 
       //cout<<iline<<" "<<Id<<" "<<Charge<<" "<<Px<<" "<<Py<<" "<<Pz<<" "<<Mass<<endl;
 
       // apply boost to particle (boost it into lab frame)
       part.SetXYZM(Px, Py, Pz, Mass);
       if (boost == 1) part.Boost(boost_vec);
+
+      // calculate fractional momentum transfer to hadron, z = E_h / nu, lorentz invariant
+      nu = Q2 / (2 * xB * targ_m[targ_species]);
+      z = part.E() / nu;
 
       // debug histograms
       Pt = part.Pt();
@@ -407,7 +408,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
           for (int ipt = 0; ipt < ptbin; ipt++)
           {
-            if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_energy[ieta][ipt]->Fill(part.E());
+            if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_z[ieta][ipt]->Fill(z);
           }
         }
       }
@@ -614,8 +615,8 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       h2d_Q2_x[ieta][ipt] = new TH2D(Form("h2d_Q2_x_%d_%d", ieta, ipt),"Q2_x",50,xlbins,50,ylbins);
       h2d_Q2_x[ieta][ipt]->Sumw2();
 
-      h1d_part_energy[ieta][ipt] = new TH1D(Form("h1d_part_energy_%d_%d", ieta, ipt), "part energy",100,0,50);
-      h1d_part_energy[ieta][ipt]->Sumw2();
+      h1d_part_z[ieta][ipt] = new TH1D(Form("h1d_part_z_%d_%d", ieta, ipt), "part energy",100,0,1);
+      h1d_part_z[ieta][ipt]->Sumw2();
     }
   }
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -669,7 +670,7 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       h2d_Q2_x[ieta][ipt]->Write();
       cout<<"h2d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
 
-      h1d_part_energy[ieta][ipt]->Write();
+      h1d_part_z[ieta][ipt]->Write();
     }
   }
 
