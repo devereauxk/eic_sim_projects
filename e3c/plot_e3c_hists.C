@@ -435,9 +435,9 @@ void Q2_x_panel(const char* out_dir)
   float plot_zrange_lo = 0;
   float plot_zrange_hi = 750E3;
 
-  for (int ieta = 0; ieta < 3; ieta++)
+  for (int ieta = 0; ieta < 4; ieta++)
   {
-    for (int ipt = 0; ipt < 3; ipt++)
+    for (int ipt = 0; ipt < 5; ipt++)
     {
       mclogxyz(cno++, 0, 0, 400, 400, 0.12, 0.15, 0.1, 0.13);
       {
