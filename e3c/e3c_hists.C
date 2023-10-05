@@ -393,6 +393,8 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       nu = Q2 / (2 * xB * Mp);
       z = part.E() / nu;
 
+      cout<<"(E, nu, z, x, Q2) : ("<<part.E()<<" "<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
+
       // debug histograms
       Pt = part.Pt();
       Eta = part.Eta();
@@ -411,7 +413,6 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
             if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && Id!=11)
             {
               h1d_part_z[ieta][ipt]->Fill(z);
-              cout<<"(E, nu, z, x, Q2) : ("<<part.E()<<" "<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
             }
           }
         }
