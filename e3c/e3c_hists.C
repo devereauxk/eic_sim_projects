@@ -24,7 +24,7 @@ static double targ_A[nspecies] = {1, 197, 12, 64, 2, 40, 238, 3, 4};
 static double targ_m[nspecies] = {Mp, MAu, MCarbon, MCu, Md, MCa, Mu, MHe3, MHe4};
 
 const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
-static double pt_lo[ptbin] = {5, 10, 20, 40, 5};
+static double pt_lo[ptbin] = {5, 10, 20, 40, 0};
 static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
 
 const int etabin = 6; // inclusive on last bin, inclusive on lower limit, exclusive on upper
@@ -400,7 +400,8 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       Eta = part.Eta();
       for (int ipt = 0; ipt < ptbin; ipt++)
       {
-        if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ipt]->Fill(Eta);
+        // temporarily switched to Q2 < 100 to test eHIJING norad capability
+        if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && Q2 < 100) h1d_part_eta[ipt]->Fill(Eta);
       }
       for (int ieta = 0; ieta < etabin; ieta++)
       {
