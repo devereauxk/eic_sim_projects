@@ -393,7 +393,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       nu = Q2 / (2 * xB * Mp);
       z = part.E() / nu;
 
-      cout<<"(E, nu, z, x, Q2) : ("<<part.E()<<" "<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
+      //cout<<"(E, nu, z, x, Q2) : ("<<part.E()<<" "<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
 
       // debug histograms
       Pt = part.Pt();
