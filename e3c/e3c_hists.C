@@ -389,7 +389,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       part.SetXYZM(Px, Py, Pz, Mass);
       if (boost == 1) part.Boost(boost_vec);
 
-      // calculate fractional momentum transfer to hadron, z = E_h / nu, lorentz invariant
+      // calculate momentum fraction of hadron h, z = E_h / nu, lorentz invariant
       nu = Q2 / (2 * xB * Mp);
       z = part.E() / nu;
 
@@ -411,7 +411,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
             if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && Id!=11)
             {
               h1d_part_z[ieta][ipt]->Fill(z);
-              //cout<<"(E, nu, z, m, p, pt) : ("<<part.E()<<" "<<nu<<" "<<z<<" "<<Mass<<" "<<part.P()<<" "<<part.Pt()<<")"<<endl;
+              cout<<"(E, nu, z, x, Q2) : ("<<part.E()<<" "<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
             }
           }
         }
