@@ -400,12 +400,12 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       Eta = part.Eta();
       for (int ipt = 0; ipt < ptbin; ipt++)
       {
-        // temporarily switched to Q2 < 100 to test eHIJING norad capability
-        if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && Q2 < 100) h1d_part_eta[ipt]->Fill(Eta);
+        if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt]) h1d_part_eta[ipt]->Fill(Eta);
       }
       for (int ieta = 0; ieta < etabin; ieta++)
       {
-        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta])
+        // temporarily switched to Q2 < 100 to test eHIJING norad capability
+        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta] && Q2 < 100)
         {
           h1d_part_pt[ieta]->Fill(Pt);
 

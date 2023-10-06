@@ -481,7 +481,7 @@ void particle_hists(const char* out_dir)
 
     TH1D* temp;
 
-    for (int ieta = 0; ieta < 3; ieta++)
+    for (int ieta = 0; ieta < 4; ieta++)
     {
       temp = (TH1D*) h1d_part_pt[ieta]->Clone("temp");
       hists.push_back(temp);
