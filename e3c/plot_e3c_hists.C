@@ -27,6 +27,7 @@ TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
 TH1D* h1d_part_z[etabin][ptbin] = {};
+TH1D* h1d_part_nu[etabin][ptbin] = {};
 
 static int cno = 0;
 
@@ -550,6 +551,18 @@ void particle_hists(const char* out_dir)
     }
   }
   hists_to_csv(Form("%sz.csv", out_dir), hists);
+  hists.clear();
+
+  // nu spectrum in eta and pt bins
+  for (int ieta = 0; ieta < 3; ieta++)
+  {
+    for (int ipt = 0; ipt < 3; ipt++)
+    {
+      temp = (TH1D*) h1d_part_nu[ieta][ipt]->Clone("temp");
+      hists.push_back(temp);
+    }
+  }
+  hists_to_csv(Form("%snu.csv", out_dir), hists);
 
   // 1d event multiplicity histogram
   mclogy(cno++);
@@ -617,6 +630,9 @@ void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir
 
       h1d_part_z[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_part_z_%d_%d", ieta, ipt));
       h1d_part_z[ieta][ipt]->SetName(Form("h1d_part_z_%d_%d", ieta, ipt));
+
+      h1d_part_nu[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_part_nu_%d_%d", ieta, ipt));
+      h1d_part_nu[ieta][ipt]->SetName(Form("h1d_part_nu_%d_%d", ieta, ipt));
     }
   }
 

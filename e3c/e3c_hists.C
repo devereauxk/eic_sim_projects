@@ -45,6 +45,7 @@ TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
 TH1D* h1d_part_z[etabin][ptbin] = {};
+TH1D* h1d_part_nu[etabin][ptbin] = {};
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -414,6 +415,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
             if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && Id!=11)
             {
               h1d_part_z[ieta][ipt]->Fill(z);
+              h1d_part_nu[ieta][ipt]->Fill(nu);
             }
           }
         }
@@ -623,6 +625,9 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
       h1d_part_z[ieta][ipt] = new TH1D(Form("h1d_part_z_%d_%d", ieta, ipt), "part energy",100,0,1);
       h1d_part_z[ieta][ipt]->Sumw2();
+
+      h1d_part_nu[ieta][ipt] = new TH1D(Form("h1d_part_nu_%d_%d", ieta, ipt), "part nu",100,0,1);
+      h1d_part_nu[ieta][ipt]->Sumw2();
     }
   }
   for (int ieta = 0; ieta < etabin; ieta++)
@@ -677,6 +682,7 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       cout<<"h2d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
 
       h1d_part_z[ieta][ipt]->Write();
+      h1d_part_nu[ieta][ipt]->Write();
     }
   }
 
