@@ -13,6 +13,10 @@ static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
 const int eta_color[etabin] = {kGreen+1, kBlue, kViolet, kOrange+1};
 
+const int partptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
+static double partpt_lo[ptbin] = {0, 2, 4, 6, 10};
+static double partpt_hi[ptbin] = {2, 4, 6, 10, 20};
+
 // jet level histograms
 TH3D* h3d_jet_eec_rl_xi_phi[etabin][ptbin] = {};
 TH3D* h3d_jet_eec_rlsqrtpt_xi_phi[etabin][ptbin] = {};
@@ -26,8 +30,7 @@ TH2D* h2d_Q2_x[etabin][ptbin] = {};
 TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
-TH1D* h1d_part_z[etabin][ptbin] = {};
-TH1D* h1d_part_nu[etabin][ptbin] = {};
+TH2D* h1d_part_z_nu[etabin][partptbin] = {};
 
 static int cno = 0;
 
@@ -539,30 +542,19 @@ void particle_hists(const char* out_dir)
     hists_to_csv(Form("%seta.csv", out_dir), hists);
   }
 
-  vector<TH1*> hists;
-  TH1D* temp;
+  vector<TH2*> hists;
+  TH2D* temp;
   // energy spectrum in eta and pt bins
   for (int ieta = 0; ieta < 3; ieta++)
   {
     for (int ipt = 0; ipt < 3; ipt++)
     {
-      temp = (TH1D*) h1d_part_z[ieta][ipt]->Clone("temp");
+      temp = (TH2D*) h1d_part_z_nu[ieta][ipt]->Clone("temp");
       hists.push_back(temp);
     }
   }
-  hists_to_csv(Form("%sz.csv", out_dir), hists);
+  hists_to_csv_2d(Form("%sz_nu.csv", out_dir), hists);
   hists.clear();
-
-  // nu spectrum in eta and pt bins
-  for (int ieta = 0; ieta < 3; ieta++)
-  {
-    for (int ipt = 0; ipt < 3; ipt++)
-    {
-      temp = (TH1D*) h1d_part_nu[ieta][ipt]->Clone("temp");
-      hists.push_back(temp);
-    }
-  }
-  hists_to_csv(Form("%snu.csv", out_dir), hists);
 
   // 1d event multiplicity histogram
   mclogy(cno++);
@@ -628,11 +620,8 @@ void plot_e3c_hists(const char* fin_name = "hists_eec.root", const char* out_dir
       h2d_Q2_x[ieta][ipt] = (TH2D*) fin->Get(Form("h2d_Q2_x_%d_%d", ieta, ipt));
       h2d_Q2_x[ieta][ipt]->SetName(Form("h2d_Q2_x_%d_%d", ieta, ipt));
 
-      h1d_part_z[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_part_z_%d_%d", ieta, ipt));
-      h1d_part_z[ieta][ipt]->SetName(Form("h1d_part_z_%d_%d", ieta, ipt));
-
-      h1d_part_nu[ieta][ipt] = (TH1D*) fin->Get(Form("h1d_part_nu_%d_%d", ieta, ipt));
-      h1d_part_nu[ieta][ipt]->SetName(Form("h1d_part_nu_%d_%d", ieta, ipt));
+      h1d_part_z_nu[ieta][ipt] = (TH2D*) fin->Get(Form("h1d_part_z_nu_%d_%d", ieta, ipt));
+      h1d_part_z_nu[ieta][ipt]->SetName(Form("h1d_part_z_nu_%d_%d", ieta, ipt));
     }
   }
 

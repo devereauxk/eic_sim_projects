@@ -384,7 +384,7 @@ void Modified_FF::sample_FF_partons(Event & event){
 
 	  // Formation time loop
       // commenting out this loop turns off radiation effects
-          
+          /*
           while(tauf < taufmax && p.e()>2*emin){
               double zmin = std::min(emin / p.e(), .4);
               double zmax = 1.-zmin;
@@ -611,7 +611,7 @@ void Modified_FF::sample_FF_partons(Event & event){
                                  recoil_remnants.push_back(recoldiQ);
               }
           }
-          
+          */
           // end of radiation loop
 
           // Now handles recoil and remannts

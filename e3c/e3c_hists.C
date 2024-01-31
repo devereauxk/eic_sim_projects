@@ -27,6 +27,10 @@ const int ptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusi
 static double pt_lo[ptbin] = {5, 10, 20, 40, 0};
 static double pt_hi[ptbin] = {10, 20, 40, 60, 60};
 
+const int partptbin = 5; // inclusive on last bin, inclusive on lower limit, exclusive on upper
+static double partpt_lo[ptbin] = {0, 2, 4, 6, 10};
+static double partpt_hi[ptbin] = {2, 4, 6, 10, 20};
+
 const int etabin = 6; // inclusive on last bin, inclusive on lower limit, exclusive on upper
 static double eta_lo[etabin] = {-3.5, -1, 1, -3.5, -1, 0};
 static double eta_hi[etabin] = {-1, 1, 3.5, 3.5, 0, 1};
@@ -44,8 +48,7 @@ TH2D* h2d_Q2_x[etabin][ptbin] = {};
 TH1D* h1d_part_pt[etabin] = {};
 TH1D* h1d_part_eta[ptbin] = {};
 TH1D* h1d_part_mult = NULL;
-TH1D* h1d_part_z[etabin][ptbin] = {};
-TH1D* h1d_part_nu[etabin][ptbin] = {};
+TH2D* h1d_part_z_nu[etabin][partptbin] = {};
 
 double calculate_distance(PseudoJet p0, PseudoJet p1)
 {
@@ -394,7 +397,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       nu = Q2 / (2 * xB * Mp);
       z = part.E() / nu;
 
-      //cout<<"(E, nu, z, x, Q2) : ("<<part.E()<<" "<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
+      cout<<"(nu, z, x, Q2) : ("<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
 
       // debug histograms
       Pt = part.Pt();
@@ -405,17 +408,15 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       }
       for (int ieta = 0; ieta < etabin; ieta++)
       {
-        // temporarily switched to Q2 < 100 to test eHIJING norad capability
-        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta] && Q2 < 100)
+        if (Eta >= eta_lo[ieta] && Eta < eta_hi[ieta])
         {
           h1d_part_pt[ieta]->Fill(Pt);
 
-          for (int ipt = 0; ipt < ptbin; ipt++)
+          for (int ipt = 0; ipt < partptbin; ipt++)
           {
-            if (Pt >= pt_lo[ipt] && Pt < pt_hi[ipt] && Id!=11)
+            if (Pt >= partpt_lo[ipt] && Pt < partpt_hi[ipt] && Id!=11)
             {
-              h1d_part_z[ieta][ipt]->Fill(z);
-              h1d_part_nu[ieta][ipt]->Fill(nu);
+              h1d_part_z_nu[ieta][ipt]->Fill(z, nu);
             }
           }
         }
@@ -541,6 +542,26 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
     lbins_rlsqrtpt[i] = TMath::Power(10, log10(xmin) + binwidth * i);
   }
 
+  xmin = 10;
+  xmax = 200;
+  int nnubins = 100;
+  Double_t nubins[nnubins+1];
+  binwidth = (xmax - xmin) / nnubins;
+  for (int i = 0; i < nnubins+1; i++)
+  {
+    nubins[i] = xmin + binwidth * i;
+  }
+
+  xmin = 0;
+  xmax = 1;
+  int nzbins = 100;
+  Double_t zbins[nzbins+1];
+  binwidth = (xmax - xmin) / nzbins;
+  for (int i = 0; i < nzbins+1; i++)
+  {
+    zbins[i] = xmin + binwidth * i;
+  }
+
   xmin = 0;
   xmax = 1;
   nbins = 20;
@@ -623,21 +644,11 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       h2d_Q2_x[ieta][ipt] = new TH2D(Form("h2d_Q2_x_%d_%d", ieta, ipt),"Q2_x",50,xlbins,50,ylbins);
       h2d_Q2_x[ieta][ipt]->Sumw2();
 
-      h1d_part_z[ieta][ipt] = new TH1D(Form("h1d_part_z_%d_%d", ieta, ipt), "part energy",100,0,1);
-      h1d_part_z[ieta][ipt]->Sumw2();
+      h1d_part_z_nu[ieta][ipt] = new TH2D(Form("h1d_part_z_nu_%d_%d", ieta, ipt), "part z, nu",nzbins, zbins, nnubins, nubins);
+      h1d_part_z_nu[ieta][ipt]->Sumw2();
 
-      h1d_part_nu[ieta][ipt] = new TH1D(Form("h1d_part_nu_%d_%d", ieta, ipt), "part nu",100,0,1);
-      h1d_part_nu[ieta][ipt]->Sumw2();
     }
   }
-  for (int ieta = 0; ieta < etabin; ieta++)
-  {
-    for (int ipt = 0; ipt < ptbin; ipt++)
-    {
-      
-    }
-  }
-
 
   // reads file and fills in jet_constits
   if (gen_type == 0 || gen_type == -1) read_root(inFile, eec_weight_power, gen_type, boost, proj_rest_e, targ_lab_e, targ_species); // pythia6 (EventPythia) or pythia8 (EventHepMC), boosts acording to boost variable
@@ -681,8 +692,8 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
       h2d_Q2_x[ieta][ipt]->Write();
       cout<<"h2d_Q2_x_"<<ieta<<"_"<<ipt<<" entries:"<<h2d_Q2_x[ieta][ipt]->GetEntries()<<endl;
 
-      h1d_part_z[ieta][ipt]->Write();
-      h1d_part_nu[ieta][ipt]->Write();
+      h1d_part_z_nu[ieta][ipt]->Write();
+      cout<<"h1d_part_z_nu_"<<ieta<<"_"<<ipt<<" entries:"<<h1d_part_z_nu[ieta][ipt]->GetEntries()<<endl;
     }
   }
 
