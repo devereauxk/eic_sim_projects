@@ -303,7 +303,7 @@ void read_root(const char* inFile = "merged.root", double eec_weight_power = 1, 
 }
 
 void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest_e = 10, double targ_lab_e = 100, int targ_species = 0,
-    double eec_weight_power = 1, int calc_Q2x = 0)
+    double eec_weight_power = 1, int calc_Q2x = 0, double toy_sigma=0.0)
 {
   // csv must be in the following format - eHIJING standard
   // each particle has the line
@@ -356,6 +356,9 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
   int nlines = content.size();
   int ievt;
 
+  TRandom *randomGen = new TRandom();
+  double Q_s, varphi, delta_eta, delta_phi;
+
   // loop over lines
   while (iline < nlines)
   {
@@ -393,11 +396,20 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       part.SetXYZM(Px, Py, Pz, Mass);
       if (boost == 1) part.Boost(boost_vec);
 
+      // KD apply TOY MODEL, smear pT a bit
+      Q_s = randomGen->Gaus(0,toy_sigma);
+      varphi = randomGen->Uniform(0, 2*TMath::Pi());
+      delta_eta = Q_s * TMath::Cos(varphi);
+      delta_phi = Q_s * TMath::Sin(varphi);
+      //cout<<part.Perp()<<" "<<part.Eta()<<" "<<part.Phi()<<" "<<part.M()<<" "<<part.E()<<endl;
+      if (toy_sigma != 0) part.SetPtEtaPhiM(part.Perp(), part.Eta()+delta_eta, part.Phi()+delta_phi, part.M());
+      //cout<<part.Perp()<<" "<<part.Eta()<<" "<<part.Phi()<<" "<<part.M()<<" "<<part.E()<<endl;
+
       // calculate momentum fraction of hadron h, z = E_h / nu, lorentz invariant
       nu = Q2 / (2 * xB * Mp);
       z = part.E() / nu;
 
-      cout<<"(nu, z, x, Q2) : ("<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
+      //cout<<"(nu, z, x, Q2) : ("<<nu<<" "<<z<<" "<<xB<<" "<<Q2<<")"<<endl;
 
       // debug histograms
       Pt = part.Pt();
@@ -506,7 +518,7 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
 
 void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_eec.root", const int gen_type = 1,
     double proj_rest_e = 2131.56, double targ_lab_e = 100, int targ_species = 0, double eec_weight_power = 1,
-    int boost = 0, int calc_Q2x = 0)
+    int boost = 0, int calc_Q2x = 0, double toy_sigma=0.0)
 {
   // proj_rest_e = energy of projectile beam in target rest frame, leave blank if pythia
   // targ_lab_e = energy of target beam in lab frame, leave blank if pythia
@@ -652,7 +664,7 @@ void e3c_hists(const char* inFile = "merged.root", const char* outFile = "hists_
 
   // reads file and fills in jet_constits
   if (gen_type == 0 || gen_type == -1) read_root(inFile, eec_weight_power, gen_type, boost, proj_rest_e, targ_lab_e, targ_species); // pythia6 (EventPythia) or pythia8 (EventHepMC), boosts acording to boost variable
-  else read_csv(inFile, boost, proj_rest_e, targ_lab_e, targ_species, eec_weight_power, calc_Q2x); // eHIJING, assumes target frame and boosts to EIC
+  else read_csv(inFile, boost, proj_rest_e, targ_lab_e, targ_species, eec_weight_power, calc_Q2x, toy_sigma); // eHIJING, assumes target frame and boosts to EIC
   cout<<"@kdebug last"<<endl;
 
   // write out histograms

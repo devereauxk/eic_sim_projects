@@ -383,6 +383,7 @@ void Modified_FF::sample_FF_partons(Event & event){
           recoil_remnants.clear();
 
 	  // Formation time loop
+      // KD
       // commenting out this loop turns off radiation effects
           /*
           while(tauf < taufmax && p.e()>2*emin){
@@ -612,6 +613,8 @@ void Modified_FF::sample_FF_partons(Event & event){
               }
           }
           */
+
+          // KD
           // end of radiation loop
 
           // Now handles recoil and remannts
