@@ -45,4 +45,5 @@ root -l -q "plot_e3c_hists.C(\"./analysis/eU_10_100_K4_density_pow15/merged.root
 
 
 # saturation scale toy model
-root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0.root\", \"./toy_model_kstudies/Qs0/\")"
+root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0/merged.root\", \"./toy_model_kstudies/Qs0/\")"
+root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p1/merged.root\", \"./toy_model_kstudies/Qs0p1/\")"
