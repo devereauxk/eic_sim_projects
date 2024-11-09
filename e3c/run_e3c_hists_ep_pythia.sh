@@ -1,7 +1,7 @@
 #!/bin/bash
 #IN_DIR=/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_ft_MB
 IN_DIR=/gpfs/mnt/gpfs02/eic/wfan/data/pythia8HepMC_e10p100_MB
-OUT_DIR=/eic/u/kdevereaux/work/e3c/analysis/ep_10_100_pythia8
+OUT_DIR=/eic/u/kdevereaux/work/e3c/analysis/ep_10_100_pythia8_2
 
 if [ -z "$1" ]
 then
@@ -29,4 +29,4 @@ mkdir $OUT_DIR
 
 #                                                                                                        DOUBLE CHECK THESE
 #                                                                                                        power, boost, Q2x
-root -l -b -q "e3c_hists.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, 0.5, 0, 1)"
+root -l -b -q "e3c_hists.C(\"ep_minbias_highQ2_${INPUT}.root\",\"$OUT_DIR/hists_eec_${INPUT}.root\", -1, 2131, 100, 0, 1, 0, 1, 0.0)"

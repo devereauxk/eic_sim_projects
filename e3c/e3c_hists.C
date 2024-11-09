@@ -396,14 +396,13 @@ void read_csv(const char* inFile = "merged.csv", int boost = 1, double proj_rest
       part.SetXYZM(Px, Py, Pz, Mass);
       if (boost == 1) part.Boost(boost_vec);
 
-      // KD apply TOY MODEL, smear pT a bit
+      // KD apply TOY MODEL, smear each track by some perp delta p 
       Q_s = randomGen->Gaus(0,toy_sigma);
       varphi = randomGen->Uniform(0, 2*TMath::Pi());
       delta_eta = Q_s * TMath::Cos(varphi);
       delta_phi = Q_s * TMath::Sin(varphi);
-      //cout<<part.Perp()<<" "<<part.Eta()<<" "<<part.Phi()<<" "<<part.M()<<" "<<part.E()<<endl;
+
       if (toy_sigma != 0) part.SetPtEtaPhiM(part.Perp(), part.Eta()+delta_eta, part.Phi()+delta_phi, part.M());
-      //cout<<part.Perp()<<" "<<part.Eta()<<" "<<part.Phi()<<" "<<part.M()<<" "<<part.E()<<endl;
 
       // calculate momentum fraction of hadron h, z = E_h / nu, lorentz invariant
       nu = Q2 / (2 * xB * Mp);
