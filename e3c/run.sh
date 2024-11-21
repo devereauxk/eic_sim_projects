@@ -27,16 +27,17 @@ root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_pow05/merged.roo
 root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_pow1/merged.root\", \"./analysis/eAu_10_100_K4_density_pow1/\")"
 root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_pow15/merged.root\", \"./analysis/eAu_10_100_K4_density_pow15/\")"
 
-root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K10_density_pow05/merged.root\", \"./analysis/eAu_10_100_K10_density_pow05/\")"
-root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K10_density_pow15/merged.root\", \"./analysis/eAu_10_100_K10_density_pow15/\")"
 
-root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow025/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow025/\")"
-root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow05/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow05/\")"
-root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow1/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow1/\")"
-root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow15/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow15/\")"
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K10_density_pow05/merged.root\", \"./analysis/eAu_10_100_K10_density_pow05/\")"
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K10_density_pow15/merged.root\", \"./analysis/eAu_10_100_K10_density_pow15/\")"
 
-root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_Q4_pow1/merged.root\", \"./analysis/eAu_10_100_K4_density_Q4_pow1/\")"
-root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_Q4_norad_pow1/merged.root\", \"./analysis/eAu_10_100_K4_density_Q4_norad_pow1/\")"
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow025/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow025/\")"
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow05/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow05/\")"
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow1/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow1/\")"
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_norad_pow15/merged.root\", \"./analysis/eAu_10_100_K4_density_norad_pow15/\")"
+
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_Q4_pow1/merged.root\", \"./analysis/eAu_10_100_K4_density_Q4_pow1/\")"
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_density_Q4_norad_pow1/merged.root\", \"./analysis/eAu_10_100_K4_density_Q4_norad_pow1/\")"
 
 root -l -q "plot_e3c_hists.C(\"./analysis/eU_10_100_K4_density_pow025/merged.root\", \"./analysis/eU_10_100_K4_density_pow025/\")"
 root -l -q "plot_e3c_hists.C(\"./analysis/eU_10_100_K4_density_pow05/merged.root\", \"./analysis/eU_10_100_K4_density_pow05/\")"
@@ -45,12 +46,15 @@ root -l -q "plot_e3c_hists.C(\"./analysis/eU_10_100_K4_density_pow15/merged.root
 
 
 # saturation scale toy model
-root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0/merged.root\", \"./toy_model_kstudies/Qs0/\")"
-root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p05/merged.root\", \"./toy_model_kstudies/Qs0p05/\")"
-root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p1/merged.root\", \"./toy_model_kstudies/Qs0p1/\")"
-root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p2/merged.root\", \"./toy_model_kstudies/Qs0p2/\")"
-root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p3/merged.root\", \"./toy_model_kstudies/Qs0p3/\")"
-root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p5/merged.root\", \"./toy_model_kstudies/Qs0p5/\")"
+#root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0/merged.root\", \"./toy_model_kstudies/Qs0/\")"
+#root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p05/merged.root\", \"./toy_model_kstudies/Qs0p05/\")"
+#root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p1/merged.root\", \"./toy_model_kstudies/Qs0p1/\")"
+#root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p2/merged.root\", \"./toy_model_kstudies/Qs0p2/\")"
+#root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p3/merged.root\", \"./toy_model_kstudies/Qs0p3/\")"
+#root -l -q "plot_e3c_hists.C(\"./toy_model_kstudies/Qs0p5/merged.root\", \"./toy_model_kstudies/Qs0p5/\")"
 
 # pythia8
-root -l -q "plot_e3c_hists.C(\"./analysis/ep_10_100_pythia8/merged.root\", \"./analysis/ep_10_100_pythia8/\")"
+#root -l -q "plot_e3c_hists.C(\"./analysis/ep_10_100_pythia8/merged.root\", \"./analysis/ep_10_100_pythia8/\")"
+
+
+#root -l -q "plot_e3c_hists.C(\"./analysis/eAu_10_100_K4_pow0p01/merged.root\", \"./analysis/eAu_10_100_K4_density_pow1/\")"
